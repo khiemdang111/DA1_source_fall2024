@@ -11,76 +11,87 @@ class Footer extends BaseView
 
 ?>
 
-                <!-- footer -->
-                <!-- ============================================================== -->
-                <footer class="footer text-center">
-                        Copyright &copy; by Chihihi
-                </footer>
-                <!-- ============================================================== -->
-                <!-- End footer -->
-                <!-- ============================================================== -->
+               <!-- Footer -->
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl">
+                <div
+                  class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                  <div class="text-body">
+                    ©
+                    <script>
+                      document.write(new Date().getFullYear());
+                    </script>
+                    , made with ❤️ by
+                    <a href="https://themeselection.com" target="_blank" class="footer-link">ThemeSelection</a>
+                  </div>
+                  <div class="d-none d-lg-inline-block">
+                    <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+                    <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+
+                    <a
+                      href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
+                      target="_blank"
+                      class="footer-link me-4"
+                      >Documentation</a
+                    >
+
+                    <a
+                      href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+                      target="_blank"
+                      class="footer-link"
+                      >Support</a
+                    >
+                  </div>
                 </div>
-                <!-- ============================================================== -->
-                <!-- End Page wrapper  -->
-                <!-- ============================================================== -->
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Wrapper -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- All Jquery -->
-                <!-- ============================================================== -->
-                <script src="<?=APP_URL?>/public/assets/admin/libs/jquery/dist/jquery.min.js"></script>
-                <!-- Bootstrap tether Core JavaScript -->
-                <script src="<?=APP_URL?>/public/assets/admin/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/extra-libs/sparkline/sparkline.js"></script>
-                <!--Wave Effects -->
-                <script src="<?=APP_URL?>/public/assets/admin/dist/js/waves.js"></script>
-                <!--Menu sidebar -->
-                <script src="<?=APP_URL?>/public/assets/admin/dist/js/sidebarmenu.js"></script>
-                <!--Custom JavaScript -->
-                <script src="<?=APP_URL?>/public/assets/admin/dist/js/custom.min.js"></script>
-                <!--This page JavaScript -->
-                <!-- <script src="<?=APP_URL?>/public/assets/admin/dist/js/pages/dashboards/dashboard1.js"></script> -->
-                <!-- Charts js Files -->
-                <script src="<?=APP_URL?>/public/assets/admin/libs/flot/excanvas.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/flot/jquery.flot.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/flot/jquery.flot.pie.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/flot/jquery.flot.time.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/flot/jquery.flot.stack.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/flot/jquery.flot.crosshair.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/dist/js/pages/chart/chart-page-init.js"></script>
+              </div>
+            </footer>
+            <!-- / Footer -->
 
-                <script src="<?=APP_URL?>/public/assets/admin/extra-libs/multicheck/datatable-checkbox-init.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/extra-libs/multicheck/jquery.multicheck.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/extra-libs/DataTables/datatables.min.js"></script>
-                <script>
-                        /****************************************
-                         *       Basic Table                   *
-                         ****************************************/
-                        $('#zero_config').DataTable();
-                </script>
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
 
-                <script src="<?=APP_URL?>/public/assets/admin/libs/inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/dist/js/pages/mask/mask.init.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/select2/dist/js/select2.full.min.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/select2/dist/js/select2.min.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/jquery-asColor/dist/jquery-asColor.min.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/jquery-asGradient/dist/jquery-asGradient.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/jquery-asColorPicker/dist/jquery-asColorPicker.min.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/jquery-minicolors/jquery.minicolors.min.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-                <script src="<?=APP_URL?>/public/assets/admin/libs/quill/dist/quill.min.js"></script>
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
 
+    <div class="buy-now">
+      <a
+        href="https://themeselection.com/item/sneat-dashboard-pro-bootstrap/"
+        target="_blank"
+        class="btn btn-danger btn-buy-now"
+        >Upgrade to Pro</a
+      >
+    </div>
 
-                </script>
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
 
+    <script src="<?= APP_URL ?>/public/assets/admin/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="<?= APP_URL ?>/public/assets/admin/assets/vendor/libs/popper/popper.js"></script>
+    <script src="<?= APP_URL ?>/public/assets/admin/assets/vendor/js/bootstrap.js"></script>
+    <script src="<?= APP_URL ?>/public/assets/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="<?= APP_URL ?>/public/assets/admin/assets/vendor/js/menu.js"></script>
 
-                </body>
+    <!-- endbuild -->
 
-                </html>
+    <!-- Vendors JS -->
+    <script src="<?= APP_URL ?>/public/assets/admin/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+    <!-- Main JS -->
+    <script src="<?= APP_URL ?>/public/assets/admin/assets/js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="<?= APP_URL ?>/public/assets/admin/assets/js/dashboards-analytics.js"></script>
+
+    <!-- Place this tag before closing body tag for github widget button. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>
 <?php
         }
 }
