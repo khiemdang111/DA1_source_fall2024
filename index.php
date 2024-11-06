@@ -47,6 +47,8 @@ Route::put('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@u
 Route::delete('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@delete');
 
 
+// *** Product ***
+Route::get('/admin/products', 'App\Controllers\Admin\ProductController@index');
 
 
 Route::dispatch($_SERVER['REQUEST_URI']);
