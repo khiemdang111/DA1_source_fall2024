@@ -55,6 +55,12 @@ Route::delete('/admin/categories/{id}', 'App\Controllers\Admin\CategoryControlle
 Route::get('/admin/products', 'App\Controllers\Admin\ProductController@index');
 Route::get('/admin/products/create', 'App\Controllers\Admin\ProductController@create');
 Route::post('/admin/products', 'App\Controllers\Admin\ProductController@store');
+Route::get('/admin/products/{id}', 'App\Controllers\Admin\ProductController@edit');
+Route::put('/admin/update/{id}', 'App\Controllers\Admin\ProductController@update');
+Route::post('/admin/delete/{id}', 'App\Controllers\Admin\ProductController@delete');
+
+
+
 
 
 Route::dispatch($_SERVER['REQUEST_URI']);
