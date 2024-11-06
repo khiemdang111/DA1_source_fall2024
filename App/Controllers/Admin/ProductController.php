@@ -34,70 +34,70 @@ class ProductController
 
 
     // hiển thị giao diện form thêm
-    // public static function create()
-    // {
+    public static function create()
+    {
 
-    //     $category = new Category();
-    //     $data = $category->getAllCategory();
-    //     // var_dump($_SESSION);
-    //     Header::render();
-    //     // hiển thị form thêm
-    //     Notification::render();
-    //     NotificationHelper::unset();
-    //     Create::render($data);
-    //     Footer::render();
-    // }
+        $product = new Product();
+        $data = $product->getAllProduct();
+        // var_dump($_SESSION);
+        Header::render();
+        // hiển thị form thêm
+        Notification::render();
+        NotificationHelper::unset();
+        Create::render($data);
+        Footer::render();
+    }
 
 
     // // // xử lý chức năng thêm
-    // public static function store()
-    // {
-    //     // validation các trường dữ liệu
-    //     $is_valid = ProductValidation::create();
+    public static function store()
+    {
+        // validation các trường dữ liệu
+        $is_valid = ProductValidation::create();
 
-    //     if(!$is_valid){
-    //         NotificationHelper::error('store', 'Thêm sản phẩm thất bại');
-    //         header('location: /admin/products/create');
-    //         exit;
-    //     }
-    //     $name  = $_POST['name'];
-    //     $tatus = $_POST['status'];
-    //     // Kiểm tra các tên có tồn tại hay chưa
-    //     $product = new Product();
-    //     $is_exist = $product->getOneProductByName($name);
+        if(!$is_valid){
+            NotificationHelper::error('store', 'Thêm sản phẩm thất bại');
+            header('location: /admin/products/create');
+            exit;
+        }
+        $name  = $_POST['name'];
+        $tatus = $_POST['status'];
+        // Kiểm tra các tên có tồn tại hay chưa
+        $product = new Product();
+        $is_exist = $product->getOneProductByName($name);
         
-    //     if ($is_exist) {
-    //         NotificationHelper::error('store', 'Tên sản phẩm này đã tồn tại');
-    //         header('location: /admin/products/create');
-    //         exit;
-    //     }
+        if ($is_exist) {
+            NotificationHelper::error('store', 'Tên sản phẩm này đã tồn tại');
+            header('location: /admin/products/create');
+            exit;
+        }
 
-    //     // Thêm vào
-    //     $data = [
-    //         'name' => $name,
-    //         'price' => $_POST['price'],
-    //         'discount_price' => $_POST['discount_price'],
-    //         'description' => $_POST['description'],
-    //         'is_featured' => $_POST['is_featured'],
-    //         'status' => $_POST['status'],
-    //         'category_id' => $_POST['category_id'],
-    //     ];
+        // Thêm vào
+        $data = [
+            'name' => $name,
+            'price' => $_POST['price'],
+            'discount_price' => $_POST['discount_price'],
+            'description' => $_POST['description'],
+            'is_featured' => $_POST['is_featured'],
+            'status' => $_POST['status'],
+            'product_id' => $_POST['product_id'],
+        ];
 
-    //     $is_upload = ProductValidation::uploadImage();
-    //     if($is_upload){
-    //         $data['image'] = $is_upload;
-    //     }
-    //     $result = $product->createProduct($data);
+        $is_upload = ProductValidation::uploadImage();
+        if($is_upload){
+            $data['image'] = $is_upload;
+        }
+        $result = $product->createProduct($data);
 
-    //     if($result){
-    //         NotificationHelper::success('store', 'Thêm sản phẩm thành công');
-    //         header('location: /admin/products');
-    //     }else{
-    //         NotificationHelper::error('store', 'Thêm sản phẩm thất bại');
-    //         header('location: /admin/products/create');
-    //         exit;
-    //     }
-    // }
+        if($result){
+            NotificationHelper::success('store', 'Thêm sản phẩm thành công');
+            header('location: /admin/products');
+        }else{
+            NotificationHelper::error('store', 'Thêm sản phẩm thất bại');
+            header('location: /admin/products/create');
+            exit;
+        }
+    }
 
 
     // // hiển thị giao diện form sửa
@@ -107,8 +107,8 @@ class ProductController
     //     $product = new Product();
     //     $data_product = $product->getOneProduct($id);
 
-    //     $category = new Category();
-    //     $data_category = $category->getAllCategory();
+    //     $product = new Product();
+    //     $data_product = $product->getAllProduct();
 
     //     if(!$data_product){
     //         NotificationHelper::error('edit','Không thể xem sản phẩm này');
@@ -117,7 +117,7 @@ class ProductController
     //     }
     //     $data = [
     //         'product' => $data_product,
-    //         'category' => $data_category,
+    //         'product' => $data_product,
     //     ];
 
     //     // echo '<pre>';
@@ -174,7 +174,7 @@ class ProductController
     //         'description' => $_POST['description'],
     //         'is_featured' => $_POST['is_featured'],
     //         'status' => $_POST['status'],
-    //         'category_id' => $_POST['category_id'],
+    //         'product_id' => $_POST['product_id'],
     //     ];
 
     //     $is_upload = ProductValidation::uploadImage();

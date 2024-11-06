@@ -57,10 +57,10 @@ class Product extends BaseModel
             return $result;
         }
     }
-    // public function getOneProductByName($name)
-    // {
-    //     return $this->getOneByName($name);
-    // }
+    public function getOneProductByName($name)
+    {
+        return $this->getOneByName($name);
+    }
 
     // public function getAllProductByCategoryAndStatus(int $id)
     // {
