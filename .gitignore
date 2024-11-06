@@ -10,3 +10,5 @@ composer.json
 cgi-bin
 
 .env
+
+.env.example

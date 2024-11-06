@@ -165,33 +165,19 @@ class Header extends BaseView
             <li class="menu-item">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div class="text-truncate" data-i18n="Layouts">Layouts</div>
+                <div class="text-truncate" data-i18n="Layouts">Danh mục sản phẩm</div>
               </a>
 
               <ul class="menu-sub">
+  
                 <li class="menu-item">
-                  <a href="layouts-without-menu.html" class="menu-link">
-                    <div class="text-truncate" data-i18n="Without menu">Without menu</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
-                    <div class="text-truncate" data-i18n="Without navbar">Without navbar</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-fluid.html" class="menu-link">
-                    <div class="text-truncate" data-i18n="Fluid">Fluid</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a href="layouts-container.html" class="menu-link">
-                    <div class="text-truncate" data-i18n="Container">Container</div>
+                  <a href="/admin/categories" class="menu-link">
+                    <div class="text-truncate" data-i18n="Container">Tất cả</div>
                   </a>
                 </li>
                 <li class="menu-item">
                   <a href="layouts-blank.html" class="menu-link">
-                    <div class="text-truncate" data-i18n="Blank">Blank</div>
+                    <div class="text-truncate" data-i18n="Blank">Tạo</div>
                   </a>
                 </li>
               </ul>
