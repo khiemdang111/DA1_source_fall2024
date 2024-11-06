@@ -30,59 +30,59 @@ class CategoryController
 
 
     // hiển thị giao diện form thêm
-    // public static function create()
-    // {
+    public static function create()
+    {
 
-    //     // var_dump($_SESSION);
-    //     Header::render();
-    //     // hiển thị form thêm
-    //     Notification::render();
-    //     NotificationHelper::unset();
-    //     Create::render();
-    //     Footer::render();
-    // }
+        // var_dump($_SESSION);
+        Header::render();
+        // hiển thị form thêm
+        Notification::render();
+        NotificationHelper::unset();
+        Create::render();
+        Footer::render();
+    }
 
 
     // // xử lý chức năng thêm
-    // public static function store()
-    // {
-    //     // validation các trường dữ liệu
-    //     $is_valid = CategoryValidation::create();
+    public static function store()
+    {
+        // validation các trường dữ liệu
+        $is_valid = CategoryValidation::create();
 
-    //     if(!$is_valid){
-    //         NotificationHelper::error('store', 'Thêm loại sản phẩm thất bại');
-    //         header('location: /admin/categories/create');
-    //         exit;
-    //     }
-    //     $name  = $_POST['name'];
-    //     $tatus = $_POST['status'];
-    //     // Kiểm tra các tên loại có tồn tại hay chưa
-    //     $category = new Category();
-    //     $is_exist = $category->getOneCategoryByName($name);
+        if(!$is_valid){
+            NotificationHelper::error('store', 'Thêm loại sản phẩm thất bại');
+            header('location: /admin/categories/create');
+            exit;
+        }
+        $name  = $_POST['name'];
+        $tatus = $_POST['status'];
+        // Kiểm tra các tên loại có tồn tại hay chưa
+        $category = new Category();
+        $is_exist = $category->getOneCategoryByName($name);
         
-    //     if ($is_exist) {
-    //         NotificationHelper::error('store', 'Tên loại sản phẩm này đã tồn tại');
-    //         header('location: /admin/categories/create');
-    //         exit;
-    //     }
+        if ($is_exist) {
+            NotificationHelper::error('store', 'Tên loại sản phẩm này đã tồn tại');
+            header('location: /admin/categories/create');
+            exit;
+        }
 
-    //     // Thêm vào
-    //     $data = [
-    //         'name' => $name,
-    //         'status' => $tatus,
-    //     ];
+        // Thêm vào
+        $data = [
+            'name' => $name,
+            'status' => $tatus,
+        ];
 
-    //     $result = $category->createCategory($data);
+        $result = $category->createCategory($data);
 
-    //     if($result){
-    //         NotificationHelper::success('store', 'Thêm loại sản phẩm thành công');
-    //         header('location: /admin/categories');
-    //     }else{
-    //         NotificationHelper::error('store', 'Thêm loại sản phẩm thất bại');
-    //         header('location: /admin/categories/create');
-    //         exit;
-    //     }
-    // }
+        if($result){
+            NotificationHelper::success('store', 'Thêm loại sản phẩm thành công');
+            header('location: /admin/categories');
+        }else{
+            NotificationHelper::error('store', 'Thêm loại sản phẩm thất bại');
+            header('location: /admin/categories/create');
+            exit;
+        }
+    }
 
 
     // hiển thị chi tiết

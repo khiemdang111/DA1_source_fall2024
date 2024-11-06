@@ -6,91 +6,64 @@ use App\Views\BaseView;
 
 class Create extends BaseView
 {
-    public static function render($data = null)
-    {
-?>
+  public static function render($data = null)
+  {
+    ?>
 
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
-        <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <div class="page-breadcrumb">
-                <div class="row">
-                    <div class="col-12 d-flex no-block align-items-center">
-                        <h4 class="page-title">QUẢN LÝ LOẠI SẢN PHẨM</h4>
-                        <div class="ms-auto text-end">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="/admin">Trang chủ</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Thêm loại sản phẩm</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
+      <!-- / Navbar -->
+
+      <!-- Content wrapper -->
+      <div class="content-wrapper">
+        <!-- Content -->
+
+        <div class="container-xxl flex-grow-1 container-p-y">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card mb-6">
+                <!-- Account -->
+                <div class="card-body">
+                  <div class="">
+                    <h2 class="text-center">Thêm mới danh mục sản phẩm</h2>
+                  </div>
                 </div>
-            </div>
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-            <div class="container-fluid">
-                <!-- ============================================================== -->
-                <!-- Start Page Content -->
-                <!-- ============================================================== -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <form class="form-horizontal" action="/admin/categories" method="POST">
-                                <div class="card-body">
-                                    <h4 class="card-title">Thêm loại sản phẩm</h4>
-                                    <input type="hidden" name="method" id="" value="POST">
-                                    <div class="form-group">
-                                        <label for="name">Tên*</label>
-                                        <input type="text" class="form-control" id="name" placeholder="Nhập tên loại sản phẩm..." name="name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="status">Trạng thái*</label>
-                                        <select class="select2 form-select shadow-none" style="width: 100%; height:36px;" id="status" name="status" required>
-                                            <option value="" selected disabled>Vui lòng chọn...</option>
-                                            <option value="1">Hiển thị</option>
-                                            <option value="0">Ẩn</option>
-
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="border-top">
-                                    <div class="card-body">
-                                        <button type="reset" class="btn btn-danger text-white" name="">Làm lại</button>
-                                        <button type="submit" class="btn btn-primary" name="">Thêm</button>
-                                    </div>
-                                </div>
-                            </form>
+                <div class="card-body pt-4">
+                  <form action="/admin/categories" id="" method="POST" enctype="multipart/form-data">
+                  <input type="hidden" name="method" id="" value="POST">
+                    <div class="row g-6">
+                      <div class="col-md-12">
+                        <label for="name" class="form-label">Tên <span class="text-danger"> *</span></label>
+                        <input class="form-control" type="text" id="name" name="name" autofocus />
+                      </div>
+                        <div class="col-md-12 mb-3">
+                        <label for="discription" class="form-label">Mô tả <span class="text-danger"> *</span></label>
+                        <textarea class="form-control" type="text" id="discription" rows="5" name="discription"
+                          placeholder="Nhập mô tả"></textarea>
                         </div>
-
+                      </div>
+                      <div class="col-md-6">
+                        <label for="status" class="form-label">Trạng thái<span class="text-danger"> *</span></label>
+                        <select id="status" class="select2 form-select">
+                          <option value="">Chọn thương hiệu</option>
+                          <option value="en">English</option>
+                          <option value="fr">French</option>
+                          <option value="de">German</option>
+                          <option value="pt">Portuguese</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12 mt-6">
+                      <button type="submit" class="btn btn-primary me-3" name>Lưu</button>
+                      <button type="reset" class="btn btn-outline-secondary" name>Nhập lại</button>
                     </div>
-
+                    </div>
+                    
+                  </form>
                 </div>
-
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
+                <!-- /Account -->
+              </div>
             </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
+          </div>
+        </div>
 
-    <?php
-    }
+        <?php
+  }
 }
