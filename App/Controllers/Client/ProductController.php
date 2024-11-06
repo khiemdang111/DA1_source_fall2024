@@ -63,30 +63,4 @@ class ProductController
     public static function getProductByCategory($id)
     {
     }
-
-
-    public static function detail($id)
-    {
-
-        $product = new Product();
-        $detail = $product->getOneProductByCategoryDetailStatus($id);
-         if(!$detail){
-            NotificationHelper::error('detail','Không thể xem sản phẩm');
-            header('Location: /');
-         }
-        $comment = new Comment();
-        $data = [
-            'product' => $detail,
-            'comments' => $comment->get5CommentNewestByProductAndStatus($id),
-        ];
-
-        $view_result = ViewProductHelper::cookieView($id,$detail['view']);
-        // var_dump($view_result);
-
-        Header::render();
-        Notification::render();
-        NotificationHelper::unset();
-        Detail::render($data);
-        Footer::render();
-    }
 }

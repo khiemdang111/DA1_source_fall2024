@@ -80,13 +80,13 @@ class Product extends BaseModel
             return $result;
         }
     }
-    // public function getOneProductByStatus(int $id)
-    // {
-    //     $result = [];
-    //     try {
-    //         $sql = "SELECT products.*, categories.name AS category_name FROM products INNER JOIN categories ON products.category_id = categories.id WHERE products.status=" . self::STATUS_ENABLE . " AND categories.status=" . self::STATUS_ENABLE . " AND products.id=?";
-    //         $conn = $this->_conn->MySQLi();
-    //         $stmt = $conn->prepare($sql);
+    public function getOneProductByStatus(int $id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT products.*, categories.name AS category_name FROM products INNER JOIN categories ON products.category_id = categories.id WHERE products.status=" . self::STATUS_ENABLE . " AND categories.status=" . self::STATUS_ENABLE . " AND products.id=?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
 
             $stmt->bind_param('i', $id);
             $stmt->execute();
