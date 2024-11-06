@@ -9,7 +9,7 @@ class Header extends BaseView
 {
     public static function render($data = null)
     {
-
+		$is_login = AuthHelper::checkLogin();
 
 ?>
 
@@ -36,7 +36,7 @@ class Header extends BaseView
   </head>
   <body>
 
-  	<div class="wrap">
+  <div class="wrap">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-6 d-flex align-items-center">
@@ -55,6 +55,18 @@ class Header extends BaseView
 			    		</p>
 		        </div>
 		        <div class="reg">
+				<?php
+                   if ($is_login):
+                ?>
+				<p class="mr-2">Xin Chào,<?= $_SESSION['user']['name'] ?></p>
+
+                 <?php
+                    else:
+                  ?>
+		        	<p class="mb-0"><a href="#" class="mr-2">Đăng ký</a> <a href="/login">Đăng Nhập</a></p>
+					<?php
+                     endif;
+                       ?>
 		        	<p class="mb-0"><a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a></p>
 		        </div>
 					</div>

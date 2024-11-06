@@ -27,7 +27,8 @@ Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');
 
 Route::get('/admin', 'App\Controllers\Admin\HomeController@index');
 
-Route::get('/admin/login', 'App\Controllers\Admin\AuthController@Login');
+Route::get('/login', 'App\Controllers\Client\AuthController@Login');
+Route::post('/login', 'App\Controllers\Client\AuthController@loginAction');
 
 
 //  *** Category
