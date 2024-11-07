@@ -196,6 +196,27 @@ class Header extends BaseView
                 </ul>
               </li>
 
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <i class="menu-icon tf-icons bx bx-layout"></i>
+                  <div class="text-truncate" data-i18n="Layouts">Khách hàng</div>
+                </a>
+
+                <ul class="menu-sub">
+
+                  <li class="menu-item">
+                    <a href="/admin/users" class="menu-link">
+                      <div class="text-truncate" data-i18n="Container">Tất cả</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="" class="menu-link">
+                      <div class="text-truncate" data-i18n="Blank">Thêm mới</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
               <!-- Front Pages -->
               <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
