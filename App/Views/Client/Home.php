@@ -71,14 +71,14 @@ class Home extends BaseView
 					</div>
 					<div class="col-md-6 wrap-about pl-md-5 ftco-animate py-5">
 	          <div class="heading-section">
-	          	<span class="subheading">Since 1905</span>
-	            <h2 class="mb-4">Desire Meets A New Taste</h2>
+	          	<span class="subheading">Từ năm 1905</span>
+	            <h2 class="mb-4">Wine CanTho - Nơi Hội Tụ Những Chai Rượu Cao Cấp</h2>
 
-	            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-	            <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country.</p>
+	            <p>Chúng tôi tự hào là địa chỉ tin cậy cung cấp các sản phẩm rượu cao cấp, từ các dòng vang nổi tiếng, rượu mạnh, cho đến các loại rượu đặc biệt nhập khẩu từ các quốc gia danh tiếng. Tại [Tên Website], bạn có thể dễ dàng lựa chọn các sản phẩm rượu phù hợp với sở thích và nhu cầu của mình, từ những dịp tiệc tùng, lễ hội cho đến các món quà tặng sang trọng.</p>
+	            <p>Chúng tôi cam kết cung cấp rượu chính hãng, chất lượng tuyệt vời và dịch vụ chăm sóc khách hàng tận tâm. Đặc biệt, với chính sách miễn phí vận chuyển và miễn phí trả lại trong vòng 30 ngày, bạn có thể yên tâm khi mua sắm tại cửa hàng trực tuyến của chúng tôi.</p>
 	            <p class="year">
-	            	<strong class="number" data-number="115">0</strong>
-		            <span>Years of Experience In Business</span>
+	            	<strong class="number" data-number="25">0</strong>
+		            <span>năm kinh nghiệm trong kinh doanh</span>
 	            </p>
 	          </div>
 
@@ -302,8 +302,8 @@ class Home extends BaseView
       <div class="container">
         <div class="row justify-content-center mb-5">
           <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-          	<span class="subheading">Testimonial</span>
-            <h2 class="mb-3">Happy Clients</h2>
+          	<span class="subheading">Lời nhận xét</span>
+            <h2 class="mb-3">Khách hàng</h2>
           </div>
         </div>
         <div class="row ftco-animate">
@@ -396,8 +396,8 @@ class Home extends BaseView
       <div class="container">
         <div class="row justify-content-center mb-5">
           <div class="col-md-7 heading-section text-center ftco-animate">
-          	<span class="subheading">Blog</span>
-            <h2>Recent Blog</h2>
+          	<span class="subheading">Tin tức</span>
+            <h2>Tin Tức Gần Đây</h2>
           </div>
         </div>
         <div class="row d-flex">
