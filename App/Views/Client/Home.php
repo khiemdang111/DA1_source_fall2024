@@ -76,17 +76,22 @@ class Home extends BaseView
 						style="background-image: url(<?= APP_URL ?>/public/assets/client/images/about.jpg);">
 					</div>
 					<div class="col-md-6 wrap-about pl-md-5 ftco-animate py-5">
-	          <div class="heading-section">
-	          	<span class="subheading">Từ năm 1905</span>
-	            <h2 class="mb-4">Wine CanTho - Nơi Hội Tụ Những Chai Rượu Cao Cấp</h2>
+						<div class="heading-section">
+							<span class="subheading">Từ năm 1905</span>
+							<h2 class="mb-4">Wine CanTho - Nơi Hội Tụ Những Chai Rượu Cao Cấp</h2>
 
-	            <p>Chúng tôi tự hào là địa chỉ tin cậy cung cấp các sản phẩm rượu cao cấp, từ các dòng vang nổi tiếng, rượu mạnh, cho đến các loại rượu đặc biệt nhập khẩu từ các quốc gia danh tiếng. Tại [Tên Website], bạn có thể dễ dàng lựa chọn các sản phẩm rượu phù hợp với sở thích và nhu cầu của mình, từ những dịp tiệc tùng, lễ hội cho đến các món quà tặng sang trọng.</p>
-	            <p>Chúng tôi cam kết cung cấp rượu chính hãng, chất lượng tuyệt vời và dịch vụ chăm sóc khách hàng tận tâm. Đặc biệt, với chính sách miễn phí vận chuyển và miễn phí trả lại trong vòng 30 ngày, bạn có thể yên tâm khi mua sắm tại cửa hàng trực tuyến của chúng tôi.</p>
-	            <p class="year">
-	            	<strong class="number" data-number="25">0</strong>
-		            <span>năm kinh nghiệm trong kinh doanh</span>
-	            </p>
-	          </div>
+							<p>Chúng tôi tự hào là địa chỉ tin cậy cung cấp các sản phẩm rượu cao cấp, từ các dòng vang nổi tiếng, rượu
+								mạnh, cho đến các loại rượu đặc biệt nhập khẩu từ các quốc gia danh tiếng. Tại [Tên Website], bạn có thể dễ
+								dàng lựa chọn các sản phẩm rượu phù hợp với sở thích và nhu cầu của mình, từ những dịp tiệc tùng, lễ hội cho
+								đến các món quà tặng sang trọng.</p>
+							<p>Chúng tôi cam kết cung cấp rượu chính hãng, chất lượng tuyệt vời và dịch vụ chăm sóc khách hàng tận tâm.
+								Đặc biệt, với chính sách miễn phí vận chuyển và miễn phí trả lại trong vòng 30 ngày, bạn có thể yên tâm khi
+								mua sắm tại cửa hàng trực tuyến của chúng tôi.</p>
+							<p class="year">
+								<strong class="number" data-number="25">0</strong>
+								<span>năm kinh nghiệm trong kinh doanh</span>
+							</p>
+						</div>
 
 					</div>
 				</div>
@@ -164,9 +169,10 @@ class Home extends BaseView
 									</div>
 									<div class="text text-center">
 										<span class="sale"></span>
-										<span class="category"><?= $item['category_name']?></span>
+										<span class="category"><?= $item['category_name'] ?></span>
 										<h2><?= $item['name'] ?></h2>
-										<p class="mb-0"><span class="price price-sale"><?= number_format($item['price']) ?></span> <span class="price"><?= number_format($item['price'] - $item['discount_price']) ?></span></p>
+										<p class="mb-0"><span class="price price-sale"><?= number_format($item['price']) ?></span> <span
+												class="price"><?= number_format($item['price'] - $item['discount_price']) ?></span></p>
 									</div>
 								</div>
 							</div>
@@ -291,129 +297,13 @@ class Home extends BaseView
 				</div>
 			</div>
 		</section>
-  
-    <section class="ftco-section testimony-section img" style="background-image: url(<?= APP_URL ?>/public/assets/client/images/bg_4.jpg);">
-    	<div class="overlay"></div>
-      <div class="container">
-        <div class="row justify-content-center mb-5">
-          <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-          	<span class="subheading">Lời nhận xét</span>
-            <h2 class="mb-3">Khách hàng</h2>
-          </div>
-        </div>
-        <div class="row ftco-animate">
-          <div class="col-md-12">
-            <div class="carousel-testimony owl-carousel ftco-owl">
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
-                  <div class="text">
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_1.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
-                  <div class="text">
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_2.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
-                  <div class="text">
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_3.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
-                  <div class="text">
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_1.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="testimony-wrap py-4">
-                	<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
-                  <div class="text">
-                    <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                    <div class="d-flex align-items-center">
-                    	<div class="user-img" style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_2.jpg)"></div>
-                    	<div class="pl-3">
-		                    <p class="name">Roger Scott</p>
-		                    <span class="position">Marketing Manager</span>
-		                  </div>
-	                  </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-		
-    <section class="ftco-section">
-      <div class="container">
-        <div class="row justify-content-center mb-5">
-          <div class="col-md-7 heading-section text-center ftco-animate">
-          	<span class="subheading">Tin tức</span>
-            <h2>Tin Tức Gần Đây</h2>
-          </div>
-        </div>
-        <div class="row d-flex">
-          <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-          	<div class="blog-entry d-flex">
-          		<a href="blog-single.html" class="block-20 img" style="background-image: url('<?= APP_URL ?>/public/assets/client/images/image_1.jpg');">
-              </a>
-              <div class="text p-4 bg-light">
-              	<div class="meta">
-              		<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-              	</div>
-                <h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-                <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-                <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
 		<section class="ftco-section">
 			<div class="container">
 				<div class="row justify-content-center mb-5">
 					<div class="col-md-7 heading-section text-center ftco-animate">
-						<span class="subheading">Bài viết</span>
-						<h2>Bài viết gần đây</h2>
+						<span class="subheading">Tin tức</span>
+						<h2>Tin Tức Gần Đây</h2>
 					</div>
 				</div>
 				<div class="row d-flex">
@@ -428,7 +318,7 @@ class Home extends BaseView
 								</div>
 								<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
 								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-								<a href="#" class="btn-custom">Đọc thêm <span class="fa fa-long-arrow-right"></span></a>
+								<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
 							</div>
 						</div>
@@ -444,7 +334,7 @@ class Home extends BaseView
 								</div>
 								<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
 								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-								<a href="#" class="btn-custom">Đọc thêm <span class="fa fa-long-arrow-right"></span></a>
+								<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
 							</div>
 						</div>
@@ -460,27 +350,12 @@ class Home extends BaseView
 								</div>
 								<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
 								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-								<a href="#" class="btn-custom">Đọc thêm <span class="fa fa-long-arrow-right"></span></a>
+								<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-						<div class="blog-entry d-flex">
-							<a href="blog-single.html" class="block-20 img"
-								style="background-image: url('<?= APP_URL ?>/public/assets/client/images/image_4.jpg');">
-							</a>
-							<div class="text p-4 bg-light">
-								<div class="meta">
-									<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-								</div>
-								<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-								<a href="#" class="btn-custom">Đọc thêm <span class="fa fa-long-arrow-right"></span></a>
-
-							</div>
-						</div>
-					</div>
+					<div class="col-lg-6 d-flex align-items-stretch ftco-animate"></div>
 				</div>
 			</div>
 		</section>
