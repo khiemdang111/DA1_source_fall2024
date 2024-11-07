@@ -129,7 +129,7 @@ class Header extends BaseView
                 <a class="dropdown-item" href="checkout.html">Checkout</a>
               </div>
             </li> -->
-			<li class="nav-item"><a href="about.html" class="nav-link">Sản Phẩm</a></li>
+			<li class="nav-item"><a href="/products" class="nav-link">Sản Phẩm</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Tin Tức</a></li>
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Liên hệ</a></li>
 	        </ul>
