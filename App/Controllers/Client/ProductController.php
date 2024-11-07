@@ -20,11 +20,43 @@ class ProductController
     // hiển thị danh sách
     public static function index()
     {
-        // giả sử data là mảng dữ liệu lấy được từ database
-       
+        // lấy dữ liệu từ database
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
+        // lấy dữ liệu sản phẩm từ database
+        $product = new Product();
+        $products = $product->getAllProductByStatus();
+
+
+        $data = [
+            'products' => $products,
+            'categories' => $categories
+        ];
+        // var_dump($data);
+
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        Index::render($data);
+        Footer::render();
+    }
+    public static function detail($id)
+    {
+        $product_detail = [
+            'id' => $id,
+            'name' => 'Product 1',
+            'description' => 'Description Product 1',
+            'price' => 100000,
+            'discount_price' => 10000,
+            'image' => 'product.jpg',
+            'status' => 1
+        ];
+        $data = [
+            'product' => $product_detail
+        ];
         Header::render();
 
-        Index::render();
+        Detail::render($data);
         Footer::render();
     }
     
