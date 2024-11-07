@@ -15,8 +15,8 @@ class Footer extends BaseView
         <div class="row mb-5">
           <div class="col-sm-12 col-md">
             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2 logo"><a href="#">Liquor <span>Store</span></a></h2>
-              <p>Far far away, behind the word mountains, far from the countries.</p>
+              <h2 class="ftco-heading-2 logo"><a href="#">Wine <span>CanTho</span></a></h2>
+              <p>Hãy khám phá bộ sưu tập rượu đa dạng của chúng tôi và trải nghiệm những giây phút thưởng thức tuyệt vời!</p>
               <ul class="ftco-footer-social list-unstyled mt-2">
                 <li class="ftco-animate"><a href="#"><span class="fa fa-twitter"></span></a></li>
                 <li class="ftco-animate"><a href="#"><span class="fa fa-facebook"></span></a></li>
