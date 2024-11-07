@@ -21,61 +21,10 @@ class ProductController
     public static function index()
     {
         // giả sử data là mảng dữ liệu lấy được từ database
-        $categories = [
-            [
-                'id' => 1,
-                'name' => 'Category 1',
-                'status' => 1
-            ],
-            [
-                'id' => 2,
-                'name' => 'Category 2',
-                'status' => 1
-            ],
-            [
-                'id' => 3,
-                'name' => 'Category 3',
-                'status' => 0
-            ],
-
-        ];
-        $products = [
-            [
-                'id' => 1,
-                'name' => 'Product 1',
-                'description' => 'Description Product 1',
-                'price' => 100000,
-                'discount_price' => 10000,
-                'image' => 'product.jpg',
-                'status' => 1
-            ],
-            [
-                'id' => 2,
-                'name' => 'Product 2',
-                'description' => 'Description Product 2',
-                'price' => 200000,
-                'discount_price' => 20000,
-                'image' => 'product.jpg',
-                'status' => 1
-            ],
-            [
-                'id' => 3,
-                'name' => 'Product 3',
-                'description' => 'Description Product 3',
-                'price' => 300000,
-                'discount_price' => 30000,
-                'image' => 'product.jpg',
-                'status' => 1
-            ],
-
-        ];
-        $data = [
-            'products' => $products,
-            'categories' => $categories
-        ];
+       
         Header::render();
 
-        Index::render($data);
+        Index::render();
         Footer::render();
     }
     public static function detail($id)
