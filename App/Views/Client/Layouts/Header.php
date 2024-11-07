@@ -67,7 +67,6 @@ class Header extends BaseView
 					<?php
                      endif;
                        ?>
-		        	<p class="mb-0"><a href="#" class="mr-2">Sign Up</a> <a href="#">Log In</a></p>
 		        </div>
 					</div>
 				</div>
