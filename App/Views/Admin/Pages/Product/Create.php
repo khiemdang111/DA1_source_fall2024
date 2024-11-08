@@ -35,8 +35,8 @@ class Create extends BaseView
                         <input class="form-control" type="text" id="name" name="name" autofocus />
                       </div>
                       <div class="col-md-12">
-                        <label for="avatar" class="form-label">Ảnh <span class="text-danger"> *</span></label>
-                        <input class="form-control" type="file" id="avatar" name="avatar" />
+                        <label for="image" class="form-label">Ảnh <span class="text-danger"> *</span></label>
+                        <input class="form-control" type="file" id="image" name="image" />
                       </div>
                       <div class="col-md-6">
                         <label for="price" class="form-label">Giá gốc <span class="text-danger"> *</span></label>
@@ -57,26 +57,39 @@ class Create extends BaseView
                         <input type="text" class="form-control" id="is_futuned" name="is_featured" maxlength="6" />
                       </div>
                       <div class="col-md-12">
-                        <label for="discription" class="form-label">Mô tả <span class="text-danger"> *</span></label>
-                        <textarea class="form-control" type="text" id="discription" rows="5" name="discription"
+                        <label for="description" class="form-label">Mô tả <span class="text-danger"> *</span></label>
+                        <textarea class="form-control" type="text" id="description" rows="5" name="description"
                           placeholder="Nhập mô tả"></textarea>
                       </div>
                       <div class="col-md-6">
                         <label class="form-label" for="category_id">Danh mục <span class="text-danger"> *</span></label>
-                        <select id="category_id" class="select2 form-select">
+                        <select id="category_id" name="category_id" class="select2 form-select">
                           <option value="">Chọn danh mục</option>
-                          <option value="Australia">Australia</option>
-                          <option value="Bangladesh">Bangladesh</option>
+                      
+                          <?php 
+                          foreach($data as $item ) :
+                          ?>
+                          <option value="<?=  $item['id']  ?>"><?=  $item['name']  ?></option>
+                          <?php 
+                          endforeach;
+                          ?>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label" for="status"> Trạng thái <span class="text-danger"> *</span></label>
+                        <select id="status" name="status" class="select2 form-select">
+                          <option value="">Chọn trang thái </option>
+                          <option value="1">Hoạt động </option>
+                          <option value="0">Không hoạt động </option>
                         </select>
                       </div>
                       <div class="col-md-6">
                         <label for="ogirin_id" class="form-label">Thương hiệu <span class="text-danger"> *</span></label>
-                        <select id="ogirin_id" class="select2 form-select">
+                        <select id="ogirin_id" name="ogirin_id" class="select2 form-select">
                           <option value="">Chọn thương hiệu</option>
-                          <option value="en">English</option>
-                          <option value="fr">French</option>
-                          <option value="de">German</option>
-                          <option value="pt">Portuguese</option>
+                          <option value="1">English</option>
+                          <option value="2">French</option>
+                          <option value="3">German</option>
                         </select>
                       </div>
                     </div>

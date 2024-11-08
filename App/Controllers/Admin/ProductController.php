@@ -36,8 +36,11 @@ class ProductController
     public static function create()
     {
 
-        $product = new Product();
-        $data = $product->getAllProduct();
+        // $product = new Product();
+        $category = new Category();
+        $data = $category->getAllCategory();
+        // var_dump($data);
+        // $data = $product->getAllProduct();
         // var_dump($_SESSION);
         Header::render();
         // hiển thị form thêm
@@ -79,7 +82,7 @@ class ProductController
             'description' => $_POST['description'],
             'is_featured' => $_POST['is_featured'],
             'status' => $_POST['status'],
-            'product_id' => $_POST['product_id'],
+            'category_id' => $_POST['category_id'],
         ];
 
         $is_upload = ProductValidation::uploadImage();

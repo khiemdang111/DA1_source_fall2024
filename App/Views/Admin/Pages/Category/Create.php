@@ -42,12 +42,11 @@ class Create extends BaseView
                       </div>
                       <div class="col-md-6">
                         <label for="status" class="form-label">Trạng thái<span class="text-danger"> *</span></label>
-                        <select id="status" class="select2 form-select">
-                          <option value="">Chọn thương hiệu</option>
-                          <option value="en">English</option>
-                          <option value="fr">French</option>
-                          <option value="de">German</option>
-                          <option value="pt">Portuguese</option>
+                        <select id="status" name="status" class="select2 form-select">
+                          <option value="">Chọn trạng thái </option>
+                          <option value="1">Hiển thị </option>
+                          <option value="0">Ẩn</option>
+                       
                         </select>
                       </div>
                       <div class="col-md-12 mt-6">

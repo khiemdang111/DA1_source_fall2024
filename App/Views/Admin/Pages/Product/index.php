@@ -40,7 +40,7 @@ class index extends BaseView
                   <tr>
                     <td><?= $item['id'] ?></td>
                     <td><?= $item['name'] ?></td>
-                    <td><img src="<?= APP_URL ?>/public/uploads/image/<?= $item['image'] ?>" alt="" width="100px"></td>
+                    <td><img src="<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>" alt="" width="100px"></td>
 
                     <td><?= number_format($item['price']) ?></td>
                     <td><?= ($item['status'] == 1) ? 'Hiển thị' : 'Ẩn' ?></td>

@@ -54,8 +54,10 @@ class CategoryController
             header('location: /admin/categories/create');
             exit;
         }
+        // var_dump($_POST);
+        // die;
         $name  = $_POST['name'];
-        $tatus = $_POST['status'];
+        $status = $_POST['status'];
         // Kiểm tra các tên loại có tồn tại hay chưa
         $category = new Category();
         $is_exist = $category->getOneCategoryByName($name);
@@ -69,7 +71,7 @@ class CategoryController
         // Thêm vào
         $data = [
             'name' => $name,
-            'status' => $tatus,
+            'status' => $status,
         ];
 
         $result = $category->createCategory($data);
