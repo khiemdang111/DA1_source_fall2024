@@ -15,6 +15,10 @@ $dotenv->load();
 
 require_once 'config.php';
 
+use App\Helpers\AuthHelper;
+
+AuthHelper::middleware();
+
 
 
 // *** Client
