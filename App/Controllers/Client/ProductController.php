@@ -36,6 +36,7 @@ class ProductController
     {
         $product = new Product();
         $detail = $product->getOneProductByCategoryDetailStatus($id);
+
          if(!$detail){
             NotificationHelper::error('detail','Không thể xem sản phẩm');
             header('Location: /');

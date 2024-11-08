@@ -24,7 +24,7 @@ class Index extends BaseView
                 <div class="col-md-4 d-flex">
                     <div class="product ftco-animate">
                         <div class="img d-flex align-items-center justify-content-center" 
-                             style="background-image: url('images/<?php echo $product['image']; ?>');">
+                             style="background-image: url('<?= APP_URL ?>/public/uploads/products/<?= $product['image'] ?>$product['image']; ?>');">
                             <div class="desc">
                                 <p class="meta-prod d-flex">
                                     <a href="#" class="d-flex align-items-center justify-content-center">
@@ -33,7 +33,7 @@ class Index extends BaseView
                                     <a href="#" class="d-flex align-items-center justify-content-center">
                                         <span class="flaticon-heart"></span>
                                     </a>
-                                    <a href="#" class="d-flex align-items-center justify-content-center">
+                                    <a href="/products/<?= $product['id'] ?>" class="d-flex align-items-center justify-content-center">
                                         <span class="flaticon-visibility"></span>
                                     </a>
                                 </p>
