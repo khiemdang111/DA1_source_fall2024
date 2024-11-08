@@ -80,6 +80,8 @@ Route::get('/admin/users/create', 'App\Controllers\Admin\UserController@create')
 Route::post('/admin/users', 'App\Controllers\Admin\UserController@store');
 
 
+// *** Post ***
+Route::get('/admin/posts', 'App\Controllers\Admin\PostController@index');
 
 
 
