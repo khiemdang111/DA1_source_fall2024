@@ -63,6 +63,10 @@ Route::post('/admin/delete/{id}', 'App\Controllers\Admin\ProductController@delet
 
 // *** User ***
 Route::get('/admin/users', 'App\Controllers\Admin\UserController@index');
+Route::get('/admin/users/create', 'App\Controllers\Admin\UserController@create');
+Route::post('/admin/users', 'App\Controllers\Admin\UserController@store');
+
+
 
 
 

@@ -56,7 +56,12 @@ class UserValidation {
    
    if (!isset($_POST['status']) || $_POST['status'] === '') {
     NotificationHelper::error('status', 'Không để trống trạng thái');
-    // var_dump($_POST['status']);
+    $is_valid = false;
+   } 
+
+   if (!isset($_POST['role']) || $_POST['role'] === '') {
+    NotificationHelper::error('role', 'Không để trống quyền');
+
     $is_valid = false;
    } 
   }

@@ -57,7 +57,7 @@ class index extends BaseView
                                             <?= $item['username'] ?>
                                         </td>
                                         <td>
-                                            <img src="<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>" alt="Avatar" class="rounded-circle" width="50px" />
+                                            <img src="<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>" alt="Avatar" class="rounded-circle" width="60px" height="60px"/>
                                         </td>
 
                                         <td>
