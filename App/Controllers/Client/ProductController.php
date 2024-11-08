@@ -21,10 +21,15 @@ class ProductController
     public static function index()
     {
         // giả sử data là mảng dữ liệu lấy được từ database
-       
+        $product = new Product();
+
+        $products = $product->getAllProductByStatus();
+        $data = [
+            'products' => $products
+        ];
         Header::render();
 
-        Index::render();
+        Index::render($data);
         Footer::render();
     }
     public static function detail($id)
