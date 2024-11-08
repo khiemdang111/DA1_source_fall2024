@@ -15,13 +15,7 @@ class Category extends BaseView
             <?php
             foreach ($data as $item) :
             ?>
-                <div class="col-lg-2 col-md-4 ">
-						<div class="sort w-100 text-center ftco-animate">
-							<div class="img" style="background-image: url(<?= APP_URL ?>/public/assets/client/images/kind-4.jpg);"></div>
-							<h3><?=$item['name']?></h3>
-						</div>
-						
-					</div>
+                <a class="nav-link" href="/products/categories/<?= $item['id'] ?>"><?= $item['name'] ?></a>
             <?php
             endforeach;
             ?>
