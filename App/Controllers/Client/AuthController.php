@@ -9,7 +9,7 @@ use App\Helpers\AuthHelper;
 use App\Validations\AuthValidation;
 use App\Helpers\NotificationHelper;
 use App\Views\Client\Components\Notification;
-
+use App\Views\Client\Pages\Auth\Register;
 
 class AuthController
 {
@@ -47,6 +47,15 @@ class AuthController
         }
 
 
+    }
+
+    public static function Register() 
+    {
+            Header::render();
+            Notification::render(); 
+            NotificationHelper::unset();
+            Register::render();
+            Footer::render();
     }
 
    

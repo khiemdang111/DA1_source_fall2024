@@ -4,7 +4,7 @@ namespace App\Views\Client\Pages\Auth;
 
 use App\Views\BaseView;
 
-class Login extends BaseView
+class Register extends BaseView
 {
     public static function render($data = null)
     {
@@ -15,8 +15,8 @@ class Login extends BaseView
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate mb-5 text-center">
-          	<p class="breadcrumbs mb-0"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>Đăng nhập <i class="fa fa-chevron-right"></i></span></p>
-            <h2 class="mb-0 bread">Đăng Nhập</h2>
+          	<p class="breadcrumbs mb-0"><span class="mr-2"><a href="index.html">Trang chủ <i class="fa fa-chevron-right"></i></a></span> <span>Đăng ký <i class="fa fa-chevron-right"></i></span></p>
+            <h2 class="mb-0 bread">Đăng Ký</h2>
           </div>
         </div>
       </div>
@@ -34,7 +34,7 @@ class Login extends BaseView
                                     <div class="mb-3 ">
                                         <label for="username" class="form-label">Tên đăng nhập </label>
                                         <input type="text" class="form-control" id="username" name="username" value=""
-                                            placeholder="Enter your email" autofocus />
+                                            placeholder="" autofocus />
                                     </div>
                                     <div class="mb-3 form-password-toggle">
                                         <label class="form-label" for="password">Mật khẩu</label>
@@ -42,7 +42,31 @@ class Login extends BaseView
                                             <input type="password" id="password" class="form-control" name="password"
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                 aria-describedby="password" />
-                                           
+                                        </div>
+                                        <div class="mb-3 ">
+                                        <label for="username" class="form-label">Họ và tên </label>
+                                        <input type="text" class="form-control" id="name" name="name" value=""
+                                            placeholder="" autofocus />
+                                        </div>
+                                        <div class="mb-3 ">
+                                        <label for="username" class="form-label">Số điện thoại </label>
+                                        <input type="text" class="form-control" id="phone" name="phone" value=""
+                                            placeholder="" autofocus />
+                                        </div>
+                                        <div class="mb-3 ">
+                                        <label for="username" class="form-label">Email</label>
+                                        <input type="text" class="form-control" id="email" name="email" value=""
+                                            placeholder="" autofocus />
+                                        </div>
+                                        <div class="mb-3 ">
+                                        <label for="username" class="form-label">Avatar</label>
+                                        <input type="file" class="" id="avatar" name="avatar" value=""
+                                            placeholder="" autofocus />
+                                        </div>
+                                        <div class="mb-3 ">
+                                        <label for="username" class="form-label">Địa chỉ </label>
+                                        <input type="text" class="form-control" id="address" name="address" value=""
+                                            placeholder="" autofocus />
                                         </div>
                                     </div>
                                     <div class="mb-3">
@@ -55,7 +79,7 @@ class Login extends BaseView
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <button class="btn btn-primary d-grid w-100" type="submit">Đăng nhập</button>
+                                        <button class="btn btn-primary d-grid w-100" type="submit">Đăng Ký</button>
                                     </div>
                                 </form>
 

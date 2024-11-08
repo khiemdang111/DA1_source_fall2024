@@ -66,7 +66,7 @@ class Header extends BaseView
                  <?php
                     else:
                   ?>
-		        	<p class="mb-0"><a href="#" class="mr-2">Đăng ký</a> <a href="/login">Đăng Nhập</a></p>
+		        	<p class="mb-0"><a href="/register" class="mr-2">Đăng ký</a> <a href="/login">Đăng Nhập</a></p>
 					<?php
                      endif;
                        ?>
