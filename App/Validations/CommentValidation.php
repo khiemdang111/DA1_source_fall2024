@@ -34,14 +34,14 @@ class CommentValidation {
    NotificationHelper::error('content', 'Không để trống nội dung bình luận');
    $is_valid = false;
   } 
-  if (!isset($_POST['product_id']) || $_POST['product_id'] === '') {
-   NotificationHelper::error('product_id', 'Không để trống mã sản phẩm');
-   $is_valid = false;
-  } 
-  if (!isset($_POST['user_id']) || $_POST['user_id'] === '') {
-   NotificationHelper::error('user_id', 'Không để trống mã người dùng');
-   $is_valid = false;
-  } 
+//   if (!isset($_POST['product_id']) || $_POST['product_id'] === '') {
+//    NotificationHelper::error('product_id', 'Không để trống mã sản phẩm');
+//    $is_valid = false;
+//   } 
+//   if (!isset($_POST['user_id']) || $_POST['user_id'] === '') {
+//    NotificationHelper::error('user_id', 'Không để trống mã người dùng');
+//    $is_valid = false;
+//   } 
   // Tên đăng nhập
  
   return $is_valid;

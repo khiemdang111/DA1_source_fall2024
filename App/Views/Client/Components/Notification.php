@@ -12,7 +12,7 @@ class Notification extends BaseView
             foreach ($_SESSION['success'] as $key => $value) :
 ?>
 
-                <div class="alert alert-success alert-dismissible">
+                <div class="alert alert-success alert-dismissible" id="eroor">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong><?= $value ?></strong>
                 </div>
@@ -26,7 +26,7 @@ class Notification extends BaseView
         if (isset($_SESSION['error'])) :
             foreach ($_SESSION['error'] as $key => $value) :
         ?>
-                <div class="alert alert-danger alert-dismissible">
+                <div class="alert alert-danger alert-dismissible" id="eroor">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong><?= $value ?></strong>
                 </div>

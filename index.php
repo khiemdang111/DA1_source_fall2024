@@ -24,7 +24,6 @@ Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');
 
 
 // *** Admin
-
 Route::get('/admin', 'App\Controllers\Admin\HomeController@index');
 
 Route::get('/login', 'App\Controllers\Client\AuthController@Login');
@@ -50,6 +49,16 @@ Route::put('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@u
 // DELETE /categories/{id} (delete loại sản phẩm với id cụ thể)
 Route::delete('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@delete');
 
+
+// chi tiết sp 
+Route::get('/detail/{id}', 'App\Controllers\Client\ProductController@detail');
+
+
+// thêm bình luận 
+Route::post('/comments', 'App\Controllers\Client\CommentController@store');
+// thêm bình luận 
+Route::put('/comments/{id}', 'App\Controllers\Client\CommentController@edit');
+Route::delete('/comments/{id}', 'App\Controllers\Client\CommentController@delete');
 
 // *** Product ***
 Route::get('/admin/products', 'App\Controllers\Admin\ProductController@index');
