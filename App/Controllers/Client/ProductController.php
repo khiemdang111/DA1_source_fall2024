@@ -34,20 +34,25 @@ class ProductController
     }
     public static function detail($id)
     {
-        $product_detail = [
-            'id' => $id,
-            'name' => 'Product 1',
-            'description' => 'Description Product 1',
-            'price' => 100000,
-            'discount_price' => 10000,
-            'image' => 'product.jpg',
-            'status' => 1
-        ];
+        $product = new Product();
+        $detail = $product->getOneProductByCategoryDetailStatus($id);
+         if(!$detail){
+            NotificationHelper::error('detail','Không thể xem sản phẩm');
+            header('Location: /');
+         }
+        $comment = new Comment();
         $data = [
-            'product' => $product_detail
+            'product' => $detail,
+            'comments' => $comment->get5CommentNewestByProductAndStatus($id),
         ];
-        Header::render();
 
+         // $view_result = ViewProductHelper::cookieView($id,$detail['view']);
+        // var_dump($view_result);
+        
+        Header::render();
+        Notification::render();
+        //hủy thông báo
+        NotificationHelper::unset();
         Detail::render($data);
         Footer::render();
     }

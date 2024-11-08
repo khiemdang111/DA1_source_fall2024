@@ -10,7 +10,7 @@ class Detail extends BaseView
     public static function render($data = null)
     {
         $is_login = AuthHelper::checklogin();
-        // var_dump($_SESSION);
+        
 ?>
 
 
@@ -19,10 +19,10 @@ class Detail extends BaseView
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 mb-5 ftco-animate">
-                        <a href="" class="image-popup prod-img-bg"><img src="<?= APP_URL ?>/public/uploads/image/<?= $data['product']['image'] ?>" class="img-fluid" alt="Colorlib Template"></a>
+                        <a href="" class="image-popup prod-img-bg"><img src="<?= APP_URL ?>/public/uploads/image/<?= $data['product'][0]['image'] ?>" class="img-fluid" alt="Colorlib Template"></a>
                     </div>
                     <div class="col-lg-6 product-details pl-md-5 ftco-animate">
-                        <h3>Bacardi 151 Degree</h3>
+                        <h3><?= $data['product'][0]['name'] ?></h3>
                         <div class="rating d-flex">
                             <p class="text-left mr-4">
                                 <a href="#" class="mr-2">5.0</a>
@@ -41,15 +41,15 @@ class Detail extends BaseView
                         </div>
 
                         <?php
-                        if ($data['product']['discount_price'] > 0) :
+                        if ($data['product'][0]['discount_price'] > 0) :
                         ?>
-                            <p class="price_product text-danger"><del><?= number_format($data['product']['discount_price'])  ?> VND</del></p>
-                            <p class="price_product"><span><?= number_format($data['product']['price'])  ?> VND</span></p>
+                            <p class="price_product text-danger"><del><?= number_format($data['product'][0]['discount_price'])  ?> VND</del></p>
+                            <p class="price_product"><span><?= number_format($data['product'][0]['price'])  ?> VND</span></p>
                         <?php
                         else :
                         ?>
 
-                            <p class="price_product"><span><?= number_format($data['product']['price'])  ?> VND</span></p>
+                            <p class="price_product"><span><?= number_format($data['product'][0]['price'])  ?> VND</span></p>
                         <?php
                         endif;
                         ?>
@@ -141,7 +141,7 @@ class Detail extends BaseView
                                                                             <form action="/comments/<?= $item['id'] ?>" method="post" onsubmit="return confirm('Chắc chưa?')" style="display: inline-block">
 
                                                                                 <input type="hidden" name="method" value="DELETE" id="">
-                                                                                <input type="hidden" name="product_id" value="<?= $data['product']['id'] ?>" id="">
+                                                                                <input type="hidden" name="product_id" value="<?= $data['product'][0]['id'] ?>" id="">
                                                                                 <button type="submit" class="btn btn-danger">Xoá</button>
 
                                                                             </form>
@@ -149,16 +149,15 @@ class Detail extends BaseView
                                                                                 <div class="card card-body mt-5 comment_select">
                                                                                     <form action="/comments/<?= $item['id'] ?>" method="post">
                                                                                         <input type="hidden" name="method" value="PUT" id="">
-                                                                                        <input type="hidden" name="product_id" value="<?= $data['product']['id'] ?>" id="">
+                                                                                        <input type="hidden" name="product_id" value="<?= $data['product'][0]['id'] ?>" id="">
                                                                                         <div class="form-group">
                                                                                             <label for="">Bình luận</label>
                                                                                             <textarea class="form-control rounded-0" name="content" id="" rows="3" placeholder="Nhập bình luận..."><?= $item['content'] ?></textarea>
                                                                                         </div>
                                                                                         <div class="comment-footer">
-                                                                                            <button type="submit" class="btn btn-pri">Gửi</button>
+                                                                                            <button type="submit" class="button_comment">Gửi</button>
                                                                                         </div>
                                                                                     </form>
-
                                                                                 </div>
                                                                             </div>
 
@@ -203,8 +202,8 @@ class Detail extends BaseView
                                                             <div class="comment-text w-100 magin">
                                                                 <h6 class="font-medium"><?= $_SESSION['user']['name'] ?> - <?= $_SESSION['user']['username'] ?></h6>
                                                                 <form action="/comments" method="post">
-                                                                    <input type="hidden" name="method" value="POST" id="" required>
-                                                                    <input type="hidden" name="product_id" value="<?= $data['product']['id'] ?>">
+                                                                    <input type="hidden" name="method" value="POST" id="" >
+                                                                    <input type="hidden" name="product_id" value="<?= $data['product'][0]['id'] ?>">
                                                                     <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id'] ?>">
                                                                     <input type="hidden" name="status" value="1">
                                                                     <div class="form-group">

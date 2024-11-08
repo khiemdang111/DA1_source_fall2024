@@ -17,11 +17,12 @@ class CommentController
     {
         $is_valid = CommentValidation::createClient();
         $product_id = $_POST['product_id'];
+     
         if (!$is_valid) {
             NotificationHelper::error('create_comment', 'Thêm bình luận thất bại  !');
             if (isset($_POST['product_id']) && $_POST['product_id']) {
 
-                header("Location: /detail/$product_id");
+                header("Location: /products/$product_id");
                 exit();
             } else {
                 header('Location: /');
@@ -44,7 +45,7 @@ class CommentController
         } else {
             NotificationHelper::error('create_comment', 'Thêm bình luận phẩm thất bại!');
         }
-        header("Location: /detail/$product_id");    
+        header("Location: /products/$product_id");    
     }
     public static function edit($id)
     {
@@ -54,7 +55,7 @@ class CommentController
             NotificationHelper::error('create_comment', 'Cập nhật bình luận thất bại  !');
             if (isset($_POST['product_id']) && $_POST['product_id']) {
 
-                header("Location: /detail/$product_id");
+                header("Location: /products/$product_id");
                 exit();
             } else {
                 header("Location: /");
@@ -68,11 +69,11 @@ class CommentController
         $comment = new Comment();
         $result = $comment->updateComment($id,$data);
         if ($result) {
-            NotificationHelper::success('create_comment', 'Thêm bình luận phẩm thành công!');
+            NotificationHelper::success('create_comment', 'Cập nhật phẩm thành công!');
         } else {
-            NotificationHelper::error('create_comment', 'Thêm bình luận phẩm thất bại!');
+            NotificationHelper::error('create_comment', 'Cập nhật phẩm thất bại!');
         }
-        header("Location: /detail/$product_id");  
+        header("Location: /products/$product_id");  
     }
     public static function delete($id){
         $comment = new Comment();
@@ -83,6 +84,6 @@ class CommentController
         } else {
             NotificationHelper::error('create_comment', 'Xóa bình luận phẩm thất bại!');
         }
-        header("Location: /detail/$product_id");  
+        header("Location: /products/$product_id");  
     }
 }

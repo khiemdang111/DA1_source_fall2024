@@ -56,7 +56,6 @@ Route::delete('/admin/categories/{id}', 'App\Controllers\Admin\CategoryControlle
 
 
 // chi tiết sp 
-Route::get('/detail/{id}', 'App\Controllers\Client\ProductController@detail');
 
 
 // thêm bình luận 

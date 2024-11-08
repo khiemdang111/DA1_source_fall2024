@@ -121,14 +121,7 @@ class Header extends BaseView
 	        <ul class="navbar-nav ml-auto">
 	          <li class="nav-item active"><a href="" class="nav-link">Trang chủ</a></li>
 	          <li class="nav-item"><a href="about.html" class="nav-link">Giới Thiệu</a></li>
-	          <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sản Phẩm</a>
-              <div class="dropdown-menu" aria-labelledby="dropdown04">
-              	<a class="dropdown-item" href="product.html">Sản Phẩm</a>
-                <a class="dropdown-item" href="cart.html">Cart</a>
-                <a class="dropdown-item" href="checkout.html">Checkout</a>
-              </div>
-            </li> -->
+	          
 			<li class="nav-item"><a href="/products" class="nav-link">Sản Phẩm</a></li>
 	          <li class="nav-item"><a href="blog.html" class="nav-link">Tin Tức</a></li>
 	          <li class="nav-item"><a href="contact.html" class="nav-link">Liên hệ</a></li>
