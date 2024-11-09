@@ -83,7 +83,7 @@ class Create extends BaseView
                           <option value="0">Không hoạt động </option>
                         </select>
                       </div>
-                      <div class="col-md-6">
+                      <div class="col-md-12">
                         <label for="ogirin_id" class="form-label">Thương hiệu <span class="text-danger"> *</span></label>
                         <select id="ogirin_id" name="ogirin_id" class="select2 form-select">
                           <option value="">Chọn thương hiệu</option>
@@ -92,6 +92,31 @@ class Create extends BaseView
                           <option value="3">German</option>
                         </select>
                       </div>
+                      <div class="form-group">
+                            <label for="">Thuộc tính</label>
+                            <a href="javascript:void(0)" onclick="create()" class="btn btn-primary btn-sm ">ADD</a>
+                            <div id="multi_properties">
+                                <div class="row items_properties">
+                                    <div class="col-5 mt-2">
+                                        <label for="">Tên thuộc tính</label>
+                                        <select name="option_id[]" id="" class="form-select">
+                                            <option value="">Chọn thuộc tính</option>
+                                            <option value="">Màu</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-5  mt-2">
+                                        <label for="option_vl_name">Giá trị</label>
+                                        <input type="text" class="form-control" id="option_vl_name" name="option_vl_name[]"
+                                            placeholder="Giá trị">
+                                    </div>
+                                    <div class="col-1">
+                                        <label for="">&nbsp;</label>
+                                        <a href="javascript:void(0)" onclick="delete_(this)"
+                                            class="btn btn-danger btn-sm d-block">Xóa</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="mt-6">
                       <button type="submit" class="btn btn-primary me-3" name>Lưu</button>
@@ -104,7 +129,36 @@ class Create extends BaseView
             </div>
           </div>
         </div>
-
+        <script>
+            function create() {
+                let count_items = document.querySelectorAll(".items_properties").length - 1;
+                count_items++;
+                $("#multi_properties").append(`
+                                    <div class="row items_properties ">
+                                        <div class="col-5 mt-3">
+                                            <label for="">Tên thuộc tính</label>
+                                            <select name="option_id[]" id="" class="form-select">
+                                                <option value="">Chọn thuộc tính</option>
+                                                  <option value=""></option>
+                                            </select>
+                                        </div>
+                                        <div class="col-5 mt-3">
+                                            <label for="option_vl_name">Giá trị</label>
+                                            <input type="text" class="form-control" id="option_vl_name" name="option_vl_name[]" placeholder="Giá trị">
+                                        </div>
+                                        <div class="col-1 mt-3">
+                                            <label for="">&nbsp;</label>
+                                            <a href="javascript:void(0)" onclick="delete_(this)" class="btn btn-danger btn-sm d-block">Xóa</a>
+                                        </div>
+                                    </div>
+                                `);
+            }
+            function delete_(__this) {
+                let count_items = document.querySelectorAll(".items_properties").length - 1;
+                count_items--;
+                $(__this).closest(".items_properties").remove();
+            }
+        </script>
         <?php
   }
 }
