@@ -66,9 +66,10 @@ class AuthController
             header('Location: /register');
             exit();
         }
+        $hash_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $data = [
             'username' => $_POST['username'],
-            'password' => $_POST['password'],
+            'password' => $hash_password,
             'name' => $_POST['name'],
             // 're_password' => $_POST['re_password'],
             'email' => $_POST['email'],
