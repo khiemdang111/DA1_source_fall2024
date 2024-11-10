@@ -43,6 +43,12 @@ class Register extends BaseView
                                                 placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                 aria-describedby="password" />
                                         </div>
+                                        <label class="form-label" for="re_password">Nhập lại mật khẩu</label>
+                                        <div class="input-group input-group-merge">
+                                            <input type="password" id="re_password" class="form-control" name="re_password"
+                                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                                                aria-describedby="password" />
+                                        </div>
                                         <div class="mb-3 ">
                                         <label for="username" class="form-label">Họ và tên </label>
                                         <input type="text" class="form-control" id="name" name="name" value=""

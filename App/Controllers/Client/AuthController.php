@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Client;
 
+use App\Models\User;
 use App\Views\Client\Pages\Auth\Login;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
@@ -56,6 +57,34 @@ class AuthController
             NotificationHelper::unset();
             Register::render();
             Footer::render();
+    }
+    public static function registerAction()
+    {
+        $is_valid = AuthValidation::register();
+        if (!$is_valid) {
+            NotificationHelper::error('register_valid', 'Đăng ký thất bại');
+            header('Location: /register');
+            exit();
+        }
+        $data = [
+            'username' => $_POST['username'],
+            'password' => $_POST['password'],
+            'name' => $_POST['name'],
+            // 're_password' => $_POST['re_password'],
+            'email' => $_POST['email'],
+            'phone' => $_POST['phone'],
+            'avatar' => $_POST['avatar'],
+            'address' => $_POST['address']
+        ];
+        $user = new User();
+        $result = $user->createUser($data);
+        if ($result) {
+            NotificationHelper::success('register_valid', 'Đăng ký thành công');
+            header('Location: /login');
+
+        }else {
+            var_dump('Đăng ký thất bại');
+        }
     }
 
    
