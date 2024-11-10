@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost
--- Thời gian đã tạo: Th10 10, 2024 lúc 03:10 AM
+-- Thời gian đã tạo: Th10 10, 2024 lúc 03:43 AM
 -- Phiên bản máy phục vụ: 8.0.39
 -- Phiên bản PHP: 8.2.24
 
@@ -33,6 +33,25 @@ CREATE TABLE `categories` (
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `categories_post`
+--
+
+CREATE TABLE `categories_post` (
+  `id` int NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `categories_post`
+--
+
+INSERT INTO `categories_post` (`id`, `name`, `status`) VALUES
+(1, 'Rượu', 1);
 
 -- --------------------------------------------------------
 
@@ -111,15 +130,17 @@ CREATE TABLE `posts` (
   `img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status` tinyint(1) DEFAULT '1'
+  `status` tinyint(1) DEFAULT '1',
+  `user_id` int NOT NULL,
+  `category_post_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `posts`
 --
 
-INSERT INTO `posts` (`id`, `title`, `content`, `img`, `created_at`, `summary`, `status`) VALUES
-(1, 'Quá trình sản xuất rượu vang từ A đến Z', 'Rượu vang là đồ uống sang trọng và quý phái, được yêu thích trên khắp thế giới. Để tạo ra những chai rượu vang hảo hạng, không chỉ cần sự hiểu biết về kỹ thuật và nghệ thuật pha chế, mà còn cần lòng tận tâm và tinh thần đam mê của người sản xuất. Mỗi chai rượu vang chất lượng chính là kết quả của một quá trình sản xuất tỉ mỉ, từ việc chọn giống nho, chăm sóc cây nho, thu hoạch, nghiền nho, lên men, ươm rượu, lọc, rót, ủ rượu, đến đóng gói và phân phối. Bài viết dưới đây sẽ giúp bạn hiểu rõ hơn về quá trình sản xuất rượu vang từ A đến Z, để bạn có cái nhìn sâu sắc hơn về công nghệ và nghệ thuật đứng sau mỗi ly rượu vang ngon tuyệt vời này.', 'post_1.jpg', NULL, 'Rượu vang là đồ uống sang trọng và quý phái, được yêu thích trên khắp thế giới. Để tạo ra những chai rượu vang hảo hạng, không', NULL);
+INSERT INTO `posts` (`id`, `title`, `content`, `img`, `created_at`, `summary`, `status`, `user_id`, `category_post_id`) VALUES
+(1, 'Quá trình sản xuất rượu vang từ A đến Z', 'Rượu vang là đồ uống sang trọng và quý phái, được yêu thích trên khắp thế giới. Để tạo ra những chai rượu vang hảo hạng, không chỉ cần sự hiểu biết về kỹ thuật và nghệ thuật pha chế, mà còn cần lòng tận tâm và tinh thần đam mê của người sản xuất. Mỗi chai rượu vang chất lượng chính là kết quả của một quá trình sản xuất tỉ mỉ, từ việc chọn giống nho, chăm sóc cây nho, thu hoạch, nghiền nho, lên men, ươm rượu, lọc, rót, ủ rượu, đến đóng gói và phân phối. Bài viết dưới đây sẽ giúp bạn hiểu rõ hơn về quá trình sản xuất rượu vang từ A đến Z, để bạn có cái nhìn sâu sắc hơn về công nghệ và nghệ thuật đứng sau mỗi ly rượu vang ngon tuyệt vời này.', 'post_1.jpg', NULL, 'Rượu vang là đồ uống sang trọng và quý phái, được yêu thích trên khắp thế giới. Để tạo ra những chai rượu vang hảo hạng, không', NULL, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -263,6 +284,12 @@ ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `categories_post`
+--
+ALTER TABLE `categories_post`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Chỉ mục cho bảng `comments`
 --
 ALTER TABLE `comments`
@@ -296,7 +323,9 @@ ALTER TABLE `order_detail`
 -- Chỉ mục cho bảng `posts`
 --
 ALTER TABLE `posts`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_post_user` (`user_id`),
+  ADD KEY `fk_post_category_post` (`category_post_id`);
 
 --
 -- Chỉ mục cho bảng `products`
@@ -362,6 +391,12 @@ ALTER TABLE `wards`
 --
 ALTER TABLE `categories`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `categories_post`
+--
+ALTER TABLE `categories_post`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `comments`
@@ -452,6 +487,13 @@ ALTER TABLE `orders`
 ALTER TABLE `order_detail`
   ADD CONSTRAINT `order_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   ADD CONSTRAINT `order_detail_ibfk_2` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`);
+
+--
+-- Các ràng buộc cho bảng `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `fk_post_category_post` FOREIGN KEY (`category_post_id`) REFERENCES `categories_post` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_post_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Các ràng buộc cho bảng `products`
