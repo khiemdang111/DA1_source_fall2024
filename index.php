@@ -17,7 +17,7 @@ require_once 'config.php';
 
 use App\Helpers\AuthHelper;
 
-AuthHelper::middleware();
+ AuthHelper::middleware();
 
 
 
@@ -71,6 +71,13 @@ Route::post('/admin/products', 'App\Controllers\Admin\ProductController@store');
 Route::get('/admin/products/{id}', 'App\Controllers\Admin\ProductController@edit');
 Route::put('/admin/update/{id}', 'App\Controllers\Admin\ProductController@update');
 Route::post('/admin/delete/{id}', 'App\Controllers\Admin\ProductController@delete');
+
+// trang giỏ hàng
+Route::get('/cart', 'App\Controllers\Client\CartController@index');
+Route::post('/cart/add', 'App\Controllers\Client\CartController@add');
+Route::put('/cart/update', 'App\Controllers\Client\CartController@update');
+Route::delete('/cart/delete', 'App\Controllers\Client\CartController@deleteItem');
+Route::delete('/cart/delete-all', 'App\Controllers\Client\CartController@deleteAll');
 
 
 

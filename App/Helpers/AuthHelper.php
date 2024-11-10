@@ -90,17 +90,15 @@ class AuthHelper
 
     public static function middleware()
     {
-        $admin = explode('/', $_SERVER['REQUEST_URI']);
+        $admin = explode('/', string: $_SERVER['REQUEST_URI']);
         $admin = $admin[1];
-
         if ($admin === 'admin') {
             if (!isset($_SESSION['user'])) {
                 NotificationHelper::error('admin', 'Vui lòng đăng nhập để thực hiện thao tác này');
                 header('Location: /login');
                 exit();
             }
-
-            if ($_SESSION['user']['role'] != 2) {
+            if ($_SESSION['user']['role'] != 0) {
                 NotificationHelper::error('admin', 'Tài khoản này không có quyền truy cập');
                 header('Location: /');
                 exit();

@@ -8,8 +8,9 @@ use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Home;
 use App\Views\Client\Layouts\Header;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Product;
-
+use App\Models\User;
 class HomeController
 {
     // hiển thị danh sách
@@ -33,4 +34,6 @@ class HomeController
         Home::render($data);
         Footer::render();
     }
+
+   
 }

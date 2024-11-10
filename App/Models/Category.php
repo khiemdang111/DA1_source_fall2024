@@ -33,6 +33,7 @@ class Category extends BaseModel
     {
         return $this->getAllByStatus();
     }
+    
     public function getOneCategoryByName($name)
     {
         $result = [];

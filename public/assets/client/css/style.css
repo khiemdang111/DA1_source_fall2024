@@ -8533,6 +8533,7 @@ h1, h2, h3, h4, h5,
 .comment_select{
   margin-right: 15px;
 }
+
 .btn-sm{
   margin-top: 2px;
   width: 52.15px;
@@ -8726,6 +8727,21 @@ h1, h2, h3, h4, h5,
   color: #b7472a;
   font-size: 12px;
   margin-top: 5px; }
+  .product .img .desc .meta-prod button {
+    margin: 0 2px;
+    width: 60px;
+    height: 60px;
+    /* background-color:rgba(0,0,0,0.7); */
+    border: 1px solid rgba(255, 255, 255, 0.5); 
+  } 
+/* .flaticon-shopping-bag{
+  color: white !important;
+}
+
+
+/* .form_cart:hover{
+  background-color: red;
+} */
 
 .prod-img-bg {
   background: #fff;
@@ -8954,7 +8970,50 @@ h1, h2, h3, h4, h5,
 
 .table-wrap {
   overflow-x: scroll; }
+.ftco-animate_cart{
+padding-right: 30px !important;
+}
 
+.cart_button{
+  margin-top: 15px;
+}
+.center_img{
+  text-align: center;
+}
+.number_input_cart{
+  text-align: center;
+}
+.buy_now{
+  padding: 7.3px 13px ;
+  font-size: 16px !important;
+
+}
+.add_to_cart{
+border-radius: 2px !important;
+font-size: 16px !important;
+}
+.img_cart{
+  width: 30%;
+  height: 30%;
+}
+.quantity-right-plus{
+  margin-top: 8px;
+}
+.quantity-left-minus{
+  margin-top: 8px;
+}
+.table_center{
+  text-align: center;
+}
+.margin_vnd{
+  margin-left: 5px;
+}
+.number_cart{
+  width: 80px !important;
+}
+.name_product{
+  font-size: 15px;
+}
 .table {
   min-width: 1000px !important;
   width: 100%;
@@ -8967,8 +9026,8 @@ h1, h2, h3, h4, h5,
     border-radius: 4px; }
   .table thead th {
     border: none;
-    padding: 30px;
-    font-size: 20px;
+    
+    font-size: 18px;
     font-weight: 500;
     color: white; }
   .table tbody tr {

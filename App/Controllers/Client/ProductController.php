@@ -46,9 +46,9 @@ class ProductController
             'product' => $detail,
             'comments' => $comment->get5CommentNewestByProductAndStatus($id),
         ];
-
+ 
          // $view_result = ViewProductHelper::cookieView($id,$detail['view']);
-        // var_dump($view_result);
+         
         
         Header::render();
         Notification::render();

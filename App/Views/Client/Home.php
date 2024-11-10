@@ -9,7 +9,7 @@ class Home extends BaseView
 {
 	public static function render($data = null)
 	{
-		?>
+?>
 
 		<div class="hero-wrap" style="background-image: url('<?= APP_URL ?>/public/assets/client/images/bg_2.jpg');"
 			data-stellar-background-ratio="0.5">
@@ -148,23 +148,27 @@ class Home extends BaseView
 				<div class="row">
 					<?php
 					if (count($data) && count($data['products'])):
-						?>
+					?>
 						<?php
 						foreach ($data['products'] as $item):
-							?>
+						?>
 							<div class="col-md-3 d-flex">
 								<div class="product ftco-animate">
 									<div class="img d-flex align-items-center justify-content-center"
 										style="background-image: url(<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>);">
 										<div class="desc">
-											<p class="meta-prod d-flex">
-												<a href="#" class="d-flex align-items-center justify-content-center"><span
-														class="flaticon-shopping-bag"></span></a>
-												<a href="#" class="d-flex align-items-center justify-content-center"><span
-														class="flaticon-heart"></span></a>
-												<a href="/products/<?= $item['id'] ?>" class="d-flex align-items-center justify-content-center"><span
-														class="flaticon-visibility"></span></a>
-											</p>
+											<div class="meta-prod d-flex"><form action="/cart/add" method="post" >
+												<input type="hidden" name="method" id="" value="POST">
+												<input type="hidden" name="id" id="" value="<?= $item['id'] ?>" required>
+												<button type="submit" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag">
+												</span></button>
+											</form>
+											<a href="#" type="submit" class="d-flex align-items-center justify-content-center"><span
+													class="flaticon-heart"></span></a>
+											<a href="/products/<?= $item['id'] ?>" class="d-flex align-items-center justify-content-center"><span
+													class="flaticon-visibility"></span></a>
+											
+											</div>
 										</div>
 									</div>
 									<div class="text text-center">
@@ -176,22 +180,22 @@ class Home extends BaseView
 									</div>
 								</div>
 							</div>
-							<?php
+						<?php
 						endforeach;
 						?>
-					</div>
 				</div>
-				<?php
+			</div>
+		<?php
 					endif;
-					?>
+		?>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-md-4">
+				<a href="product.html" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
+						class="fa fa-long-arrow-right"></span></a>
 			</div>
-			<div class="row justify-content-center">
-				<div class="col-md-4">
-					<a href="product.html" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
-							class="fa fa-long-arrow-right"></span></a>
-				</div>
-			</div>
-			</div>
+		</div>
+		</div>
 		</section>
 
 		<section class="ftco-section testimony-section img"
@@ -359,6 +363,6 @@ class Home extends BaseView
 				</div>
 			</div>
 		</section>
-		<?php
+<?php
 	}
 }

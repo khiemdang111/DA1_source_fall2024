@@ -6,56 +6,52 @@ use App\Views\BaseView;
 
 class Footer extends BaseView
 {
-        public static function render($data = null)
-        {
+  public static function render($data = null)
+  {
 
 ?>
 
-               <!-- Footer -->
-            <footer class="content-footer footer bg-footer-theme">
-              <div class="container-xxl">
-                <div
-                  class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
-                  <div class="text-body">
-                    ©
-                    <script>
-                      document.write(new Date().getFullYear());
-                    </script>
-                    , made with ❤️ by
-                    <a href="https://themeselection.com" target="_blank" class="footer-link">ThemeSelection</a>
-                  </div>
-                  <div class="d-none d-lg-inline-block">
-                    <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
-                    <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
-
-                    <a
-                      href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
-                      target="_blank"
-                      class="footer-link me-4"
-                      >Documentation</a
-                    >
-
-                    <a
-                      href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
-                      target="_blank"
-                      class="footer-link"
-                      >Support</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </footer>
-            <!-- / Footer -->
-
-            <div class="content-backdrop fade"></div>
+    <!-- Footer -->
+    <footer class="content-footer footer bg-footer-theme">
+      <div class="container-xxl">
+        <div
+          class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+          <div class="text-body">
+            ©
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            , made with ❤️ by
+            <a href="https://themeselection.com" target="_blank" class="footer-link">ThemeSelection</a>
           </div>
-          <!-- Content wrapper -->
-        </div>
-        <!-- / Layout page -->
-      </div>
+          <div class="d-none d-lg-inline-block">
+            <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+            <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
 
-      <!-- Overlay -->
-      <div class="layout-overlay layout-menu-toggle"></div>
+            <a
+              href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/documentation/"
+              target="_blank"
+              class="footer-link me-4">Documentation</a>
+
+            <a
+              href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+              target="_blank"
+              class="footer-link">Support</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- / Footer -->
+
+    <div class="content-backdrop fade"></div>
+    </div>
+    <!-- Content wrapper -->
+    </div>
+    <!-- / Layout page -->
+    </div>
+
+    <!-- Overlay -->
+    <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     <!-- / Layout wrapper -->
 
@@ -63,9 +59,7 @@ class Footer extends BaseView
       <a
         href="https://themeselection.com/item/sneat-dashboard-pro-bootstrap/"
         target="_blank"
-        class="btn btn-danger btn-buy-now"
-        >Upgrade to Pro</a
-      >
+        class="btn btn-danger btn-buy-now">Upgrade to Pro</a>
     </div>
 
     <!-- Core JS -->
@@ -90,10 +84,12 @@ class Footer extends BaseView
 
     <!-- Place this tag before closing body tag for github widget button. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-  </body>
-</html>
+    
+    </body>
+
+    </html>
 <?php
-        }
+  }
 }
 
 ?>

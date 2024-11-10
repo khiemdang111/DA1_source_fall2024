@@ -24,7 +24,10 @@ class Product extends BaseModel
     {
         return $this->update($id, $data);
     }
-
+    public function countTotalProduct()
+    {
+        return $this->countTotal();
+    }
     public function deleteProduct($id)
     {
         return $this->delete($id);
@@ -96,23 +99,32 @@ class Product extends BaseModel
             return $result;
         }
     }
-    // public function countTotalProduct(){
-    //     return $this->countTotal();
-    // }
+    public function countProductByCategory()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT COUNT(*) AS count,categories.name FROM products INNER JOIN categories on products.category_id = categories.id GROUP BY products.category_id;";
 
-    // public function countProductByCategory()
-    // {
-    //     $result = [];
-    //     try {
-    //         $sql = "SELECT COUNT(*) AS count, categories.name FROM products INNER JOIN categories ON products.category_id=categories.id GROUP BY products.category_id";
-    //         $result = $this->_conn->MySQLi()->query($sql);
-    //         return $result->fetch_all(MYSQLI_ASSOC);
-    //     } catch (\Throwable $th) {
-    //         error_log('Lỗi khi hiển thị dữ liệu: ' . $th->getMessage());
-    //         return $result;
-    //     }
-    // }
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
 
+    public function getTopViewedProducts()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM $this->table ORDER BY view DESC LIMIT 5";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị các sản phẩm có lượt xem nhiều nhất: ' . $th->getMessage());
+            return $result;
+        }
+    }
     // public function searchProduct($keyword) {
     //     $result = [];
     //     try {

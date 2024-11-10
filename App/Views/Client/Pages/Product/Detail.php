@@ -21,7 +21,7 @@ class Detail extends BaseView
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 mb-5 ftco-animate">
-                        <a href="" class="image-popup prod-img-bg"><img src="<?= APP_URL ?>/public/uploads/image/<?= $data['product'][0]['image'] ?>" class="img-fluid" alt="Colorlib Template"></a>
+                        <a href="" class="image-popup prod-img-bg"><img src="<?= APP_URL ?>/public/uploads/products/<?= $data['product'][0]['image'] ?>" class="img-fluid" alt="Colorlib Template"></a>
                     </div>
                     <div class="col-lg-6 product-details pl-md-5 ftco-animate">
                         <h3><?= $data['product'][0]['name'] ?></h3>
@@ -54,30 +54,49 @@ class Detail extends BaseView
                             <p class="price_product"><span><?= number_format($data['product'][0]['price'])  ?> VND</span></p>
                         <?php
                         endif;
-                        ?>                   
+                        ?>
                         <p>
-                        <?= $data['product'][0]['description']?>
+                            <?= $data['product'][0]['description'] ?>
                         </p>
-                        <div class="row mt-4">
-                            <div class="input-group col-md-6 d-flex mb-3">
-                                <span class="input-group-btn mr-2">
-                                    <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </span>
-                                <input type="text" id="quantity" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                <span class="input-group-btn ml-2">
-                                    <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </span>
+
+
+                        <form action="/cart/add" method="post">
+                            <div class="row mt-4">
+                                <div class="input-group col-md-6 d-flex mb-3">
+
+
+                                    <input type="hidden" name="method" id="" value="POST">
+
+                                    <span class="input-group-btn mr-2">
+                                        <button type="button" class="quantity-left-minus btn" data-type="minus" data-field="">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </span>
+                                    <input type="text" id="quantity" name="number" class="number_cart p-1 m-2 number_input_cart" value="1" min="1" max="100">
+                                    <input type="hidden" name="id" id="" value="<?= $data['product'][0]['id'] ?>">
+
+                                    <span class="input-group-btn ml-2">
+                                        <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </span>
+
+
+
+
+
+
+
+
+                                </div>
+
+                                <div class="w-100"></div>
+                                <div class="col-md-12">
+                                    <p style="color: #000;">80 piece available</p>
+                                </div>
                             </div>
-                            <div class="w-100"></div>
-                            <div class="col-md-12">
-                                <p style="color: #000;">80 piece available</p>
-                            </div>
-                        </div>
-                        <p><a href="cart.html" class="btn btn-primary py-3 px-5 mr-2">Add to Cart</a><a href="cart.html" class="btn btn-primary py-3 px-5">Buy now</a></p>
+                        <button type="submit" class="btn btn-primary add_to_cart">Thêm vào giỏ hàng</button>   <a href="/cart" class="btn btn-primary buy_now">Mua ngay</a>
+                        </form>
                     </div>
                 </div>
                 <div class="row mt-5">
@@ -92,8 +111,8 @@ class Detail extends BaseView
                         <div class="tab-content bg-light" id="v-pills-tabContent">
                             <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
                                 <div class="p-4">
-                                    <h3 class="mb-4">Bacardi 151 Degree</h3>
-                                    <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
+                                    <h3 class="mb-4"><?= $data['product'][0]['name'] ?></h3>
+                                    <p><?= $data['product'][0]['description'] ?></p>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-day-2-tab">
@@ -201,7 +220,7 @@ class Detail extends BaseView
                                                             <div class="comment-text w-100 magin">
                                                                 <h6 class="font-medium"><?= $_SESSION['user']['name'] ?> - <?= $_SESSION['user']['username'] ?></h6>
                                                                 <form action="/comments" method="post">
-                                                                    <input type="hidden" name="method" value="POST" id="" >
+                                                                    <input type="hidden" name="method" value="POST" id="">
                                                                     <input type="hidden" name="product_id" value="<?= $data['product'][0]['id'] ?>">
                                                                     <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id'] ?>">
                                                                     <input type="hidden" name="status" value="1">
@@ -220,7 +239,7 @@ class Detail extends BaseView
                                                     <?php
                                                     else :
                                                     ?>
-                                                        <h6 class="commnets_h6">Vui lòng đăng nhập để bình luận</h6>
+                                                        <h6 class="mx-3">Vui lòng đăng nhập để bình luận</h6>
                                                     <?php
                                                     endif;
                                                     ?>

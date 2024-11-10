@@ -37,7 +37,10 @@ class User extends BaseModel
     {
         return $this->getAllByStatus();
     }
-
+    public function countTotalUser()
+    {
+        return $this->countTotal();
+    }
     public function getOneUserByUsername(string $username)
     {
         $result = [];
