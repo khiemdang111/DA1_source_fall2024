@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: localhost
--- Thời gian đã tạo: Th10 10, 2024 lúc 02:36 AM
+-- Thời gian đã tạo: Th10 10, 2024 lúc 03:10 AM
 -- Phiên bản máy phục vụ: 8.0.39
 -- Phiên bản PHP: 8.2.24
 
@@ -79,6 +79,7 @@ CREATE TABLE `orders` (
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `shippingFee` int DEFAULT NULL,
   `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `phone` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `user_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -107,7 +108,7 @@ CREATE TABLE `posts` (
   `id` int NOT NULL,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `summary` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `status` tinyint(1) DEFAULT '1'
@@ -117,7 +118,7 @@ CREATE TABLE `posts` (
 -- Đang đổ dữ liệu cho bảng `posts`
 --
 
-INSERT INTO `posts` (`id`, `title`, `content`, `avatar`, `created_at`, `summary`, `status`) VALUES
+INSERT INTO `posts` (`id`, `title`, `content`, `img`, `created_at`, `summary`, `status`) VALUES
 (1, 'Quá trình sản xuất rượu vang từ A đến Z', 'Rượu vang là đồ uống sang trọng và quý phái, được yêu thích trên khắp thế giới. Để tạo ra những chai rượu vang hảo hạng, không chỉ cần sự hiểu biết về kỹ thuật và nghệ thuật pha chế, mà còn cần lòng tận tâm và tinh thần đam mê của người sản xuất. Mỗi chai rượu vang chất lượng chính là kết quả của một quá trình sản xuất tỉ mỉ, từ việc chọn giống nho, chăm sóc cây nho, thu hoạch, nghiền nho, lên men, ươm rượu, lọc, rót, ủ rượu, đến đóng gói và phân phối. Bài viết dưới đây sẽ giúp bạn hiểu rõ hơn về quá trình sản xuất rượu vang từ A đến Z, để bạn có cái nhìn sâu sắc hơn về công nghệ và nghệ thuật đứng sau mỗi ly rượu vang ngon tuyệt vời này.', 'post_1.jpg', NULL, 'Rượu vang là đồ uống sang trọng và quý phái, được yêu thích trên khắp thế giới. Để tạo ra những chai rượu vang hảo hạng, không', NULL);
 
 -- --------------------------------------------------------
@@ -129,8 +130,8 @@ INSERT INTO `posts` (`id`, `title`, `content`, `avatar`, `created_at`, `summary`
 CREATE TABLE `products` (
   `id` int NOT NULL,
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `price` float DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `price` int DEFAULT NULL,
   `discount_price` float DEFAULT NULL,
   `date` timestamp NULL DEFAULT NULL,
   `is_featured` tinyint(1) DEFAULT NULL,
@@ -148,8 +149,8 @@ CREATE TABLE `products` (
 
 CREATE TABLE `product_variants` (
   `id` int NOT NULL,
-  `product_id` int DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -203,6 +204,8 @@ CREATE TABLE `skus` (
   `skus` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `quantity` int DEFAULT NULL,
+  `price` int NOT NULL,
+  `imgae` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
   `product_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -306,8 +309,7 @@ ALTER TABLE `products`
 -- Chỉ mục cho bảng `product_variants`
 --
 ALTER TABLE `product_variants`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `product_variant_options`
@@ -456,12 +458,6 @@ ALTER TABLE `order_detail`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`);
-
---
--- Các ràng buộc cho bảng `product_variants`
---
-ALTER TABLE `product_variants`
-  ADD CONSTRAINT `product_variants_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
 
 --
 -- Các ràng buộc cho bảng `product_variant_options`
