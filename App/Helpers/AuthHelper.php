@@ -100,7 +100,7 @@ class AuthHelper
                 exit();
             }
 
-            if ($_SESSION['user']['role'] != 0) {
+            if ($_SESSION['user']['role'] != 2) {
                 NotificationHelper::error('admin', 'Tài khoản này không có quyền truy cập');
                 header('Location: /');
                 exit();
