@@ -37,7 +37,7 @@ class Index extends BaseView
                                         <tr>
                                             <td><?= $item['id'] ?></td>
                                             <td><?= $item['name'] ?></td>
-                                            <td>Khoong co</td>
+                                            <td><?= $item['description'] ?></td>
                                             <td><?= ($item['status'] == 1) ? 'Hiển thị' : 'Ẩn' ?></td>
                                             <td>
                                                 <div class="dropdown">

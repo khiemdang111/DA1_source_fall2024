@@ -8079,10 +8079,6 @@ h1, h2, h3, h4, h5,
 
 .ftco-navbar-light {
   background: transparent !important;
-  position: absolute;
-  top: 35px;
-  left: 0;
-  right: 0;
   z-index: 3;
   padding: 0 0; }
   @media (max-width: 991.98px) {
@@ -8527,9 +8523,7 @@ h1, h2, h3, h4, h5,
 .magin{
   margin-right: 13px;
 }
-#eroor{
-  margin-top: 40px;
-}
+
 .comment_select{
   margin-right: 15px;
 }
