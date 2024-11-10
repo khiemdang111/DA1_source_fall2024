@@ -50,6 +50,7 @@ class index extends BaseView
                             </thead>
                             <tbody class="table-border-bottom-0">
                                 <?php
+                            
                                 foreach ($data as $item):
                                 ?>
                                     <tr>
@@ -57,7 +58,7 @@ class index extends BaseView
                                             <?= $item['username'] ?>
                                         </td>
                                         <td>
-                                            <img src="<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>" alt="Avatar" class="rounded-circle" width="60px" height="60px"/>
+                                            <img src="<?= APP_URL ?>/public/assets/admin/assets/img/avatars/<?= $item['avatar'] ?>" alt="Avatar" class="rounded-circle" width="60px" height="60px" />
                                         </td>
 
                                         <td>
@@ -79,10 +80,13 @@ class index extends BaseView
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href=""><i
-                                                            class="bx bx-edit-alt me-1"></i> Edit</a>
-                                                    <a class="dropdown-item" href=""><i class="bx bx-trash me-1"></i>
-                                                        Delete</a>
+                                                    <a class="dropdown-item" href="/admin/users/<?= $item['id'] ?>"><i class="bx bx-edit-alt me-1"></i> Sửa</a>
+                                                    
+                                                    <form class="w-100" action="/admin/delete/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
+                                                        <input type="hidden" name="method" value="POST" id="">
+                                            
+                                                        <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Xóa</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>

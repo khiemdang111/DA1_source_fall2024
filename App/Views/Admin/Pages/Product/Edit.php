@@ -19,7 +19,7 @@ class Edit extends BaseView
               <!-- Account -->
               <div class="card-body">
                 <div class="">
-                  <h2 class="text-center">Cập nhật sản phẩm</h2>
+                  <h2 class="text-center">Cập nhật sản phẩm dfhjk</h2>
                 </div>
               </div>
               <div class="card-body pt-4">

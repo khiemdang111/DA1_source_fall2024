@@ -214,6 +214,7 @@ class Header extends BaseView
                       <div class="text-truncate" data-i18n="Blank">Thêm mới</div>
                     </a>
                   </li>
+                 
                 </ul>
               </li>
 

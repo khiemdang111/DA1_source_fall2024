@@ -28,10 +28,10 @@ class UserController
         Header::render();
         Notification::render();
         NotificationHelper::unset();
-        index::render($data );
+        index::render($data);
         Footer::render();
     }
-    
+
 
     public static function create()
     {
@@ -51,7 +51,6 @@ class UserController
             NotificationHelper::error('store', 'Thêm khách hàng thất bại');
             header('location: /admin/users/create');
             exit();
-
         }
         $username = $_POST['username'];
         $user = new User();
@@ -84,11 +83,117 @@ class UserController
             NotificationHelper::success('store', 'Thêm khách hàng thành công');
             header('location: /admin/users');
             exit();
-
         } else {
             NotificationHelper::error('store', 'Thêm khách hàng thất bại');
             header('location: /admin/users/create');
             exit();
+        }
+    }
+
+    public static function edit(int $id)
+    {
+
+        $user = new User();
+        $data = $user->getOneUser($id);
+
+        if (!$data) {
+            NotificationHelper::error('edit', 'Không thể xem người dùng này');
+            header('location: /admin/users');
+            exit;
+        }
+// var_dump($data['avatar']);
+// die;
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        // Hiển thị form sửa
+        Edit::render($data);
+        Footer::render();
+
+        // if ($data) {
+        //     Header::render();
+        //     // hiển thị form sửa
+        //     Edit::render($data);
+        //     Footer::render();
+        // } else {
+        //     header('location: /admin/categories');
+        // }
+    }
+
+
+
+    // // xử lý chức năng sửa (cập nhật)
+    public static function update(int $id)
+    {
+       // Kiểm tra tính hợp lệ của dữ liệu
+        $is_valid = UserValidation::edit();
+
+        if (!$is_valid) {
+            NotificationHelper::error('update', 'Cập nhật người dùng thất bại');
+            header("location: /admin/users/$id");
+            exit;
+        }
+
+        $user = new User();
+// var_dump($_POST);
+// die;
+// //         Chuẩn bị dữ liệu để cập nhật
+
+        $data = [
+            'username' => $_POST['username'],
+            'name' => $_POST['name'],
+            'phone' => $_POST['phone'],
+            'email' => $_POST['email'],
+            'avatar' => $_POST['avatar'],
+            'address' => $_POST['address'],
+            'status' => $_POST['status'],
+            'role' => $_POST['role'],
+        ];
+// var_dump($data);
+// die;
+        // Cập nhật mật khẩu chỉ khi có mật khẩu mới
+        if ($_POST['password'] !== '') {
+            $data['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        }
+
+        // Kiểm tra và cập nhật ảnh đại diện nếu tải lên thành công
+        $is_upload = UserValidation::uploadAvatar();
+        if ($is_upload) {
+            $data['avatar'] = $is_upload;
+        }
+
+        // Thực hiện cập nhật người dùng
+        $result = $user->updateUser($id, $data);
+
+        if ($result) {
+            NotificationHelper::success('update', 'Cập nhật người dùng thành công');
+            header('location: /admin/users');
+        } else {
+            NotificationHelper::error('update', 'Cập nhật người dùng thất bại');
+            header("location: /admin/users/$id");
+            exit;
+        }
+    }
+
+
+
+    // // thực hiện xoá
+    public static function delete(int $id)
+    {
+        $user = new user();
+        $is_exist = $user->getOneuser($id);
+        if ($is_exist && $is_exist['id'] === $id) {
+            $data = [
+                'status' => 0,
+            ];
+            $result = $user->updateuser($id, $data);
+        }
+        if ($result) {
+            NotificationHelper::success('delete_user', 'Xóa người dùng thành công!');
+            header('Location: /admin/users');
+        } else {
+            NotificationHelper::error('delete_user', 'Xóa người dùng thất bại!');
+            header("Location: /admin/users");
         }
     }
 }

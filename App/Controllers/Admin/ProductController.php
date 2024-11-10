@@ -132,7 +132,7 @@ class ProductController
 
     public static function update(int $id)
     {
-
+ 
         $is_valid =  ProductValidation::edit();
         if (!$is_valid) {
             NotificationHelper::error('update_product', 'Cập nhật sản phẩm thất bại  !');
