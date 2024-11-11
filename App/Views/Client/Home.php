@@ -157,17 +157,18 @@ class Home extends BaseView
 									<div class="img d-flex align-items-center justify-content-center"
 										style="background-image: url(<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>);">
 										<div class="desc">
-											<div class="meta-prod d-flex"><form action="/cart/add" method="post" >
-												<input type="hidden" name="method" id="" value="POST">
-												<input type="hidden" name="id" id="" value="<?= $item['id'] ?>" required>
-												<button type="submit" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag">
-												</span></button>
-											</form>
-											<a href="#" type="submit" class="d-flex align-items-center justify-content-center"><span
-													class="flaticon-heart"></span></a>
-											<a href="/products/<?= $item['id'] ?>" class="d-flex align-items-center justify-content-center"><span
-													class="flaticon-visibility"></span></a>
-											
+											<div class="meta-prod d-flex">
+												<form action="/cart/add" method="post">
+													<input type="hidden" name="method" id="" value="POST">
+													<input type="hidden" name="id" id="" value="<?= $item['id'] ?>" required>
+													<button type="submit" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag">
+														</span></button>
+												</form>
+												<a href="#" type="submit" class="d-flex align-items-center justify-content-center"><span
+														class="flaticon-heart"></span></a>
+												<a href="/products/<?= $item['id'] ?>" class="d-flex align-items-center justify-content-center"><span
+														class="flaticon-visibility"></span></a>
+
 											</div>
 										</div>
 									</div>
@@ -175,8 +176,22 @@ class Home extends BaseView
 										<span class="sale"></span>
 										<span class="category"><?= $item['category_name'] ?></span>
 										<h2><?= $item['name'] ?></h2>
-										<p class="mb-0"><span class="price price-sale"><?= number_format($item['price']) ?></span> <span
-												class="price"><?= number_format($item['price'] - $item['discount_price']) ?></span></p>
+										<p class="mb-0">
+											<?php
+											if ($item['discount_price'] > 0) :
+											?>
+												<span class="price price-sale"><?= number_format($item['price']) ?></span> <span
+													class="price"><?= number_format($item['price'] - $item['discount_price']) ?></span>
+
+											<?php
+											else:
+											?>
+												 <span
+												 class="price"><?= number_format($item['price'] ) ?></span>
+
+											<?php endif; ?>
+
+										</p>
 									</div>
 								</div>
 							</div>

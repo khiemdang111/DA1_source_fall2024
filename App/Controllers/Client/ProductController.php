@@ -21,11 +21,15 @@ class ProductController
     public static function index()
     {
         // giả sử data là mảng dữ liệu lấy được từ database
-        $product = new Product();
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
 
+        // lấy dữ liệu sản phẩm từ database
+        $product = new Product();
         $products = $product->getAllProductByStatus();
         $data = [
-            'products' => $products
+            'products' => $products,
+            'categories' => $categories
         ];
         Header::render();
 
@@ -36,7 +40,8 @@ class ProductController
     {
         $product = new Product();
         $detail = $product->getOneProductByCategoryDetailStatus($id);
-
+    //    var_dump($detail[0]['view']);
+    //    die;
          if(!$detail){
             NotificationHelper::error('detail','Không thể xem sản phẩm');
             header('Location: /');
@@ -46,9 +51,8 @@ class ProductController
             'product' => $detail,
             'comments' => $comment->get5CommentNewestByProductAndStatus($id),
         ];
- 
-         // $view_result = ViewProductHelper::cookieView($id,$detail['view']);
-         
+         $view_result = ViewProductHelper::cookieView($id,$detail[0]['view']);
+         // var_dump($view_result);
         
         Header::render();
         Notification::render();
@@ -60,5 +64,16 @@ class ProductController
     
     public static function getProductByCategory($id)
     {
+        $product = new Product();
+        $return_product_category = $product->getAllProductJoinCategoryDetail($id);
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
+        $data = [
+            'products' => $return_product_category,
+            'categories' => $categories
+        ];
+        Header::render();
+        Index::render($data);
+        Footer::render();
     }
 }

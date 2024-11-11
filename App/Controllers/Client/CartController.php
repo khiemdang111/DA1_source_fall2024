@@ -221,7 +221,6 @@ class CartController
     {
         $is_login = AuthHelper::checkLogin();
         if (isset($_COOKIE['cart'])) {
-
             $product = new Product();
             $cookie_data = $_COOKIE['cart'];
             $cart_data = json_decode($cookie_data, true);
@@ -251,7 +250,7 @@ class CartController
                 // setcookie("cart", "", time() -  3600 * 24 * 30 * 12, '/');
                 // $_SESSION['error'] = 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào';
                 NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
-                header('location: /products');
+                header('location: /');
             }
         } else {
             NotificationHelper::error('checkout', 'Vui lòng đăng nhập hoặc thêm sản phẩm vào giỏ hàng để thanh toán');

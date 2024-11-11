@@ -71,6 +71,9 @@ Route::post('/admin/products', 'App\Controllers\Admin\ProductController@store');
 Route::get('/admin/products/{id}', 'App\Controllers\Admin\ProductController@edit');
 Route::put('/admin/update/{id}', 'App\Controllers\Admin\ProductController@update');
 Route::post('/admin/delete/{id}', 'App\Controllers\Admin\ProductController@delete');
+// lọc sản phẩm theo loại
+Route::get('/products/categories/{id}','App\Controllers\Client\ProductController@getProductByCategory');
+
 
 // trang giỏ hàng
 Route::get('/cart', 'App\Controllers\Client\CartController@index');
@@ -78,8 +81,8 @@ Route::post('/cart/add', 'App\Controllers\Client\CartController@add');
 Route::put('/cart/update', 'App\Controllers\Client\CartController@update');
 Route::delete('/cart/delete', 'App\Controllers\Client\CartController@deleteItem');
 Route::delete('/cart/delete-all', 'App\Controllers\Client\CartController@deleteAll');
-
-
+// trang đặt hàng
+Route::get('/checkout', 'App\Controllers\Client\CartController@checkout');
 
 // *** User ***
 Route::get('/admin/users', 'App\Controllers\Admin\UserController@index');

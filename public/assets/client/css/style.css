@@ -1340,7 +1340,7 @@ pre {
   background-color: transparent; }
   .table th,
   .table td {
-    padding: 0.75rem;
+    padding: 0.10rem;
     vertical-align: top;
     border-top: 1px solid #dee2e6; }
   .table thead th {
@@ -8725,9 +8725,17 @@ h1, h2, h3, h4, h5,
     margin: 0 2px;
     width: 60px;
     height: 60px;
-    /* background-color:rgba(0,0,0,0.7); */
+    color: white;
+    background-color:rgba(0,0,0,0);
     border: 1px solid rgba(255, 255, 255, 0.5); 
   } 
+
+  .product .img .desc .meta-prod button:hover{
+    background-color:rgba(0,0,0,0.9);
+  }
+  .product .img .desc .meta-prod a:hover{
+    background-color:rgba(0,0,0,0.9);
+  }
 /* .flaticon-shopping-bag{
   color: white !important;
 }
@@ -9021,7 +9029,7 @@ font-size: 16px !important;
   .table thead th {
     border: none;
     
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 500;
     color: white; }
   .table tbody tr {

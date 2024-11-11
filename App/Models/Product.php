@@ -64,7 +64,20 @@ class Product extends BaseModel
     {
         return $this->getOneByName($name);
     }
-
+    public function getAllProductJoinCategoryDetail($id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT products.*,categories.name AS category_name FROM products INNER JOIN categories ON products.category_id = categories.id 
+            WHERE products.status =" . self::STATUS_ENABLE . "  
+            AND  categories.status = " . self::STATUS_ENABLE . "  AND products.category_id =$id";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
     public function getOneProductByCategoryDetailStatus($id)
     {
         $result = [];

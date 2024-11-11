@@ -36,7 +36,7 @@ class Index extends BaseView
 								if ($cart['data']) :
 									$i++;
 							?>
-									<tr >
+									<tr>
 										<td>
 											<span><?= $cart['data']['name'] ?> </span>
 										</td>
@@ -48,8 +48,8 @@ class Index extends BaseView
 										if ($cart['data']['discount_price'] > 0) :
 										?>
 											<td>
-												<div class="d-flex"><strike><?= number_format($cart['data']['price']) ?>   </strike> <span><del class="margin_vnd">VND</del></span></div>
-												
+												<div class="d-flex"><strike><?= number_format($cart['data']['price']) ?> </strike> <span><del class="margin_vnd">VND</del></span></div>
+
 												<br>
 												<?= number_format($cart['data']['discount_price']) ?> VND
 											</td>
@@ -59,7 +59,7 @@ class Index extends BaseView
 										else :
 										?>
 											<td>
-												
+
 												<?= number_format($cart['data']['price']) ?> <span>VND</span>
 											</td>
 										<?php
@@ -69,12 +69,12 @@ class Index extends BaseView
 										<td>
 											<form action="/cart/update" method="post">
 												<input type="hidden" name="method" id="" value="PUT">
-												<input  class="quantity form-control input-number number_cart" type="number" name="quantity" value="<?= $cart['quantity'] ?>" onchange="this.form.submit()" class="form-control" min=1>
+												<input class="quantity form-control input-number number_cart" type="number" name="quantity" value="<?= $cart['quantity'] ?>" onchange="this.form.submit()" class="form-control" min=1>
 												<input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
 												<input type="hidden" name="update-cart-item">
 											</form>
 										</td>
-										
+
 
 
 										<?php
@@ -83,10 +83,10 @@ class Index extends BaseView
 											$total_price += $discount_price;
 										?>
 											<td>
-											<div class="d-flex">
-											<span><?= number_format($discount_price) ?></span> <span class="margin_vnd"> VND</span>
-											</div>
-												
+												<div class="d-flex">
+													<span><?= number_format($discount_price) ?></span> <span class="margin_vnd"> VND</span>
+												</div>
+
 											</td>
 										<?php
 										else :
@@ -103,7 +103,7 @@ class Index extends BaseView
 											<form action="/cart/delete" method="post">
 												<input type="hidden" name="method" id="" value="DELETE">
 												<input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
-												<button type="submit" class="close" >
+												<button type="submit" class="close">
 													<span aria-hidden="true"><i class="fa fa-close"></i></span>
 												</button>
 											</form>
@@ -141,11 +141,23 @@ class Index extends BaseView
 							</p>
 							<hr>
 							<p class="d-flex total-price">
-								<span>Total</span>
+								<span>Tổng</span>
 								<span>$17.60</span>
 							</p>
 						</div>
-						<p class="text-center cart_button"><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+
+						<?php
+						if ($is_login) :
+						?>
+							<p class="text-center cart_button"><a href="/checkout" class="btn btn-primary py-3 px-4">Tiến hành thanh toán</a></p>
+						<?php
+						else :
+						?>
+							<p class="text-center cart_button"><a href="/register" class="btn btn-primary py-3 px-4">Vui lòng đăng nhập để thanh toán</a></p>
+						<?php
+						endif;
+						?>
+
 					</div>
 				</div>
 			</div>

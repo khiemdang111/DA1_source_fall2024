@@ -108,7 +108,7 @@ class Header extends BaseView
 									</div>
 								</div>
 								<a class="dropdown-item text-center btn-link d-block w-100" href="/cart">
-									View All
+									Xem giỏ hàng
 									<span class="ion-ios-arrow-round-forward"></span>
 								</a>
 
@@ -128,7 +128,6 @@ class Header extends BaseView
 							<ul class="navbar-nav ml-auto">
 								<li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
 								<li class="nav-item"><a href="about.html" class="nav-link">Giới Thiệu</a></li>
-
 								<li class="nav-item"><a href="/products" class="nav-link">Sản Phẩm</a></li>
 								<li class="nav-item"><a href="blog.html" class="nav-link">Tin Tức</a></li>
 								<li class="nav-item"><a href="contact.html" class="nav-link">Liên hệ</a></li>

@@ -14,7 +14,18 @@ class Detail extends BaseView
         // var_dump($data);
         // die;
 ?>
-
+        <!-- giao diện mới -->
+        <section class="hero-wrap hero-wrap-2" style="background-image: url('/public/uploads/image/bg_2.jpg');" data-stellar-background-ratio="0.5">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row no-gutters slider-text align-items-end justify-content-center">
+                    <div class="col-md-9 ftco-animate mb-5 text-center">
+                        <p class="breadcrumbs mb-0"><span class="mr-2"><a href="/">Trang chủ <i class="fa fa-chevron-right"></i></a></span> <span><a href="product.html">Products <i class="fa fa-chevron-right"></i></a></span> <span>Products Single <i class="fa fa-chevron-right"></i></span></p>
+                        <h2 class="mb-0 bread">Chi tiết sản phẩm</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
 
 
         <section class="ftco-section">
@@ -74,7 +85,6 @@ class Detail extends BaseView
                                     </span>
                                     <input type="text" id="quantity" name="number" class="number_cart p-1 m-2 number_input_cart" value="1" min="1" max="100">
                                     <input type="hidden" name="id" id="" value="<?= $data['product'][0]['id'] ?>">
-
                                     <span class="input-group-btn ml-2">
                                         <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
                                             <i class="fa fa-plus"></i>
@@ -95,7 +105,7 @@ class Detail extends BaseView
                                     <p style="color: #000;">80 piece available</p>
                                 </div>
                             </div>
-                        <button type="submit" class="btn btn-primary add_to_cart">Thêm vào giỏ hàng</button>   <a href="/cart" class="btn btn-primary buy_now">Mua ngay</a>
+                            <button type="submit" class="btn btn-primary add_to_cart">Thêm vào giỏ hàng</button> <a href="/cart" class="btn btn-primary buy_now">Mua ngay</a>
                         </form>
                     </div>
                 </div>

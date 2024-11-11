@@ -11,18 +11,20 @@
 .title_card{
   font-size: 16px;
 }
-
+.thongke{
+  background-color: white;
+  margin: 2px;
+  border-radius: 5px;
+}
 
 .app-brand-logo.demo svg {
   width: 22px;
   height: 38px;
 }
-
 .app-brand-text.demo {
   font-size: 1.75rem;
   letter-spacing: -0.5px;
 }
-
 /* ! For .layout-navbar-fixed added fix padding top to .layout-page */
 /* Detached navbar */
 .layout-navbar-fixed .layout-wrapper:not(.layout-horizontal):not(.layout-without-menu) .layout-page {
