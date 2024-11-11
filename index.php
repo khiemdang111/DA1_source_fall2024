@@ -34,6 +34,8 @@ Route::get('/admin', 'App\Controllers\Admin\HomeController@index');
 Route::get('/login', 'App\Controllers\Client\AuthController@Login');
 Route::post('/login', 'App\Controllers\Client\AuthController@loginAction');
 
+Route::get('/logout', 'App\Controllers\Client\AuthController@logout');
+
 
 //  *** Category
 // GET /categories (lấy danh sách loại sản phẩm)

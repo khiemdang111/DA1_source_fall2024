@@ -57,6 +57,14 @@ class Login extends BaseView
                                     <div class="mb-3">
                                         <button class="btn btn-primary d-grid w-100" type="submit">Đăng nhập</button>
                                     </div>
+                                    <?php
+                      if (isset($_SESSION['success_message'])) {
+                        echo '<div class="alert alert-success mt-3">' . $_SESSION['success_message'] . '</div>';
+                      } elseif (isset($_SESSION['error_message'])) {
+                        echo '<div class="alert alert-danger mt-3">' . $_SESSION['error_message'] . '</div>';
+                        unset($_SESSION['error_message']);
+                      }
+                      ?>
                                 </form>
 
                               

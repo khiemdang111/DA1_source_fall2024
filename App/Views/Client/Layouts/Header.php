@@ -69,11 +69,12 @@ class Header extends BaseView
 													class="sr-only">Dribbble</i></span></a>
 									</p>
 								</div>
-								<div class="reg">
+								<div class="reg row justify-content-between">
 									<?php
 									if ($is_login):
-										?>
+										?>								
 										<p class="mr-2 text-light">Xin Chào,<?= $_SESSION['user']['name'] ?></p>
+										<a href="/logout" class="text-light px-4">Đăng xuất</a>
 										<?php
 									else:
 										?>
@@ -82,6 +83,7 @@ class Header extends BaseView
 									endif;
 									?>
 								</div>
+
 							</div>
 						</div>
 					</div>

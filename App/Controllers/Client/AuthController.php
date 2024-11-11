@@ -88,5 +88,12 @@ class AuthController
         }
     }
 
+    public static function logout()
+  {
+    AuthHelper::logout();
+    NotificationHelper::success('logout', 'Đăng xuất thành công');
+    header('Location: /');
+  }
+
    
 }

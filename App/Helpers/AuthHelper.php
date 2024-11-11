@@ -106,4 +106,13 @@ class AuthHelper
 
         }
     }
+    public static function logout()
+ {
+  if (isset($_SESSION['user'])) {
+   unset($_SESSION['user']);
+  }
+  if (isset($_COOKIE['user'])) {
+   setcookie('user', '', time() -(3600 * 24 * 30 * 12), '/');
+  }
+ }
 }
