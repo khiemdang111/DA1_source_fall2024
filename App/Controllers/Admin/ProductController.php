@@ -12,6 +12,7 @@ use App\Views\Admin\Components\Notification;
 use App\Views\Admin\Pages\Product\Create;
 use App\Views\Admin\Pages\Product\Edit;
 use App\Views\Admin\Pages\Product\Index;
+use App\Views\Admin\Pages\Recycle\ProductRecycle;
 
 class ProductController
 {
@@ -192,5 +193,16 @@ class ProductController
             NotificationHelper::error('delete_product', 'Xóa loại sản phẩm thất bại!');
             header("Location: /admin/products");
         }
+    }
+    
+    public static function productRecycle(){
+        $product = new Product();
+        $data = $product->getAllProductByStatusRecycle();
+        Header::render();
+        Notification::render();
+        //hủy thông báo
+        NotificationHelper::unset();
+        ProductRecycle::render($data);
+        Footer::render();
     }
 }

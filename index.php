@@ -94,6 +94,9 @@ Route::post('/admin/delete/{id}', 'App\Controllers\Admin\UserController@delete')
 // *** Post ***
 Route::get('/admin/posts', 'App\Controllers\Admin\PostController@index');
 
+// *** Recycle Bin ***
+Route::get('/admin/recycle/products', 'App\Controllers\Admin\ProductController@productRecycle');
+Route::get('/admin/recycle/users', 'App\Controllers\Admin\UserController@userRecycle');
 
 
 Route::dispatch($_SERVER['REQUEST_URI']);

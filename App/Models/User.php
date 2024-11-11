@@ -57,4 +57,17 @@ class User extends BaseModel
             return $result;
         }
     }
+
+    public function getAllUserByStatusRecycle()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT users.* FROM users  WHERE status= 0";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
 }

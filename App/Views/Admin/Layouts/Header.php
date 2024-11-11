@@ -217,13 +217,13 @@ class Header extends BaseView
                       <div class="text-truncate" data-i18n="Blank">Thêm mới</div>
                     </a>
                   </li>
-                 
+
                 </ul>
               </li>
 
               <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-detail"></i>
+                  <i class="menu-icon tf-icons bx bx-detail"></i>
                   <div class="text-truncate" data-i18n="Layouts">Bài viết</div>
                 </a>
 
@@ -241,7 +241,27 @@ class Header extends BaseView
                   </li>
                 </ul>
               </li>
+              <!-- #region -->
+              <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                  <i class="menu-icon tf-icons bx bx-recycle"></i>
+                  <div class="text-truncate" data-i18n="Layouts">Thùng rác</div>
+                </a>
 
+                <ul class="menu-sub">
+
+                  <li class="menu-item">
+                    <a href="/admin/recycle/products" class="menu-link">
+                      <div class="text-truncate" data-i18n="Container">Sản phẩm</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="/admin/recycle/users" class="menu-link">
+                      <div class="text-truncate" data-i18n="Blank">Tài khoảng khách hàng</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
               <!-- Front Pages -->
               <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">

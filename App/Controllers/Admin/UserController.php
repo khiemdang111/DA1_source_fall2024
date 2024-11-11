@@ -11,8 +11,7 @@ use App\Views\Admin\Pages\User\Create;
 use App\Views\Admin\Pages\User\Edit;
 use App\Views\Admin\Pages\User\index;
 use App\Validations\UserValidation;
-
-
+use App\Views\Admin\Pages\Recycle\UserRecycle;
 
 class UserController
 {
@@ -195,5 +194,16 @@ class UserController
             NotificationHelper::error('delete_user', 'Xóa người dùng thất bại!');
             header("Location: /admin/users");
         }
+    }
+    public function userRecycle() {
+        $user = new User();
+        $data = $user->getAllUserByStatusRecycle();
+
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        UserRecycle::render($data);
+        Footer::render();
+     
     }
 }
