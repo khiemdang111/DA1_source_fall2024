@@ -97,6 +97,8 @@ Route::get('/admin/posts/create', 'App\Controllers\Admin\PostController@create')
 Route::post('/admin/posts', 'App\Controllers\Admin\PostController@store');
 Route::get('/admin/posts/{id}', 'App\Controllers\Admin\PostController@edit');
 Route::put('/update/posts/{id}', 'App\Controllers\Admin\PostController@update');
+Route::post('/admin/delete/{id}', 'App\Controllers\Admin\PostController@delete');
+
 
 
 

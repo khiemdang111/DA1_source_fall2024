@@ -178,4 +178,23 @@ class PostController
             header("Location: /admin/posts/$id");
         }
     }
+
+    public static function delete(int $id)
+    {
+        $post = new Post();
+        $is_exist = $post->getOnePost($id);
+        if ($is_exist && $is_exist['id'] === $id) {
+            $data = [
+                'status' => 0,
+            ];
+            $result = $post->updatepost($id, $data);
+        }
+        if ($result) {
+            NotificationHelper::success('delete_post', 'Xóa bài viết thành công!');
+            header('Location: /admin/posts');
+        } else {
+            NotificationHelper::error('delete_post', 'Xóa bài viết thất bại!');
+            header("Location: /admin/posts");
+        }
+    }
 }
