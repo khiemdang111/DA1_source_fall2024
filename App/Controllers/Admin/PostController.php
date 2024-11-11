@@ -90,7 +90,7 @@ class PostController
 
         $is_upload = PostValidation::uploadAvatar();
         if ($is_upload) {
-            $data['avatar'] = $is_upload;
+            $data['img'] = $is_upload;
         }
         
         $result = $post->createPost($data);
@@ -102,6 +102,80 @@ class PostController
             NotificationHelper::error('store', 'Thêm bài viết thất bại');
             header('location: /admin/posts/create');
             exit();
+        }
+    }
+
+    public static function edit(int $id)
+    {
+
+        $user = new User();
+        $user_all = $user->getAllUser();
+
+        $Category_post = new Category_post();
+        $category_post_all = $Category_post->getAllCatrgoty_Post();
+
+        $post = new Post();
+        $getOnePost = $post->getOnePost($id);
+
+       
+        if (!$getOnePost) {
+            NotificationHelper::error('edit', 'Không thể xem sản phẩm này!');
+            header('Location: /admin/posts');
+        }
+        $data = [
+            'getOnePost' => $getOnePost,
+            'user_all' => $user_all,
+            'category_post_all' => $category_post_all,
+
+        ];
+       
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        Edit::render($data);
+        Footer::render();
+    }
+
+
+    public static function update(int $id)
+    {
+ 
+        $is_valid =  PostValidation::edit();
+        if (!$is_valid) {
+            NotificationHelper::error('update_product', 'Cập nhật bài viết thất bại  !');
+            header("Location: /admin/posts/$id");
+            exit();
+        }
+        $title = $_POST['title'];
+
+        $post = new Post();
+        $is_existe = $post->getOnePostByName($title);
+
+        if ($is_existe && $is_existe['id'] != $id) {
+            NotificationHelper::error('update_product', 'Tên loại bài viết đã tồn tại!');
+            header("Location: /admin/posts/$id");
+            exit();
+        }
+        $data = [
+            'title' => $title,
+            'summary' => $_POST['title'],
+            'content' => $_POST['content'],
+            'user_id' => $_POST['user_id'],
+            'category_post_id' => $_POST['category_post_id'],
+            'status' => $_POST['status'],
+            
+        ];
+        // $is_upload = ProductValidation::updateImage();
+        // if ($is_upload) {
+        //     $data['image'] = $is_upload;
+        // }
+        $result = $post->updatePost($id, $data);
+        if ($result) {
+            NotificationHelper::success('update', 'Cập nhật bài viết thành công!');
+            header('Location: /admin/posts');
+        } else {
+            NotificationHelper::error('update', 'Cập nhật bài viết thất bại!');
+            header("Location: /admin/posts/$id");
         }
     }
 }
