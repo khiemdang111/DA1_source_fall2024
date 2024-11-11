@@ -79,7 +79,7 @@ class PostController
 
         $data = [
             'title' => $title,
-            'summary' => $_POST['title'],
+            'summary' => $_POST['summary'],
             'content' => $_POST['content'],
             'user_id' => $_POST['user_id'],
             'category_post_id' => $_POST['category_post_id'],

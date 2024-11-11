@@ -41,12 +41,12 @@ class Create extends BaseView
                       <input class="form-control" type="file" id="img" name="img" />
                     </div>
                     <div class="col-md-12">
-                      <label for="address" class="form-label">Mô tả ngắn </label>
+                      <label for="summary" class="form-label">Mô tả ngắn </label>
                       <textarea name="summary" id="summary"></textarea>
                     </div>
 
                     <div class="col-md-12">
-                      <label for="address" class="form-label">Nội dung </label>
+                      <label for="content" class="form-label">Nội dung </label>
                       <textarea name="content" id="content"></textarea>
                     </div>
 
