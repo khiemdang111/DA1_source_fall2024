@@ -56,7 +56,7 @@ class index extends BaseView
                                             <?= $item['title'] ?>
                                         </td>
                                         <td>
-                                            <img src="<?= APP_URL ?>/public/uploads/posts/<?= $item['avatar'] ?>" alt="Avatar" class="rounded-circle" width="60px" height="60px" />
+                                            <img src="<?= APP_URL ?>/public/uploads/posts/<?= $item['img'] ?>" alt="Avatar" class="rounded-circle" width="60px" height="60px" />
                                         </td>
                                         <td class="text-truncate" style="max-width: 200px;">
                                             <?= $item['summary'] ?>

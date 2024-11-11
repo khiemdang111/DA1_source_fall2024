@@ -56,6 +56,8 @@ class Header extends BaseView
       <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
       <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
       <script src="<?= APP_URL ?>/public/assets/admin/assets/js/config.js"></script>
+      
+      <script src="<?= APP_URL ?>/ckeditor4/ckeditor/ckeditor.js"></script>
 
 
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -235,7 +237,7 @@ class Header extends BaseView
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="" class="menu-link">
+                    <a href="/admin/posts/create" class="menu-link">
                       <div class="text-truncate" data-i18n="Blank">Thêm mới</div>
                     </a>
                   </li>

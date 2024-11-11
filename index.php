@@ -93,6 +93,10 @@ Route::post('/admin/delete/{id}', 'App\Controllers\Admin\UserController@delete')
 
 // *** Post ***
 Route::get('/admin/posts', 'App\Controllers\Admin\PostController@index');
+Route::get('/admin/posts/create', 'App\Controllers\Admin\PostController@create');
+Route::post('/admin/posts', 'App\Controllers\Admin\PostController@store');
+
+
 
 // *** Recycle Bin ***
 Route::get('/admin/recycle/products', 'App\Controllers\Admin\ProductController@productRecycle');

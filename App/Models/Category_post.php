@@ -4,39 +4,34 @@ namespace App\Models;
 
 use App\Helpers\NotificationHelper;
 
-class Post extends BaseModel
+class Category_post extends BaseModel
 {
-    protected $table = 'posts';
+    protected $table = 'categories_post';
     protected $id = 'id';
 
 
 
-    public function getAllPost()
+    public function getAllCatrgoty_Post()
     {
         return $this->getAll();
     }
-    public function getOnePost($id)
+    public function getOneCatrgoty_Post($id)
     {
         return $this->getOne($id);
     }
 
-    public function createPost($data)
+    public function createCatrgoty_Post($data)
     {
         return $this->create($data);
     }
-    public function updatePost($id, $data)
+    public function updateCatrgoty_Post($id, $data)
     {
         return $this->update($id, $data);
     }
 
-    public function deletePost($id)
+    public function deleteCatrgoty_Post($id)
     {
         return $this->delete($id);
-    }
-
-    public function getOnePostByName($name)
-    {
-        return $this->getOneByName($name);
     }
    
 
