@@ -50,8 +50,8 @@ class ProductRecycle extends BaseView
                           <i class="bx bx-dots-vertical-rounded"></i>
                         </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="/admin/products/<?= $item['id'] ?>"><i class="bx bxs-color me-1"></i> Khôi phục</a>
-                          <form class="w-100" action="/admin/delete/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
+                          <a class="dropdown-item" href="/admin/product/restore/<?= $item['id'] ?>"><i class="bx bxs-color me-1"></i> Khôi phục</a>
+                          <form class="w-100" action="/admin/product/deletePermanently/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
                             <input type="hidden" name="method" value="POST" id="">
                             <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Xóa vĩnh viễn</button>
                           </form>

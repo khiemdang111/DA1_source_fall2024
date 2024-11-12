@@ -23,7 +23,7 @@ class ProductController
     {
 
         $product = new Product();
-        $data = $product->getAllByStatus();
+        $data = $product->getAllProductByStatus();
         Header::render();
         Notification::render();
         //hủy thông báo
@@ -187,10 +187,10 @@ class ProductController
             $result = $product->updateproduct($id, $data);
         }
         if ($result) {
-            NotificationHelper::success('delete_product', 'Xóa loại sản phẩm thành công!');
+            NotificationHelper::success('delete_product', 'Xóa sản phẩm thành công!');
             header('Location: /admin/products');
         } else {
-            NotificationHelper::error('delete_product', 'Xóa loại sản phẩm thất bại!');
+            NotificationHelper::error('delete_product', 'Xóa sản phẩm thất bại!');
             header("Location: /admin/products");
         }
     }
@@ -204,5 +204,40 @@ class ProductController
         NotificationHelper::unset();
         ProductRecycle::render($data);
         Footer::render();
+    }
+
+    public static function restore(int $id){
+        $product = new Product();
+        $is_exist = $product->getOneProduct($id);
+        if ($is_exist && $is_exist['id'] === $id) {
+            $data = [
+                'status' => 1,
+            ];
+            $result = $product->updateproduct($id, $data);
+        }
+        if ($result) {
+            NotificationHelper::success('restore_product', 'Khôi phục sản phẩm thành công!');
+            header('Location: /admin/recycle/products');
+        } else {
+            NotificationHelper::error('restore_product', 'Khôi phục sản phẩm thất bại!');
+            header("Location: /admin/recycle/products");
+        }
+    }
+    public static function deletePermanently(int $id){
+        $product = new Product();
+        $is_exist = $product->getOneProduct($id);
+        if ($is_exist && $is_exist['id'] === $id) {
+            $data = [
+                'status' => 2,
+            ];
+            $result = $product->updateproduct($id, $data);
+        }
+        if ($result) {
+            NotificationHelper::success('deletePermanently_product', 'Xóa vĩnh viễn sản phẩm thành công!');
+            header('Location: /admin/recycle/products');
+        } else {
+            NotificationHelper::error('deletePermanently_product', 'Xóa vĩnh viễn sản phẩm thất bại!');
+            header("Location: /admin/recycle/products");
+        }
     }
 }
