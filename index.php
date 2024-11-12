@@ -103,8 +103,16 @@ Route::post('/admin/delete/posts/{id}', 'App\Controllers\Admin\PostController@de
 
 
 // *** Recycle Bin ***
+// *** Products
 Route::get('/admin/recycle/products', 'App\Controllers\Admin\ProductController@productRecycle');
+
+// *** Users
 Route::get('/admin/recycle/users', 'App\Controllers\Admin\UserController@userRecycle');
 
+
+// *** Posts
+Route::get('/admin/recycle/posts', 'App\Controllers\Admin\PostController@postRecycle');
+Route::get('/admin/post/restore/{id}', 'App\Controllers\Admin\PostController@restore');
+Route::post('/admin/post/deletePermanently/{id}', 'App\Controllers\Admin\PostController@deletePermanently');
 
 Route::dispatch($_SERVER['REQUEST_URI']);

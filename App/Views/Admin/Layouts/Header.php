@@ -262,6 +262,11 @@ class Header extends BaseView
                       <div class="text-truncate" data-i18n="Blank">Tài khoảng khách hàng</div>
                     </a>
                   </li>
+                  <li class="menu-item">
+                    <a href="/admin/recycle/posts" class="menu-link">
+                      <div class="text-truncate" data-i18n="Blank">Bài viết</div>
+                    </a>
+                  </li>
                 </ul>
               </li>
               <!-- Front Pages -->

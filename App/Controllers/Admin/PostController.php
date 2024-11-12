@@ -15,6 +15,8 @@ use App\Views\Admin\Components\Notification;
 use App\Views\Admin\Pages\Post\Create;
 use App\Views\Admin\Pages\Post\Edit;
 use App\Views\Admin\Pages\Post\index;
+use App\Views\Admin\Pages\Recycle\PostRecycle;
+
 
 
 
@@ -28,7 +30,7 @@ class PostController
     {
 
         $post = new Post();
-        $data = $post->getAllPost();
+        $data = $post->getAllByStatus();
 
         Header::render();
         Notification::render();
@@ -195,6 +197,52 @@ class PostController
         } else {
             NotificationHelper::error('delete_post', 'Xóa bài viết thất bại!');
             header("Location: /admin/posts");
+        }
+    }
+    public static function postRecycle()
+    {
+
+        $post = new Post();
+        $data = $post->getAllPostByStatusRecycle();
+
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        PostRecycle::render($data );
+        Footer::render();
+    }
+    public static function restore(int $id){
+        $post = new Post();
+        $is_exist = $post->getOnePost($id);
+        if ($is_exist && $is_exist['id'] === $id) {
+            $data = [
+                'status' => 1,
+            ];
+            $result = $post->updatepost($id, $data);
+        }
+        if ($result) {
+            NotificationHelper::success('restore_post', 'Khôi phục bài viết thành công!');
+            header('Location: /admin/recycle/posts');
+        } else {
+            NotificationHelper::error('restore_post', 'Khôi phục bài viết thất bại!');
+            header("Location: /admin/recycle/posts");
+        }
+    }
+    public static function deletePermanently(int $id){
+        $post = new Post();
+        $is_exist = $post->getOnePost($id);
+        if ($is_exist && $is_exist['id'] === $id) {
+            $data = [
+                'status' => 2,
+            ];
+            $result = $post->updatepost($id, $data);
+        }
+        if ($result) {
+            NotificationHelper::success('deletePermanently_post', 'Xóa vĩnh viễn bài viết thành công!');
+            header('Location: /admin/recycle/posts');
+        } else {
+            NotificationHelper::error('deletePermanently_post', 'Xóa vĩnh viễn bài viết thất bại!');
+            header("Location: /admin/recycle/posts");
         }
     }
 }

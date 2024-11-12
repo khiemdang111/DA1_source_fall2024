@@ -39,6 +39,17 @@ class Post extends BaseModel
         return $this->getOneByName($name);
     }
    
-
+    public function getAllPostByStatusRecycle()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM posts WHERE status= 0";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
    
 }
