@@ -206,4 +206,38 @@ class UserController
         Footer::render();
      
     }
+    public static function restore(int $id){
+        $user = new User();
+        $is_exist = $user->getOneUser($id);
+        if ($is_exist && $is_exist['id'] === $id) {
+            $data = [
+                'status' => 1,
+            ];
+            $result = $user->updateuser($id, $data);
+        }
+        if ($result) {
+            NotificationHelper::success('restore_user', 'Khôi phục tài khoản thành công!');
+            header('Location: /admin/recycle/users');
+        } else {
+            NotificationHelper::error('restore_user', 'Khôi phục tài khoản thất bại!');
+            header("Location: /admin/recycle/users");
+        }
+    }
+    public static function deletePermanently(int $id){
+        $user = new User();
+        $is_exist = $user->getOneUser($id);
+        if ($is_exist && $is_exist['id'] === $id) {
+            $data = [
+                'status' => 3,
+            ];
+            $result = $user->updateuser($id, $data);
+        }
+        if ($result) {
+            NotificationHelper::success('deletePermanently_user', 'Xóa vĩnh viễn tài khoản thành công!');
+            header('Location: /admin/recycle/users');
+        } else {
+            NotificationHelper::error('deletePermanently_user', 'Xóa vĩnh viễn tài khoản thất bại!');
+            header("Location: /admin/recycle/users");
+        }
+    }
 }

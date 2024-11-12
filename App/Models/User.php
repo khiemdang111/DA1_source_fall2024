@@ -13,7 +13,16 @@ class User extends BaseModel
 
     public function getAllUser()
     {
-        return $this->getAll();
+        $result = [];
+        try {
+            $sql = "SELECT * FROM users WHERE status != 0 AND status !=3";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    
     }
     public function getOneUser($id)
     {

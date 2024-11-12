@@ -104,7 +104,7 @@ class Edit extends BaseView
                                                 <select id="status" class="select2 form-select" name="status">
                                                     <option value="">Chọn trạng thái</option>
                                                     <option value="1" <?= $data['status'] == 1 ? 'selected' : '' ?>>Kích hoạt</option>
-                                                    <option value="0" <?= $data['status'] == 0 ? 'selected' : '' ?>>Không kích hoạt</option>
+                                                    <option value="2" <?= $data['status'] == 0 ? 'selected' : '' ?>>Khóa</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6">

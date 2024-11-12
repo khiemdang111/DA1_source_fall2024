@@ -70,7 +70,7 @@ class UserRecycle extends BaseView
                                         <td>
                                             <?= $item['address'] ?>
                                         </td>
-                                        <td><?= ($item['status'] == 0) ? 'Khóa ' : 'Hoạt động ' ?></td>
+                                        <td><?= ($item['status'] == 0) ? 'Ẩn ' : 'Hoạt động ' ?></td>
                                         <td><?= ($item['role'] == 0) ? 'Quản trị viên ' : 'Khách hàng' ?></td>
 
                                         <td>
@@ -80,9 +80,9 @@ class UserRecycle extends BaseView
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="/admin/users/<?= $item['id'] ?>"><i class="bx bxs-color me-1"></i> Khôi phục</a>
+                                                    <a class="dropdown-item" href="/admin/user/restore/<?= $item['id'] ?>"><i class="bx bxs-color me-1"></i> Khôi phục</a>
                                                     
-                                                    <form class="w-100" action="/admin/delete/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
+                                                    <form class="w-100" action="/admin/user/deletePermanently/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
                                                         <input type="hidden" name="method" value="POST" id="">
                                             
                                                         <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Xóa vĩnh viễn</button>

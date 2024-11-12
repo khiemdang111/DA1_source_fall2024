@@ -70,7 +70,7 @@ class index extends BaseView
                                         <td>
                                             <?= $item['address'] ?>
                                         </td>
-                                        <td><?= ($item['status'] == 0) ? 'Khóa ' : 'Hoạt động ' ?></td>
+                                        <td><?= ($item['status'] == 2) ? 'Khóa ' : 'Hoạt động ' ?></td>
                                         <td><?= ($item['role'] == 0) ? 'Quản trị viên ' : 'Khách hàng' ?></td>
 
                                         <td>

@@ -85,7 +85,7 @@ Route::get('/admin/users/create', 'App\Controllers\Admin\UserController@create')
 Route::post('/admin/users', 'App\Controllers\Admin\UserController@store');
 Route::get('/admin/users/{id}', 'App\Controllers\Admin\UserController@edit');
 Route::put('/update/user/{id}', 'App\Controllers\Admin\UserController@update');
-Route::post('/admin/delete/uers/{id}', 'App\Controllers\Admin\UserController@delete');
+Route::post('/admin/delete/users/{id}', 'App\Controllers\Admin\UserController@delete');
 
 
 
@@ -108,6 +108,8 @@ Route::get('/admin/recycle/products', 'App\Controllers\Admin\ProductController@p
 
 // *** Users
 Route::get('/admin/recycle/users', 'App\Controllers\Admin\UserController@userRecycle');
+Route::get('/admin/user/restore/{id}', 'App\Controllers\Admin\UserController@restore');
+Route::post('/admin/user/deletePermanently/{id}', 'App\Controllers\Admin\UserController@deletePermanently');
 
 
 // *** Posts
