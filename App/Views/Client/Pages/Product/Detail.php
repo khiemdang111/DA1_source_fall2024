@@ -32,7 +32,7 @@ class Detail extends BaseView
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 mb-5 ftco-animate">
-                        <a href="" class="image-popup prod-img-bg"><img src="<?= APP_URL ?>/public/uploads/products/<?= $data['product'][0]['image'] ?>" class="img-fluid" alt="Colorlib Template"></a>
+                        <a href="" class="image-popup prod-img-bg"><img width="100%" height="100%" src="<?= APP_URL ?>/public/uploads/products/<?= $data['product'][0]['image'] ?>" class="img-fluid" alt="Colorlib Template"></a>
                     </div>
                     <div class="col-lg-6 product-details pl-md-5 ftco-animate">
                         <h3><?= $data['product'][0]['name'] ?></h3>
@@ -102,7 +102,7 @@ class Detail extends BaseView
 
                                 <div class="w-100"></div>
                                 <div class="col-md-12">
-                                    <p style="color: #000;">80 piece available</p>
+                                    <p style="color: #000;">Số lượt xem : <?= $data['product'][0]['view'] ?></p>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary add_to_cart">Thêm vào giỏ hàng</button> <a href="/cart" class="btn btn-primary buy_now">Mua ngay</a>
@@ -148,7 +148,7 @@ class Detail extends BaseView
                                                                     <?php
                                                                     else :
                                                                     ?>
-                                                                        <img class="img_account" src="<?= APP_URL ?>/public/uploads/image/user.png" alt="" width="40%">
+                                                                        <img class="rounded-circle" src="<?= APP_URL ?>/public/uploads/image/user.png" alt="" width="45px">
                                                                     <?php
                                                                     endif; ?>
 
@@ -203,7 +203,7 @@ class Detail extends BaseView
                                                         endforeach;
                                                     else :
                                                         ?>
-                                                        <h6 class="commnets_h6">Chưa có bình luận</h6>
+                                                        <h5 class="commnets_no ">Chưa có bình luận</h5>
                                                     <?php
                                                     endif;
 
@@ -223,7 +223,7 @@ class Detail extends BaseView
                                                                 <?php
                                                                 else :
                                                                 ?>
-                                                                    <img class="img_account" src="<?= APP_URL ?>/public/uploads/img/user.png" alt="" width="40%">
+                                                                    <img class="img_account" src="<?= APP_URL ?>/public/uploads/image/user.png" alt="" width="40%">
                                                                 <?php
                                                                 endif; ?>
                                                             </div>

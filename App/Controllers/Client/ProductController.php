@@ -36,12 +36,12 @@ class ProductController
         Index::render($data);
         Footer::render();
     }
-    public static function detail($id)
+    public static function detail(int $id)
     {
+       
         $product = new Product();
         $detail = $product->getOneProductByCategoryDetailStatus($id);
-    //    var_dump($detail[0]['view']);
-    //    die;
+    
          if(!$detail){
             NotificationHelper::error('detail','Không thể xem sản phẩm');
             header('Location: /');
@@ -51,9 +51,7 @@ class ProductController
             'product' => $detail,
             'comments' => $comment->get5CommentNewestByProductAndStatus($id),
         ];
-         $view_result = ViewProductHelper::cookieView($id,$detail[0]['view']);
-         // var_dump($view_result);
-        
+          $view_result = ViewProductHelper::cookieView($id,$detail[0]['view']);
         Header::render();
         Notification::render();
         //hủy thông báo

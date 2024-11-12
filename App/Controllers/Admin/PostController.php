@@ -63,7 +63,7 @@ class PostController
         $is_valid = PostValidation::create();
         if (!$is_valid) {
 
-            NotificationHelper::error('store', 'Thêm bài viết thất bại');
+            NotificationHelper::error('store_post2', 'Thêm bài viết thất bại');
             header('location: /admin/posts/create');
             exit();
         }
@@ -72,7 +72,7 @@ class PostController
         $post = new Post();
         $is_existe = $post->getOnePostByName($title);
         if ($is_existe) {
-            NotificationHelper::error('store', 'Tên bài viết đã tồn tại');
+            NotificationHelper::error('store_post', 'Tên bài viết đã tồn tại');
             header('location: /admin/posts/create');
             exit();
         }
@@ -95,11 +95,11 @@ class PostController
         
         $result = $post->createPost($data);
         if ($result) {
-            NotificationHelper::success('store', 'Thêm bài viết thành công');
+            NotificationHelper::success('store_post', 'Thêm bài viết thành công');
             header('location: /admin/posts');
             exit();
         } else {
-            NotificationHelper::error('store', 'Thêm bài viết thất bại');
+            NotificationHelper::error('store_post', 'Thêm bài viết thất bại');
             header('location: /admin/posts/create');
             exit();
         }
@@ -119,7 +119,7 @@ class PostController
 
        
         if (!$getOnePost) {
-            NotificationHelper::error('edit', 'Không thể xem sản phẩm này!');
+            NotificationHelper::error('edit_post', 'Không thể xem sản phẩm này!');
             header('Location: /admin/posts');
         }
         $data = [
@@ -142,7 +142,7 @@ class PostController
  
         $is_valid =  PostValidation::edit();
         if (!$is_valid) {
-            NotificationHelper::error('update_product', 'Cập nhật bài viết thất bại  !');
+            NotificationHelper::error('update_p', 'Cập nhật bài viết thất bại  !');
             header("Location: /admin/posts/$id");
             exit();
         }
@@ -171,10 +171,10 @@ class PostController
         // }
         $result = $post->updatePost($id, $data);
         if ($result) {
-            NotificationHelper::success('update', 'Cập nhật bài viết thành công!');
+            NotificationHelper::success('update_post', 'Cập nhật bài viết thành công!');
             header('Location: /admin/posts');
         } else {
-            NotificationHelper::error('update', 'Cập nhật bài viết thất bại!');
+            NotificationHelper::error('update_post', 'Cập nhật bài viết thất bại!');
             header("Location: /admin/posts/$id");
         }
     }

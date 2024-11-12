@@ -107,7 +107,11 @@ class Edit extends BaseView
           </div>
         </div>
       </div>
+      <script>
+        CKEDITOR.replace('description');
+       
 
+    </script>
   <?php
   }
 }

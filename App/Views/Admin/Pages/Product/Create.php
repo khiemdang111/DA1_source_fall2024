@@ -130,35 +130,10 @@ class Create extends BaseView
           </div>
         </div>
         <script>
-            function create() {
-                let count_items = document.querySelectorAll(".items_properties").length - 1;
-                count_items++;
-                $("#multi_properties").append(`
-                                    <div class="row items_properties ">
-                                        <div class="col-5 mt-3">
-                                            <label for="">Tên thuộc tính</label>
-                                            <select name="option_id[]" id="" class="form-select">
-                                                <option value="">Chọn thuộc tính</option>
-                                                  <option value=""></option>
-                                            </select>
-                                        </div>
-                                        <div class="col-5 mt-3">
-                                            <label for="option_vl_name">Giá trị</label>
-                                            <input type="text" class="form-control" id="option_vl_name" name="option_vl_name[]" placeholder="Giá trị">
-                                        </div>
-                                        <div class="col-1 mt-3">
-                                            <label for="">&nbsp;</label>
-                                            <a href="javascript:void(0)" onclick="delete_(this)" class="btn btn-danger btn-sm d-block">Xóa</a>
-                                        </div>
-                                    </div>
-                                `);
-            }
-            function delete_(__this) {
-                let count_items = document.querySelectorAll(".items_properties").length - 1;
-                count_items--;
-                $(__this).closest(".items_properties").remove();
-            }
-        </script>
+        CKEDITOR.replace('description');
+       
+
+    </script>
         <?php
   }
 }

@@ -23,7 +23,7 @@ class ProductController
     {
 
         $product = new Product();
-        $data = $product->getAllProductJoinCategory();
+        $data = $product->getAllByStatus();
         Header::render();
         Notification::render();
         //hủy thông báo
@@ -59,7 +59,7 @@ class ProductController
         $is_valid = ProductValidation::create();
 
         if (!$is_valid) {
-            NotificationHelper::error('store', 'Thêm sản phẩm thất bại');
+            NotificationHelper::error('store_product', 'Thêm sản phẩm thất bại');
             header('location: /admin/products/create');
             exit;
         }
@@ -70,7 +70,7 @@ class ProductController
         $is_exist = $product->getOneProductByName($name);
 
         if ($is_exist) {
-            NotificationHelper::error('store', 'Tên sản phẩm này đã tồn tại');
+            NotificationHelper::error('store_product2', 'Tên sản phẩm này đã tồn tại');
             header('location: /admin/products/create');
             exit;
         }
@@ -93,10 +93,10 @@ class ProductController
         $result = $product->createProduct($data);
 
         if ($result) {
-            NotificationHelper::success('store', 'Thêm sản phẩm thành công');
+            NotificationHelper::success('create_product', 'Thêm sản phẩm thành công');
             header('location: /admin/products');
         } else {
-            NotificationHelper::error('store', 'Thêm sản phẩm thất bại');
+            NotificationHelper::error('create_product', 'Thêm sản phẩm thất bại');
             header('location: /admin/products/create');
             exit;
         }
@@ -111,7 +111,7 @@ class ProductController
         $category = new category();
         $data_category = $category->getAllCategory();
         if (!$data_product) {
-            NotificationHelper::error('edit', 'Không thể xem sản phẩm này!');
+            NotificationHelper::error('edit_product', 'Không thể xem sản phẩm này!');
             header('Location: /admin/products');
         }
         $data = [
@@ -136,7 +136,7 @@ class ProductController
  
         $is_valid =  ProductValidation::edit();
         if (!$is_valid) {
-            NotificationHelper::error('update_product', 'Cập nhật sản phẩm thất bại  !');
+            NotificationHelper::error('update_product2', 'Cập nhật sản phẩm thất bại  !');
             header("Location: /admin/products/$id");
             exit();
         }
@@ -166,10 +166,10 @@ class ProductController
         // }
         $result = $product->updateproduct($id, $data);
         if ($result) {
-            NotificationHelper::success('update', 'Cập nhật sản phẩm thành công!');
+            NotificationHelper::success('update_products', 'Cập nhật sản phẩm thành công!');
             header('Location: /admin/products');
         } else {
-            NotificationHelper::error('update', 'Cập nhật sản phẩm thất bại!');
+            NotificationHelper::error('update_products', 'Cập nhật sản phẩm thất bại!');
             header("Location: /admin/products/$id");
         }
     }

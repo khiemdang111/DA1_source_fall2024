@@ -69,7 +69,7 @@ class index extends BaseView
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     <a class="dropdown-item" href="/admin/posts/<?= $item['id'] ?>"><i class="bx bx-edit-alt me-1"></i> Sửa</a>
-                                                    <form class="w-100" action="/admin/delete/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
+                                                    <form class="w-100" action="/admin/delete/posts/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
                                                         <input type="hidden" name="method" value="POST" id="">
                                             
                                                         <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Xóa</button>

@@ -35,8 +35,8 @@ class Create extends BaseView
                         <input class="form-control" type="text" id="name" name="name" autofocus />
                       </div>
                         <div class="col-md-12 mb-3">
-                        <label for="discription" class="form-label">Mô tả <span class="text-danger"> *</span></label>
-                        <textarea class="form-control" type="text" id="discription" rows="5" name="discription"
+                        <label for="description" class="form-label">Mô tả <span class="text-danger"> *</span></label>
+                        <textarea class="form-control" type="text" id="description" rows="5" name="description"
                           placeholder="Nhập mô tả"></textarea>
                         </div>
                       </div>
@@ -45,7 +45,7 @@ class Create extends BaseView
                         <select id="status" name="status" class="select2 form-select">
                           <option value="">Chọn trạng thái </option>
                           <option value="1">Hiển thị </option>
-                          <option value="0">Ẩn</option>
+                          <option value="2">Ẩn</option>
                        
                         </select>
                       </div>
@@ -62,7 +62,11 @@ class Create extends BaseView
             </div>
           </div>
         </div>
+        <script>
+        CKEDITOR.replace('description');
+       
 
+    </script>
         <?php
   }
 }

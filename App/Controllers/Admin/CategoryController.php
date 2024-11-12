@@ -20,9 +20,11 @@ class CategoryController
     public static function index()
     {
         $category = new Category();
-        $data = $category->getAllCategory();
-        
+        $data = $category->getAllCategoryByStatus();
+
         Header::render();
+        Notification::render();
+        NotificationHelper::unset();
         // hiển thị giao diện danh sách
         Index::render($data);
         Footer::render();
@@ -49,8 +51,8 @@ class CategoryController
         // validation các trường dữ liệu
         $is_valid = CategoryValidation::create();
 
-        if(!$is_valid){
-            NotificationHelper::error('store', 'Thêm loại sản phẩm thất bại');
+        if (!$is_valid) {
+            NotificationHelper::error('store_category', 'Thêm loại sản phẩm thất bại');
             header('location: /admin/categories/create');
             exit;
         }
@@ -58,12 +60,13 @@ class CategoryController
         // die;
         $name  = $_POST['name'];
         $status = $_POST['status'];
+
         // Kiểm tra các tên loại có tồn tại hay chưa
         $category = new Category();
         $is_exist = $category->getOneCategoryByName($name);
-        
+
         if ($is_exist) {
-            NotificationHelper::error('store', 'Tên loại sản phẩm này đã tồn tại');
+            NotificationHelper::error('store_category_name', 'Tên loại sản phẩm này đã tồn tại');
             header('location: /admin/categories/create');
             exit;
         }
@@ -71,129 +74,98 @@ class CategoryController
         // Thêm vào
         $data = [
             'name' => $name,
+            'description' => $_POST['description'],
             'status' => $status,
         ];
 
         $result = $category->createCategory($data);
 
-        if($result){
-            NotificationHelper::success('store', 'Thêm loại sản phẩm thành công');
+        if ($result) {
+            NotificationHelper::success('store_category', 'Thêm loại sản phẩm thành công');
             header('location: /admin/categories');
-        }else{
-            NotificationHelper::error('store', 'Thêm loại sản phẩm thất bại');
+        } else {
+            NotificationHelper::error('store_category', 'Thêm loại sản phẩm thất bại');
             header('location: /admin/categories/create');
             exit;
         }
     }
 
 
-    // hiển thị chi tiết
-    // public static function show()
-    // {
-    // }
-
-
     // hiển thị giao diện form sửa
-    // public static function edit(int $id)
-    // {
-    //     // giả sử data là mảng dữ liệu lấy được từ database
-    //     // $data = [
-    //     //     'id' => $id,
-    //     //     'name' => 'Category 1',
-    //     //     'status' => 1
-    //     // ];
-    //     $category = new Category();
-    //     $data = $category->getOneCategory($id);
+    public static function edit(int $id)
+    {
 
-    //     if(!$data){
-    //         NotificationHelper::error('edit','Không thể xem loại sản phẩm này');
-    //         header('location: /admin/categories');
-    //         exit;
-
-    //     }
-
-    //     Header::render();
-    //     Notification::render();
-    //     NotificationHelper::unset();
-    //     // Hiển thị form sửa
-    //     Edit::render($data);
-    //     Footer::render();
-
-    //     // if ($data) {
-    //     //     Header::render();
-    //     //     // hiển thị form sửa
-    //     //     Edit::render($data);
-    //     //     Footer::render();
-    //     // } else {
-    //     //     header('location: /admin/categories');
-    //     // }
-    // }
+        $category = new Category();
+        $data = $category->getOneCategory($id);
+        if (!$data) {
+            NotificationHelper::error('edit_category', 'Không thể xem loại sản phẩm này!');
+            header('Location: /admin/categories');
+        }
+        Header::render();
+        Notification::render();
+        //hủy thông báo
+        NotificationHelper::unset();
+        // hiển thị form sửa
+        Edit::render($data);
+        Footer::render();
+    }
 
 
-    // xử lý chức năng sửa (cập nhật)
-    // public static function update(int $id)
-    // {
-    //     $is_valid = CategoryValidation::edit();
+    public static function update(int $id)
+    {
 
-    //     if(!$is_valid){
-    //         NotificationHelper::error('update', 'Cập nhật loại sản phẩm thất bại');
-    //         header("location: /admin/categories/$id");
-    //         exit;
-    //     }
-    //     $name  = $_POST['name'];
-    //     $status = intval($_POST['status']);
-    //     // Kiểm tra các tên loại có tồn tại hay chưa
-    //     $category = new Category();
-    //     $is_exist = $category->getOneCategoryByName($name);
-    //     // var_dump($is_exist['status']);
-    //     // var_dump($status);
-    //     if(($is_exist['status'] == $status)){
-    //         if ($is_exist) {
-    //             if($is_exist['id']){
-    //                 NotificationHelper::error('store', 'Tên loại sản phẩm này đã tồn tại');
-    //                 header("location: /admin/categories/$id");
-    //             exit;
-    //             }
-                
-    //         }
-    //     }
+        $is_valid =  CategoryValidation::edit();
+        if (!$is_valid) {
+            NotificationHelper::error('update_category2', 'Cập nhật loại sản phẩm thất bại  !');
+            header("Location: /admin/categories/$id");
+            exit();
+        }
+        $name = $_POST['name'];
+        $status = $_POST['status'];
+        // kiểm tra category name đã tồn tại chgx nếu có thì thông báo ra 
+        $category = new Category();
+        $is_exist = $category->getOneCategoryByName($name);
 
-    //     // Thực hiện cập nhật
-  
-    //     $data = [
-    //         'name' => $name,
-    //         'status' => $status,
-    //     ];
-
-    //     $result = $category->updateCategory($id, $data);
-
-    //     if($result){
-    //         NotificationHelper::success('update', 'Cập nhật loại sản phẩm thành công');
-    //         header('location: /admin/categories');
-    //     }else{
-    //         NotificationHelper::error('update', 'Cập nhật loại sản phẩm thất bại');
-    //         header("location: /admin/categories/$id");
-    //         exit;
-    //     }
-
-    // }
+        if ($is_exist && $is_exist['id'] != $id) {
+            NotificationHelper::error('update_category', 'Tên loại sản phẩm đã tồn tại!');
+            header("Location: /admin/categories/$id");
+            exit();
+        }
 
 
-    // thực hiện xoá
-    // public static function delete(int $id)
-    // {
-    //     $category = new Category();
-    //     $result = $category->deleteCategory($id);
 
-    //     // var_dump($result);
-    //     if($result){
-    //         NotificationHelper::success('delete', 'Xóa loại sản phẩm thành công');
-    //         header("location: /admin/categories/$id");
+        $data = [
+            'name' => $name,
+            'description' => $_POST['description'],
+            'status' => $status,
+        ];
 
-    //     } else{
-    //         NotificationHelper::error('delete', 'Xóa loại sản phẩm thất bại');
-    //         header("location: /admin/categories/$id");
+        $result = $category->updateCategory($id, $data);
+        if ($result) {
+            NotificationHelper::success('update', 'Cập nhật loại sản phẩm thành công!');
+            header('Location: /admin/categories');
+        } else {
+            NotificationHelper::error('update', 'Cập nhật loại sản phẩm thất bại!');
+            header("Location: /admin/categories/$id");
+        }
+    }
 
-    //     }
-    // }
+    public static function delete(int $id)
+    {
+        $category = new Category();
+        $is_exist = $category->getOneCategory($id);
+        if ($is_exist && $is_exist['id'] === $id) {
+            $data = [
+                'status' => 0,
+            ];
+            $result = $category->updateCategory($id, $data);
+        }
+        if ($result) {
+            NotificationHelper::success('delete_category', 'Xóa loại sản phẩm thành công!');
+            header('Location: /admin/categories');
+        } else {
+            NotificationHelper::error('delete_category', 'Xóa loại sản phẩm thất bại!');
+            header("Location: /admin/categories");
+        }
+    }
 }

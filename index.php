@@ -27,54 +27,14 @@ Route::get('/products', 'App\Controllers\Client\ProductController@index');
 Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');
 Route::get('/register', 'App\Controllers\Client\AuthController@Register');
 Route::post('/register', 'App\Controllers\Client\AuthController@registerAction');
+// lọc sản phẩm theo loại
+Route::get('/products/categories/{id}','App\Controllers\Client\ProductController@getProductByCategory');
 
-// *** Admin
-Route::get('/admin', 'App\Controllers\Admin\HomeController@index');
 
 Route::get('/login', 'App\Controllers\Client\AuthController@Login');
 Route::post('/login', 'App\Controllers\Client\AuthController@loginAction');
-
 Route::get('/logout', 'App\Controllers\Client\AuthController@logout');
 
-
-//  *** Category
-// GET /categories (lấy danh sách loại sản phẩm)
-Route::get('/admin/categories', 'App\Controllers\Admin\CategoryController@index');
-
-// GET /categories/create (hiển thị form thêm loại sản phẩm)
-Route::get('/admin/categories/create', 'App\Controllers\Admin\CategoryController@create');
-
-// POST /categories (tạo mới một loại sản phẩm)
-Route::post('/admin/categories', 'App\Controllers\Admin\CategoryController@store');
-
-// GET /categories/{id} (lấy chi tiết loại sản phẩm với id cụ thể)
-Route::get('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@edit');
-
-// PUT /categories/{id} (update loại sản phẩm với id cụ thể)
-Route::put('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@update');
-
-// DELETE /categories/{id} (delete loại sản phẩm với id cụ thể)
-Route::delete('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@delete');
-
-
-// chi tiết sp 
-
-
-// thêm bình luận 
-Route::post('/comments', 'App\Controllers\Client\CommentController@store');
-// thêm bình luận 
-Route::put('/comments/{id}', 'App\Controllers\Client\CommentController@edit');
-Route::delete('/comments/{id}', 'App\Controllers\Client\CommentController@delete');
-
-// *** Product ***
-Route::get('/admin/products', 'App\Controllers\Admin\ProductController@index');
-Route::get('/admin/products/create', 'App\Controllers\Admin\ProductController@create');
-Route::post('/admin/products', 'App\Controllers\Admin\ProductController@store');
-Route::get('/admin/products/{id}', 'App\Controllers\Admin\ProductController@edit');
-Route::put('/admin/update/{id}', 'App\Controllers\Admin\ProductController@update');
-Route::post('/admin/delete/{id}', 'App\Controllers\Admin\ProductController@delete');
-// lọc sản phẩm theo loại
-Route::get('/products/categories/{id}','App\Controllers\Client\ProductController@getProductByCategory');
 
 
 // trang giỏ hàng
@@ -86,13 +46,46 @@ Route::delete('/cart/delete-all', 'App\Controllers\Client\CartController@deleteA
 // trang đặt hàng
 Route::get('/checkout', 'App\Controllers\Client\CartController@checkout');
 
+
+
+
+// thêm bình luận 
+Route::post('/comments', 'App\Controllers\Client\CommentController@store');
+Route::put('/comments/{id}', 'App\Controllers\Client\CommentController@edit');
+Route::delete('/comments/{id}', 'App\Controllers\Client\CommentController@delete');
+
+
+
+// *** Admin
+Route::get('/admin', 'App\Controllers\Admin\HomeController@index');
+// *** Product ***
+Route::get('/admin/products', 'App\Controllers\Admin\ProductController@index');
+Route::get('/admin/products/create', 'App\Controllers\Admin\ProductController@create');
+Route::post('/admin/products', 'App\Controllers\Admin\ProductController@store');
+Route::get('/admin/products/{id}', 'App\Controllers\Admin\ProductController@edit');
+Route::put('/admin/update/{id}', 'App\Controllers\Admin\ProductController@update');
+Route::post('/admin/delete/products/{id}', 'App\Controllers\Admin\ProductController@delete');
+
+//  *** Category
+// GET /categories (lấy danh sách loại sản phẩm)
+Route::get('/admin/categories', 'App\Controllers\Admin\CategoryController@index');
+Route::get('/admin/categories/create', 'App\Controllers\Admin\CategoryController@create');
+Route::post('/admin/categories', 'App\Controllers\Admin\CategoryController@store');
+Route::get('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@edit');
+Route::put('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@update');
+Route::post('/admin/delete/categories/{id}', 'App\Controllers\Admin\CategoryController@delete');
+
+
+
+
+
 // *** User ***
 Route::get('/admin/users', 'App\Controllers\Admin\UserController@index');
 Route::get('/admin/users/create', 'App\Controllers\Admin\UserController@create');
 Route::post('/admin/users', 'App\Controllers\Admin\UserController@store');
 Route::get('/admin/users/{id}', 'App\Controllers\Admin\UserController@edit');
 Route::put('/update/user/{id}', 'App\Controllers\Admin\UserController@update');
-Route::post('/admin/delete/{id}', 'App\Controllers\Admin\UserController@delete');
+Route::post('/admin/delete/uers/{id}', 'App\Controllers\Admin\UserController@delete');
 
 
 
@@ -102,7 +95,7 @@ Route::get('/admin/posts/create', 'App\Controllers\Admin\PostController@create')
 Route::post('/admin/posts', 'App\Controllers\Admin\PostController@store');
 Route::get('/admin/posts/{id}', 'App\Controllers\Admin\PostController@edit');
 Route::put('/update/posts/{id}', 'App\Controllers\Admin\PostController@update');
-Route::post('/admin/delete/{id}', 'App\Controllers\Admin\PostController@delete');
+Route::post('/admin/delete/posts/{id}', 'App\Controllers\Admin\PostController@delete');
 
 
 

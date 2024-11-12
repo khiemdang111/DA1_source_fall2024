@@ -14,7 +14,7 @@ class Header extends BaseView
 		$is_login = AuthHelper::checkLogin();
 
 
-		?>
+?>
 
 
 
@@ -72,14 +72,22 @@ class Header extends BaseView
 								<div class="reg row justify-content-between">
 									<?php
 									if ($is_login):
-										?>								
-										<p class="mr-2 text-light">Xin Chào,<?= $_SESSION['user']['name'] ?></p>
+									?>
+										<div class="dropdown_hmenu">
+											<a class="a_dropdown_hmenu" href="#">Xin Chào,<?= $_SESSION['user']['name'] ?> ▼</a>
+											<div class="dropdown-content">
+												<a href="/">Thông tin tài khoản</a>
+												<a href="#">Đổi mật khẩu</a>
+												<a href="#">Đăng xuất</a>
+											</div>
+										</div>
+										<!-- <p class="mr-2 text-light">Xin Chào,<?= $_SESSION['user']['name'] ?></p> -->
 										<a href="/logout" class="text-light px-4">Đăng xuất</a>
-										<?php
+									<?php
 									else:
-										?>
+									?>
 										<p class="mb-0"><a href="/register" class="mr-2">Đăng ký</a> <a href="/login">Đăng Nhập</a></p>
-										<?php
+									<?php
 									endif;
 									?>
 								</div>
@@ -89,7 +97,7 @@ class Header extends BaseView
 					</div>
 				</div>
 
-				<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+				<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light menu_header" id="ftco-navbar">
 					<div class="container">
 						<a class="navbar-brand" href="index.html">Wine <span>CanTho</span></a>
 						<div class="order-lg-last btn-group">
@@ -99,8 +107,7 @@ class Header extends BaseView
 								<div class="d-flex justify-content-center align-items-center"><small>3</small></div>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
-								<!-- danh sách sp -->
-
+								
 								<div class="dropdown-item d-flex align-items-start" href="#">
 									<div class="img" style="background-image: url(images/prod-1.jpg);"></div>
 									<div class="text pl-3">
@@ -142,9 +149,9 @@ class Header extends BaseView
 
 
 
-			<?php
+	<?php
 
 	}
 }
 
-?>
+	?>
