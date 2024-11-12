@@ -199,7 +199,7 @@ class PostController
             header("Location: /admin/posts");
         }
     }
-    public static function PostRecycle()
+    public static function postRecycle()
     {
 
         $post = new Post();

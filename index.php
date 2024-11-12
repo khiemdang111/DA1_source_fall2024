@@ -119,4 +119,9 @@ Route::get('/admin/recycle/posts', 'App\Controllers\Admin\PostController@postRec
 Route::get('/admin/post/restore/{id}', 'App\Controllers\Admin\PostController@restore');
 Route::post('/admin/post/deletePermanently/{id}', 'App\Controllers\Admin\PostController@deletePermanently');
 
+// *** Posts
+Route::get('/admin/recycle/posts', 'App\Controllers\Admin\PostController@postRecycle');
+Route::get('/admin/post/restore/{id}', 'App\Controllers\Admin\PostController@restore');
+Route::post('/admin/post/deletePermanently/{id}', 'App\Controllers\Admin\PostController@deletePermanently');
+
 Route::dispatch($_SERVER['REQUEST_URI']);
