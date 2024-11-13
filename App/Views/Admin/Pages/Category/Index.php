@@ -49,6 +49,7 @@ class Index extends BaseView
                                                     <a class="dropdown-item" href="/admin/categories/<?= $item['id'] ?>"><i class="bx bx-edit-alt me-1"></i> Sửa</a>
                                                     <form class="w-100" action="/admin/delete/categories/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
                                                         <input type="hidden" name="method" value="POST" id="">
+                                                        <input type="hidden" name="id" value="<?= $item['id'] ?>">
                                                         <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Xóa</button>
                                                     </form>
                                                 </div>

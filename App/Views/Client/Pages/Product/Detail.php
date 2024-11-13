@@ -219,11 +219,22 @@ class Detail extends BaseView
                                                                 <?php
                                                                 if ($is_login) :
                                                                 ?>
-                                                                    <img src="<?= APP_URL ?>/public/uploads/image/<?= $_SESSION['user']['avatar'] ?>" alt="user" width="50" class="rounded-circle">
+                                                                    <?php
+                                                                    if ($_SESSION['user']['avatar'] === null || $_SESSION['user']['avatar'] === ""):
+                                                                    ?>
+                                                                        <img src="<?= APP_URL ?>/public/uploads/users/user.png" alt="user" width="50" class="rounded-circle">
+                                                                    <?php
+                                                                    else :
+                                                                    ?>
+                                                                        <img src="<?= APP_URL ?>/public/uploads/users/<?= $_SESSION['user']['avatar'] ?>" alt="user" width="50" class="rounded-circle">
+
+                                                                    <?php
+                                                                    endif;
+                                                                    ?>
                                                                 <?php
                                                                 else :
                                                                 ?>
-                                                                    <img class="img_account" src="<?= APP_URL ?>/public/uploads/image/user.png" alt="" width="40%">
+                                                                    <img class="img_account" src="<?= APP_URL ?>/public/uploads/users/user.png" alt="" width="40%">
                                                                 <?php
                                                                 endif; ?>
                                                             </div>

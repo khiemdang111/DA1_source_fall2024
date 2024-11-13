@@ -34,7 +34,9 @@ Route::get('/products/categories/{id}','App\Controllers\Client\ProductController
 Route::get('/login', 'App\Controllers\Client\AuthController@Login');
 Route::post('/login', 'App\Controllers\Client\AuthController@loginAction');
 Route::get('/logout', 'App\Controllers\Client\AuthController@logout');
-
+// chi tiết tài khoản
+Route::get('/users/{id}', 'App\Controllers\Client\AuthController@edit');
+Route::put('/users/update/{id}', 'App\Controllers\Client\AuthController@update');
 
 
 // trang giỏ hàng
@@ -45,6 +47,7 @@ Route::delete('/cart/delete', 'App\Controllers\Client\CartController@deleteItem'
 Route::delete('/cart/delete-all', 'App\Controllers\Client\CartController@deleteAll');
 // trang đặt hàng
 Route::get('/checkout', 'App\Controllers\Client\CartController@checkout');
+Route::post('/order', 'App\Controllers\Client\CartController@order');
 
 
 

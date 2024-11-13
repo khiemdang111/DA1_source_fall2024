@@ -4,6 +4,7 @@ namespace App\Controllers\Client;
 
 use App\Helpers\AuthHelper;
 use App\Helpers\NotificationHelper;
+use App\Models\Order;
 use App\Models\Product;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
@@ -25,7 +26,6 @@ class CartController
 
             $cookie_data = $_COOKIE['cart'];
             $cart_data = json_decode($cookie_data, true);
-
             // // echo "<pre>";
             // echo "<pre>";
             // var_dump($cart_data);
@@ -110,17 +110,15 @@ class CartController
             }
         } else {
             if (isset($_POST['number'])) {
-                if($_POST['number'] > 0){
+                if ($_POST['number'] > 0) {
                     $product_array = [
                         'product_id' => $product_id,
                         'quantity' => $number,
                     ];
-                }else{
+                } else {
                     header('location: /');
                     exit();
                 }
-
-                
             } else {
                 $product_array = [
                     'product_id' => $product_id,
@@ -235,11 +233,8 @@ class CartController
                     $result = $product->getOneProduct($product_id);
                     // var_dump($result);
                     $cart_data[$key]['data'] = $result;
-
                     // var_dump($cart_data);
                 }
-
-
                 Header::render();
                 Notification::render();
                 NotificationHelper::unset();
@@ -263,24 +258,47 @@ class CartController
     public static function order()
     {
         $is_login = AuthHelper::checkLogin();
-        if ($is_login) {
-            $data = [
-                'username' => $_SESSION['user']['username'],
-                'email' => $_SESSION['user']['email'],
-                'phone' => $_SESSION['user']['phone'],
-            ];
-            var_dump($data);
-        }else{
-            $hihi = [
-                'username' => $_POST['username'],
-                'email' => $_POST['email'],
-                'phone' => $_POST['phone'],
-            ];
-            var_dump(value: $hihi);
+       
+
+        if (isset($_COOKIE['cart'])) {
+            $product = new Product();
+            $cookie_data = $_COOKIE['cart'];
+            $cart_data = json_decode($cookie_data, true);
+            // // echo "<pre>";
+            // echo "<pre>";
+            // var_dump($cart_data);
+            if (count($cart_data)) {
+                foreach ($cart_data as $key => $value) {
+                    $product_id = $value['product_id'];
+                    // var_dump($product_id);
+                    $result = $product->getOneProduct($product_id);
+                    // var_dump($result);
+                    $cart_data[$key]['data'] = $result;
+                    //  echo "<pre>";
+                    //  var_dump($cart_data);
+                    //  die;
+                }
+                $total_price = 0;
+                $i = 0;
+                foreach ($cart_data as $cart) {
+                    if ($cart['data']) {
+                        $i++;
+                        $name = $_POST['PaymentMethod'];
+                        $data2 = [
+                            'codeDetail' => $name,
+                            'product_id' => $cart['data']['id']
+                        ];
+                        $oder = new Order();
+                        $oder->create($data2);
+                    }
+                }
+            } else {
+                // setcookie("cart", "", time() -  3600 * 24 * 30 * 12, '/');
+                // $_SESSION['error'] = 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào';
+                NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
+
+                header('location: /');
+            }
         }
-          
-           
-        
-        
     }
 }

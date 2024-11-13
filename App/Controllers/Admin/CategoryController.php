@@ -94,7 +94,6 @@ class CategoryController
     // hiển thị giao diện form sửa
     public static function edit(int $id)
     {
-
         $category = new Category();
         $data = $category->getOneCategory($id);
         if (!$data) {
@@ -120,6 +119,8 @@ class CategoryController
             header("Location: /admin/categories/$id");
             exit();
         }
+        
+
         $name = $_POST['name'];
         $status = $_POST['status'];
         // kiểm tra category name đã tồn tại chgx nếu có thì thông báo ra 
@@ -152,20 +153,36 @@ class CategoryController
 
     public static function delete(int $id)
     {
+
+        // $id = $_POST['id'];
+
+        // $category = new Category();
+        // $result = $category->getAllCategoryProductByStatus($id);
+        // if ($result) {
+        //     NotificationHelper::success('delete_category2', 'Danh mục đã có sản phẩm không xóa được!');
+        //     header('Location: /admin/categories');
+        // }else{
         $category = new Category();
-        $is_exist = $category->getOneCategory($id);
+        $is_exist = $category->getOnecategory($id);
         if ($is_exist && $is_exist['id'] === $id) {
+            $result = $category->getAllCategoryProductByStatus($id);
+            if ($result) {
+                NotificationHelper::error('delete_category2', 'Danh mục đã có sản phẩm không xóa được!');
+                header('Location: /admin/categories');
+                exit();
+            }
             $data = [
                 'status' => 0,
             ];
             $result = $category->updateCategory($id, $data);
         }
         if ($result) {
-            NotificationHelper::success('delete_category', 'Xóa loại sản phẩm thành công!');
+            NotificationHelper::success('delete_product', 'Xóa loại sản phẩm thành công!');
             header('Location: /admin/categories');
         } else {
-            NotificationHelper::error('delete_category', 'Xóa loại sản phẩm thất bại!');
+            NotificationHelper::error('delete_product', 'Xóa loại sản phẩm thất bại!');
             header("Location: /admin/categories");
         }
+
     }
 }

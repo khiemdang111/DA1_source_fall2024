@@ -76,13 +76,13 @@ class Header extends BaseView
 										<div class="dropdown_hmenu">
 											<a class="a_dropdown_hmenu" href="#">Xin Chào,<?= $_SESSION['user']['name'] ?> ▼</a>
 											<div class="dropdown-content">
-												<a href="/">Thông tin tài khoản</a>
+												<a href="/users/<?= $_SESSION['user']['id'] ?>">Thông tin tài khoản</a>
 												<a href="#">Đổi mật khẩu</a>
-												<a href="#">Đăng xuất</a>
+												<a href="/logout">Đăng xuất</a>
 											</div>
 										</div>
 										<!-- <p class="mr-2 text-light">Xin Chào,<?= $_SESSION['user']['name'] ?></p> -->
-										<a href="/logout" class="text-light px-4">Đăng xuất</a>
+										<!-- <a href="/logout" class="text-light px-4">Đăng xuất</a> -->
 									<?php
 									else:
 									?>

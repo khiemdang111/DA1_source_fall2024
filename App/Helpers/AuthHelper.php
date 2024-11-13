@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helpers;
 
 use App\Models\User;
@@ -31,7 +32,6 @@ class AuthHelper
             self::updateSession($is_exist['id']);
         }
         return true;
-
     }
 
     public static function updateCookie(int $id)
@@ -45,8 +45,6 @@ class AuthHelper
             setcookie("user", $user_data, time() + (86400 * 30), "/");
             $_SESSION['user'] = $return;
         }
-
-
     }
 
 
@@ -54,34 +52,34 @@ class AuthHelper
     {
         $user = new User();
         $return = $user->getOneUser($id);
-    
+
         if ($return) {
-            
+
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
             $_SESSION['user'] = (array) $return;
         }
     }
-    
+
 
     public static function checkLogin(): bool
     {
         if (isset($_COOKIE['user']) && !empty($_COOKIE['user'])) {
             $user = $_COOKIE['user'];
-            
+
             $user_data = json_decode($user, true);
-            
+
             if (is_array($user_data) && isset($user_data['id'])) {
-              
+
                 self::updateCookie($user_data['id']);
                 $_SESSION['user'] = $user_data;
                 return true;
             }
         }
-    
+
         if (isset($_SESSION['user']) && isset($_SESSION['user']['id'])) {
-          
+
             self::updateSession($_SESSION['user']['id']);
             return true;
         }
@@ -103,16 +101,50 @@ class AuthHelper
                 header('Location: /');
                 exit();
             }
-
         }
     }
     public static function logout()
- {
-  if (isset($_SESSION['user'])) {
-   unset($_SESSION['user']);
-  }
-  if (isset($_COOKIE['user'])) {
-   setcookie('user', '', time() -(3600 * 24 * 30 * 12), '/');
-  }
- }
+    {
+        if (isset($_SESSION['user'])) {
+            unset($_SESSION['user']);
+        }
+        if (isset($_COOKIE['user'])) {
+            setcookie('user', '', time() - (3600 * 24 * 30 * 12), '/');
+        }
+    }
+
+    public static function edit($id): bool
+    {
+        // lấy dữ liệu user theo id
+        if (!self::checklogin()) {
+            NotificationHelper::error('login', 'Vui lòng đăng nhập để xem thông tin tài khoản');
+            return false;
+        }
+        $data = $_SESSION['user'];
+        $user_id = $data['id'];
+
+        if ($user_id != $id) {
+            NotificationHelper::error('user_id', 'Bạn không có quyền xem thông tin tài khoản này ');
+            return false;
+        }
+        return true;
+    }
+    public static function update($id, $data)
+    {
+        $user = new User();
+        $result = $user->updateUser($id, $data);
+        if (!$result) {
+            NotificationHelper::error('update_user1', 'Cập nhật thông tin tài khoản thất bại');
+            return false;
+        }
+        if ($_SESSION['user']) {
+            self::updateSession($id);
+        }
+        if ($_COOKIE['user']) {
+            self::updateCookie($id);
+            self::updateSession($id);
+        }
+        NotificationHelper::success('update_user', 'Cập nhật thông tin tài khoản thành công');
+        return true;
+    }
 }

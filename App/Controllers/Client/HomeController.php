@@ -28,6 +28,8 @@ class HomeController
             'products' => $products,
             'categories' => $categories
         ];
+        // var_dump($data);
+        // die();
         Header::render();
         Notification::render();
         NotificationHelper::unset();

@@ -110,13 +110,49 @@ class AuthValidation
             }
         }
 
-        if (!isset($_POST['name']) || $_POST['name'] === '') {
-            NotificationHelper::error('name', 'Không để trống tên ');
+        if (!isset($_POST['phone']) || $_POST['phone'] === '') {
+            NotificationHelper::error('phone', 'Không để trống Số điện thoại');
             $is_valid = false;
+        } else {
+            $phonePattern = "/^(0[0-9]{9,10})$/";
+            if (!preg_match($phonePattern, $_POST['phone'])) {
+                NotificationHelper::error('phone', 'Số điện thoại không đúng định dạng');
+                $is_valid = false;
+            }
         }
         return $is_valid;
     }
+    public static function update(): bool
+    {
 
+        $is_valid = true;
+
+        if (!isset($_POST['phone']) || $_POST['phone'] === '') {
+            NotificationHelper::error('phone', 'Không để trống Số điện thoại');
+            $is_valid = false;
+        } else {
+            $phonePattern = "/^(0[0-9]{9,10})$/";
+            if (!preg_match($phonePattern, $_POST['phone'])) {
+                NotificationHelper::error('phone', 'Số điện thoại không đúng định dạng');
+                $is_valid = false;
+            } elseif (strlen($_POST['phone']) !== 10) {
+                NotificationHelper::error('phone', 'Số điện thoại phải có đúng 10 ký tự số');
+                $is_valid = false;
+            }
+        }
+        
+
+        if (!isset($_POST['email']) || $_POST['email'] === '') {
+            NotificationHelper::error('email', 'Email không được để trống!');
+            $is_valid = false;
+        } else {
+            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                NotificationHelper::error('email', 'Email không đúng định dạng!');
+                $is_valid = false;
+            }
+        }
+        return $is_valid;
+    }
     public static function uploadAvatar()
     {
         if (!file_exists($_FILES['avatar']['tmp_name']) || (!is_uploaded_file($_FILES['avatar']['tmp_name']))) {
