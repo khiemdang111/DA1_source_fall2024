@@ -37,6 +37,10 @@ Route::get('/admin', 'App\Controllers\Admin\HomeController@index');
 
 Route::get('/login', 'App\Controllers\Client\AuthController@Login');
 Route::post('/login', 'App\Controllers\Client\AuthController@loginAction');
+
+Route::get('/login-google', 'App\Controllers\Client\GoogleController@loginGoogle');
+Route::get('/login-googleAction', 'App\Controllers\Client\GoogleController@callbackGoogle');
+
 Route::get('/logout', 'App\Controllers\Client\AuthController@logout');
 // chi tiết tài khoản
 Route::get('/users/{id}', 'App\Controllers\Client\AuthController@edit');

@@ -57,6 +57,15 @@ class Login extends BaseView
                                     <div class="mb-3">
                                         <button class="btn btn-primary d-grid w-100" type="submit">Đăng nhập</button>
                                     </div>
+
+                                    <div class="mb-3 d-flex justify-content-center ">
+                                        or
+                                    </div>
+                                    <div class="mb-2 d-flex justify-content-center border border-dark-subtle ">
+                                    <a href="/login-google"><img src="<?=getenv(APP_URL)?>/public/assets/client/images/google.png" alt="" width="60px" class="mr-3">Đăng nhập bằng GooGle</a>
+                                        
+                                    </div>
+
                                     <?php
                       if (isset($_SESSION['success_message'])) {
                         echo '<div class="alert alert-success mt-3">' . $_SESSION['success_message'] . '</div>';
