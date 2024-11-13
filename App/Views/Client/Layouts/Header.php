@@ -138,7 +138,7 @@ class Header extends BaseView
 								<li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
 								<li class="nav-item"><a href="about.html" class="nav-link">Giới Thiệu</a></li>
 								<li class="nav-item"><a href="/products" class="nav-link">Sản Phẩm</a></li>
-								<li class="nav-item"><a href="blog.html" class="nav-link">Tin Tức</a></li>
+								<li class="nav-item"><a href="/post" class="nav-link">Tin Tức</a></li>
 								<li class="nav-item"><a href="contact.html" class="nav-link">Liên hệ</a></li>
 							</ul>
 						</div>

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Helpers\NotificationHelper;
 
 class Post extends BaseModel
 {

@@ -31,6 +31,10 @@ Route::post('/register', 'App\Controllers\Client\AuthController@registerAction')
 Route::get('/products/categories/{id}','App\Controllers\Client\ProductController@getProductByCategory');
 
 
+
+// *** Admin
+Route::get('/admin', 'App\Controllers\Admin\HomeController@index');
+
 Route::get('/login', 'App\Controllers\Client\AuthController@Login');
 Route::post('/login', 'App\Controllers\Client\AuthController@loginAction');
 Route::get('/logout', 'App\Controllers\Client\AuthController@logout');
@@ -98,8 +102,8 @@ Route::get('/admin/posts/create', 'App\Controllers\Admin\PostController@create')
 Route::post('/admin/posts', 'App\Controllers\Admin\PostController@store');
 Route::get('/admin/posts/{id}', 'App\Controllers\Admin\PostController@edit');
 Route::put('/update/posts/{id}', 'App\Controllers\Admin\PostController@update');
-Route::post('/admin/delete/posts/{id}', 'App\Controllers\Admin\PostController@delete');
-
+Route::post('/admin/delete/{id}', 'App\Controllers\Admin\PostController@delete');
+Route::get('/post', 'App\Controllers\Client\PostController@index');
 
 
 
