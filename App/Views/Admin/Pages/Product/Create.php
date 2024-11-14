@@ -54,7 +54,11 @@ class Create extends BaseView
                       </div>
                       <div class="col-md-6">
                         <label for="is_futuned" class="form-label">Nổi bật</label>
-                        <input type="text" class="form-control" id="is_futuned" name="is_featured" maxlength="6" />
+                        <select id="is_futuned" name="is_futuned" class="select2 form-select">
+                          <option value="">Chọn nổi bật</option>
+                          <option value="1">Nổi bật </option>
+                          <option value="0"> Không nổi bật </option>
+                        </select>
                       </div>
                       <div class="col-md-12">
                         <label for="description" class="form-label">Mô tả <span class="text-danger"> *</span></label>
@@ -134,6 +138,40 @@ class Create extends BaseView
        
 
     </script>
+
+<script>
+            function create() {
+                let count_items = document.querySelectorAll(".items_properties").length - 1;
+                count_items++;
+                $("#multi_properties").append(`
+                                    <div class="row items_properties mt-3">
+                                        <div class="col-5">
+                                            <label for="">Tên thuộc tính</label>
+                                            <select name="option_id[]" id="" class="form-select">
+                                                <option value="">Chọn thuộc tính</option>
+                                                <?php foreach ($data['options'] as $item_option): ?>
+                                                                        <option value="<?= $item_option['id'] ?>"><?= $item_option['name'] ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-5">
+                                            <label for="option_vl_name">Giá trị</label>
+                                            <input type="text" class="form-control" id="option_vl_name" name="option_vl_name[]" placeholder="Giá trị">
+                                        </div>
+                                        <div class="col-1">
+                                            <label for="">&nbsp;</label>
+                                            <a href="javascript:void(0)" onclick="delete_(this)" class="btn btn-danger btn-sm d-block">Xóa</a>
+                                        </div>
+                                    </div>
+                                `);
+            }
+
+            function delete_(__this) {
+                let count_items = document.querySelectorAll(".items_properties").length - 1;
+                count_items--;
+                $(__this).closest(".items_properties").remove();
+            }
+        </script>
         <?php
   }
 }
