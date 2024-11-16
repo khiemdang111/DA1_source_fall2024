@@ -189,5 +189,30 @@ class Product extends BaseModel
             return $result;
         }
     }
+    public function getRelatedProducts(int $id, int $category_id)
+{
+    $result = [];
+    try {
+        $sql = "SELECT products.*, categories.name AS category_name 
+                FROM products 
+                INNER JOIN categories ON products.category_id = categories.id 
+                WHERE products.status = " . self::STATUS_ENABLE . " 
+                  AND categories.status = " . self::STATUS_ENABLE . " 
+                  AND products.id != ? 
+                  AND products.category_id = ?
+                LIMIT 4";
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ii', $id, $category_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        return $result;
+    } catch (\Throwable $th) {
+        error_log('Lỗi khi lấy sản phẩm liên quan: ' . $th->getMessage());
+        return $result;
+    }
+}
+
     
 }   

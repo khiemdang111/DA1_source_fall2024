@@ -38,17 +38,20 @@ class ProductController
     }
     public static function detail(int $id)
     {
-       
+        
         $product = new Product();
         $detail = $product->getOneProductByCategoryDetailStatus($id);
          if(!$detail){
             NotificationHelper::error('detail','Không thể xem sản phẩm');
             header('Location: /');
          }
+        $category_id = $detail[0]['category_id'];
+        $relatedProducts = $product->getRelatedProducts(  $id, $category_id);
         $comment = new Comment();
         $data = [
             'product' => $detail,
             'comments' => $comment->get5CommentNewestByProductAndStatus($id),
+            'relatedProducts' => $relatedProducts,
         ];
           $view_result = ViewProductHelper::cookieView($id,$detail[0]['view']);
         Header::render();

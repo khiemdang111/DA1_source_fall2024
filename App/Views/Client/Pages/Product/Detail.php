@@ -408,6 +408,82 @@ class Detail extends BaseView
                 </div>
             </div>
         </section>
+        <section class="ftco-section">
+            <div class="container">
+                <div class="row justify-content-center pb-5">
+                    <div class="col-md-7 heading-section text-center ftco-animate">
+                        <span class="subheading">Rượu vang hảo hạn</span>
+                        <h2>Sản phẩm liên quan</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- <?php
+                            if (count($data) && count($data['relatedProducts'])):
+
+                            ?> -->
+                    <?php
+                                foreach ($data['relatedProducts'] as $relatedProducts):
+                    ?>
+                        <div class="col-md-3 d-flex">
+                            <div class="product ftco-animate">
+                                <div class="img d-flex align-items-center justify-content-center"
+                                    style="background-image: url(<?= APP_URL ?>/public/uploads/products/<?= $relatedProducts['image'] ?>);">
+                                    <div class="desc">
+                                        <div class="meta-prod d-flex">
+                                            <form action="/cart/add" method="post">
+                                                <input type="hidden" name="method" id="" value="POST">
+                                                <input type="hidden" name="id" id="" value="<?= $relatedProducts['id'] ?>" required>
+                                                <button type="submit" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag">
+                                                    </span></button>
+                                            </form>
+                                            <a href="#" type="submit" class="d-flex align-items-center justify-content-center"><span
+                                                    class="flaticon-heart"></span></a>
+                                            <a href="/products/<?= $relatedProducts['id'] ?>" class="d-flex align-items-center justify-content-center"><span
+                                                    class="flaticon-visibility"></span></a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text text-center">
+                                    <span class="sale"></span>
+                                    <span class="category"><?= $relatedProducts['category_name'] ?></span>
+                                    <h2><?= $relatedProducts['name'] ?></h2>
+                                    <p class="mb-0">
+                                        <?php
+                                        if ($relatedProducts['discount_price'] > 0) :
+                                        ?>
+                                            <span class="price price-sale"><?= number_format($relatedProducts['price']) ?></span> <span
+                                                class="price"><?= number_format($relatedProducts['price'] - $relatedProducts['discount_price']) ?></span>
+
+                                        <?php
+                                        else:
+                                        ?>
+                                            <span
+                                                class="price"><?= number_format($relatedProducts['price']) ?></span>
+
+                                        <?php endif; ?>
+
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                                endforeach;
+                    ?>
+                </div>
+            </div>
+        <?php
+                            endif;
+        ?>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <a href="/products" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
+                        class="fa fa-long-arrow-right"></span></a>
+            </div>
+        </div>
+        </div>
+        </section>
 
 
 
