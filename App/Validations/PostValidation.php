@@ -97,8 +97,34 @@ class PostValidation {
   
   
 
- public static function uploadAvatar(){
-  return AuthValidation::uploadAvatar();
- }
+  public static function uploadImage()
+    {
+        if (!file_exists($_FILES['img']['tmp_name']) || (!is_uploaded_file($_FILES['img']['tmp_name']))) {
+            return false;
+        }
+
+        /// Nơi lưu trữ hình ảnh trong source code
+        $target_dir = 'public/uploads/posts/';
+
+        // Kiểm tra loại file upload có hợp lệ hay không
+        $imageFileType = strtolower(pathinfo(basename($_FILES['img']['name']), PATHINFO_EXTENSION));
+
+        if ($imageFileType != 'jpg' && $imageFileType != 'png' && $imageFileType != 'jpeg' && $imageFileType != 'gif') {
+            NotificationHelper::error('type', 'Chỉ nhận file ảnh JPG, PNG, JPEG, GIF');
+        }
+
+        // thay đổi tên file thành dạng năm tháng ngày giờ
+        $nameImage = date('YmdHmi') . '.' . $imageFileType;
+
+        // đường dẫn đầy đủ để chuyển file
+        $target_file = $target_dir . $nameImage;
+
+        if (!move_uploaded_file($_FILES['img']['tmp_name'], $target_file)) {
+            NotificationHelper::error('move_upload', 'Không thể tải ảnh về thư mục lưu trữ');
+            return false;
+        }
+
+        return $nameImage;
+    }
 
 }

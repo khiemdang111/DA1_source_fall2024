@@ -90,7 +90,7 @@ class PostController
             
         ];
 
-        $is_upload = PostValidation::uploadAvatar();
+        $is_upload = PostValidation::uploadImage();
         if ($is_upload) {
             $data['img'] = $is_upload;
         }
@@ -167,10 +167,10 @@ class PostController
             'status' => $_POST['status'],
             
         ];
-        // $is_upload = ProductValidation::updateImage();
-        // if ($is_upload) {
-        //     $data['image'] = $is_upload;
-        // }
+        $is_upload = PostValidation::uploadImage();
+        if ($is_upload) {
+            $data['img'] = $is_upload;
+        }
         $result = $post->updatePost($id, $data);
         if ($result) {
             NotificationHelper::success('update_post', 'Cập nhật bài viết thành công!');
