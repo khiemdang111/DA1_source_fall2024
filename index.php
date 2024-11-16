@@ -60,6 +60,9 @@ Route::post('/order', 'App\Controllers\Client\CartController@order');
 
 
 
+
+
+
 // thêm bình luận 
 Route::post('/comments', 'App\Controllers\Client\CommentController@store');
 Route::put('/comments/{id}', 'App\Controllers\Client\CommentController@edit');
@@ -134,5 +137,8 @@ Route::post('/admin/post/deletePermanently/{id}', 'App\Controllers\Admin\PostCon
 Route::get('/admin/recycle/posts', 'App\Controllers\Admin\PostController@postRecycle');
 Route::get('/admin/post/restore/{id}', 'App\Controllers\Admin\PostController@restore');
 Route::post('/admin/post/deletePermanently/{id}', 'App\Controllers\Admin\PostController@deletePermanently');
+//thống kê
+ Route::get('/mail', 'App\Controllers\Client\MailController@index');
+
 
 Route::dispatch($_SERVER['REQUEST_URI']);

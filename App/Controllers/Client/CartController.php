@@ -3,9 +3,12 @@
 namespace App\Controllers\Client;
 
 use App\Helpers\AuthHelper;
+use App\Helpers\CartHelper;
 use App\Helpers\NotificationHelper;
 use App\Models\Order;
 use App\Models\Product;
+use App\Validations\CartValidation;
+use App\Views\Client\Components\Formmail;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
@@ -23,7 +26,6 @@ class CartController
         //   die
         if (isset($_COOKIE['cart'])) {
             $product = new Product();
-
             $cookie_data = $_COOKIE['cart'];
             $cart_data = json_decode($cookie_data, true);
             // // echo "<pre>";
@@ -218,87 +220,97 @@ class CartController
     public static function checkout()
     {
         $is_login = AuthHelper::checkLogin();
-        if (isset($_COOKIE['cart'])) {
-            $product = new Product();
-            $cookie_data = $_COOKIE['cart'];
-            $cart_data = json_decode($cookie_data, true);
+        if ($is_login) {
+            if (isset($_COOKIE['cart'])) {
+                $product = new Product();
+                $cookie_data = $_COOKIE['cart'];
+                $cart_data = json_decode($cookie_data, true);
 
-            // // echo "<pre>";
-            // echo "<pre>";
-            // var_dump($cart_data);
-            if (count($cart_data)) {
-                foreach ($cart_data as $key => $value) {
-                    $product_id = $value['product_id'];
-                    // var_dump($product_id);
-                    $result = $product->getOneProduct($product_id);
-                    // var_dump($result);
-                    $cart_data[$key]['data'] = $result;
-                    // var_dump($cart_data);
+                // // echo "<pre>";
+                // echo "<pre>";
+                // var_dump($cart_data);
+                if (count($cart_data)) {
+                    foreach ($cart_data as $key => $value) {
+                        $product_id = $value['product_id'];
+                        // var_dump($product_id);
+                        $result = $product->getOneProduct($product_id);
+                        // var_dump($result);
+                        $cart_data[$key]['data'] = $result;
+                        // var_dump($cart_data);
+                    }
+                    Header::render();
+                    Notification::render();
+                    NotificationHelper::unset();
+                    Checkout::render($cart_data);
+                    Footer::render();
+                } else {
+                    // setcookie("cart", "", time() -  3600 * 24 * 30 * 12, '/');
+                    // $_SESSION['error'] = 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào';
+                    NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
+                    header('location: /');
                 }
-                Header::render();
-                Notification::render();
-                NotificationHelper::unset();
-                Checkout::render($cart_data);
-
-                Footer::render();
             } else {
-                // setcookie("cart", "", time() -  3600 * 24 * 30 * 12, '/');
-                // $_SESSION['error'] = 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào';
-                NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
+                NotificationHelper::error('checkout', 'Vui lòng đăng nhập hoặc thêm sản phẩm vào giỏ hàng để thanh toán');
+
                 header('location: /');
             }
         } else {
-            NotificationHelper::error('checkout', 'Vui lòng đăng nhập hoặc thêm sản phẩm vào giỏ hàng để thanh toán');
+            NotificationHelper::error('checkout', 'Vui lòng đăng nhập dể thực hiện chức năng này');
 
             header('location: /');
         }
+
     }
 
 
     public static function order()
     {
         $is_login = AuthHelper::checkLogin();
-       
-
-        if (isset($_COOKIE['cart'])) {
-            $product = new Product();
-            $cookie_data = $_COOKIE['cart'];
-            $cart_data = json_decode($cookie_data, true);
-            // // echo "<pre>";
-            // echo "<pre>";
-            // var_dump($cart_data);
-            if (count($cart_data)) {
-                foreach ($cart_data as $key => $value) {
-                    $product_id = $value['product_id'];
-                    // var_dump($product_id);
-                    $result = $product->getOneProduct($product_id);
-                    // var_dump($result);
-                    $cart_data[$key]['data'] = $result;
-                    //  echo "<pre>";
-                    //  var_dump($cart_data);
-                    //  die;
-                }
-                $total_price = 0;
-                $i = 0;
-                foreach ($cart_data as $cart) {
-                    if ($cart['data']) {
-                        $i++;
-                        $name = $_POST['PaymentMethod'];
-                        $data2 = [
-                            'codeDetail' => $name,
-                            'product_id' => $cart['data']['id']
-                        ];
-                        $oder = new Order();
-                        $oder->create($data2);
-                    }
-                }
-            } else {
-                // setcookie("cart", "", time() -  3600 * 24 * 30 * 12, '/');
-                // $_SESSION['error'] = 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào';
-                NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
-
-                header('location: /');
+        if ($is_login) {
+            $is_valid = CartValidation::create();
+            if (!$is_valid) {
+                NotificationHelper::error('update_product2', 'Cập nhật sản phẩm thất bại  !');
+                header("Location: /checkout");
+                exit();
             }
+            if (isset($_COOKIE['cart'])) {
+                $product = new Product();
+                $cookie_data = $_COOKIE['cart'];
+                $cart_data = json_decode($cookie_data, true);
+                // // echo "<pre>";
+                // echo "<pre>";
+                // var_dump($cart_data);
+                if (count($cart_data)) {
+                    foreach ($cart_data as $key => $value) {
+                        $product_id = $value['product_id'];
+                        // var_dump($product_id);
+                        $result = $product->getOneProduct($product_id);
+                        // var_dump($result);
+                        $cart_data[$key]['data'] = $result;
+                        //  echo "<pre>";
+                        //  var_dump($cart_data);
+                        //  die;
+                    }
+                    CartHelper::createCart($cart_data);
+                } else {
+                    // setcookie("cart", "", time() -  3600 * 24 * 30 * 12, '/');
+                    // $_SESSION['error'] = 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào';
+                    NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
+                    header('location: /');
+                }
+            }
+        } else {
+            // setcookie("cart", "", time() -  3600 * 24 * 30 * 12, '/');
+            // $_SESSION['error'] = 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào';
+            NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
+            header('location: /');
         }
+
+
     }
+
+
 }
+
+
+

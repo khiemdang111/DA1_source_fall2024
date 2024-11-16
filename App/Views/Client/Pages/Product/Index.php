@@ -91,7 +91,7 @@ class Index extends BaseView
                                                     if ($item['discount_price'] > 0) :
                                                     ?>
                                                         <span class="price price-sale"><?= number_format($item['price']) ?></span> <span
-                                                            class="price"><?= number_format($item['price'] - $item['discount_price']) ?></span>
+                                                            class="price"><?= number_format( $item['discount_price']) ?></span>
 
                                                     <?php
                                                     else:

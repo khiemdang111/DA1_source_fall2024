@@ -49,7 +49,6 @@ class Index extends BaseView
 										?>
 											<td>
 												<div class="d-flex"><strike><?= number_format($cart['data']['price']) ?> </strike> <span><del class="margin_vnd">VND</del></span></div>
-
 												<br>
 												<?= number_format($cart['data']['discount_price']) ?> VND
 											</td>
@@ -74,9 +73,6 @@ class Index extends BaseView
 												<input type="hidden" name="update-cart-item">
 											</form>
 										</td>
-
-
-
 										<?php
 										if ($cart['data']['discount_price'] > 0) :
 											$discount_price = $cart['quantity'] * $cart['data']['discount_price'];
@@ -129,7 +125,7 @@ class Index extends BaseView
 							<h3>Tổng cộng giỏ hàng</h3>
 							<p class="d-flex">
 								<span>Tổng cộng</span>
-								<span>$20.60</span>
+								<span><?= number_format($total_price) ?></span>
 							</p>
 							<p class="d-flex">
 								<span>Phí vận chuyển</span>
@@ -142,7 +138,7 @@ class Index extends BaseView
 							<hr>
 							<p class="d-flex total-price">
 								<span>Tổng</span>
-								<span>$17.60</span>
+								<span><?= number_format($total_price) ?></span>
 							</p>
 						</div>
 
@@ -153,7 +149,7 @@ class Index extends BaseView
 						<?php
 						else :
 						?>
-							<p class="text-center cart_button"><a href="/register" class="btn btn-primary py-3 px-4">Vui lòng đăng nhập để thanh toán</a></p>
+							<p class="text-center cart_button"><a href="/login" class="btn btn-primary py-3 px-4">Vui lòng đăng nhập để thanh toán</a></p>
 						<?php
 						endif;
 						?>
