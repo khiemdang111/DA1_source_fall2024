@@ -189,5 +189,17 @@ class Product extends BaseModel
             return $result;
         }
     }
+    public function getAllProductByVariant()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT products.*, product_variants.id AS product_variant_id, product_variants.name AS product_variant_name  FROM `products` INNER JOIN product_variants on products.id = product_variants.product_id;";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
     
 }   
