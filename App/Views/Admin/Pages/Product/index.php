@@ -50,6 +50,7 @@ class index extends BaseView
                           <i class="bx bx-dots-vertical-rounded"></i>
                         </button>
                         <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/admin/productvariant/<?= $item['id'] ?>"><i class="bx bx-cog me-1"></i> Cấu hình</a>
                           <a class="dropdown-item" href="/admin/products/<?= $item['id'] ?>"><i class="bx bx-edit-alt me-1"></i> Sửa</a>
                           <form class="w-100" action="/admin/delete/products/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
                             <input type="hidden" name="method" value="POST" id="">

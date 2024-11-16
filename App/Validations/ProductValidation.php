@@ -93,4 +93,20 @@ class ProductValidation
 
         return $nameImage;
     }
+    public static function createVariant()
+    {
+        $is_valid = true;
+        // Tên đăng nhập
+        if (!isset($_POST['product_variant_name']) || $_POST['product_variant_name'] === '') {
+            NotificationHelper::error('product_variant_name', 'Không để trống thuộc tính');
+            $is_valid = false;
+        }
+
+        // giá tiền
+        if (!isset($_POST['option_vl_name[]']) || $_POST['option_vl_name[]'] === '') {
+            NotificationHelper::error('option_vl_name[]', 'Không để trống giá tiền');
+            $is_valid = false;
+        } 
+        return $is_valid;
+    }
 }

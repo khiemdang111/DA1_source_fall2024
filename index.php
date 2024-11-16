@@ -79,6 +79,9 @@ Route::post('/admin/products', 'App\Controllers\Admin\ProductController@store');
 Route::get('/admin/products/{id}', 'App\Controllers\Admin\ProductController@edit');
 Route::put('/admin/update/{id}', 'App\Controllers\Admin\ProductController@update');
 Route::post('/admin/delete/products/{id}', 'App\Controllers\Admin\ProductController@delete');
+Route::get('/admin/productvariant/{id}', 'App\Controllers\Admin\ProductController@createVariant');
+Route::post('/admin/productvariant', 'App\Controllers\Admin\ProductController@storeVariant');
+
 
 //  *** Category
 // GET /categories (lấy danh sách loại sản phẩm)

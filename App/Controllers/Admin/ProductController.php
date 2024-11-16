@@ -12,6 +12,7 @@ use App\Views\Admin\Components\Notification;
 use App\Views\Admin\Pages\Product\Create;
 use App\Views\Admin\Pages\Product\Edit;
 use App\Views\Admin\Pages\Product\Index;
+use App\Views\Admin\Pages\Product\SettingVariant;
 use App\Views\Admin\Pages\Recycle\ProductRecycle;
 
 class ProductController
@@ -39,10 +40,17 @@ class ProductController
 
         // $product = new Product();
         $category = new Category();
-        $data = $category->getAllCategory();
+        $categories = $category->getAllCategory();
+        $variant = new Product;
+        $variant_data = $variant->getAllProductByVariant();
         // var_dump($data);
         // $data = $product->getAllProduct();
         // var_dump($_SESSION);
+        $data = [
+            'categories' => $categories,
+            'variant_data' => $variant_data,
+        ];
+
         Header::render();
         // hiển thị form thêm
         Notification::render();
@@ -63,7 +71,7 @@ class ProductController
             header('location: /admin/products/create');
             exit;
         }
-        $name  = $_POST['name'];
+        $name = $_POST['name'];
         $tatus = $_POST['status'];
         // Kiểm tra các tên có tồn tại hay chưa
         $product = new Product();
@@ -85,7 +93,6 @@ class ProductController
             'status' => $_POST['status'],
             'category_id' => $_POST['category_id'],
         ];
-
         $is_upload = ProductValidation::uploadImage();
         if ($is_upload) {
             $data['image'] = $is_upload;
@@ -133,8 +140,8 @@ class ProductController
 
     public static function update(int $id)
     {
- 
-        $is_valid =  ProductValidation::edit();
+
+        $is_valid = ProductValidation::edit();
         if (!$is_valid) {
             NotificationHelper::error('update_product2', 'Cập nhật sản phẩm thất bại  !');
             header("Location: /admin/products/$id");
@@ -194,8 +201,9 @@ class ProductController
             header("Location: /admin/products");
         }
     }
-    
-    public static function productRecycle(){
+
+    public static function productRecycle()
+    {
         $product = new Product();
         $data = $product->getAllProductByStatusRecycle();
         Header::render();
@@ -206,7 +214,8 @@ class ProductController
         Footer::render();
     }
 
-    public static function restore(int $id){
+    public static function restore(int $id)
+    {
         $product = new Product();
         $is_exist = $product->getOneProduct($id);
         if ($is_exist && $is_exist['id'] === $id) {
@@ -223,7 +232,8 @@ class ProductController
             header("Location: /admin/recycle/products");
         }
     }
-    public static function deletePermanently(int $id){
+    public static function deletePermanently(int $id)
+    {
         $product = new Product();
         $is_exist = $product->getOneProduct($id);
         if ($is_exist && $is_exist['id'] === $id) {
@@ -240,4 +250,92 @@ class ProductController
             header("Location: /admin/recycle/products");
         }
     }
+    public static function createVariant($id)
+    {
+        // validation các trường dữ liệu
+        $products = new product();
+        $product = $products->getOneProductByCategoryDetailStatus($id);
+        $variant = $products->getAllProductByVariant();
+        $data = [
+            'product' => $product,
+            'variant' => $variant
+        ];
+        // echo '<pre>';
+        // var_dump($data);
+        // die;
+        Header::render();
+        Notification::render();
+        //hủy thông báo
+        NotificationHelper::unset();
+        SettingVariant::render($data);
+        Footer::render();
+    }
+    public static function storeVariant()
+    {
+
+        // validation các trường dữ liệu
+        $is_valid = ProductValidation::createVariant();
+
+        if (!$is_valid) {
+            NotificationHelper::error('store_product', 'Thêm sản phẩm thất bại');
+            header('location: /admin/products');
+            exit;
+        }
+        $option_ids = $_POST['option_id'] ?? [];
+        $option_values = $_POST['option_vl_name'] ?? [];
+        $id_product = $_POST['id'];
+        var_dump($id_product);
+        var_dump($option_ids);
+        var_dump($option_values);
+        die;
+        // Tạo mảng kết hợp
+        $combinedOptions = [];
+
+        foreach ($option_ids as $index => $id) {
+            if (isset($option_values[$index])) {
+                $combinedOptions[] = [
+                    'product_id' => $id_product,
+                    'option_id' => $id,
+                    'name' => $option_values[$index]
+                ];
+            }
+        }
+        // $name  = $_POST['name'];
+        // $tatus = $_POST['status'];
+        // // Kiểm tra các tên có tồn tại hay chưa
+        // $product = new Product();
+        // $is_exist = $product->getOneProductByName($name);
+
+        // if ($is_exist) {
+        //     NotificationHelper::error('store_product2', 'Tên sản phẩm này đã tồn tại');
+        //     header('location: /admin/products/create');
+        //     exit;
+        // }
+
+        // // Thêm vào
+        // $data = [
+        //     'name' => $name,
+        //     'price' => $_POST['price'],
+        //     'discount_price' => $_POST['discount_price'],
+        //     'description' => $_POST['description'],
+        //     'is_featured' => $_POST['is_featured'],
+        //     'status' => $_POST['status'],
+        //     'category_id' => $_POST['category_id'],
+        // ];
+        // $is_upload = ProductValidation::uploadImage();
+        // if ($is_upload) {
+        //     $data['image'] = $is_upload;
+        // }
+        // $result = $product->createProduct($data);
+
+        // if ($result) {
+        //     NotificationHelper::success('create_product', 'Thêm sản phẩm thành công');
+        //     header('location: /admin/products');
+        // } else {
+        //     NotificationHelper::error('create_product', 'Thêm sản phẩm thất bại');
+        //     header('location: /admin/products/create');
+        //     exit;
+        // }
+    }
+
 }
