@@ -13,6 +13,7 @@ use App\Views\Admin\Pages\Product\Create;
 use App\Views\Admin\Pages\Product\Edit;
 use App\Views\Admin\Pages\Product\Index;
 use App\Views\Admin\Pages\Product\SettingVariant;
+use App\Views\Admin\Pages\Product\createAttributeVariant;
 use App\Views\Admin\Pages\Recycle\ProductRecycle;
 
 class ProductController
@@ -256,12 +257,14 @@ class ProductController
         $products = new product();
         $product = $products->getOneProductByCategoryDetailStatus($id);
         $variant = $products->getAllProductByVariant();
+        $variant_opt = $products->getAllVariantOptionsById($id);
         $data = [
             'product' => $product,
-            'variant' => $variant
+            'variant' => $variant,
+            'variant_opt' => $variant_opt,
         ];
         // echo '<pre>';
-        // var_dump($data);
+        // var_dump($data['variant_opt']);
         // die;
         Header::render();
         Notification::render();
@@ -272,7 +275,6 @@ class ProductController
     }
     public static function storeVariant()
     {
-
         // validation các trường dữ liệu
         $is_valid = ProductValidation::createVariant();
 
@@ -281,61 +283,42 @@ class ProductController
             header('location: /admin/products');
             exit;
         }
-        $option_ids = $_POST['option_id'] ?? [];
+
+        // Lấy giá trị từ $_POST
         $option_values = $_POST['option_vl_name'] ?? [];
         $id_product = $_POST['id'];
-        var_dump($id_product);
-        var_dump($option_ids);
-        var_dump($option_values);
-        die;
+        $option_ids = $_POST['option_vl_name'] ?? [];
+        $pro_variant_ids = $_POST['pro_variant_id'] ?? [];
         // Tạo mảng kết hợp
+
         $combinedOptions = [];
 
         foreach ($option_ids as $index => $id) {
             if (isset($option_values[$index])) {
+                // Lấy pro_variant_id từ mảng tương ứng
+                $pro_variant_id = isset($pro_variant_ids[$index]) ? $pro_variant_ids[$index] : null;
+
+                // Thêm phần tử vào mảng kết hợp
                 $combinedOptions[] = [
                     'product_id' => $id_product,
+                    'pro_variant_id' => $pro_variant_id,
                     'option_id' => $id,
-                    'name' => $option_values[$index]
                 ];
             }
         }
-        // $name  = $_POST['name'];
-        // $tatus = $_POST['status'];
-        // // Kiểm tra các tên có tồn tại hay chưa
-        // $product = new Product();
-        // $is_exist = $product->getOneProductByName($name);
 
-        // if ($is_exist) {
-        //     NotificationHelper::error('store_product2', 'Tên sản phẩm này đã tồn tại');
-        //     header('location: /admin/products/create');
-        //     exit;
-        // }
-
-        // // Thêm vào
-        // $data = [
-        //     'name' => $name,
-        //     'price' => $_POST['price'],
-        //     'discount_price' => $_POST['discount_price'],
-        //     'description' => $_POST['description'],
-        //     'is_featured' => $_POST['is_featured'],
-        //     'status' => $_POST['status'],
-        //     'category_id' => $_POST['category_id'],
-        // ];
-        // $is_upload = ProductValidation::uploadImage();
-        // if ($is_upload) {
-        //     $data['image'] = $is_upload;
-        // }
-        // $result = $product->createProduct($data);
-
-        // if ($result) {
-        //     NotificationHelper::success('create_product', 'Thêm sản phẩm thành công');
-        //     header('location: /admin/products');
-        // } else {
-        //     NotificationHelper::error('create_product', 'Thêm sản phẩm thất bại');
-        //     header('location: /admin/products/create');
-        //     exit;
-        // }
+        $produtc = new Product();
+        $result = $produtc->createProductVariant($combinedOptions);
     }
 
+    public function createAttributeVariant()
+    {
+
+        Header::render();
+        // hiển thị form thêm
+        Notification::render();
+        NotificationHelper::unset();
+        createAttributeVariant::render();
+        Footer::render();
+    }
 }

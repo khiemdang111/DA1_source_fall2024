@@ -201,5 +201,51 @@ class Product extends BaseModel
             return $result;
         }
     }
+    public function getAllVariantOptionsById($id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT product_variant_options.*, products.id AS pro_id, product_variants.name AS pro_variant_name , product_variants.id AS pro_variant_id FROM product_variant_options INNER JOIN product_variants on product_variant_options.product_variant_id = product_variants.id INNER JOIN products on product_variants.product_id = products.id;";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+    public function createProductVariant(array $data_product_variants)
+    {
+        try {
+            // Bắt đầu câu lệnh SQL
+            $sql = "INSERT INTO product_variant_values (product_id, product_variant_id, option_id) VALUES ";
+            $values = [];
     
-}   
+            // Duyệt qua các phần tử của mảng và xây dựng câu SQL
+            foreach ($data_product_variants as $variant) {
+                $product_id = (int) $variant['product_id'];
+                $product_variant_id = (int) $variant['pro_variant_id'];
+                $option_id = (int) $variant['option_id'];
+                $values[] = "($product_id, $product_variant_id, $option_id)";
+            }
+    
+            // Nối danh sách values vào câu SQL
+            if (empty($values)) {
+                throw new \Exception("Không có dữ liệu để thêm.");
+            }
+    
+            $sql .= implode(", ", $values);
+            // Thực thi câu lệnh SQL
+            $conn = $this->_conn->MySQLi();
+            if (!$conn->query($sql)) {
+                throw new \Exception("MySQL Error: " . $conn->error);
+            }
+            header('Location: /admin/productvariant/{$product_id}');
+            return true;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
+            return false;
+        }
+    }
+    
+
+}
