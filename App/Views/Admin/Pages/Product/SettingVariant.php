@@ -33,7 +33,8 @@ class SettingVariant extends BaseView
                     </div>
                     <div class="col-md-6">
                       <label for="name" class="form-label">Tên <span class="text-danger"> *</span></label>
-                      <input value="<?= $data['product'][0]['name'] ?>" class="form-control" type="text" id="name" name="name" />
+                      <input value="<?= $data['product'][0]['name'] ?>" class="form-control" type="text" id="name"
+                        name="name" />
                     </div>
 
 
