@@ -45,14 +45,14 @@ class SettingVariant extends BaseView
                     </div>
                     <table class="table table-striped">
                       <div class="row mt-3 mb-3 justify-content-between">
-                        <a href="javascript:void(0)" onclick="create()" class="btn btn-primary btn-sm"
-                        style="width: 100px">Thêm hàng</a>
+                        <!-- <a href="javascript:void(0)" onclick="create()" class="btn btn-primary btn-sm"
+                        style="width: 100px">Thêm hàng</a> -->
                       <a href="/admin/variant/add" class="btn btn-primary" style="width: 200px">Thêm thuộc tính</a>
                       </div>
                       
                       <thead>
                         <tr>
-                          <th style="width: 20px" scope="col">#</th>
+                          <th style="" scope="col">Tên</th>
                           <?php
                           foreach ($data['variant'] as $itemVariant):
                             ?>
@@ -62,12 +62,11 @@ class SettingVariant extends BaseView
                             <?php
                           endforeach;
                           ?>
-                          <th></th>
                         </tr>
                       </thead>
                       <tbody id="multi_properties">
                         <tr class="items_properties">
-                          <th scope="row">1</th>
+                          <th scope="row"><?= $data['product'][0]['name'] ?></th>
                           <?php
                           $processed_ids = []; // Mảng để theo dõi các pro_variant_id đã xử lý
 // Khởi tạo mảng lưu trữ giá trị option_vl_name
@@ -107,11 +106,6 @@ class SettingVariant extends BaseView
                             <?php
                           endforeach;
                           ?>
-                          <td>
-                            <label for="">&nbsp;</label>
-                            <a href="javascript:void(0)" onclick="delete_(this)"
-                              class="btn btn-danger btn-sm d-block w-50">Xóa</a>
-                          </td>
                         </tr>
                       </tbody>
                     </table>

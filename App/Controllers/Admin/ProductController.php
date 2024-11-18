@@ -313,12 +313,41 @@ class ProductController
 
     public function createAttributeVariant()
     {
-
+        $product = new Product();
+        $data = $product->getAllVariantAndAttribute();
         Header::render();
         // hiển thị form thêm
         Notification::render();
         NotificationHelper::unset();
-        createAttributeVariant::render();
+        createAttributeVariant::render($data);
         Footer::render();
     }
+    public static function storeAttribute()
+    {
+        // validation các trường dữ liệu
+        $is_valid = ProductValidation::createAttribute();
+        if (!$is_valid) {
+            NotificationHelper::error('store_product', 'Thêm sản phẩm thất bại');
+            header('location: /admin/products/create');
+            exit;
+        }
+
+        $data = [
+            'name' => $_POST['product_variant_name'],
+            'value' => $_POST['product_variant_value'],
+            'product_id' => $_POST['product_id'],
+        ];
+        $product = new Product();
+        $result = $product->createNameVariant($data);
+        $kq = $product->createValueVariant($data);
+        if ($result && $kq) {
+            NotificationHelper::success('create_product', 'Thêm sản phẩm thành công');
+            header('location: /admin/variant/add');
+        } else {
+            NotificationHelper::error('create_product', 'Thêm sản phẩm thất bại');
+            header('location: /admin/variant/add');
+            exit;
+        }
+    }
+
 }

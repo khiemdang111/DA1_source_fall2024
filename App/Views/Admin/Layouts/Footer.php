@@ -9,10 +9,10 @@ class Footer extends BaseView
   public static function render($data = null)
   {
 
-?>
+    ?>
 
     <!-- Footer -->
-  
+
     <!-- / Footer -->
 
     <div class="content-backdrop fade"></div>
@@ -27,16 +27,8 @@ class Footer extends BaseView
     </div>
     <!-- / Layout wrapper -->
 
-    <div class="buy-now">
-      <a
-        href="https://themeselection.com/item/sneat-dashboard-pro-bootstrap/"
-        target="_blank"
-        class="btn btn-danger btn-buy-now">Upgrade to Pro</a>
-    </div>
-
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-
     <script src="<?= APP_URL ?>/public/assets/admin/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="<?= APP_URL ?>/public/assets/admin/assets/vendor/libs/popper/popper.js"></script>
     <script src="<?= APP_URL ?>/public/assets/admin/assets/vendor/js/bootstrap.js"></script>
@@ -56,11 +48,11 @@ class Footer extends BaseView
 
     <!-- Place this tag before closing body tag for github widget button. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    
+
     </body>
 
     </html>
-<?php
+    <?php
   }
 }
 

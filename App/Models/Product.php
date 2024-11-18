@@ -246,6 +246,108 @@ class Product extends BaseModel
             return false;
         }
     }
+    public function getAllVariantAndAttribute(){
+        $result = [];
+        try {
+            $sql = "SELECT product_variants.*, product_variant_options.name AS option_name FROM `product_variants` INNER JOIN product_variant_options on product_variants.id = product_variant_options.product_variant_id;";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+    public function createNameVariant($data) {
+        try {
+            // Kiểm tra dữ liệu đầu vào
+            if (!isset($data['name']) || empty($data['name'])) {
+                throw new \Exception('Name không hợp lệ');
+            }
+            if (!isset($data['product_id']) || empty($data['product_id'])) {
+                throw new \Exception('Product ID không hợp lệ');
+            }
     
+            // Kết nối cơ sở dữ liệu
+            $conn = $this->_conn->MySQLi();
+            if (!$conn) {
+                throw new \Exception('Không thể kết nối cơ sở dữ liệu');
+            }
+    
+            // Sử dụng prepared statement để bảo mật
+            $stmt = $conn->prepare("INSERT INTO product_variants (name, product_id) VALUES (?, ?)");
+            if (!$stmt) {
+                throw new \Exception('Lỗi chuẩn bị câu lệnh SQL: ' . $conn->error);
+            }
+    
+            // Gán tham số vào câu lệnh và thực thi
+            $name = $data['name'];
+            $product_id = (int) $data['product_id']; // Đảm bảo product_id là số nguyên
+            $stmt->bind_param("si", $name, $product_id);
+            if (!$stmt->execute()) {
+                throw new \Exception('Lỗi thực thi câu lệnh SQL: ' . $stmt->error);
+            }
+    
+            // Lấy ID bản ghi vừa thêm
+            $insert_id = $stmt->insert_id;
+    
+            // Đóng tài nguyên
+            $stmt->close();
+            $conn->close();
+    
+            // Trả về ID bản ghi vừa thêm
+            return $insert_id;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
+            return false;
+        }
+    }
+    
+    public function createValueVariant($data) {
+        try {
+            // Kiểm tra dữ liệu đầu vào
+            if (!isset($data['value']) || empty($data['value'])) {
+                throw new \Exception('Value không hợp lệ');
+            }
+    
+            $conn = $this->_conn->MySQLi();
+            if (!$conn) {
+                throw new \Exception('Không thể kết nối cơ sở dữ liệu');
+            }
+    
+            // Lấy product_variant_id nếu không được cung cấp
+            if (!isset($data['product_variant_id']) || empty($data['product_variant_id'])) {
+                $result = $conn->query("SELECT id FROM `product_variants` ORDER BY id DESC LIMIT 1");
+
+                if ($result && $row = $result->fetch_assoc()) {
+                    $data['product_variant_id'] = $row['id'];
+                } else {
+                    throw new \Exception('Không tìm thấy product_variant_id');
+                }
+            }
+            // Sử dụng prepared statement để bảo mật
+            $stmt = $conn->prepare("INSERT INTO product_variant_options (name, product_variant_id, product_id) VALUES (?, ?, ?)");
+            if (!$stmt) {
+                throw new \Exception('Lỗi chuẩn bị câu lệnh SQL: ' . $conn->error);
+            }
+    
+            // Gán tham số vào câu lệnh và thực thi
+            $value = $data['value'];
+            $product_variant_id = $data['product_variant_id'];
+            $product_id = $data['product_id']; // Đảm bảo product_id là số nguyên
+            $stmt->bind_param("sii", $value, $product_variant_id, $product_id);
+    
+            if (!$stmt->execute()) {
+                throw new \Exception('Lỗi thực thi câu lệnh SQL: ' . $stmt->error);
+            }
+    
+            // Chuyển hướng sau khi thành công
+            header("Location: /admin/variant/add");
+            return true;
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
+            return false;
+    
+        }
+    }
 
 }

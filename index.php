@@ -82,6 +82,7 @@ Route::post('/admin/delete/products/{id}', 'App\Controllers\Admin\ProductControl
 Route::get('/admin/productvariant/{id}', 'App\Controllers\Admin\ProductController@createVariant');
 Route::post('/admin/productvariant', 'App\Controllers\Admin\ProductController@storeVariant');
 Route::get('/admin/variant/add', 'App\Controllers\Admin\ProductController@createAttributeVariant');
+Route::post('/admin/addAttribute', 'App\Controllers\Admin\ProductController@storeAttribute');
 
 
 //  *** Category

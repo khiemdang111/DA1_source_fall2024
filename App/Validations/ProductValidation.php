@@ -116,4 +116,19 @@ class ProductValidation
         
         return $is_valid;
     }
+    public static function createAttribute()
+    {
+        $is_valid = true;
+
+        if (!isset($_POST['product_variant_name'])  || $_POST['product_variant_name'] === "") {
+            NotificationHelper::error('product_variant_name', 'Không để trống thuộc tính');
+            $is_valid = false;
+        } 
+        if (!isset($_POST['product_variant_value'])  || $_POST['product_variant_value'] == '') {
+            NotificationHelper::error('product_variant_value', 'Không để trống giá trị');
+            $is_valid = false;
+        } 
+        
+        return $is_valid;
+    }
 }
