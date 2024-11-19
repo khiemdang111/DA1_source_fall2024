@@ -46,12 +46,10 @@ class ProductController
             header('Location: /');
          }
         $category_id = $detail[0]['category_id'];
-        $relatedProducts = $product->getRelatedProducts(  $id, $category_id);
         $comment = new Comment();
         $data = [
             'product' => $detail,
             'comments' => $comment->get5CommentNewestByProductAndStatus($id),
-            'relatedProducts' => $relatedProducts,
         ];
           $view_result = ViewProductHelper::cookieView($id,$detail[0]['view']);
         Header::render();
