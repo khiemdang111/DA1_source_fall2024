@@ -21,9 +21,15 @@ class Login extends BaseView
         </div>
       </div>
     </section>
-    <div class="container d-flex justify-content-center align-items-center my-4">
+            <div class="container d-flex justify-content-center align-items-center  ">
+               
+                        <!-- Register -->
+                         <div class=" mt-5 mb-5 col-xl-6 " >
+                         <div class="card px-sm-6 px-0  ">
+                            <div class="card-body">
+                                <!-- Logo -->
 
-                                <form id="formAuthentication" method="post" class="mb-6 w-50" action="">
+                                <form id="formAuthentication" method="post" class="mb-6" action="">
                                 <input type="hidden" name="method" value="POST">
                                     <div class="mb-3 ">
                                         <label for="username" class="form-label">Tên đăng nhập </label>
@@ -71,7 +77,16 @@ class Login extends BaseView
                       ?>
                                 </form>
 
-</div>
+                              
+                            </div>
+                        </div>
+                         </div>
+                      
+                        <!-- /Register -->
+            
+            </div>
+
+           
 <?php
   }
 }
