@@ -86,6 +86,7 @@ class ProductController
         $recommended = $product->recommendedProducts($recommendedProducts);
 
         $detail = $product->getOneProductByCategoryDetailStatus($id);
+        $variant = $product->getAllVariantByProductId($id);
          if(!$detail){
             NotificationHelper::error('detail','Không thể xem sản phẩm');
             header('Location: /');
@@ -95,6 +96,7 @@ class ProductController
         $data = [
             'product' => $detail,
             'comments' => $comment->get5CommentNewestByProductAndStatus($id),
+            'variant' => $variant,
         ];
         $view_result = ViewProductHelper::cookieView($id, $detail[0]['view']);
         Header::render();
