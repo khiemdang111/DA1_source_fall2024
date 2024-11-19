@@ -13,14 +13,18 @@ class Detail extends BaseView
         // echo '<pre>';
         // var_dump($data);
         // die;
-?>
+        ?>
         <!-- giao diện mới -->
-        <section class="hero-wrap hero-wrap-2" style="background-image: url('/public/uploads/image/bg_2.jpg');" data-stellar-background-ratio="0.5">
+        <section class="hero-wrap hero-wrap-2" style="background-image: url('/public/uploads/image/bg_2.jpg');"
+            data-stellar-background-ratio="0.5">
             <div class="overlay"></div>
             <div class="container">
                 <div class="row no-gutters slider-text align-items-end justify-content-center">
                     <div class="col-md-9 ftco-animate mb-5 text-center">
-                        <p class="breadcrumbs mb-0"><span class="mr-2"><a href="/">Trang chủ <i class="fa fa-chevron-right"></i></a></span> <span><a href="product.html">Products <i class="fa fa-chevron-right"></i></a></span> <span>Products Single <i class="fa fa-chevron-right"></i></span></p>
+                        <p class="breadcrumbs mb-0"><span class="mr-2"><a href="/">Trang chủ <i
+                                        class="fa fa-chevron-right"></i></a></span> <span><a href="product.html">Products <i
+                                        class="fa fa-chevron-right"></i></a></span> <span>Products Single <i
+                                    class="fa fa-chevron-right"></i></span></p>
                         <h2 class="mb-0 bread">Chi tiết sản phẩm</h2>
                     </div>
                 </div>
@@ -32,7 +36,9 @@ class Detail extends BaseView
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 mb-5 ftco-animate">
-                        <a href="" class="image-popup prod-img-bg"><img width="100%" height="100%" src="<?= APP_URL ?>/public/uploads/products/<?= $data['product'][0]['image'] ?>" class="img-fluid" alt="Colorlib Template"></a>
+                        <a href="" class="image-popup prod-img-bg"><img width="100%" height="100%"
+                                src="<?= APP_URL ?>/public/uploads/products/<?= $data['product'][0]['image'] ?>"
+                                class="img-fluid" alt="Colorlib Template"></a>
                     </div>
                     <div class="col-lg-6 product-details pl-md-5 ftco-animate">
                         <h3><?= $data['product'][0]['name'] ?></h3>
@@ -54,28 +60,76 @@ class Detail extends BaseView
                         </div>
 
                         <?php
-                        if ($data['product'][0]['discount_price'] > 0) :
-                        ?>
-                            <p class="price_product text-danger"><del><?= number_format($data['product'][0]['discount_price'])  ?> VND</del></p>
-                            <p class="price_product"><span><?= number_format($data['product'][0]['price'])  ?> VND</span></p>
-                        <?php
-                        else :
-                        ?>
+                        if ($data['product'][0]['discount_price'] > 0):
+                            ?>
+                            <p class="price_product text-danger"><del><?= number_format($data['product'][0]['discount_price']) ?>
+                                    VND</del></p>
+                            <p class="price_product"><span><?= number_format($data['product'][0]['price']) ?> VND</span></p>
+                            <?php
+                        else:
+                            ?>
 
-                            <p class="price_product"><span><?= number_format($data['product'][0]['price'])  ?> VND</span></p>
-                        <?php
+                            <p class="price_product"><span><?= number_format($data['product'][0]['price']) ?> VND</span></p>
+                            <?php
                         endif;
                         ?>
                         <p>
                             <?= $data['product'][0]['description'] ?>
                         </p>
+                        <div class="form-group">
+                        <?php
+$processed_ids_cli = [];
+foreach ($data['variant'] as $itemVariant_opt) {
+    if (in_array($itemVariant_opt['variant_name'], $processed_ids_cli)) {
+        // Bỏ qua nếu variant_name đã tồn tại
+        continue;
+    }
+    // Thêm variant_name vào danh sách đã xử lý
+    $processed_ids_cli[] = $itemVariant_opt['variant_name'];
+
+    // Reset $countinput cho mỗi nhóm variant_name
+    $countinput = 1;
+    ?>
+    <td value="<?= $itemVariant_opt['variant_name'] ?>">
+        <div class="mt-3">
+            <h6><?= $itemVariant_opt['variant_name'] ?></h6>
+            <div class="row">
+                <?php
+                foreach ($data['variant'] as $itemVariant_value):
+                    if ($itemVariant_value['variant_name'] === $itemVariant_opt['variant_name']):
+                        ?>
+                        <div class="radio-inputs">
+                            <label>
+                                <input 
+                                    class="radio-input" 
+                                    type="radio" 
+                                    name="enginev-<?= $itemVariant_opt['option_name'] . '-' . $countinput ?>" 
+                                    value="<?= $itemVariant_value['option_name'] ?>"
+                                >
+                                <span class="radio-tile">
+                                    <span class="radio-label"><?= $itemVariant_value['option_name'] ?></span>
+                                </span>
+                            </label>
+                        </div>
+                        <?php
+                        // Tăng $countinput sau mỗi lần tạo input
+                        
+                    endif;
+                endforeach;
+                $countinput++;
+                ?>
+            </div>
+        </div>
+    </td>
+    <?php
+}
+?>
 
 
+                        </div>
                         <form action="/cart/add" method="post">
                             <div class="row mt-4">
                                 <div class="input-group col-md-6 d-flex mb-3">
-
-
                                     <input type="hidden" name="method" id="" value="POST">
 
                                     <span class="input-group-btn mr-2">
@@ -83,21 +137,14 @@ class Detail extends BaseView
                                             <i class="fa fa-minus"></i>
                                         </button>
                                     </span>
-                                    <input type="text" id="quantity" name="number" class="number_cart p-1 m-2 number_input_cart" value="1" min="1" max="100">
+                                    <input type="text" id="quantity" name="number" class="number_cart p-1 m-2 number_input_cart"
+                                        value="1" min="1" max="100">
                                     <input type="hidden" name="id" id="" value="<?= $data['product'][0]['id'] ?>">
                                     <span class="input-group-btn ml-2">
                                         <button type="button" class="quantity-right-plus btn" data-type="plus" data-field="">
                                             <i class="fa fa-plus"></i>
                                         </button>
                                     </span>
-
-
-
-
-
-
-
-
                                 </div>
 
                                 <div class="w-100"></div>
@@ -105,16 +152,21 @@ class Detail extends BaseView
                                     <p style="color: #000;">Số lượt xem : <?= $data['product'][0]['view'] ?></p>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary add_to_cart">Thêm vào giỏ hàng</button> <a href="/cart" class="btn btn-primary buy_now">Mua ngay</a>
+                            <button type="submit" class="btn btn-primary add_to_cart">Thêm vào giỏ hàng</button> <a href="/cart"
+                                class="btn btn-primary buy_now">Mua ngay</a>
                         </form>
                     </div>
                 </div>
                 <div class="row mt-5">
                     <div class="col-md-12 nav-link-wrap">
-                        <div class="nav nav-pills d-flex text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link ftco-animate active mr-lg-1" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Mô tả</a>
-                            <a class="nav-link ftco-animate mr-lg-1" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Bình luận</a>
-                            <a class="nav-link ftco-animate" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab" aria-controls="v-pills-3" aria-selected="false">Đánh giá</a>
+                        <div class="nav nav-pills d-flex text-center" id="v-pills-tab" role="tablist"
+                            aria-orientation="vertical">
+                            <a class="nav-link ftco-animate active mr-lg-1" id="v-pills-1-tab" data-toggle="pill"
+                                href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Mô tả</a>
+                            <a class="nav-link ftco-animate mr-lg-1" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2"
+                                role="tab" aria-controls="v-pills-2" aria-selected="false">Bình luận</a>
+                            <a class="nav-link ftco-animate" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab"
+                                aria-controls="v-pills-3" aria-selected="false">Đánh giá</a>
                         </div>
                     </div>
                     <div class="col-md-12 tab-wrap">
@@ -135,12 +187,12 @@ class Detail extends BaseView
                                                     <h4 class="card-title">Bình luận mới nhất</h4>
                                                 </div>
                                                 <div class="comment-widgets">
-                                                    <?php if (isset($data) && isset($data['comments']) && $data && $data['comments']) :
-                                                        foreach ($data['comments'] as $item) :
-                                                    ?>
+                                                    <?php if (isset($data) && isset($data['comments']) && $data && $data['comments']):
+                                                        foreach ($data['comments'] as $item):
+                                                            ?>
                                                             <!-- Comment Row -->
                                                             <div class="d-flex flex-row comment-row m-t-0 my-3">
-                                                                <div class="p-2">
+                                                            <div class="p-2">
                                                                     <?php
                                                                     if ($item['avatar']) :
                                                                     ?>
@@ -150,46 +202,59 @@ class Detail extends BaseView
                                                                     ?>
                                                                         <img class="rounded-circle" src="<?= APP_URL ?>/public/uploads/image/user.png" alt="" width="45px">
                                                                     <?php
-                                                                    endif; ?>
-
-
+                                                                    endif;
+                                                                    ?>
                                                                 </div>
                                                                 <div class="comment-text w-100 ">
-                                                                    <h6 class="font-medium"><?= $item['name'] ?> - <?= $item['username'] ?></h6>
+                                                                    <h6 class="font-medium"><?= $item['name'] ?> -
+                                                                        <?= $item['username'] ?></h6>
                                                                     <span class="m-b-15 d-block"><?= $item['content'] ?></span>
                                                                     <div class="my-2">
-                                                                        <span class="text-muted float-right mx-3"><?= $item['date'] ?></span>
-
+                                                                        <span
+                                                                            class="text-muted float-right mx-3"><?= $item['date'] ?></span>
                                                                         <?php
-                                                                        if (isset($data) && $is_login  && $_SESSION['user']['id'] === $item['user_id']) :
-                                                                        ?>
+                                                                        if (isset($data) && $is_login && $_SESSION['user']['id'] === $item['user_id']):
+                                                                            ?>
 
 
-                                                                            <button type="button" class="btn-sm" data-toggle="collapse" data-target="#<?= $item['username'] ?><?= $item['id'] ?>" aria-expanded="false" aria-controls="<?= $item['username'] ?><?= $item['id'] ?>">Sửa</button>
-                                                                            <form action="/comments/<?= $item['id'] ?>" method="post" onsubmit="return confirm('Chắc chưa?')" style="display: inline-block">
+                                                                            <button type="button" class="btn-sm" data-toggle="collapse"
+                                                                                data-target="#<?= $item['username'] ?><?= $item['id'] ?>"
+                                                                                aria-expanded="false"
+                                                                                aria-controls="<?= $item['username'] ?><?= $item['id'] ?>">Sửa</button>
+                                                                            <form action="/comments/<?= $item['id'] ?>" method="post"
+                                                                                onsubmit="return confirm('Chắc chưa?')"
+                                                                                style="display: inline-block">
 
                                                                                 <input type="hidden" name="method" value="DELETE" id="">
-                                                                                <input type="hidden" name="product_id" value="<?= $data['product'][0]['id'] ?>" id="">
+                                                                                <input type="hidden" name="product_id"
+                                                                                    value="<?= $data['product'][0]['id'] ?>" id="">
                                                                                 <button type="submit" class="btn btn-danger">Xoá</button>
 
                                                                             </form>
-                                                                            <div class="collapse" id="<?= $item['username'] ?><?= $item['id'] ?>">
+                                                                            <div class="collapse"
+                                                                                id="<?= $item['username'] ?><?= $item['id'] ?>">
                                                                                 <div class="card card-body mt-5 comment_select">
-                                                                                    <form action="/comments/<?= $item['id'] ?>" method="post">
-                                                                                        <input type="hidden" name="method" value="PUT" id="">
-                                                                                        <input type="hidden" name="product_id" value="<?= $data['product'][0]['id'] ?>" id="">
+                                                                                    <form action="/comments/<?= $item['id'] ?>"
+                                                                                        method="post">
+                                                                                        <input type="hidden" name="method" value="PUT"
+                                                                                            id="">
+                                                                                        <input type="hidden" name="product_id"
+                                                                                            value="<?= $data['product'][0]['id'] ?>" id="">
                                                                                         <div class="form-group">
                                                                                             <label for="">Bình luận</label>
-                                                                                            <textarea class="form-control rounded-0" name="content" id="" rows="3" placeholder="Nhập bình luận..."><?= $item['content'] ?></textarea>
+                                                                                            <textarea class="form-control rounded-0"
+                                                                                                name="content" id="" rows="3"
+                                                                                                placeholder="Nhập bình luận..."><?= $item['content'] ?></textarea>
                                                                                         </div>
                                                                                         <div class="comment-footer">
-                                                                                            <button type="submit" class="button_comment">Gửi</button>
+                                                                                            <button type="submit"
+                                                                                                class="button_comment">Gửi</button>
                                                                                         </div>
                                                                                     </form>
                                                                                 </div>
                                                                             </div>
 
-                                                                        <?php
+                                                                            <?php
                                                                         endif;
                                                                         ?>
 
@@ -197,57 +262,64 @@ class Detail extends BaseView
                                                                     </div>
                                                                 </div>
                                                             </div>
-
-
-                                                        <?php
+                                                            <?php
                                                         endforeach;
-                                                    else :
+                                                    else:
                                                         ?>
                                                         <h5 class="commnets_no ">Chưa có bình luận</h5>
-                                                    <?php
+                                                        <?php
                                                     endif;
 
                                                     ?>
                                                     <?php
-                                                    if (isset($data) && $is_login) :
-                                                    ?>
+                                                    if (isset($data) && $is_login):
+                                                        ?>
 
 
                                                         <div class="d-flex flex-row comment-row">
 
                                                             <div class="p-2">
                                                                 <?php
-                                                                if ($is_login) :
-                                                                ?>
+                                                                if ($is_login):
+                                                                    ?>
                                                                     <?php
                                                                     if ($_SESSION['user']['avatar'] === null || $_SESSION['user']['avatar'] === ""):
-                                                                    ?>
-                                                                        <img src="<?= APP_URL ?>/public/uploads/users/user.png" alt="user" width="50" class="rounded-circle">
-                                                                    <?php
-                                                                    else :
-                                                                    ?>
-                                                                        <img src="<?= APP_URL ?>/public/uploads/users/<?= $_SESSION['user']['avatar'] ?>" alt="user" width="50" class="rounded-circle">
+                                                                        ?>
+                                                                        <img src="<?= APP_URL ?>/public/uploads/users/user.png" alt="user"
+                                                                            width="50" class="rounded-circle">
+                                                                        <?php
+                                                                    else:
+                                                                        ?>
+                                                                        <img src="<?= APP_URL ?>/public/uploads/users/<?= $_SESSION['user']['avatar'] ?>"
+                                                                            alt="user" width="50" class="rounded-circle">
 
-                                                                    <?php
+                                                                        <?php
                                                                     endif;
                                                                     ?>
-                                                                <?php
-                                                                else :
-                                                                ?>
-                                                                    <img class="img_account" src="<?= APP_URL ?>/public/uploads/users/user.png" alt="" width="40%">
-                                                                <?php
+                                                                    <?php
+                                                                else:
+                                                                    ?>
+                                                                    <img class="img_account"
+                                                                        src="<?= APP_URL ?>/public/uploads/users/user.png" alt=""
+                                                                        width="40%">
+                                                                    <?php
                                                                 endif; ?>
                                                             </div>
                                                             <div class="comment-text w-100 magin">
-                                                                <h6 class="font-medium"><?= $_SESSION['user']['name'] ?> - <?= $_SESSION['user']['username'] ?></h6>
+                                                                <h6 class="font-medium"><?= $_SESSION['user']['name'] ?> -
+                                                                    <?= $_SESSION['user']['username'] ?></h6>
                                                                 <form action="/comments" method="post">
                                                                     <input type="hidden" name="method" value="POST" id="">
-                                                                    <input type="hidden" name="product_id" value="<?= $data['product'][0]['id'] ?>">
-                                                                    <input type="hidden" name="user_id" value="<?= $_SESSION['user']['id'] ?>">
+                                                                    <input type="hidden" name="product_id"
+                                                                        value="<?= $data['product'][0]['id'] ?>">
+                                                                    <input type="hidden" name="user_id"
+                                                                        value="<?= $_SESSION['user']['id'] ?>">
                                                                     <input type="hidden" name="status" value="1">
                                                                     <div class="form-group">
                                                                         <label for="">Bình luận</label>
-                                                                        <textarea class="form-control rounded-0" name="content" id="" rows="3" placeholder="Nhập bình luận..."></textarea>
+                                                                        <textarea class="form-control rounded-0" name="content"
+                                                                            id="" rows="3"
+                                                                            placeholder="Nhập bình luận..."></textarea>
                                                                     </div>
                                                                     <div class="comment-footer">
                                                                         <button type="submit" class="button_comment">Gửi</button>
@@ -257,11 +329,11 @@ class Detail extends BaseView
 
                                                             </div>
                                                         </div>
-                                                    <?php
-                                                    else :
-                                                    ?>
+                                                        <?php
+                                                    else:
+                                                        ?>
                                                         <h6 class="mx-3">Vui lòng đăng nhập để bình luận</h6>
-                                                    <?php
+                                                        <?php
                                                     endif;
                                                     ?>
                                                 </div>
@@ -295,9 +367,11 @@ class Detail extends BaseView
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                     </span>
-                                                    <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
+                                                    <span class="text-right"><a href="#" class="reply"><i
+                                                                class="icon-reply"></i></a></span>
                                                 </p>
-                                                <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
+                                                <p>When she reached the first hills of the Italic Mountains, she had a last view
+                                                    back on the skyline of her hometown Bookmarksgrov</p>
                                             </div>
                                         </div>
                                         <div class="review">
@@ -315,9 +389,11 @@ class Detail extends BaseView
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                     </span>
-                                                    <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
+                                                    <span class="text-right"><a href="#" class="reply"><i
+                                                                class="icon-reply"></i></a></span>
                                                 </p>
-                                                <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
+                                                <p>When she reached the first hills of the Italic Mountains, she had a last view
+                                                    back on the skyline of her hometown Bookmarksgrov</p>
                                             </div>
                                         </div>
                                         <div class="review">
@@ -335,9 +411,11 @@ class Detail extends BaseView
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                     </span>
-                                                    <span class="text-right"><a href="#" class="reply"><i class="icon-reply"></i></a></span>
+                                                    <span class="text-right"><a href="#" class="reply"><i
+                                                                class="icon-reply"></i></a></span>
                                                 </p>
-                                                <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrov</p>
+                                                <p>When she reached the first hills of the Italic Mountains, she had a last view
+                                                    back on the skyline of her hometown Bookmarksgrov</p>
                                             </div>
                                         </div>
                                     </div>
@@ -487,7 +565,7 @@ class Detail extends BaseView
 
 
 
-<?php
+        <?php
 
     }
 }

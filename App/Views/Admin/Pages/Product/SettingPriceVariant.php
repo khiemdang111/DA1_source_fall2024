@@ -4,7 +4,7 @@ namespace App\Views\Admin\Pages\Product;
 
 use App\Views\BaseView;
 
-class SettingVariant extends BaseView
+class SettingPriceVariant extends BaseView
 {
   public static function render($data = null)
   {
