@@ -486,37 +486,37 @@ foreach ($data['variant'] as $itemVariant_opt) {
                 </div>
             </div>
         </section>
-        <section class="ftco-section">
+        <section class="mb-5">
             <div class="container">
                 <div class="row justify-content-center pb-5">
                     <div class="col-md-7 heading-section text-center ftco-animate">
                         <span class="subheading">Rượu vang hảo hạn</span>
-                        <h2>Sản phẩm liên quan</h2>
+                        <h2>Dành cho bạn</h2>
                     </div>
                 </div>
                 <div class="row">
                     <!-- <?php
-                            if (count($data) && count($data['relatedProducts'])):
+                            if (count($data) && count($data['recommended'])):
 
                             ?> -->
                     <?php
-                                foreach ($data['relatedProducts'] as $relatedProducts):
+                                foreach ($data['recommended'] as $recommended):
                     ?>
                         <div class="col-md-3 d-flex">
                             <div class="product ftco-animate">
                                 <div class="img d-flex align-items-center justify-content-center"
-                                    style="background-image: url(<?= APP_URL ?>/public/uploads/products/<?= $relatedProducts['image'] ?>);">
+                                    style="background-image: url(<?= APP_URL ?>/public/uploads/products/<?= $recommended['image'] ?>);">
                                     <div class="desc">
                                         <div class="meta-prod d-flex">
                                             <form action="/cart/add" method="post">
                                                 <input type="hidden" name="method" id="" value="POST">
-                                                <input type="hidden" name="id" id="" value="<?= $relatedProducts['id'] ?>" required>
+                                                <input type="hidden" name="id" id="" value="<?= $recommended['id'] ?>" required>
                                                 <button type="submit" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag">
                                                     </span></button>
                                             </form>
                                             <a href="#" type="submit" class="d-flex align-items-center justify-content-center"><span
                                                     class="flaticon-heart"></span></a>
-                                            <a href="/products/<?= $relatedProducts['id'] ?>" class="d-flex align-items-center justify-content-center"><span
+                                            <a href="/products/<?= $recommended['id'] ?>" class="d-flex align-items-center justify-content-center"><span
                                                     class="flaticon-visibility"></span></a>
 
                                         </div>
@@ -524,20 +524,20 @@ foreach ($data['variant'] as $itemVariant_opt) {
                                 </div>
                                 <div class="text text-center">
                                     <span class="sale"></span>
-                                    <span class="category"><?= $relatedProducts['category_name'] ?></span>
-                                    <h2><?= $relatedProducts['name'] ?></h2>
+                                    <span class="category"><?= $recommended['category_name'] ?></span>
+                                    <h2><?= $recommended['name'] ?></h2>
                                     <p class="mb-0">
                                         <?php
-                                        if ($relatedProducts['discount_price'] > 0) :
+                                        if ($recommended['discount_price'] > 0) :
                                         ?>
-                                            <span class="price price-sale"><?= number_format($relatedProducts['price']) ?></span> <span
-                                                class="price"><?= number_format($relatedProducts['price'] - $relatedProducts['discount_price']) ?></span>
+                                            <span class="price price-sale"><?= number_format($recommended['price']) ?></span> <span
+                                                class="price"><?= number_format($recommended['price'] - $recommended['discount_price']) ?></span>
 
                                         <?php
                                         else:
                                         ?>
                                             <span
-                                                class="price"><?= number_format($relatedProducts['price']) ?></span>
+                                                class="price"><?= number_format($recommended['price']) ?></span>
 
                                         <?php endif; ?>
 

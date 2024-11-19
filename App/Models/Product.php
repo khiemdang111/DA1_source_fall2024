@@ -361,4 +361,51 @@ class Product extends BaseModel
             return $result;
         }
     }
+
+
+public function getProductByWatched($ids)
+{
+    $result = [];
+    try {
+        $sql = "SELECT products.*, categories.name AS category_name 
+                FROM products 
+                INNER JOIN categories ON products.category_id = categories.id
+                WHERE products.id IN ($ids) AND products.status = " . self::STATUS_ENABLE . "
+                AND categories.status = " . self::STATUS_ENABLE;
+                
+        $result = $this->_conn->MySQLi()->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    } catch (\Throwable $th) {
+        error_log('Lỗi khi hiển thị các sản phẩm có lượt xem nhiều nhất: ' . $th->getMessage());
+        return $result;
+    }
+}
+
+public function recommendedProducts($recommendedProducts)
+{
+    $result = [];
+    try {
+        if (empty($recommendedProducts)) {
+            return $result; 
+        }      
+        $sql = "SELECT products.* , categories.name AS category_name 
+                FROM products
+                INNER JOIN categories ON products.category_id = categories.id
+                WHERE products.name IN ($recommendedProducts) 
+                  AND products.status = " . self::STATUS_ENABLE . "
+                AND categories.status = " . self::STATUS_ENABLE;
+        $queryResult = $this->_conn->MySQLi()->query($sql);
+
+        if ($queryResult) {
+            $result = $queryResult->fetch_all(MYSQLI_ASSOC);
+        }
+        return $result;
+    } catch (\Throwable $th) {
+        // Ghi log lỗi nếu có
+        error_log('Lỗi khi hiển thị các sản phẩm được gợi ý: ' . $th->getMessage());
+        return $result;
+    }
+}
+    
+
 }
