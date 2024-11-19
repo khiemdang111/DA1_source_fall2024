@@ -96,4 +96,32 @@ class User extends BaseModel
             return $result;
         }
     }
+
+
+    public function updatePasswordByUsername(string $username, string $hashedPassword)
+    {
+        try {
+            $sql = "UPDATE users SET password = ? WHERE username = ?";
+            $conn = $this->_conn->MySQLi(); // Giả sử bạn đã khởi tạo kết nối MySQLi trong lớp
+            $stmt = $conn->prepare($sql);
+    
+            if (!$stmt) {
+                throw new \Exception("Không thể chuẩn bị câu lệnh: " . $conn->error);
+            }
+    
+            $stmt->bind_param('ss', $hashedPassword, $username);
+            $result = $stmt->execute();
+    
+            if (!$result) {
+                throw new \Exception("Lỗi khi thực thi câu lệnh: " . $stmt->error);
+            }
+    
+            return true;
+        } catch (\Throwable $th) {
+            error_log("Lỗi khi cập nhật mật khẩu: " . $th->getMessage());
+            return false;
+        }
+    }
+    
+    
 }

@@ -12,6 +12,7 @@ use App\Models\Comment;
 use App\Models\Product;
 use App\Models\User;
 use App\Helpers\AuthHelper;
+use Mailer;
 
 class HomeController
 {
@@ -52,5 +53,4 @@ class HomeController
         Home::render($data);
         Footer::render();
     }
-
 }

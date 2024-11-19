@@ -6,30 +6,24 @@ use App\Views\BaseView;
 
 class Login extends BaseView
 {
-    public static function render($data = null)
-    {
+  public static function render($data = null)
+  {
 ?>
-      
-      <section class="hero-wrap hero-wrap-2" style="background-image: url('<?= APP_URL ?>/public/assets/client/images/bg_2.jpg');" data-stellar-background-ratio="0.5">
+
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('<?= APP_URL ?>/public/assets/client/images/bg_2.jpg');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate mb-5 text-center">
-          	<p class="breadcrumbs mb-0"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>Đăng nhập <i class="fa fa-chevron-right"></i></span></p>
+            <p class="breadcrumbs mb-0"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>Đăng nhập <i class="fa fa-chevron-right"></i></span></p>
             <h2 class="mb-0 bread">Đăng Nhập</h2>
           </div>
         </div>
       </div>
     </section>
-            <div class="container d-flex justify-content-center align-items-center  ">
-               
-                        <!-- Register -->
-                         <div class=" mt-5 mb-5 col-xl-6 " >
-                         <div class="card px-sm-6 px-0  ">
-                            <div class="card-body">
-                                <!-- Logo -->
+    <div class="container d-flex justify-content-center align-items-center my-4">
 
-                                <form id="formAuthentication" method="post" class="mb-6" action="">
+                                <form id="formAuthentication" method="post" class="mb-6 w-50" action="">
                                 <input type="hidden" name="method" value="POST">
                                     <div class="mb-3 ">
                                         <label for="username" class="form-label">Tên đăng nhập </label>
@@ -49,8 +43,9 @@ class Login extends BaseView
                                         <div class="d-flex justify-content-between mt-8">
                                             <div class="form-check mb-0 ms-2">
                                                 <input class="form-check-input" type="checkbox" id="remember" name="remember" />
-                                                <label class="form-check-label" for="remember"> Remember Me </label>
+                                                <label class="form-check-label" for="remember"> Ghi lại </label>
                                             </div>
+                                            <p class="mb-0"><a href="/forgetpass" class="mr-2">Quên mật khẩu </a> </p>
                                             
                                         </div>
                                     </div>
@@ -76,16 +71,7 @@ class Login extends BaseView
                       ?>
                                 </form>
 
-                              
-                            </div>
-                        </div>
-                         </div>
-                      
-                        <!-- /Register -->
-            
-            </div>
-
-           
+</div>
 <?php
-    }
+  }
 }

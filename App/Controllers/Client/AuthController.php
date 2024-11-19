@@ -11,6 +11,7 @@ use App\Validations\AuthValidation;
 use App\Helpers\NotificationHelper;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Pages\Auth\Edit;
+use App\Views\Client\Pages\Auth\Forgetpass;
 use App\Views\Client\Pages\Auth\Register;
 
 class AuthController
@@ -148,4 +149,23 @@ class AuthController
          // kiểm tra kết quả vầ và chuyển hướng
         header("Location: /users/$id");
     }
+
+  public static function forgetpass()
+    {
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        Forgetpass::render();
+        Footer::render();
+    }
+
+    // public static function Verification()
+    // {
+    //     Header::render();
+    //     Notification::render();
+    //     NotificationHelper::unset();
+    //     Verification::render();
+    //     Footer::render();
+    // }
+   
 }

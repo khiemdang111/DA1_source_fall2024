@@ -7,9 +7,19 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
+    
+use App\Email\Mailer;
+use App\Models\User;
+// use App\Models\Mailer
+use App\Views\Client\Pages\Auth\Forgetpass;
+use App\Views\Client\Layouts\Footer;
+use App\Views\Client\Layouts\Header;
+use App\Helpers\NotificationHelper;
+use App\Views\Client\Components\Notification;
+
 class EmailController
 {
-    public static function sendEmail($message, $to, $name)
+public static function sendEmail($message, $to, $name)
     {
         $mail = new PHPMailer();
 
@@ -49,4 +59,60 @@ class EmailController
         }
         return true;
     }
+    public static function forgetpass()
+    {
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        Forgetpass::render();
+        Footer::render();
+    }
+
+    public static function mail()
+    {
+        $username = $_POST['username'] ?? null;
+        $email = $_POST['email'] ?? null;
+
+        if (!$username || !$email) {
+            echo "Vui lòng nhập đầy đủ thông tin.";
+            return;
+        }
+
+        $userModel = new User();
+        $user = $userModel->getOneUserByUsername($username);
+
+        if (!$user) {
+            echo "Người dùng không tồn tại.";
+            return;
+        }
+
+       // Tạo mật khẩu mới và mã hóa
+       $newPassword = self::generateRandomNumber();
+       $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+
+
+      // Gửi email khôi phục mật khẩu
+      $subject = "Khôi phục mật khẩu";
+      $body = "Mật khẩu mới của bạn là: <strong>$newPassword</strong>";
+
+      $emailSent = Mailer::sendMail($email, $subject, $body);
+      if ($emailSent) {
+          echo "Đã gửi mail thành công.";
+
+          // Cập nhật mật khẩu mới
+          $updateSuccess = $userModel->updatePasswordByUsername($username, $hashedPassword);
+          if ($updateSuccess) {
+              echo "Mật khẩu đã được cập nhật.";
+          } else {
+              echo "Không thể cập nhật mật khẩu. Vui lòng thử lại.";
+          }
+      } else {
+          echo "Đã xảy ra lỗi khi gửi email.";
+      }
+  }
+
+  public static function generateRandomNumber()
+  {
+      return str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
+  }
 }

@@ -33,7 +33,10 @@ Route::get('/products/categories/{id}','App\Controllers\Client\ProductController
 Route::post('/products/filter', 'App\Controllers\Client\ProductController@index');
 
 
+Route::get('/forgetpass', 'App\Controllers\Client\AuthController@forgetpass');
+Route::get('/Verification', 'App\Controllers\Client\AuthController@Verification');
 
+Route::post('/mail', 'App\Controllers\Client\EmailController@mail');
 // *** Admin
 Route::get('/admin', 'App\Controllers\Admin\HomeController@index');
 
