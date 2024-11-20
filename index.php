@@ -117,6 +117,8 @@ Route::get('/admin/posts/{id}', 'App\Controllers\Admin\PostController@edit');
 Route::put('/update/posts/{id}', 'App\Controllers\Admin\PostController@update');
 Route::post('/admin/delete/{id}', 'App\Controllers\Admin\PostController@delete');
 Route::get('/post', 'App\Controllers\Client\PostController@index');
+Route::get('/Blog_single/{id}', 'App\Controllers\Client\PostController@Blog_single');
+
 
 // *** Contact
 Route::get('/contact', 'App\Controllers\Client\PostController@Contact');

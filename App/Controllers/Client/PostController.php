@@ -12,6 +12,7 @@ use App\Helpers\NotificationHelper;
 use App\Models\Post;
 
 use App\Views\Client\Components\Notification;
+use App\Views\Client\Pages\Post\Blog_single;
 use App\Views\Client\Pages\Post\Contact;
 use App\Views\Client\Pages\Post\index;
 
@@ -62,5 +63,19 @@ class PostController
         
         
     }
+
+    public static function Blog_single($id){
+        $post = new Post();
+        $data = $post->getOnePost($id);
+        $data = [
+            'post' => $data,
+        ];
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset(); 
+        Blog_single::render($data);
+        Footer::render();
+    }
+
    
 }

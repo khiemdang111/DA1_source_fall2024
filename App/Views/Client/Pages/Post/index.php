@@ -27,6 +27,7 @@ class index extends BaseView
     <section class="ftco-section">
       <div class="container">
         <div class="row d-flex">
+        
         <?php
                                 foreach ($data as $item):
                                 ?>
@@ -41,7 +42,7 @@ class index extends BaseView
               	</div>
                 <h3 class="heading mb-3"><a href="#"> <?= $item['title'] ?></a></h3>
                 <p> <?= $item['summary'] ?></p>
-                <a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+                <a href=" /Blog_single/<?=$item['id'] ?>" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
 
               </div>
             </div>
