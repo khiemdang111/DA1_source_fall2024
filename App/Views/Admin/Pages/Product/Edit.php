@@ -36,7 +36,7 @@ class Edit extends BaseView
                     </div>
                     <div class="col-md-12">
                       <label for="avatar" class="form-label">Ảnh <span class="text-danger"> *</span></label>
-                      <input value="" class="form-control" type="file" id="avatar" name="avatar" />
+                      <input value="" class="form-control" type="file" id="avatar" name="image" />
                     </div>
                     <div class="col-md-6">
                       <label for="price" class="form-label">Giá gốc <span class="text-danger"> *</span></label>

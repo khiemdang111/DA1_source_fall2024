@@ -143,7 +143,6 @@ class AuthController
         ];
         // kiểm tra hình ảnh có hợp leej hay không 
         $is_upload = AuthValidation::uploadAvatar();
-
         if ($is_upload) {
             $data['avatar'] = $is_upload;
         }

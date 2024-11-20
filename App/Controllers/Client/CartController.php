@@ -194,13 +194,13 @@ class CartController
         // var_dump($currentURL);
         // die;
         // Chuyển hướng về trang giỏ hàng để cập nhật
-        header('location: /cart');
-        if($currentURL = 'http://127.0.0.1:8080/cart/update'){
-              header('location: /cart');
-              exit();
-        }else{
+        // header('location: /cart');
+        if ($currentURL === 'http://127.0.0.1:8080/cart/update') {
+            header('location: /cart');
+            exit();
+        } else {
             header('location: /checkout');
-              exit();
+            exit();
         }
     }
     public static function deleteItem()

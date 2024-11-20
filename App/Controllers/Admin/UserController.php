@@ -94,7 +94,6 @@ class UserController
 
         $user = new User();
         $data = $user->getOneUser($id);
-
         if (!$data) {
             NotificationHelper::error('edit', 'Không thể xem người dùng này');
             header('location: /admin/users');
