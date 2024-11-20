@@ -97,11 +97,6 @@ class ProductController
             'status' => $_POST['status'],
             'category_id' => $_POST['category_id'],
         ];
-
-        $is_upload = ProductValidation::uploadImage();
-        if ($is_upload) {
-            $data['image'] = $is_upload;
-        }
         $result = $product->createProduct($data);
 
         if ($result) {

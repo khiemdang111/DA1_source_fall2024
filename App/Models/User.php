@@ -122,6 +122,21 @@ class User extends BaseModel
             return false;
         }
     }
-    
+    public function getOneToken(int $token)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM $this->table WHERE token=?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('i', $token);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
     
 }
