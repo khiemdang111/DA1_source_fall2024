@@ -5,6 +5,7 @@ namespace App\Controllers\Client;
 use App\Helpers\AuthHelper;
 use App\Helpers\CartHelper;
 use App\Helpers\NotificationHelper;
+use App\Helpers\PayHelper;
 use App\Models\Order;
 use App\Models\Product;
 use App\Validations\CartValidation;
@@ -42,7 +43,6 @@ class CartController
                     //  var_dump($cart_data);
                     //  die;
                 }
-
                 Header::render();
                 Notification::render();
                 NotificationHelper::unset();
@@ -190,7 +190,18 @@ class CartController
         NotificationHelper::success('cart', 'Đã cập nhật số lượng sản phẩm');
 
         // sau khi lưu cookie thì phải chuyển trang/ load lại thì mới ăn cookie
+        $currentURL = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        // var_dump($currentURL);
+        // die;
+        // Chuyển hướng về trang giỏ hàng để cập nhật
         header('location: /cart');
+        if($currentURL = 'http://127.0.0.1:8080/cart/update'){
+              header('location: /cart');
+              exit();
+        }else{
+            header('location: /checkout');
+              exit();
+        }
     }
     public static function deleteItem()
     {
@@ -259,8 +270,29 @@ class CartController
 
             header('location: /');
         }
-
     }
+
+
+    public static function getoder()
+    {
+        if (isset($_COOKIE['cart'])) {
+            $product = new Product();
+            $cookie_data = $_COOKIE['cart'];
+            $cart_data = json_decode($cookie_data, true);
+            if (count($cart_data)) {
+                foreach ($cart_data as $key => $value) {
+                    $product_id = $value['product_id'];
+                    $result = $product->getOneProduct($product_id);
+                    $cart_data[$key]['data'] = $result;
+                }
+            } else {
+                NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
+                header('location: /');
+            }
+        }
+        return $cart_data;
+    }
+
 
 
     public static function order()
@@ -273,41 +305,22 @@ class CartController
                 header("Location: /checkout");
                 exit();
             }
-            if (isset($_COOKIE['cart'])) {
-                $product = new Product();
-                $cookie_data = $_COOKIE['cart'];
-                $cart_data = json_decode($cookie_data, true);
-                // // echo "<pre>";
-                // echo "<pre>";
-                // var_dump($cart_data);
-                if (count($cart_data)) {
-                    foreach ($cart_data as $key => $value) {
-                        $product_id = $value['product_id'];
-                        // var_dump($product_id);
-                        $result = $product->getOneProduct($product_id);
-                        // var_dump($result);
-                        $cart_data[$key]['data'] = $result;
-                        //  echo "<pre>";
-                        //  var_dump($cart_data);
-                        //  die;
-                    }
-                    CartHelper::createCart($cart_data);
-                } else {
-                    // setcookie("cart", "", time() -  3600 * 24 * 30 * 12, '/');
-                    // $_SESSION['error'] = 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào';
-                    NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
-                    header('location: /');
-                }
-            }
+            $cart_data = self::getoder();
+            $total = CartHelper::tatol($cart_data);
+            $data = [
+                'name' => $_POST['name'],
+                'phone' => $_POST['phone'],
+                'address' => $_POST['address'],
+                'PaymentMethod' => $_POST['PaymentMethod'],
+            ];
+            $_SESSION['information'] = $data;
+            PayHelper::VNpay($total);
         } else {
-            // setcookie("cart", "", time() -  3600 * 24 * 30 * 12, '/');
-            // $_SESSION['error'] = 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào';
-            NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
+            NotificationHelper::error('cart', 'Vui lòng đăng nhập để thực hiện chức năng này');
             header('location: /');
         }
-
-
     }
+
 
 
 }

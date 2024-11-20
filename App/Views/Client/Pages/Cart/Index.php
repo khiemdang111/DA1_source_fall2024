@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Views\Client\Pages\Cart;
 
 use App\Helpers\AuthHelper;

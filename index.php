@@ -23,6 +23,7 @@ use App\Helpers\AuthHelper;
 
 // *** Client
 Route::get('/', 'App\Controllers\Client\HomeController@index');
+
 Route::get('/products', 'App\Controllers\Client\ProductController@index');
 Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');
 Route::get('/register', 'App\Controllers\Client\AuthController@Register');
@@ -60,21 +61,16 @@ Route::delete('/cart/delete', 'App\Controllers\Client\CartController@deleteItem'
 Route::delete('/cart/delete-all', 'App\Controllers\Client\CartController@deleteAll');
 // trang đặt hàng
 Route::get('/checkout', 'App\Controllers\Client\CartController@checkout');
+Route::put('/checkout/update', 'App\Controllers\Client\CartController@update');
 Route::post('/order', 'App\Controllers\Client\CartController@order');
-
-
-
-
-
-
+Route::get('/thanks', 'App\Controllers\Client\HomeController@thanks');
+Route::get('/history', 'App\Controllers\Client\AuthController@history');
+ //     Route::post('/bill', 'App\Controllers\Client\CartController@return');
 
 // thêm bình luận 
 Route::post('/comments', 'App\Controllers\Client\CommentController@store');
 Route::put('/comments/{id}', 'App\Controllers\Client\CommentController@edit');
 Route::delete('/comments/{id}', 'App\Controllers\Client\CommentController@delete');
-
-
-
 // *** Admin
 Route::get('/admin', 'App\Controllers\Admin\HomeController@index');
 // *** Product ***

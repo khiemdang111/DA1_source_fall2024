@@ -15,12 +15,8 @@ class Header extends BaseView
 
 		
 ?>
-
-
-
 		<!DOCTYPE html>
 		<html lang="en">
-
 		<head>
 			<title>Liquor Store - Free Bootstrap 4 Template by Colorlib</title>
 			<meta charset="utf-8">
@@ -33,7 +29,6 @@ class Header extends BaseView
 				rel="stylesheet">
 
 			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/animate.css">
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/bootstrap.css">
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/owl.carousel.min.css">
@@ -42,9 +37,7 @@ class Header extends BaseView
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/flaticon.css">
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/style.css">
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/bootstrap/bootrap.css">
-
 		</head>
-
 		<body>
 			<div class="content">
 				<div class="wrap">

@@ -64,33 +64,26 @@ class ProductValidation
         return self::create();
     }
 
-    public static function uploadImage()
-    {
-        if (!file_exists($_FILES['image']['tmp_name']) || (!is_uploaded_file($_FILES['image']['tmp_name']))) {
-            return false;
+    public static function updateImage(){
+        if(!file_exists($_FILES['avatar']['tmp_name']) || !is_uploaded_file($_FILES['avatar']['tmp_name'])){
+          return false;
         }
-
-        /// Nơi lưu trữ hình ảnh trong source code
+        // nowi luu file ảnh
         $target_dir = 'public/uploads/products/';
-
-        // Kiểm tra loại file upload có hợp lệ hay không
-        $imageFileType = strtolower(pathinfo(basename($_FILES['image']['name']), PATHINFO_EXTENSION));
-
-        if ($imageFileType != 'jpg' && $imageFileType != 'png' && $imageFileType != 'jpeg' && $imageFileType != 'gif') {
-            NotificationHelper::error('type', 'Chỉ nhận file ảnh JPG, PNG, JPEG, GIF');
-        }
-
-        // thay đổi tên file thành dạng năm tháng ngày giờ
-        $nameImage = date('YmdHmi') . '.' . $imageFileType;
-
-        // đường dẫn đầy đủ để chuyển file
-        $target_file = $target_dir . $nameImage;
-
-        if (!move_uploaded_file($_FILES['image']['tmp_name'], $target_file)) {
-            NotificationHelper::error('move_upload', 'Không thể tải ảnh về thư mục lưu trữ');
+        // kiểm tra loại file có hợp lệ ko
+        $imageFileType = strtolower(pathinfo(basename( $_FILES['avatar']['name']), PATHINFO_EXTENSION));
+        if ($imageFileType != 'jpg' && $imageFileType != 'png' && $imageFileType != 'jpeg' &&  $imageFileType != 'gif'){
+            NotificationHelper::error('type_upload', 'Chỉ chấp nhận file ảnh JPG, JPEG, PNG, GIF');
             return false;
         }
-
+            // tháy đổi tên file mà mình mông muốn 
+        $nameImage = date('YmdHmi').'.'.$imageFileType;
+        // đường dẫn đầy đủ file 
+        $target_file = $target_dir. $nameImage;
+        if(!move_uploaded_file($_FILES['avatar']['tmp_name'],$target_file)){
+            NotificationHelper::error('move_upload', 'Không thể tải ảnh vào trong thư mục lưu trữ ');
+            return false;
+        }
         return $nameImage;
     }
     public static function createVariant()

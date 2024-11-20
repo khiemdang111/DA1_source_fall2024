@@ -2,7 +2,9 @@
 
 namespace App\Controllers\Client;
 
+use App\Helpers\CartHelper;
 use App\Helpers\NotificationHelper;
+use App\Models\vnpays;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Home;
@@ -13,6 +15,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Helpers\AuthHelper;
 use Mailer;
+use App\Views\Client\Pages\Cart\Bill;
 
 class HomeController
 {
@@ -25,7 +28,6 @@ class HomeController
         
         $category = new Category();
         $categories = $category->getAllCategoryByStatus();
-
         // lấy dữ liệu sản phẩm từ database
         $product = new Product();
         $products = $product->getAllProductByStatus();
@@ -45,8 +47,6 @@ class HomeController
             'categories' => $categories,
             'products' => array_merge($product_watched, $products),
         ];
-        // var_dump($data);
-        // die();
         Header::render();
         Notification::render();
         NotificationHelper::unset();

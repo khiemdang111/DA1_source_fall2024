@@ -12,99 +12,103 @@ class Checkout extends BaseView
 		// echo '<pre>';
 		// var_dump($data);
 		$is_login = AuthHelper::checkLogin();
-?>
+		?>
 		<section class="ftco-section">
 			<div class="container">
-			<table class="table table_center">
-						<thead class="thead-primary">
-							<tr>
-								<th class="">Tên sản phẩm</th>
-								<th class="">Hình ảnh</th>
-								<th>Giá</th>
-								<th>Số lượng</th>
-								<th>Tổng</th>
-								<th>&nbsp;</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php
-							$total_price = 0;
-							$i = 0;
-							foreach ($data as $cart) :
-								if ($cart['data']) :
-									$i++;
-							?>
-									<tr>
+				<table class="table table_center">
+					<thead class="thead-primary">
+						<tr>
+							<th class="">Tên sản phẩm</th>
+							<th class="">Hình ảnh</th>
+							<th>Giá</th>
+							<th>Số lượng</th>
+							<th>Tổng</th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+						$total_price = 0;
+						$i = 0;
+						foreach ($data as $cart):
+							if ($cart['data']):
+								$i++;
+								?>
+								<tr>
+									<td>
+										<span><?= $cart['data']['name'] ?> </span>
+									</td>
+									<td class="">
+										<img class="img_cart" src="/public/uploads/products/<?= $cart['data']['image'] ?>" alt="">
+									</td>
+
+									<?php
+									if ($cart['data']['discount_price'] > 0):
+										?>
 										<td>
-											<span><?= $cart['data']['name'] ?> </span>
+											<div class="d-flex justify-content-center"><strike><?= number_format($cart['data']['price']) ?>
+												</strike> <span><del class="margin_vnd">VND</del></span></div>
+
+											<br>
+											<?= number_format($cart['data']['discount_price']) ?> VND
 										</td>
-										<td class="">
-											<img class="img_cart" src="/public/uploads/products/<?= $cart['data']['image'] ?>" alt="">
-										</td>
-
-										<?php
-										if ($cart['data']['discount_price'] > 0) :
-										?>
-											<td>
-												<div class="d-flex"><strike><?= number_format($cart['data']['price']) ?> </strike> <span><del class="margin_vnd">VND</del></span></div>
-
-												<br>
-												<?= number_format($cart['data']['discount_price']) ?> VND
-											</td>
 
 										<?php
 
-										else :
+									else:
 										?>
-											<td>
-
-												<?= number_format($cart['data']['price']) ?> <span>VND</span>
-											</td>
-										<?php
-										endif;
-										?>
-
 										<td>
-										<?= $cart['quantity'] ?> 
-											
+
+											<?= number_format($cart['data']['price']) ?> <span>VND</span>
 										</td>
-
-
-
 										<?php
-										if ($cart['data']['discount_price'] > 0) :
-											$discount_price = $cart['quantity'] * $cart['data']['discount_price'];
-											$total_price += $discount_price;
-										?>
-											<td>
-												<div class="d-flex">
-													<span><?= number_format($discount_price) ?></span> <span class="margin_vnd"> VND</span>
-												</div>
+									endif;
+									?>
 
-											</td>
+									<td>
+										<form action="/checkout/update" method="post">
+											<input type="hidden" name="method" id="" value="PUT">
+											<input class="quantity form-control input-number number_cart" type="number" name="quantity"
+												value="<?= $cart['quantity'] ?>" onchange="this.form.submit()" class="form-control"
+												min=1>
+											<input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
+											<input type="hidden" name="update-cart-item">
+										</form>
+									</td>
+									<?php
+									if ($cart['data']['discount_price'] > 0):
+										$discount_price = $cart['quantity'] * $cart['data']['discount_price'];
+										$total_price += $discount_price;
+										?>
+										<td>
+											<div class="d-flex">
+												<span><?= number_format($discount_price) ?></span> <span class="margin_vnd"> VND</span>
+											</div>
+
+										</td>
 										<?php
-										else :
-											$unit_price = $cart['quantity'] * $cart['data']['price'];
-											$total_price += $unit_price;
+									else:
+										$unit_price = $cart['quantity'] * $cart['data']['price'];
+										$total_price += $unit_price;
 										?>
-											<td>
-												<?= number_format($unit_price) ?> VND
-											</td>
+										<td>
+											<?= number_format($unit_price) ?> VND
+										</td>
 										<?php
-										endif;
-										?>
-										
-									</tr>
+									endif;
+									?>
+
+								</tr>
 
 
 
-							<?php
-								endif;
-							endforeach;
-							?>
+								<?php
+							endif;
+						endforeach;
+						?>
 
-						</tbody>
-					</table>
+					</tbody>
+				</table>
 				<form action="/order" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="method" value="POST">
 					<div class="row ">
@@ -205,7 +209,7 @@ class Checkout extends BaseView
 
 		</section>
 
-<?php
+		<?php
 	}
 }
 ?>

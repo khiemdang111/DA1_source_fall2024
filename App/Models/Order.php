@@ -39,7 +39,6 @@ class Order extends BaseModel
             $sql = "SELECT * FROM $this->table WHERE id =?";
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
-
             $stmt->bind_param('i', $id);
             $stmt->execute();
             return $stmt->get_result()->fetch_assoc();

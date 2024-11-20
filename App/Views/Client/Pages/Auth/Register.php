@@ -28,9 +28,8 @@ class Register extends BaseView
                 <div class="card px-sm-6 px-0  ">
                     <div class="card-body">
                         <!-- Logo -->
-
-                        <form id="formAuthentication" method="post" class="mb-6" action="">
-                            <input type="hidden" name="method" value="POST">
+                        <form id="formAuthentication" method="get" class="mb-6" action="">
+                            <input type="hidden" name="method" value="get">
                             <div class="mb-3 ">
                                 <label for="username" class="form-label">Tên đăng nhập </label>
                                 <input type="text" class="form-control" id="username" name="username" value=""

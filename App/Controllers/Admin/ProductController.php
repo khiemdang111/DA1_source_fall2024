@@ -85,7 +85,8 @@ class ProductController
             header('location: /admin/products/create');
             exit;
         }
-
+       
+       
         // Thêm vào
         $data = [
             'name' => $name,
@@ -96,6 +97,7 @@ class ProductController
             'status' => $_POST['status'],
             'category_id' => $_POST['category_id'],
         ];
+
         $is_upload = ProductValidation::uploadImage();
         if ($is_upload) {
             $data['image'] = $is_upload;
@@ -170,10 +172,10 @@ class ProductController
             'is_featured' => $_POST['is_featured'],
             'status' => $_POST['status'],
         ];
-        // $is_upload = ProductValidation::updateImage();
-        // if ($is_upload) {
-        //     $data['image'] = $is_upload;
-        // }
+        $is_upload = ProductValidation::updateImage();
+        if ($is_upload) {
+            $data['image'] = $is_upload;
+        }
         $result = $product->updateproduct($id, $data);
         if ($result) {
             NotificationHelper::success('update_products', 'Cập nhật sản phẩm thành công!');

@@ -2,8 +2,10 @@
 
 namespace App\Helpers;
 
+use App\Controllers\Client\CartController;
 use App\Controllers\Client\mail;
 use App\Controllers\Client\MailController;
+use App\Controllers\Client\VNPAYController;
 use App\Models\Order;
 use App\Models\Order_detail;
 use App\Models\Product;
@@ -16,21 +18,29 @@ class CartHelper
     // hàm lấy tổng giá đơn hàng
     public static function tatol($cart_data)
     {
-        $total_price = 0;
+        $total = 0;
         $i = 0;
         foreach ($cart_data as $cart) {
             if ($cart['data']) {
                 $i++;
                 if ($cart['data']['discount_price'] > 0) {
-                    $unit_price = $cart['quantity'] * $cart['data']['discount_price'];
-                    $total_price += $unit_price;
+                    $money = $cart['quantity'] * $cart['data']['discount_price'];
+                    $unitPrice = $cart['data']['discount_price'];
+                    $total += $money;
                 } else {
-                    $unit_price = $cart['quantity'] * $cart['data']['price'];
-                    $total_price += $unit_price;
+                    $money = $cart['quantity'] * $cart['data']['price'];
+                    $unitPrice = $cart['data']['price'];
+                    $total += $money;
                 }
             }
         }
-        return $total_price;
+        $data_total = [
+         'money' => $money,
+         'unitPrice' => $unitPrice,
+         'total' => $total,
+
+        ];
+        return $data_total;
     }
 
     public static function getOrder_id($cart_data)
@@ -42,100 +52,62 @@ class CartHelper
             $user_COOKIE = json_decode($_COOKIE['user'], true);
             $user_id = $user_COOKIE['id'];
         }
-        $total_price = 0;
         $total = self::tatol($cart_data);
         $date = date('Y-m-d');
-        // var_dump($date);
-        // die();
         $oders = [
-            'total' => $total,
+            'total' => $total['total'],
             'orderStatus' => 1,
-            'name' => $_POST['name'],
-            'phone' => $_POST['phone'],
-            'address' => $_POST['address'],
+            'name' =>  $_SESSION['information']['name'],
+            'phone' => $_SESSION['information']['phone'],
+            'address' => $_SESSION['information']['address'],
             'date' => $date,
-            'PaymentMethod' => $_POST['PaymentMethod'],
+            'PaymentMethod' => $_SESSION['information']['PaymentMethod'],
             'user_id' => $user_id,
         ];
         $oder = new Order();
         $id_order = $oder->createOder($oders);
-
-        $getOneOder_id = $oder->getOneCodeDetail($id_order);
-
-        return $getOneOder_id['id'];
+        return $id_order;
     }
     public static function createCart($cart_data)
     {
-        // $code_oder = rand(0, 999);
+
         $order_id = self::getOrder_id($cart_data);
         $i = 0;
         foreach ($cart_data as $cart) {
             if ($cart['data']) {
                 $i++;
-                if ($cart['data']['discount_price'] > 0) {
-                    $unit_price = $cart['quantity'] * $cart['data']['discount_price'];
-                    $unitPrice = $cart['data']['discount_price'];
-                } else {
-                    $unit_price = $cart['quantity'] * $cart['data']['price'];
-                    $unitPrice = $cart['data']['price'];
-                }
+              $price = self::tatol($cart_data);
                 $order_detail = [
-                    'product_id' => $cart['data']['id'],
                     'quantity' => $cart['quantity'],
-                    'unitPrice' => $unitPrice,
-                    'totalPrice' => $unit_price,
+                    'unitPrice' => $price['unitPrice'],
+                    'totalPrice' => $price['money'],
+                    'product_id' => $cart['data']['id'],
                     'order_id' => $order_id,
                 ];
-                $oder = new Order_detail();
-                $result = $oder->createorderDetail($order_detail);
-            }
+                 $oder = new Order_detail();
+                 $result = $oder->createorderDetail($order_detail);
+                //  var_dump($result);
+                //  die;
+            } 
         }
         $mail = new MailController();
-        $form = self::form();
+        $form = self::form_Html();
         $mail->index($form);
         if ($result) {
             setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
-            NotificationHelper::success('update_products', 'Đặt hàng thành công!');
-            header('Location: /');
         } else {
             NotificationHelper::error('update_products', 'Đặt hàng thất bại!');
             header("Location: /");
         }
-
         // echo 'vô';
     }
-
-
-    public static function form()
+    public static function form_Html()
     {
-        
-        if (isset($_COOKIE['cart'])) {
-            $product = new Product();
-            $cookie_data = $_COOKIE['cart'];
-            $cart_data = json_decode($cookie_data, true);
-            if (count($cart_data)) {
-                foreach ($cart_data as $key => $value) {
-                    $product_id = $value['product_id'];
-                    $result = $product->getOneProduct($product_id);
-                    $cart_data[$key]['data'] = $result;
-                }
-                $hihi = self::form_Html($cart_data);
-            }
-        } else {
-            // $_SESSION['error'] = 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào';
-            NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
-            header('location: /');
-            // var_dump($_SESSION['error']);
-        }
-        return $hihi;
-    }
-
-    public static function form_Html($data)
-    {
-
-        $sđt = $_POST['phone'];
+        $data = CartController::getoder();
+        $phone = $_SESSION['information']['phone'];
         $total_price = 0;
         $i = 0;
+        $fullname = $_SESSION['information']['name'];
         $date = date("d/m/Y H:i:s");
         // Tạo biến chứa HTML và PHP
         $html = <<<HTML
@@ -157,7 +129,6 @@ class CartHelper
             th {
                 background-color: #f2f2f2;
             }
-
             .total {
                 font-weight: bold;
                 text-align: right;
@@ -165,16 +136,18 @@ class CartHelper
         </style>
     </head>
     <body>
-        <h2>Thông tin đơn hàng</h2>
+HTML;
+        $html .= <<<ROW
+        <h2>Thông tin đơn hàng của {$fullname}</h2>
         <table>
             <thead>
-HTML;
-        // Thêm vào biến HTML
-        $html .= <<<ROW
+
+
+      
                 <table>
                  <thead>
               <tr>
-                  <th>STT </th>
+                  <th>STT</th>
                   <th>Số điện thoại</th>
                   <th>Tên sản phẩm</th>
                   <th>Số lượng</th>
@@ -191,21 +164,14 @@ ROW;
                 $i++;
                 $name = $cart['data']['name'];
                 $quantity = $cart['quantity'];
-                if ($cart['data']['discount_price'] > 0) {
-                    $price = $cart['quantity'] * $cart['data']['discount_price'];
-                    $total_price += $price;
-                    $unit_price = number_format($cart['data']['discount_price']) . " VND";
-                } else {
-                    $price = $cart['quantity'] * $cart['data']['price'];
-                    $total_price += $price;
-                    $unit_price = number_format($cart['data']['price']) . " VND";
-                }
-                $total_price_formatted = number_format($price) . " VND";
-                $total = number_format($total_price) . " VND";
+                $tatol = self::tatol($data);
+                $total_price_formatted = number_format($tatol['money']) . " VND";
+                $unit_price = number_format($tatol['unitPrice']) . " VND";
+                $total = number_format($tatol['total']) . " VND";
                 $html .= <<<ROW2
             <tr>
                 <td>{$i}</td>
-                <td>{$sđt}</td>
+                <td>{$phone}</td>
                 <td>{$name}</td>
                 <td>{$quantity}</td>
                 <td>{$date}</td>
@@ -221,7 +187,7 @@ ROW2;
                 <tr>
                     
                     <td colspan="5" class="total">Tổng cộng</td>
-                    <td colspan="2" class="total">{$total} VND</td>
+                    <td colspan="2" class="total">{$total} </td>
                 </tr>
             </tfoot>
         </table>
@@ -232,3 +198,5 @@ FOOTER;
         return $html;
     }
 }
+
+

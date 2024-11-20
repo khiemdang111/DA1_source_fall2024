@@ -13,6 +13,9 @@ use App\Views\Client\Components\Notification;
 use App\Views\Client\Pages\Auth\Edit;
 use App\Views\Client\Pages\Auth\Forgetpass;
 use App\Views\Client\Pages\Auth\Register;
+use App\Views\Client\Pages\Order\index;
+use App\Views\Client\Pages\Auth\Verification;
+use App\Views\Client\Pages\Auth\ResetPassword;
 
 class AuthController
 {
@@ -140,17 +143,17 @@ class AuthController
         ];
         // kiểm tra hình ảnh có hợp leej hay không 
         $is_upload = AuthValidation::uploadAvatar();
-      
+
         if ($is_upload) {
             $data['avatar'] = $is_upload;
         }
         // gọi helper để udate 
         $result = AuthHelper::update($id, $data);
-         // kiểm tra kết quả vầ và chuyển hướng
+        // kiểm tra kết quả vầ và chuyển hướng
         header("Location: /users/$id");
     }
 
-  public static function forgetpass()
+    public static function history()
     {
         Header::render();
         Notification::render();
@@ -159,13 +162,63 @@ class AuthController
         Footer::render();
     }
 
-    // public static function Verification()
-    // {
-    //     Header::render();
-    //     Notification::render();
-    //     NotificationHelper::unset();
-    //     Verification::render();
-    //     Footer::render();
-    // }
+    public static function forgetpass()
+    {
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        Forgetpass::render();
+        Footer::render();
+    }
+
+    public static function Verification()
+    {
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        Verification::render();
+        Footer::render();
+    }
+    public static function VerificationAction()
+    {
+        $number = $_POST['number'];
+        $user = new User();
+        $result = $user->getOneToken($number);
+        if (!$result) {
+            NotificationHelper::error('error', 'Số điện thoại không tồn tại');
+            header('location: /Verification');
+        } else {
+            header('location: /resetPassword');
+        }
+    }
+    public static function resetPassword()
+    {
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        ResetPassword::render();
+        Footer::render();
+    }
+
+    public static function resetPasswordAction()
+    {
+        $password = $_POST['new_password'];
+        $passwordConfirm = $_POST['confirm_password'];
+        // echo $_SESSION['id'];
+        $user = new User();
+        $result = $user->getOneUser($_SESSION['id']);
+        // var_dump($result);
+        // die();
+    }
+    public static function updatePassword(int $id)
+    {
+     $user = new User();
+     $result = $user->getOneUser($id);
+   
+     if ($result) {
+      // lưu session
+      $_SESSION['user'] = $result;
+     }
+    }
    
 }
