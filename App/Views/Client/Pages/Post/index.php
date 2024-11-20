@@ -17,8 +17,8 @@ class index extends BaseView
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-center">
           <div class="col-md-9 ftco-animate mb-5 text-center">
-          	<p class="breadcrumbs mb-0"><span class="mr-2"><a href="index.html">Home <i class="fa fa-chevron-right"></i></a></span> <span>Blog <i class="fa fa-chevron-right"></i></span></p>
-            <h2 class="mb-0 bread">Blog</h2>
+          	<p class="breadcrumbs mb-0"><span class="mr-2"><a href="/">Trang Chủ <i class="fa fa-chevron-right"></i></a></span> <span>Tin tức <i class="fa fa-chevron-right"></i></span></p>
+            <h2 class="mb-0 bread">Tin Tức</h2>
           </div>
         </div>
       </div>
@@ -54,7 +54,7 @@ class index extends BaseView
           
           
         </div>
-        <div class="row mt-5">
+        <!-- <div class="row mt-5">
           <div class="col text-center">
             <div class="block-27">
               <ul>
@@ -68,7 +68,7 @@ class index extends BaseView
               </ul>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </section>	
 <?php

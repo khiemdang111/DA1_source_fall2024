@@ -69,7 +69,41 @@ class AuthValidation
             NotificationHelper::error('address', 'Không để trống địa chỉ');
             $is_valid = false;
         }
+
         return $is_valid;
+    }
+
+    public static function contactForm(){
+        $is_valid = true;
+        // Tên
+        if (!isset($_POST['name']) || $_POST['name'] === '') {
+            NotificationHelper::error('name', 'vui lòng nhập họ và tên');
+            $is_valid = false;
+        }
+        // Email
+        if (!isset($_POST['email']) || $_POST['email'] === '') {
+            NotificationHelper::error('email', 'Không để trống Email');
+            $is_valid = false;
+        } else {
+            $emailPattern = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/";
+            if (!preg_match($emailPattern, $_POST['email'])) {
+                NotificationHelper::error('email', 'Email không đúng định dạng');
+                $is_valid = false;
+            }
+        }
+        // Số điện thoại
+        if (!isset($_POST['phone']) || $_POST['phone'] === '') {
+            NotificationHelper::error('phone', 'Không để trống Số điện thoại');
+            $is_valid = false;
+        } else {
+            $phonePattern = "/^(0[0-9]{9,10})$/";
+            if (!preg_match($phonePattern, $_POST['phone'])) {
+                NotificationHelper::error('phone', 'Số điện thoại không đúng định dạng');
+                $is_valid = false;
+            }
+        }
+        return $is_valid;
+        
     }
 
 
