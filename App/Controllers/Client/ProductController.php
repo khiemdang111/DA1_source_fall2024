@@ -95,9 +95,11 @@ class ProductController
         $comment = new Comment();
         $data = [
             'product' => $detail,
+            'recommended' => $recommended,
             'comments' => $comment->get5CommentNewestByProductAndStatus($id),
             'variant' => $variant,
         ];
+
         $view_result = ViewProductHelper::cookieView($id, $detail[0]['view']);
         Header::render();
         Notification::render();

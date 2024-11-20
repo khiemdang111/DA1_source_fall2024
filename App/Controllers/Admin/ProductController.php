@@ -13,6 +13,8 @@ use App\Views\Admin\Pages\Product\Create;
 use App\Views\Admin\Pages\Product\Edit;
 use App\Views\Admin\Pages\Product\Index;
 use App\Views\Admin\Pages\Product\SettingVariant;
+use App\Views\Admin\Pages\Product\SettingPriceVariant;
+use App\Views\Admin\Pages\Product\DetailSettingVariant;
 use App\Views\Admin\Pages\Product\createAttributeVariant;
 use App\Views\Admin\Pages\Recycle\ProductRecycle;
 
@@ -349,5 +351,93 @@ class ProductController
             exit;
         }
     }
+    public function settingVariant(){
+        $id = $_SESSION['id'];
+        // var_dump($id);die;
+        $products = new Product();
+        $data = $products->SettingVariantByProductId($id);
 
+
+
+        $product_id = $id;
+        $variant_id = 1;  // Ví dụ xử lý cho variant_id = 1
+        
+        // Lọc dữ liệu có cùng product_id và variant_id
+        $filteredData = array_filter($data, function($item) use ($product_id, $variant_id) {
+            return $item['product_id'] == $product_id && $item['variant_id'] == $variant_id;
+        });
+        
+        // Bước 2: Tạo các nhóm id_variant_value
+        $groupedData = [];
+        $groupId = 1;  // Tạo group_id bắt đầu từ 1
+        
+        // Lấy danh sách các id_variant_value
+        $id_variant_values = [];
+        foreach ($filteredData as $item) {
+            $id_variant_values[] = $item['id_varaiant_value'];
+        }
+        
+        // Hàm tạo tất cả các tổ hợp (combinations) của một mảng
+        function getCombinations($array, $size) {
+            $result = [];
+            $count = count($array);
+            if ($size == 1) {
+                return array_map(function($item) { return [$item]; }, $array);
+            }
+            for ($i = 0; $i < $count; $i++) {
+                $head = $array[$i];
+                $tail = array_slice($array, $i + 1);
+                $combinations = getCombinations($tail, $size - 1);
+                foreach ($combinations as $combination) {
+                    $result[] = array_merge([$head], $combination);
+                }
+            }
+            return $result;
+        }
+        
+        // Tạo tất cả các tổ hợp có thể với ít nhất 2 giá trị
+        for ($size = 2; $size <= count($id_variant_values); $size++) {
+            $combinations = getCombinations($id_variant_values, $size);
+            
+            // Gộp các tổ hợp vào nhóm
+            foreach ($combinations as $combination) {
+                $groupedData[] = [
+                    'group_id' => $groupId++,  // Tăng group_id
+                    'id_variant_values' => $combination,  // Lưu các giá trị trong nhóm
+                ];
+            }
+        }      // Bây giờ $groupedData sẽ chứa tất cả các nhóm có nhiều hơn 2 id_variant_value
+$combination_variant = $products->updateCombinatioValue($groupedData);
+
+        Header::render();
+        // hiển thị form thêm
+        Notification::render();
+        NotificationHelper::unset();
+        SettingPriceVariant::render($data);
+        Footer::render();
+    }
+    public function detailSettingVariant(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Lấy dữ liệu JSON từ body của yêu cầu
+            $input = file_get_contents('php://input');
+            $decodedData = json_decode($input, true);
+        
+            // Gán dữ liệu vào biến $data
+            $data = $decodedData['data'];
+        
+            // Xử lý dữ liệu (nếu cần)
+            // ...
+            var_dump($data);
+            // Trả về phản hồi
+            echo json_encode([
+                'status' => 'success',
+                'receivedData' => $data,
+            ]);
+        }
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        DetailSettingVariant::render();
+        Footer::render();
+    }
 }

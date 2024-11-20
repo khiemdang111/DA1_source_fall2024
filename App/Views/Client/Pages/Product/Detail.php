@@ -77,53 +77,50 @@ class Detail extends BaseView
                             <?= $data['product'][0]['description'] ?>
                         </p>
                         <div class="form-group">
-                        <?php
-$processed_ids_cli = [];
-foreach ($data['variant'] as $itemVariant_opt) {
-    if (in_array($itemVariant_opt['variant_name'], $processed_ids_cli)) {
-        // Bỏ qua nếu variant_name đã tồn tại
-        continue;
-    }
-    // Thêm variant_name vào danh sách đã xử lý
-    $processed_ids_cli[] = $itemVariant_opt['variant_name'];
+                            <?php
+                            $processed_ids_cli = [];
+                            foreach ($data['variant'] as $itemVariant_opt) {
+                                if (in_array($itemVariant_opt['variant_name'], $processed_ids_cli)) {
+                                    // Bỏ qua nếu variant_name đã tồn tại
+                                    continue;
+                                }
+                                // Thêm variant_name vào danh sách đã xử lý
+                                $processed_ids_cli[] = $itemVariant_opt['variant_name'];
 
-    // Reset $countinput cho mỗi nhóm variant_name
-    $countinput = 1;
-    ?>
-    <td value="<?= $itemVariant_opt['variant_name'] ?>">
-        <div class="mt-3">
-            <h6><?= $itemVariant_opt['variant_name'] ?></h6>
-            <div class="row">
-                <?php
-                foreach ($data['variant'] as $itemVariant_value):
-                    if ($itemVariant_value['variant_name'] === $itemVariant_opt['variant_name']):
-                        ?>
-                        <div class="radio-inputs">
-                            <label>
-                                <input 
-                                    class="radio-input" 
-                                    type="radio" 
-                                    name="enginev-<?= $itemVariant_opt['option_name'] . '-' . $countinput ?>" 
-                                    value="<?= $itemVariant_value['option_name'] ?>"
-                                >
-                                <span class="radio-tile">
-                                    <span class="radio-label"><?= $itemVariant_value['option_name'] ?></span>
-                                </span>
-                            </label>
-                        </div>
-                        <?php
-                        // Tăng $countinput sau mỗi lần tạo input
-                        
-                    endif;
-                endforeach;
-                $countinput++;
-                ?>
-            </div>
-        </div>
-    </td>
-    <?php
-}
-?>
+                                // Reset $countinput cho mỗi nhóm variant_name
+                                $countinput = 1;
+                                ?>
+                                <td value="<?= $itemVariant_opt['variant_name'] ?>">
+                                    <div class="mt-3">
+                                        <h6><?= $itemVariant_opt['variant_name'] ?></h6>
+                                        <div class="row">
+                                            <?php
+                                            foreach ($data['variant'] as $itemVariant_value):
+                                                if ($itemVariant_value['variant_name'] === $itemVariant_opt['variant_name']):
+                                                    ?>
+                                                    <div class="radio-inputs">
+                                                        <label>
+                                                            <input class="radio-input" type="radio"
+                                                                name="enginev-<?= $itemVariant_opt['option_name'] . '-' . $countinput ?>"
+                                                                value="<?= $itemVariant_value['option_name'] ?>">
+                                                            <span class="radio-tile">
+                                                                <span class="radio-label"><?= $itemVariant_value['option_name'] ?></span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <?php
+                                                    // Tăng $countinput sau mỗi lần tạo input
+                                
+                                                endif;
+                                            endforeach;
+                                            $countinput++;
+                                            ?>
+                                        </div>
+                                    </div>
+                                </td>
+                                <?php
+                            }
+                            ?>
 
 
                         </div>
@@ -192,8 +189,8 @@ foreach ($data['variant'] as $itemVariant_opt) {
                                                             ?>
                                                             <!-- Comment Row -->
                                                             <div class="d-flex flex-row comment-row m-t-0 my-3">
-                                                            <div class="p-2">
-                                                                    <?php
+                                                                <div class="p-2">
+                                                                <?php
                                                                     if ($item['avatar']) :
                                                                     ?>
                                                                         <img class="rounded-circle" src="<?= APP_URL ?>/public/uploads/image/<?= $item['avatar'] ?>" alt="" width="50">
@@ -207,7 +204,8 @@ foreach ($data['variant'] as $itemVariant_opt) {
                                                                 </div>
                                                                 <div class="comment-text w-100 ">
                                                                     <h6 class="font-medium"><?= $item['name'] ?> -
-                                                                        <?= $item['username'] ?></h6>
+                                                                        <?= $item['username'] ?>
+                                                                    </h6>
                                                                     <span class="m-b-15 d-block"><?= $item['content'] ?></span>
                                                                     <div class="my-2">
                                                                         <span
@@ -307,7 +305,8 @@ foreach ($data['variant'] as $itemVariant_opt) {
                                                             </div>
                                                             <div class="comment-text w-100 magin">
                                                                 <h6 class="font-medium"><?= $_SESSION['user']['name'] ?> -
-                                                                    <?= $_SESSION['user']['username'] ?></h6>
+                                                                    <?= $_SESSION['user']['username'] ?>
+                                                                </h6>
                                                                 <form action="/comments" method="post">
                                                                     <input type="hidden" name="method" value="POST" id="">
                                                                     <input type="hidden" name="product_id"
@@ -496,71 +495,71 @@ foreach ($data['variant'] as $itemVariant_opt) {
                 </div>
                 <div class="row">
                     <!-- <?php
-                            if (count($data) && count($data['recommended'])):
+                    if (count($data) && count($data['recommended'])):
+                        ?> -->
+                        <?php
+                        foreach ($data['recommended'] as $recommended):
+                            ?>
+                            <div class="col-md-3 d-flex">
+                                <div class="product ftco-animate">
+                                    <div class="img d-flex align-items-center justify-content-center"
+                                        style="background-image: url(<?= APP_URL ?>/public/uploads/products/<?= $recommended['image'] ?>);">
+                                        <div class="desc">
+                                            <div class="meta-prod d-flex">
+                                                <form action="/cart/add" method="post">
+                                                    <input type="hidden" name="method" id="" value="POST">
+                                                    <input type="hidden" name="id" id="" value="<?= $recommended['id'] ?>" required>
+                                                    <button type="submit" class="d-flex align-items-center justify-content-center"><span
+                                                            class="flaticon-shopping-bag">
+                                                        </span></button>
+                                                </form>
+                                                <a href="#" type="submit" class="d-flex align-items-center justify-content-center"><span
+                                                        class="flaticon-heart"></span></a>
+                                                <a href="/products/<?= $recommended['id'] ?>"
+                                                    class="d-flex align-items-center justify-content-center"><span
+                                                        class="flaticon-visibility"></span></a>
 
-                            ?> -->
-                    <?php
-                                foreach ($data['recommended'] as $recommended):
-                    ?>
-                        <div class="col-md-3 d-flex">
-                            <div class="product ftco-animate">
-                                <div class="img d-flex align-items-center justify-content-center"
-                                    style="background-image: url(<?= APP_URL ?>/public/uploads/products/<?= $recommended['image'] ?>);">
-                                    <div class="desc">
-                                        <div class="meta-prod d-flex">
-                                            <form action="/cart/add" method="post">
-                                                <input type="hidden" name="method" id="" value="POST">
-                                                <input type="hidden" name="id" id="" value="<?= $recommended['id'] ?>" required>
-                                                <button type="submit" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag">
-                                                    </span></button>
-                                            </form>
-                                            <a href="#" type="submit" class="d-flex align-items-center justify-content-center"><span
-                                                    class="flaticon-heart"></span></a>
-                                            <a href="/products/<?= $recommended['id'] ?>" class="d-flex align-items-center justify-content-center"><span
-                                                    class="flaticon-visibility"></span></a>
-
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="text text-center">
-                                    <span class="sale"></span>
-                                    <span class="category"><?= $recommended['category_name'] ?></span>
-                                    <h2><?= $recommended['name'] ?></h2>
-                                    <p class="mb-0">
-                                        <?php
-                                        if ($recommended['discount_price'] > 0) :
-                                        ?>
-                                            <span class="price price-sale"><?= number_format($recommended['price']) ?></span> <span
-                                                class="price"><?= number_format($recommended['price'] - $recommended['discount_price']) ?></span>
+                                    <div class="text text-center">
+                                        <span class="sale"></span>
+                                        <span class="category"><?= $recommended['category_name'] ?></span>
+                                        <h2><?= $recommended['name'] ?></h2>
+                                        <p class="mb-0">
+                                            <?php
+                                            if ($recommended['discount_price'] > 0):
+                                                ?>
+                                                <span class="price price-sale"><?= number_format($recommended['price']) ?></span> <span
+                                                    class="price"><?= number_format($recommended['price'] - $recommended['discount_price']) ?></span>
 
-                                        <?php
-                                        else:
-                                        ?>
-                                            <span
-                                                class="price"><?= number_format($recommended['price']) ?></span>
+                                                <?php
+                                            else:
+                                                ?>
+                                                <span class="price"><?= number_format($recommended['price']) ?></span>
 
-                                        <?php endif; ?>
+                                            <?php endif; ?>
 
-                                    </p>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    <?php
-                                endforeach;
+                            <?php
+                        endforeach;
+                        ?>
+                    </div>
+                </div>
+                <?php
+                    endif;
                     ?>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <a href="/products" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
+                            class="fa fa-long-arrow-right"></span></a>
                 </div>
             </div>
-        <?php
-                            endif;
-        ?>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <a href="/products" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
-                        class="fa fa-long-arrow-right"></span></a>
             </div>
-        </div>
-        </div>
         </section>
 
 
