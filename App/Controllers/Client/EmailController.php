@@ -34,16 +34,17 @@ class EmailController
         }
         $userModel = new User();
         $user = $userModel->getOneUserByUsername($username);
-        // var_dump($user['id']);
-        // die;
+
         $id = $user['id'];
-        $_SESSION['id'] =$id;
+        $_SESSION['id'] = $user['id'];
+
         $number = str_pad(rand(0, 9999), 4, '0', STR_PAD_LEFT);
         $number2 = $number;
         $data = [
             'token' => $number2,
-        ];
+        ];  
         $result =  $userModel->update($id, $data);
+
         Mailer::sendMail($email, $number2);
         if ($result) {
             // NotificationHelper::error('checkout', 'Vui lòng đăng nhập hoặc thêm sản phẩm vào giỏ hàng để thanh toán');

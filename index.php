@@ -36,6 +36,9 @@ Route::post('/products/filter', 'App\Controllers\Client\ProductController@index'
 
 Route::get('/forgetpass', 'App\Controllers\Client\AuthController@forgetpass');
 Route::get('/Verification', 'App\Controllers\Client\AuthController@Verification');
+Route::post('/VerificationAction', 'App\Controllers\Client\AuthController@VerificationAction');
+Route::get('/resetPassword', 'App\Controllers\Client\AuthController@resetPassword');
+Route::post('/resetPassword', 'App\Controllers\Client\AuthController@resetPasswordAction');
 
 Route::post('/mail', 'App\Controllers\Client\EmailController@mail');
 // *** Admin

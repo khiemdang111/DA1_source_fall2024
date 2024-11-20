@@ -53,4 +53,41 @@ class HomeController
         Home::render($data);
         Footer::render();
     }
+    public static function thanks()
+    {
+        $cart_data = CartController::getoder();
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $vnp_ResponseCode = $_GET['vnp_ResponseCode'] ?? null;
+            if ($vnp_ResponseCode == '00') {
+                $order_id = CartHelper::getOrder_id($cart_data);
+                CartHelper::createCart($cart_data);
+                Notification::render();
+                NotificationHelper::unset();
+                $timeStr = $_GET['vnp_PayDate'];
+                // Chuyển chuỗi sang timestamp
+                $timestamp = strtotime(substr($timeStr, 0, 8) . ' ' . substr($timeStr, 8));
+                $date = date("Y-m-d H:i:s", $timestamp);
+                $data = [
+                    "vnp_Amount" => $_GET['vnp_Amount'],
+                    "vnp_BankCode" => $_GET['vnp_BankCode'],
+                    "vnp_BankTranNo" => $_GET['vnp_BankTranNo'],
+                    "vnp_CardType" => $_GET['vnp_CardType'],
+                    "vnp_OrderInfo" => $_GET['vnp_OrderInfo'],
+                    "vnp_PayDate" => $date,
+                    "vnp_ResponseCode" => $_GET['vnp_ResponseCode'],
+                    "vnp_TransactionStatus" => $_GET['vnp_TransactionStatus'],
+                    "vnp_TxnRef" => $_GET['vnp_TxnRef'],
+                    "order_id" => $order_id
+                ];
+                $vnpays = new vnpays();
+                $vnpays->createVnpay($data);
+                Bill::render();
+            } else {
+                // Thất bại hoặc bị hủy
+                header('Location: http://127.0.0.1:8080/checkout');
+                unset($_SESSION['information']);
+                exit();
+            }
+        }
+    }
 }
