@@ -30,6 +30,8 @@ Route::post('/register', 'App\Controllers\Client\AuthController@registerAction')
 // lọc sản phẩm theo loại
 Route::get('/products/categories/{id}','App\Controllers\Client\ProductController@getProductByCategory');
 
+Route::post('/products/filter', 'App\Controllers\Client\ProductController@index');
+
 
 
 // *** Admin

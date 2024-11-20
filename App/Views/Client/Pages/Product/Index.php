@@ -36,6 +36,67 @@ class Index extends BaseView
         </div>
       </div>
     </section>
+    <section class="mt-3">
+            <div class="container">
+                <form action="/products/filter" method="POST" id="form-control">
+                <input type="hidden" name="POST">
+                        <div class="row">
+
+                        <div class="form-group col-3">
+                            <label for="sort">Sắp xếp</label>
+                            <div class="select-wrap">
+                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                <select id="sort" class="form-control" name="sort">
+                                    <option value="0" >Vui lòng chọn </option>
+                                    <option value="1" <?= isset($_GET['sort']) && $_GET['sort'] === '1' ? "selected" : "" ?>>Giá Giảm Dần</option>
+                                    <option value="2" <?= isset($_GET['sort']) && $_GET['sort'] === '2' ? "selected" : "" ?>>Giá Tăng Dần</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="origin">Xuất Xứ</label>
+                            <div class="select-wrap">
+                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                <select id="origin" class="form-control" name="origin">
+                                <option value="">Vui lòng chọn xuất xứ</option>
+                                <?php 
+                          foreach($data['origins'] as $origins ) :
+                          ?>
+                          <option value="<?=  $origins['id']  ?>"><?=  $origins['name']  ?></option>
+                          <?php 
+                          endforeach;
+                          ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="volume">Thể Tích</label>
+                            <div class="select-wrap">
+                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                <select id="volume" class="form-control" name="volume">
+                                    <option value="0">Vui lòng chọn thể tích </option>
+                                    <option value="1">300ml</option>
+                                    <option value="2">450ml</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="country">Giá Tiền</label>
+                            <div class="select-wrap">
+                                <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                <select id="price" class="form-control" name="price">
+                                    <option value="0">Vui lòng chọn giá tiền</option>
+                                    <option value="1">1-500000</option>
+                                    <option value="2">500000-1000000</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    </form>
+            </div>
+        </section>
+
         <section class="ftco-section">
             <div class="container">
                 <div class="row">
@@ -148,8 +209,43 @@ class Index extends BaseView
                 </div>
             </div>
         </section>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+        <script type="text/javascript">
+    $(document).ready(function () {
+       
+        $('#form-control select').change(function () {
+            var selectName = $(this).attr('name'); 
+            var selectValue = $(this).val(); 
+            var dataToSend = {}; 
+            dataToSend[selectName] = selectValue;
 
+            // Kiểm tra dữ liệu trước khi gửi
+            console.log("Dữ liệu gửi qua AJAX:", dataToSend);
+
+            // Thực hiện gửi AJAX
+            $.ajax({
+                url: '/products/filter',
+                method: 'POST',          
+                data: dataToSend,        
+                success: function (response) {
+                    console.log("Kết quả trả về từ server:", response);
+
+                  
+                   
+                        $('#result').html(productsHtml); // Hiển thị sản phẩm
+                   
+                },
+                error: function () {
+                    $('#result').html('<p style="color:red;">Có lỗi xảy ra. Vui lòng thử lại.</p>'); // Hiển thị lỗi
+                }
+            });
+        });
+    });
+</script>
+</script>
+
+</script> 
 
 
 <?php

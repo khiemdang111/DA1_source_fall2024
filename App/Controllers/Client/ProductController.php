@@ -15,11 +15,23 @@ use App\Views\Client\Pages\Product\Category as ProductCategory;
 use App\Views\Client\Pages\Product\Detail;
 use App\Views\Client\Pages\Product\Index;
 
+use App\Models\Origin;
+
+
 class ProductController
 {
     // hiển thị danh sách
     public static function index()
     {
+
+        $sort = isset($_POST['sort']) ? $_POST['sort'] : 0;
+        $origin = isset($_POST['origin']) ? $_POST['origin'] : 0;
+        $volume = isset($_POST['volume']) ? $_POST['volume'] : 0;
+        $price = isset($_POST['price']) ? $_POST['price'] : 0;
+    
+        // Kiểm tra giá trị của $sort (debug)
+        var_dump($sort);
+  
         // giả sử data là mảng dữ liệu lấy được từ database
         $category = new Category();
         $categories = $category->getAllCategoryByStatus();
@@ -27,14 +39,21 @@ class ProductController
         // lấy dữ liệu sản phẩm từ database
         $product = new Product();
         $products = $product->getAllProductByStatus();
+
+        $origins = new Origin();
+        $origins = $origins->getAllOriginsByStatus();
         $data = [
             'products' => $products,
-            'categories' => $categories
+            'categories' => $categories,
+            'origins' => $origins,
+         
         ];
         Header::render();
 
         Index::render($data);
         Footer::render();
+
+        
     }
     public static function fetchRecommendedProducts($product_id)
     {
