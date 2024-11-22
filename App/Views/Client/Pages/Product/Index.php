@@ -36,20 +36,20 @@ class Index extends BaseView
         </div>
       </div>
     </section>
-    <section class="mt-3">
+    <section class="mt-4">
             <div class="container">
-                <form action="/products/filter" method="POST" id="form-control">
-                <input type="hidden" name="POST">
-                        <div class="row">
-
+                <form action="" method="GET" id="form-control">
+                    <div class="row">
                         <div class="form-group col-3">
                             <label for="sort">Sắp xếp</label>
                             <div class="select-wrap">
                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <select id="sort" class="form-control" name="sort">
-                                    <option value="0" >Vui lòng chọn </option>
-                                    <option value="1" <?= isset($_GET['sort']) && $_GET['sort'] === '1' ? "selected" : "" ?>>Giá Giảm Dần</option>
-                                    <option value="2" <?= isset($_GET['sort']) && $_GET['sort'] === '2' ? "selected" : "" ?>>Giá Tăng Dần</option>
+                                <select id="sort" class="form-control" name="sort" onchange="handleParams('sort', this.value)">
+                                    <option value="" selected>Vui lòng chọn</option>
+                                    <option value="1" <?= isset($_GET['sort']) && $_GET['sort'] === '1' ? 'selected' : '' ?>>Giá Giảm Dần</option>
+                                    <option value="2" <?= isset($_GET['sort']) && $_GET['sort'] === '2' ? 'selected' : '' ?>>Giá Tăng Dần</option>
+                                    <option value="3" <?= isset($_GET['sort']) && $_GET['sort'] === '2' ? 'selected' : '' ?>>Sản Phẩm Hot</option>
+
                                 </select>
                             </div>
                         </div>
@@ -57,50 +57,56 @@ class Index extends BaseView
                             <label for="origin">Xuất Xứ</label>
                             <div class="select-wrap">
                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <select id="origin" class="form-control" name="origin">
-                                <option value="">Vui lòng chọn xuất xứ</option>
-                                <?php 
-                          foreach($data['origins'] as $origins ) :
-                          ?>
-                          <option value="<?=  $origins['id']  ?>"><?=  $origins['name']  ?></option>
-                          <?php 
-                          endforeach;
-                          ?>
+                                <select id="origin" class="form-control" name="origin" onchange="handleParams('origin', this.value)">
+                                    <option value="" selected>Vui lòng chọn xuất xứ</option>
+                                    <?php foreach ($data['origins'] as $origin): ?>
+                                        <option value="<?= $origin['id'] ?>"
+                                            <?= isset($_GET['origin']) && $_GET['origin'] === $origin['id'] ? 'selected' : '' ?>>
+                                            <?= $origin['name'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group col-3">
-                            <label for="volume">Thể Tích</label>
+                            <label for="origin">Loại sản phẩm</label>
                             <div class="select-wrap">
                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <select id="volume" class="form-control" name="volume">
-                                    <option value="0">Vui lòng chọn thể tích </option>
-                                    <option value="1">300ml</option>
-                                    <option value="2">450ml</option>
+                                <select id="categories" class="form-control" name="categories" onchange="handleParams('categories', this.value)">
+                                    <option value="" selected>Vui lòng chọn xuất xứ</option>
+                                    <?php foreach ($data['categories'] as $categories): ?>
+                                        <option value="<?= $categories['id'] ?>"
+                                            <?= isset($_GET['categories']) && $_GET['categories'] === $categories['id'] ? 'selected' : '' ?>>
+                                            <?= $categories['name'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group col-3">
-                            <label for="country">Giá Tiền</label>
+                            <label for="price">Giá Tiền</label>
                             <div class="select-wrap">
                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                <select id="price" class="form-control" name="price">
-                                    <option value="0">Vui lòng chọn giá tiền</option>
-                                    <option value="1">1-500000</option>
-                                    <option value="2">500000-1000000</option>
+                                <select id="price" class="form-control" name="price" onchange="handleParams('price', this.value)">
+                                    <option value="0" selected>Vui lòng chọn giá tiền</option>
+                                    <option value="0-100000" <?= isset($_GET['price']) && $_GET['price'] === '0-100000' ? 'selected' : '' ?>>Từ 0 đến 100 nghìn</option>
+                                    <option value="100000-500000" <?= isset($_GET['price']) && $_GET['price'] === '100000-500000' ? 'selected' : '' ?>>Từ 100 nghìn đến 500 nghìn</option>
+                                    <option value="500000-1000000" <?= isset($_GET['price']) && $_GET['price'] === '500000-1000000' ? 'selected' : '' ?>>Từ 500 nghìn đến 1 triệu</option>
+                                    <option value="1000000-5000000" <?= isset($_GET['price']) && $_GET['price'] === '1000000-5000000' ? 'selected' : '' ?>>Từ 1 triệu đến 5 triệu</option>
+                                    <option value="5000000-10000000" <?= isset($_GET['price']) && $_GET['price'] === '5000000-10000000' ? 'selected' : '' ?>>Từ 5 triệu đến 10 triệu</option>
+                                    <option value="10000000-20000000" <?= isset($_GET['price']) && $_GET['price'] === '10000000-20000000' ? 'selected' : '' ?>>Từ 10 triệu đến 20 triệu</option>
                                 </select>
                             </div>
                         </div>
 
                     </div>
-                    </form>
+                </form>
             </div>
         </section>
-
         <section class="ftco-section">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-12">
                         <div class="row mb-4">
                             <div
                                 class="col-md-12 d-flex justify-content-between align-items-center">
@@ -123,7 +129,7 @@ class Index extends BaseView
                             ?>
 
 
-                                    <div class="col-md-4 d-flex">
+                                    <div class="col-md-3 d-flex">
                                         <div class="product ftco-animate">
                                             <div
                                                 class="img d-flex align-items-center justify-content-center"
@@ -172,80 +178,35 @@ class Index extends BaseView
                             endif; ?>
 
                         </div>
-                        <div class="row mt-5">
-                            <div class="col text-center">
-                                <div class="block-27">
-                                    <ul>
-                                        <li><a href="#">&lt;</a></li>
-                                        <li class="active"><span>1</span></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li><a href="#">&gt;</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
 
-                    <div class="col-md-3">
-                        <div class="sidebar-box ftco-animate">
-                            <div class="categories">
-                                <h3>Danh mục sản phẩm</h3>
-                                <ul class="p-0">
-
-                                    <?php
-                                    Category::render();
-                                    ?>
-
-
-                                </ul>
-                            </div>
-                        </div>
-
-                      
-                    </div>
+                    
                 </div>
             </div>
         </section>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+            
+        <script>
+            function handleParams(filter, value) {
+                const currentUrl = window.location.href; 
+                const newUrl = new URL(currentUrl); 
 
-        <script type="text/javascript">
-    $(document).ready(function () {
-       
-        $('#form-control select').change(function () {
-            var selectName = $(this).attr('name'); 
-            var selectValue = $(this).val(); 
-            var dataToSend = {}; 
-            dataToSend[selectName] = selectValue;
+                const currentValue = newUrl.searchParams.get(filter);
 
-            // Kiểm tra dữ liệu trước khi gửi
-            console.log("Dữ liệu gửi qua AJAX:", dataToSend);
-
-            // Thực hiện gửi AJAX
-            $.ajax({
-                url: '/products/filter',
-                method: 'POST',          
-                data: dataToSend,        
-                success: function (response) {
-                    console.log("Kết quả trả về từ server:", response);
-
-                  
-                   
-                        $('#result').html(productsHtml); // Hiển thị sản phẩm
-                   
-                },
-                error: function () {
-                    $('#result').html('<p style="color:red;">Có lỗi xảy ra. Vui lòng thử lại.</p>'); // Hiển thị lỗi
+                if (value === "0" || value === "" || value === currentValue) {
+                    newUrl.searchParams.delete(filter);
+                } else {
+                    newUrl.searchParams.set(filter, value);
                 }
-            });
-        });
-    });
-</script>
-</script>
 
-</script> 
+                window.location.href = newUrl.toString(); 
+            }
+
+            function clearFilters() {
+                window.location.href = window.location.pathname;
+            }
+        </script>
+
 
 
 <?php

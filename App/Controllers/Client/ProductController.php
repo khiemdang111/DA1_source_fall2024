@@ -20,26 +20,40 @@ use App\Models\Origin;
 
 class ProductController
 {
+
+    private static function getQueryParams()
+{
+    $queryParams = [];
+    if (isset($_GET['sort'])) {
+        $queryParams['sort'] = $_GET['sort'];
+    }
+    if (isset($_GET['origin'])) {
+        $queryParams['origin'] = $_GET['origin'];
+    }
+    if (isset($_GET['categories'])) {
+        $queryParams['categories'] = $_GET['categories'];
+    }
+    if (isset($_GET['price'])) {
+        $queryParams['price'] = $_GET['price'];
+    }
+    return $queryParams;
+}
     // hiển thị danh sách
     public static function index()
     {
 
-        $sort = isset($_POST['sort']) ? $_POST['sort'] : 0;
-        $origin = isset($_POST['origin']) ? $_POST['origin'] : 0;
-        $volume = isset($_POST['volume']) ? $_POST['volume'] : 0;
-        $price = isset($_POST['price']) ? $_POST['price'] : 0;
-    
-        // Kiểm tra giá trị của $sort (debug)
-        var_dump($sort);
-  
+        $queryParams = self::getQueryParams();
         // giả sử data là mảng dữ liệu lấy được từ database
         $category = new Category();
         $categories = $category->getAllCategoryByStatus();
 
         // lấy dữ liệu sản phẩm từ database
         $product = new Product();
-        $products = $product->getAllProductByStatus();
-
+        if (empty($queryParams)) {
+            $products = $product->getAllProductByStatus();
+        } else {
+            $products = $product->getProductsWithFilters($queryParams);
+        }
         $origins = new Origin();
         $origins = $origins->getAllOriginsByStatus();
         $data = [

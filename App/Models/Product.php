@@ -589,4 +589,55 @@ public function addFkSku($id, $sku_id) {
     }
 }
 
+public function getProductsWithFilters($filters = [])
+{
+    $result = [];
+    try {
+       
+        $query = "SELECT products.*, categories.name AS category_name
+                  FROM products
+                  INNER JOIN categories ON products.category_id = categories.id
+                  WHERE products.status = " . self::STATUS_ENABLE . "
+                  AND categories.status = " . self::STATUS_ENABLE;
+
+        if (!empty($filters['categories'])) {
+            $categories = implode(',', array_map('intval', (array) $filters['categories']));
+            $query .= " AND category_id IN ($categories)";
+        }
+
+        if (!empty($filters['origin'])) {
+            $origin = implode(',', array_map('intval', (array) $filters['origin']));
+            $query .= " AND origin_id IN ($origin)";
+        }
+
+        if (!empty($filters['price'])) {
+            $priceRange = explode('-', $filters['price']); 
+            if (count($priceRange) === 2) {
+                $minPrice = intval($priceRange[0]); 
+                $maxPrice = intval($priceRange[1]);  
+                $query .= " AND price BETWEEN $minPrice AND $maxPrice";
+            }
+        }
+
+        if (!empty($filters['sort'])) {
+            if ($filters['sort'] == 1) {
+                $query .= " ORDER BY price DESC";
+            } elseif ($filters['sort'] == 2) {
+                $query .= " ORDER BY price ASC";  
+            }elseif($filters['sort'] == 3){
+                $query.= " ORDER BY view DESC"; 
+            }
+        }
+
+        $result = $this->_conn->MySQLi()->query($query);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    } catch (\Throwable $th) {
+        error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+        return $result;
+    }
 }
+
+
+}
+    
+
