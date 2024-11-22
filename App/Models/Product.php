@@ -138,43 +138,19 @@ class Product extends BaseModel
             return $result;
         }
     }
-    // public function searchProduct($keyword) {
-    //     $result = [];
-    //     try {
-    //         // Kết nối tới cơ sở dữ liệu
-    //         $conn = $this->_conn->MySQLi();
+    public function search($keyword)
+{
+    $sql = "SELECT products.* , categories.name AS category_name 
+                FROM products
+                INNER JOIN categories ON products.category_id = categories.id
+                WHERE products.name REGEXP '$keyword' 
+                AND products.status = " . self::STATUS_ENABLE . "
+                AND categories.status = " . self::STATUS_ENABLE;
+    $result = $this->_conn->MySQLi()->query($sql);
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
 
-    //         // Câu truy vấn tìm kiếm, sử dụng các tham số ràng buộc để ngăn chặn SQL injection
-    //         $sql = "SELECT products.*, categories.name as name_cate 
-    //                 FROM products 
-    //                 INNER JOIN categories ON products.category_id = categories.id 
-    //                 WHERE products.name LIKE ? OR categories.name LIKE ?";
 
-    //         // Chuẩn bị câu truy vấn
-    //         $stmt = $conn->prepare($sql);
-    //         // Tạo từ khóa tìm kiếm với ký tự `%` ở đầu và cuối
-    //         $keyword = '%' . $keyword . '%';
-
-    //         // Ràng buộc các tham số
-    //         $stmt->bind_param('ss', $keyword, $keyword);
-
-    //         // Thực thi câu truy vấn
-    //         $stmt->execute();
-
-    //         // Lấy kết quả
-    //         $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-    //         // Đóng câu lệnh
-    //         $stmt->close();
-    //     } catch (\Throwable $th) {
-    //         // Ghi lại lỗi nếu có
-    //         error_log('Lỗi khi tìm kiếm sản phẩm: ' . $th->getMessage());
-    //     }
-
-    //     // Trả về kết quả
-    //     return $result;
-
-    // }
 
 
     public function getAllProductByStatusRecycle()
@@ -349,7 +325,6 @@ class Product extends BaseModel
         } catch (\Throwable $th) {
             error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
             return false;
-
         }
     }
     public function getAllVariantByProductId($id)
@@ -418,226 +393,83 @@ class Product extends BaseModel
             return $result;
         }
     }
+    public function updateCombinatioValue($groupedData)
+{
+    $conn = $this->_conn->MySQLi();  // Giữ kết nối MySQLi
+    $data = $groupedData;
 
-    public function SelectProductVariantValueID($productID, array $variants, array $variant_ids)
-    {
-        $result = [];
-        try {
-            // Escape các giá trị để tránh SQL Injection
-            $product_id = $this->_conn->MySQLi()->real_escape_string($productID);
+    // Get the last inserted ID and increment it by 1
+    $query = "SELECT MAX(id) FROM product_variant_option_combination";
+    $result = $conn->query($query);
+    $lastId = $result->fetch_row()[0];
+    $newId = $lastId + 1;
 
-            // Chuẩn bị danh sách variant_ids và variants
-            $escaped_variant_ids = array_map([$this->_conn->MySQLi(), 'real_escape_string'], $variant_ids);
-            $escaped_variants = array_map([$this->_conn->MySQLi(), 'real_escape_string'], $variants);
-
-            // Tạo chuỗi điều kiện `IN` cho mảng
-            $variant_ids_condition = "'" . implode("','", $escaped_variant_ids) . "'";
-            $variants_condition = "'" . implode("','", $escaped_variants) . "'";
-
-            // Tạo câu truy vấn
-            $sql = "SELECT product_variant_values.id
-                FROM `product_variant_values`
-                INNER JOIN product_variant_options
-                    ON product_variant_values.option_id = product_variant_options.id
-                WHERE product_variant_values.product_variant_id IN ($variant_ids_condition)
-                  AND product_variant_options.name IN ($variants_condition)
-                  AND product_variant_values.product_id = '$product_id'";
-
-            // Thực thi truy vấn
-            $query = $this->_conn->MySQLi()->query($sql);
-            if ($query) {
-                $result = $query->fetch_all(MYSQLI_ASSOC);
-            }
-            return $result;
-        } catch (\Throwable $th) {
-            error_log('Lỗi không tìm thấy: ' . $th->getMessage());
-            return $result;
-        }
-    }
-    public function InsertCombinationID($variant_value_id)
-    {
-        $conn = $this->_conn->MySQLi(); // Giữ kết nối MySQLi
-        $data = $variant_value_id;
-
-        // Chèn bản ghi mới vào bảng product_variant_option_combination
-        $stmt = $conn->prepare("INSERT INTO product_variant_option_combination (id) VALUES (NULL)");
+    foreach ($data as $item) {
+        // Bước 1: Chèn group_id vào bảng compostr
+        $stmt = $conn->prepare("INSERT INTO product_variant_option_combination (id) VALUES (?)");
+        $stmt->bind_param('i', $newId);
         $stmt->execute();
-
-        // Lấy ID tự động tăng vừa được chèn
+  
+        // Lấy id của bản ghi vừa chèn
         $combination_id = $conn->insert_id;
-        $_SESSION['id_combination'] = $combination_id;
-        // Duyệt qua từng phần tử trong mảng data và cập nhật bảng product_variant_values
-        foreach ($data as $item) {
-            if (isset($item['id'])) {
-                $variant_id = (int) $item['id']; // Lấy ID của variant hiện tại
 
-                // Cập nhật bảng product_variant_values với combination_id
-                $updateStmt = $conn->prepare("UPDATE product_variant_values SET combination_id = ? WHERE id = ?");
-                $updateStmt->bind_param('ii', $combination_id, $variant_id); // Liên kết tham số
-                $updateStmt->execute(); // Thực thi truy vấn
-            }
+        // Bước 2: Cập nhật bảng value với combination_id
+        foreach ($item['id_variant_values'] as $variant_id) {
+            // Cập nhật combination_id vào bảng value nếu id trùng với id_variant_values
+            $updateStmt = $conn->prepare("UPDATE product_variant_values SET combination_id = ? WHERE id = ?");
+            $updateStmt->bind_param('ii', $combination_id, $variant_id);
+            $updateStmt->execute();
         }
 
-        // Đóng statement
-        $stmt->close();
-        $updateStmt->close();
-
-        // Trả về combination_id vừa tạo
-        return $combination_id;
+        $newId++;
     }
+}
 
-    public function DetailVariant($id)
+    public function getProductsWithFilters($filters = [])
     {
         $result = [];
         try {
-            $sql = "SELECT products.name AS product_name, products.id AS product_id FROM `product_variant_values` INNER JOIN product_variant_options on product_variant_values.option_id = product_variant_options.id INNER JOIN products on product_variant_values.product_id = products.id WHERE product_variant_values.combination_id = $id";
-            $result = $this->_conn->MySQLi()->query($sql);
+
+            $query = "SELECT products.*, categories.name AS category_name
+                  FROM products
+                  INNER JOIN categories ON products.category_id = categories.id
+                  WHERE products.status = " . self::STATUS_ENABLE . "
+                  AND categories.status = " . self::STATUS_ENABLE;
+
+            if (!empty($filters['categories'])) {
+                $categories = implode(',', array_map('intval', (array) $filters['categories']));
+                $query .= " AND category_id IN ($categories)";
+            }
+
+            if (!empty($filters['origin'])) {
+                $origin = implode(',', array_map('intval', (array) $filters['origin']));
+                $query .= " AND origin_id IN ($origin)";
+            }
+
+            if (!empty($filters['price'])) {
+                $priceRange = explode('-', $filters['price']);
+                if (count($priceRange) === 2) {
+                    $minPrice = intval($priceRange[0]);
+                    $maxPrice = intval($priceRange[1]);
+                    $query .= " AND price BETWEEN $minPrice AND $maxPrice";
+                }
+            }
+
+            if (!empty($filters['sort'])) {
+                if ($filters['sort'] == 1) {
+                    $query .= " ORDER BY price DESC";
+                } elseif ($filters['sort'] == 2) {
+                    $query .= " ORDER BY price ASC";
+                } elseif ($filters['sort'] == 3) {
+                    $query .= " ORDER BY view DESC";
+                }
+            }
+
+            $result = $this->_conn->MySQLi()->query($query);
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {
             error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
             return $result;
         }
     }
-    public function createSku($data)
-{
-    try {
-        // Lấy giá trị id lớn nhất hiện tại
-        $conn = $this->_conn->MySQLi();
-
-        if (!$conn) {
-            throw new \Exception('Không thể kết nối cơ sở dữ liệu: ' . mysqli_connect_error());
-        }
-
-        $result = $conn->query("SELECT MAX(id) AS max_id FROM skus");
-
-        if (!$result) {
-            throw new \Exception('Lỗi khi truy vấn giá trị lớn nhất: ' . $conn->error);
-        }
-
-        $row = $result->fetch_assoc();
-        $newId = ($row['max_id'] ?? 0) + 1;
-$_SESSION['sku_id'] = $newId;
-        // Chuẩn bị câu lệnh SQL INSERT
-        $sql = "INSERT INTO skus (id, name, sku, description, price, image, product_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        // Chuẩn bị statement
-        $stmt = $conn->prepare($sql);
-
-        if (!$stmt) {
-            throw new \Exception('Lỗi khi chuẩn bị câu lệnh: ' . $conn->error);
-        }
-
-        // Gắn các giá trị vào statement
-        $stmt->bind_param(
-            "isssssi", // i: integer, s: string
-            $newId,
-            $data['name'],
-            $data['sku'],
-            $data['description'],
-            $data['price'],
-            $data['image'],
-            $data['product_id']
-        );
-
-        // Thực hiện câu lệnh
-        if (!$stmt->execute()) {
-            throw new \Exception('Lỗi khi thực thi câu lệnh: ' . $stmt->error);
-        }
-
-        // Đóng statement
-        $stmt->close();
-
-        return true;
-    } catch (\Throwable $th) {
-        error_log('Lỗi khi chèn dữ liệu vào bảng skus: ' . $th->getMessage());
-        return false;
-    }
 }
-public function addFkSku($id, $sku_id) {
-    try {
-        // Kết nối cơ sở dữ liệu
-        $conn = $this->_conn->MySQLi();
-        if (!$conn) {
-            throw new \Exception('Không thể kết nối cơ sở dữ liệu: ' . mysqli_connect_error());
-        }
-
-        // Chuẩn bị câu lệnh SQL UPDATE
-        $sql = "UPDATE product_variant_option_combination SET sku_id = ? WHERE id = ?";
-
-        // Chuẩn bị statement
-        $stmt = $conn->prepare($sql);
-
-        if (!$stmt) {
-            throw new \Exception('Lỗi khi chuẩn bị câu lệnh: ' . $conn->error);
-        }
-
-        // Gắn các giá trị vào statement
-        $stmt->bind_param("ii", $sku_id, $id); // "ii" cho 2 giá trị kiểu integer
-
-        // Thực hiện câu lệnh
-        if (!$stmt->execute()) {
-            throw new \Exception('Lỗi khi thực thi câu lệnh: ' . $stmt->error);
-        }
-
-        // Đóng statement
-        $stmt->close();
-
-        return true;
-    } catch (\Throwable $th) {
-        error_log('Lỗi khi cập nhật dữ liệu trong bảng product_variant_option_combination: ' . $th->getMessage());
-        return false;
-    }
-}
-
-public function getProductsWithFilters($filters = [])
-{
-    $result = [];
-    try {
-       
-        $query = "SELECT products.*, categories.name AS category_name
-                  FROM products
-                  INNER JOIN categories ON products.category_id = categories.id
-                  WHERE products.status = " . self::STATUS_ENABLE . "
-                  AND categories.status = " . self::STATUS_ENABLE;
-
-        if (!empty($filters['categories'])) {
-            $categories = implode(',', array_map('intval', (array) $filters['categories']));
-            $query .= " AND category_id IN ($categories)";
-        }
-
-        if (!empty($filters['origin'])) {
-            $origin = implode(',', array_map('intval', (array) $filters['origin']));
-            $query .= " AND origin_id IN ($origin)";
-        }
-
-        if (!empty($filters['price'])) {
-            $priceRange = explode('-', $filters['price']); 
-            if (count($priceRange) === 2) {
-                $minPrice = intval($priceRange[0]); 
-                $maxPrice = intval($priceRange[1]);  
-                $query .= " AND price BETWEEN $minPrice AND $maxPrice";
-            }
-        }
-
-        if (!empty($filters['sort'])) {
-            if ($filters['sort'] == 1) {
-                $query .= " ORDER BY price DESC";
-            } elseif ($filters['sort'] == 2) {
-                $query .= " ORDER BY price ASC";  
-            }elseif($filters['sort'] == 3){
-                $query.= " ORDER BY view DESC"; 
-            }
-        }
-
-        $result = $this->_conn->MySQLi()->query($query);
-        return $result->fetch_all(MYSQLI_ASSOC);
-    } catch (\Throwable $th) {
-        error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
-        return $result;
-    }
-}
-
-
-}
-    
-

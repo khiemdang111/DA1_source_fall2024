@@ -155,4 +155,28 @@ class ProductController
         Index::render($data);
         Footer::render();
     }
+
+    public function searchProduct()
+    {
+
+        $keyword = $_GET['keywords'] ?? '';
+
+        $product = new Product();
+        $key_product = $product->search($keyword);
+  
+        $category = new Category();
+        $categories = $category->getAllCategoryByStatus();
+        $product = new Product();
+        
+        $origins = new Origin();
+        $origins = $origins->getAllOriginsByStatus();
+        $data = [
+            'products' => $key_product,
+           'categories' => $categories,
+            'origins' => $origins,
+        ];
+        Header::render();
+        Index::render($data);
+        Footer::render();
+    }
 }

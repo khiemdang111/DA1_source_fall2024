@@ -32,6 +32,9 @@ Route::post('/register', 'App\Controllers\Client\AuthController@registerAction')
 Route::get('/products/categories/{id}','App\Controllers\Client\ProductController@getProductByCategory');
 
 Route::post('/products/filter', 'App\Controllers\Client\ProductController@index');
+Route::get('/search', 'App\Controllers\Client\ProductController@searchProduct');
+
+
 
 
 Route::get('/forgetpass', 'App\Controllers\Client\AuthController@forgetpass');

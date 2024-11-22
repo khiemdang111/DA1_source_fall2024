@@ -13,16 +13,18 @@ class Header extends BaseView
 	{
 		$is_login = AuthHelper::checkLogin();
 
-		
+
 ?>
 		<!DOCTYPE html>
 		<html lang="en">
+
 		<head>
-			<title>Liquor Store - Free Bootstrap 4 Template by Colorlib</title>
+			<title>WINE CẦN THƠ</title>
 			<meta charset="utf-8">
 			<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 			<link rel="stylesheet"
 				href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.min.css">
+			<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" rel="stylesheet" />
 
 			<link
 				href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,200;0,300;0,400;0,500;0,700;0,800;1,200;1,300;1,400;1,500;1,700&display=swap"
@@ -38,6 +40,7 @@ class Header extends BaseView
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/style.css">
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/bootstrap/bootrap.css">
 		</head>
+
 		<body>
 			<div class="content">
 				<div class="wrap">
@@ -100,7 +103,7 @@ class Header extends BaseView
 								<div class="d-flex justify-content-center align-items-center"><small>3</small></div>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
-								
+
 								<div class="dropdown-item d-flex align-items-start" href="#">
 									<div class="img" style="background-image: url(images/prod-1.jpg);"></div>
 									<div class="text pl-3">
@@ -113,12 +116,15 @@ class Header extends BaseView
 									Xem giỏ hàng
 									<span class="ion-ios-arrow-round-forward"></span>
 								</a>
+								<!-- /* From Uiverse.io by TimTrayler */ -->
+
 
 
 
 
 
 							</div>
+
 						</div>
 
 						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
@@ -126,8 +132,8 @@ class Header extends BaseView
 							<span class="oi oi-menu"></span> Menu
 						</button>
 
-						<div class="collapse navbar-collapse" id="ftco-nav">
-							<ul class="navbar-nav ml-auto">
+						<div class="collapse navbar-collapse justify-content-center" id="ftco-nav">
+							<ul class="navbar-nav ">
 								<li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
 								<li class="nav-item"><a href="about.html" class="nav-link">Giới Thiệu</a></li>
 								<li class="nav-item"><a href="/products" class="nav-link">Sản Phẩm</a></li>
@@ -135,12 +141,43 @@ class Header extends BaseView
 								<li class="nav-item"><a href="/contact" class="nav-link">Liên hệ</a></li>
 							</ul>
 						</div>
+						<form action="/search" method="get"  id="search-form">
+							<div class="searchbar">
+								<div class="searchbar-wrapper">
+									<div class="searchbar-left">
+										<div class="search-icon-wrapper">
+											<span class="search-icon searchbar-icon">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+													<path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+													</path>
+												</svg>
+											</span>
+										</div>
+									</div>
+
+									<div class="searchbar-center">
+										<div class="searchbar-input-spacer"></div>
+										<input type="search" class="searchbar-input" name="keywords" placeholder="Tìm kiếm">
+									</div>
+
+									<div class="searchbar-right">
+										<button type="button" id="mic-btn">
+											<i class="fas fa-microphone"></i>
+										</button>
+									</div>
+
+									<p class="info"></p>
+
+								</div>
+							</div>
+						</form>
 					</div>
 				</nav>
+				<!-- <button class="search"><i class="bi bi-search"></i></button> -->
 			</div>
 
 
-
+			<source>
 
 	<?php
 
