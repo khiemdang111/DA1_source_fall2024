@@ -42,7 +42,7 @@ class Verification extends BaseView
             </div>
         </section>
 
-        <div class="container d-flex justify-content-center align-items-center min-vh-100">
+        <div class="container d-flex justify-content-center align-items-center  min-vh-75 mt-4 mb-4">
             <div class="col-lg-6 col-md-8">
                 <div class="card shadow-lg border-0 rounded-4">
                     <div class="card-body p-4">

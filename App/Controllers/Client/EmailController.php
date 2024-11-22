@@ -25,8 +25,8 @@ class EmailController
 
     public static function mail()
     {
-        $username = $_POST['username'] ?? null;
-        $email = $_POST['email'] ?? null;
+        $username = $_POST['username'];
+        $email = $_POST['email'];
       
         if (!$username ) {
             echo "Vui lòng nhập đầy đủ thông tin.";

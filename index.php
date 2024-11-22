@@ -39,6 +39,7 @@ Route::get('/Verification', 'App\Controllers\Client\AuthController@Verification'
 Route::post('/VerificationAction', 'App\Controllers\Client\AuthController@VerificationAction');
 Route::get('/resetPassword', 'App\Controllers\Client\AuthController@resetPassword');
 Route::post('/resetPassword', 'App\Controllers\Client\AuthController@resetPasswordAction');
+Route::post('/updatePassword', 'App\Controllers\Client\AuthController@updatePassword'); 
 
 Route::post('/mail', 'App\Controllers\Client\EmailController@mail');
 // *** Admin

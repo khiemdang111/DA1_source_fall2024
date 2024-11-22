@@ -16,6 +16,7 @@ use App\Views\Client\Pages\Auth\Register;
 use App\Views\Client\Pages\Order\index;
 use App\Views\Client\Pages\Auth\Verification;
 use App\Views\Client\Pages\Auth\ResetPassword;
+use App\Views\Client\Pages\Auth\updatePassword;
 
 class AuthController
 {
@@ -184,7 +185,7 @@ class AuthController
         $user = new User();
         $result = $user->getOneToken($number);
         if (!$result) {
-            NotificationHelper::error('error', 'Số điện thoại không tồn tại');
+            NotificationHelper::error('error', 'Mã xác thực không tồn tại');
             header('location: /Verification');
         } else {
             header('location: /resetPassword');
@@ -209,15 +210,64 @@ class AuthController
         // var_dump($result);
         // die();
     }
-    public static function updatePassword(int $id)
+    public static function updatePassword()
     {
-     $user = new User();
-     $result = $user->getOneUser($id);
-   
-     if ($result) {
-      // lưu session
-      $_SESSION['user'] = $result;
-     }
+        // Lấy dữ liệu từ POST
+        $newPassword = $_POST['new_password'];
+        $confirmPassword = $_POST['confirm_password'];
+// var_dump(
+//     $newPassword
+// );
+// var_dump(
+//     $confirmPassword
+// );
+// die();
+        // Kiểm tra dữ liệu nhập vào
+        if (!$newPassword || !$confirmPassword) {
+            NotificationHelper::error('password_update', 'Vui lòng nhập đầy đủ thông tin!');
+            header("Location: /resetPassword");
+            exit();
+        }
+
+        if ($newPassword !== $confirmPassword) {
+            NotificationHelper::error('password_mismatch', 'Mật khẩu xác nhận không trùng khớp!');
+            header("Location: /resetPassword");
+            exit();
+        }
+
+      
+        // Mã hóa mật khẩu mới
+        $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
+      
+
+        // Lấy thông tin người dùng từ session (giả sử bạn lưu email hoặc username trong session)
+      //  $username = $_SESSION['username']; 
+        // Hoặc bạn có thể sử dụng email
+        if (!$_SESSION['id'] ) {
+            NotificationHelper::error('user_not_found', 'Không tìm thấy thông tin người dùng!');
+            header("Location: /resetPassword");
+            exit();
+        }
+ 
+   $data = [
+    'password' => $hashedPassword,
+   ];
+
+        // Cập nhật mật khẩu vào cơ sở dữ liệu
+        $newUser = new User();
+        $updateResult = $newUser->update($_SESSION['id'],$data);
+//    var_dump(!$updateResult);
+//    die;
+        // Kiểm tra kết quả
+        if ($updateResult) {
+            NotificationHelper::success('password_update', 'Cập nhật mật khẩu thành công!');
+            unset($_SESSION['username']); // Xóa session để đảm bảo an toàn
+            header("Location: /login");
+            exit();
+        } else {
+            NotificationHelper::error('password_update_fail', 'Có lỗi xảy ra. Vui lòng thử lại!');
+            header("Location: /resetPassword");
+            exit();
+        }
     }
-   
 }

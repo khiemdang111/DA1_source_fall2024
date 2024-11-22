@@ -27,25 +27,20 @@ class ResetPassword extends BaseView
         <div class="mt-5 mb-5 col-xl-6">
             <div class="card px-sm-6 px-0">
                 <div class="card-body">
-                    <form id="formResetPassword" method="post" action="/resetPassword">
+                    <form id="formResetPassword" method="post" action="/updatePassword">
                         <input type="hidden" name="method" value="POST">
                         
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" value=""
-                                placeholder="Nhập email đã đăng ký của bạn..." autofocus required />
-                        </div>
 
                         <div class="mb-3">
                             <label for="new_password" class="form-label">Mật khẩu mới</label>
                             <input type="password" class="form-control" id="new_password" name="new_password"
-                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required />
+                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"   />
                         </div>
 
                         <div class="mb-3">
                             <label for="confirm_password" class="form-label">Xác nhận mật khẩu mới</label>
                             <input type="password" class="form-control" id="confirm_password" name="confirm_password"
-                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" required />
+                                placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"  />
                         </div>
 
                         <div class="mb-3">

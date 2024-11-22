@@ -48,7 +48,7 @@ class Mailer
             // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Cảm ơn bạn đã đặt hàng';
+            $mail->Subject = 'Mã xác nhận quên mật khẩu ';
             $mail->Body = $body;
             // $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
             $mail->send();
