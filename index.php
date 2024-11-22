@@ -95,6 +95,7 @@ Route::get('/admin/productvariant/setting', 'App\Controllers\Admin\ProductContro
 Route::post('/admin/settingdetail/variant/{id}', 'App\Controllers\Admin\ProductController@settingDetailVariant');
 Route::get('/admin/createdetail/variant/{id}', 'App\Controllers\Admin\ProductController@detailSettingVariant');
 Route::post('/admin/skus', 'App\Controllers\Admin\ProductController@addSku');
+Route::get('/admin/products/search', 'App\Controllers\Admin\ProductController@searchProduct');
 
 
 //  *** Category
@@ -105,6 +106,8 @@ Route::post('/admin/categories', 'App\Controllers\Admin\CategoryController@store
 Route::get('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@edit');
 Route::put('/admin/categories/{id}', 'App\Controllers\Admin\CategoryController@update');
 Route::post('/admin/delete/categories/{id}', 'App\Controllers\Admin\CategoryController@delete');
+Route::get('/admin/categories/search', 'App\Controllers\Admin\CategoryController@searchCategory');
+
 
 
 
@@ -117,6 +120,8 @@ Route::post('/admin/users', 'App\Controllers\Admin\UserController@store');
 Route::get('/admin/users/{id}', 'App\Controllers\Admin\UserController@edit');
 Route::put('/update/user/{id}', 'App\Controllers\Admin\UserController@update');
 Route::post('/admin/delete/users/{id}', 'App\Controllers\Admin\UserController@delete');
+Route::get('/admin/users/search', 'App\Controllers\Admin\UserController@searchUsers');
+
 
 
 
@@ -129,6 +134,8 @@ Route::put('/update/posts/{id}', 'App\Controllers\Admin\PostController@update');
 Route::post('/admin/delete/{id}', 'App\Controllers\Admin\PostController@delete');
 Route::get('/post', 'App\Controllers\Client\PostController@index');
 Route::get('/Blog_single/{id}', 'App\Controllers\Client\PostController@Blog_single');
+Route::get('/admin/posts/search', 'App\Controllers\Admin\PostController@searchPosts');
+
 
 
 // *** Contact

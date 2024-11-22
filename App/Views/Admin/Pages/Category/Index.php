@@ -16,12 +16,41 @@ class Index extends BaseView
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-                <!-- Basic Bootstrap Table -->
+                <div class="card mb-3">
+                    <h5 class="card-header">Danh sách loại sản phẩm</h5>
+                    <div class="card-body">
+                        <!-- Basic Breadcrumb -->
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:void(0);">Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:void(0);">Danh sách loại sản phẩm</a>
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
                 <div class="card">
-                    <h5 class="card-header">Table Basic</h5>
+                    <div class="card-header">
+                        <form action="/admin/categories/search" method="get">
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    name="keywords"
+                                    placeholder="Tìm kiếm"
+                                    aria-label="Tìm kiếm"
+                                    aria-describedby="basic-addon-search31" />
+                            </div>
+
+                        </form>
+                    </div>
                     <div class="table-responsive text-nowrap">
                         <table class="table">
-                            <thead>
+                            <thead class="table-light">
                                 <tr>
                                     <th style="width: 15px">Id</th>
                                     <th>Tên</th>

@@ -447,4 +447,17 @@ public function addSku(){
         }
 }
 
+
+    public function searchProduct()
+    {
+
+        $keyword = $_GET['keywords'] ?? '';
+
+        $product = new Product();
+        $data = $product->search($keyword);
+      
+        Header::render();
+        Index::render($data);
+        Footer::render();
+    }
 }

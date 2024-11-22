@@ -245,4 +245,17 @@ class PostController
             header("Location: /admin/recycle/posts");
         }
     }
+
+    public function searchPosts()
+    {
+
+        $keyword = $_GET['keywords'] ?? '';
+
+        $post = new Post();
+        $data = $post->search($keyword);
+      
+        Header::render();
+        Index::render($data);
+        Footer::render();
+    }
 }

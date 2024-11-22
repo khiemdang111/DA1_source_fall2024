@@ -138,5 +138,13 @@ class User extends BaseModel
             return $result;
         }
     }
+
+    public function search($keyword)
+    {
+        $sql = "SELECT users.* FROM users WHERE users.name REGEXP '$keyword' OR users.phone REGEXP '$keyword' OR users.email REGEXP '$keyword' OR users.address REGEXP '$keyword' ";
+        $result = $this->_conn->MySQLi()->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    
     
 }

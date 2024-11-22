@@ -239,4 +239,17 @@ class UserController
             header("Location: /admin/recycle/users");
         }
     }
+
+    public function searchUsers()
+    {
+
+        $keyword = $_GET['keywords'] ?? '';
+
+        $user = new User();
+        $data = $user->search($keyword);
+      
+        Header::render();
+        Index::render($data);
+        Footer::render();
+    }
 }

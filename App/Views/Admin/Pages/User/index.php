@@ -31,6 +31,21 @@ class index extends BaseView
             </div>
             <!-- Basic Bootstrap Table -->
             <div class="card">
+            <div class="card-header">
+            <form action="/admin/users/search" method="get">
+              <div class="input-group input-group-merge">
+                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="keywords"
+                  placeholder="Tìm kiếm"
+                  aria-label="Tìm kiếm"
+                  aria-describedby="basic-addon-search31" />
+              </div>
+
+            </form>
+          </div>
                 <div class="table-responsive text-nowrap">
                     <?php
                     if (count($data)):

@@ -77,4 +77,11 @@ class Category extends BaseModel
         }
         
     }
+
+    public function search($keyword)
+    {
+        $sql = "SELECT categories.* FROM categories WHERE categories.name REGEXP '$keyword' ";
+        $result = $this->_conn->MySQLi()->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }

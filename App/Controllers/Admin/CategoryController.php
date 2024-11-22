@@ -185,4 +185,17 @@ class CategoryController
         }
 
     }
+
+    public function searchCategory()
+    {
+
+        $keyword = $_GET['keywords'] ?? '';
+
+        $category = new Category();
+        $data = $category->search($keyword);
+      
+        Header::render();
+        Index::render($data);
+        Footer::render();
+    }
 }

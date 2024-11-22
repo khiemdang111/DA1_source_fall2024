@@ -50,5 +50,12 @@ class Post extends BaseModel
             return $result;
         }
     }
+
+    public function search($keyword)
+    {
+        $sql = "SELECT posts.* FROM posts WHERE posts.title REGEXP '$keyword' ";
+        $result = $this->_conn->MySQLi()->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
    
 }
