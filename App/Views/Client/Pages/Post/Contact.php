@@ -34,7 +34,7 @@ class Contact extends BaseView
 				        			<span class="fa fa-map-marker"></span>
 				        		</div>
 				        		<div class="text">
-					            <p><span>Địa chỉ:</span> Toà nhà FPT Polytechnic, Đ. Số 22, Thường Thạnh, Cái Răng, Cần Thơ, Việt Nam</p>
+					            <p><span>Địa chỉ:</span> <a class="text-danger"> Toà nhà FPT Polytechnic, Đ. Số 22, Thường Thạnh, Cái Răng, Cần Thơ, Việt Nam</a></p>
 					          </div>
 				          </div>
 								</div>
@@ -44,7 +44,7 @@ class Contact extends BaseView
 				        			<span class="fa fa-phone"></span>
 				        		</div>
 				        		<div class="text">
-					            <p><span>Số điện thoại:</span> <a href="tel://1234567920">0789593011</a></p>
+					            <p><span>Số điện thoại:</span> <a class="text-danger" ;>0789593011</a></p>
 					          </div>
 				          </div>
 								</div>
@@ -54,7 +54,7 @@ class Contact extends BaseView
 				        			<span class="fa fa-paper-plane"></span>
 				        		</div>
 				        		<div class="text">
-					            <p><span>Email:</span> <a href="mailto:info@yoursite.com"></a></p>
+					            <p><span>Email:</span> <a class="text-danger">winecantho@gmail.com</a></p>
 					          </div>
 				          </div>
 								</div>

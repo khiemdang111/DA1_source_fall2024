@@ -56,7 +56,8 @@ class PostController
             'phone' => $_POST['phone'],
             'message' => $_POST['message'],
         ];
-        $phpEmail= EmailController::sendEmail( $data['message'], $data['email'], $data['name']);       
+        $phpEmailAdmin = EmailController::sendEmailAdmin($data['message'], $data['email'], $data['name'],$data['phone']);
+        $phpEmail= EmailController::sendEmail( $data['message'], $data['email'], $data['name'], $data['phone']);       
         NotificationHelper::success('contact_success', 'Gửi liên hệ thành công');
         header('Location: /');
         ob_end_flush();
