@@ -73,11 +73,9 @@ class AuthController
         $data = [
             'username' => $_POST['username'],
             'password' => $hash_password,
-            'name' => $_POST['name'],
-            // 're_password' => $_POST['re_password'],
+            'name' => $_POST['name'],         
             'email' => $_POST['email'],
             'phone' => $_POST['phone'],
-            'avatar' => $_POST['avatar'],
             'address' => $_POST['address']
         ];
         $user = new User();
