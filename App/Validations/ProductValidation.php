@@ -89,11 +89,6 @@ class ProductValidation
     public static function createVariant()
     {
         $is_valid = true;
-        // Tên đăng nhập
-        // if (!isset($_POST['skus_price']) || $_POST['skus_price'] === '') {
-        //     NotificationHelper::error('skus_price', 'Không để trống giá tiền');
-        //     $is_valid = false;
-        // }
 
         if (!isset($_POST['option_vl_name']) || !is_array($_POST['option_vl_name']) || empty($_POST['option_vl_name'])) {
             NotificationHelper::error('option_vl_name', 'Không để trống thuộc tính');
@@ -112,13 +107,33 @@ class ProductValidation
     public static function createAttribute()
     {
         $is_valid = true;
-
         if (!isset($_POST['product_variant_name'])  || $_POST['product_variant_name'] === "") {
             NotificationHelper::error('product_variant_name', 'Không để trống thuộc tính');
             $is_valid = false;
         } 
         if (!isset($_POST['product_variant_value'])  || $_POST['product_variant_value'] == '') {
             NotificationHelper::error('product_variant_value', 'Không để trống giá trị');
+            $is_valid = false;
+        } 
+        
+        return $is_valid;
+    }
+    public static function createSku(){
+        $is_valid = true;
+        if (!isset($_POST['name'])  || $_POST['name'] === "") {
+            NotificationHelper::error('name', 'Không để trống tên');
+            $is_valid = false;
+        } 
+        if (!isset($_POST['description'])  || $_POST['description'] == '') {
+            NotificationHelper::error('description', 'Không để trống mô tả');
+            $is_valid = false;
+        } 
+        if (!isset($_POST['sku'])  || $_POST['sku'] == '') {
+            NotificationHelper::error('sku', 'Không để trống mã vạch');
+            $is_valid = false;
+        } 
+        if (!isset($_POST['price'])  || $_POST['price'] == '') {
+            NotificationHelper::error('price', 'Không để trống giá');
             $is_valid = false;
         } 
         

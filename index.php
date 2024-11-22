@@ -88,6 +88,9 @@ Route::post('/admin/productvariant', 'App\Controllers\Admin\ProductController@st
 Route::get('/admin/variant/add', 'App\Controllers\Admin\ProductController@createAttributeVariant');
 Route::post('/admin/addAttribute', 'App\Controllers\Admin\ProductController@storeAttribute');
 Route::get('/admin/productvariant/setting', 'App\Controllers\Admin\ProductController@settingVariant');
+Route::post('/admin/settingdetail/variant/{id}', 'App\Controllers\Admin\ProductController@settingDetailVariant');
+Route::get('/admin/createdetail/variant/{id}', 'App\Controllers\Admin\ProductController@detailSettingVariant');
+Route::post('/admin/skus', 'App\Controllers\Admin\ProductController@addSku');
 
 
 //  *** Category

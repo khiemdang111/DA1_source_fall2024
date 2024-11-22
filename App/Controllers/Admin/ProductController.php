@@ -85,8 +85,8 @@ class ProductController
             header('location: /admin/products/create');
             exit;
         }
-       
-       
+
+
         // Thêm vào
         $data = [
             'name' => $name,
@@ -98,7 +98,7 @@ class ProductController
             'category_id' => $_POST['category_id'],
         ];
         $is_upload = ProductValidation::updateImage();
-       //  var_dump($is_upload);
+        //  var_dump($is_upload);
         if ($is_upload) {
             $data['image'] = $is_upload;
         }
@@ -329,6 +329,7 @@ class ProductController
     public static function storeAttribute()
     {
         // validation các trường dữ liệu
+
         $is_valid = ProductValidation::createAttribute();
         if (!$is_valid) {
             NotificationHelper::error('store_product', 'Thêm sản phẩm thất bại');
@@ -353,64 +354,14 @@ class ProductController
             exit;
         }
     }
-    public function settingVariant(){
+    public function settingVariant()
+    {
         $id = $_SESSION['id'];
-        // var_dump($id);die;
         $products = new Product();
         $data = $products->SettingVariantByProductId($id);
-
-
-
-        $product_id = $id;
-        $variant_id = 1;  // Ví dụ xử lý cho variant_id = 1
-        
-        // Lọc dữ liệu có cùng product_id và variant_id
-        $filteredData = array_filter($data, function($item) use ($product_id, $variant_id) {
-            return $item['product_id'] == $product_id && $item['variant_id'] == $variant_id;
-        });
-        
-        // Bước 2: Tạo các nhóm id_variant_value
-        $groupedData = [];
-        $groupId = 1;  // Tạo group_id bắt đầu từ 1
-        
-        // Lấy danh sách các id_variant_value
-        $id_variant_values = [];
-        foreach ($filteredData as $item) {
-            $id_variant_values[] = $item['id_varaiant_value'];
-        }
-        
-        // Hàm tạo tất cả các tổ hợp (combinations) của một mảng
-        function getCombinations($array, $size) {
-            $result = [];
-            $count = count($array);
-            if ($size == 1) {
-                return array_map(function($item) { return [$item]; }, $array);
-            }
-            for ($i = 0; $i < $count; $i++) {
-                $head = $array[$i];
-                $tail = array_slice($array, $i + 1);
-                $combinations = getCombinations($tail, $size - 1);
-                foreach ($combinations as $combination) {
-                    $result[] = array_merge([$head], $combination);
-                }
-            }
-            return $result;
-        }
-        
-        // Tạo tất cả các tổ hợp có thể với ít nhất 2 giá trị
-        for ($size = 2; $size <= count($id_variant_values); $size++) {
-            $combinations = getCombinations($id_variant_values, $size);
-            
-            // Gộp các tổ hợp vào nhóm
-            foreach ($combinations as $combination) {
-                $groupedData[] = [
-                    'group_id' => $groupId++,  // Tăng group_id
-                    'id_variant_values' => $combination,  // Lưu các giá trị trong nhóm
-                ];
-            }
-        }      // Bây giờ $groupedData sẽ chứa tất cả các nhóm có nhiều hơn 2 id_variant_value
-$combination_variant = $products->updateCombinatioValue($groupedData);
-
+        // echo '<pre>';
+        // var_dump($data);
+        // die;
         Header::render();
         // hiển thị form thêm
         Notification::render();
@@ -418,28 +369,84 @@ $combination_variant = $products->updateCombinatioValue($groupedData);
         SettingPriceVariant::render($data);
         Footer::render();
     }
-    public function detailSettingVariant(){
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Lấy dữ liệu JSON từ body của yêu cầu
-            $input = file_get_contents('php://input');
-            $decodedData = json_decode($input, true);
-        
-            // Gán dữ liệu vào biến $data
-            $data = $decodedData['data'];
-        
-            // Xử lý dữ liệu (nếu cần)
-            // ...
-            var_dump($data);
-            // Trả về phản hồi
-            echo json_encode([
-                'status' => 'success',
-                'receivedData' => $data,
-            ]);
-        }
+    public function detailSettingVariant($id)
+    {
+
+        $product = new Product();
+        $id = $_SESSION['id_combination'];
+
+        $data = $product->DetailVariant($id);
         Header::render();
         Notification::render();
         NotificationHelper::unset();
-        DetailSettingVariant::render();
+        DetailSettingVariant::render($data);
         Footer::render();
     }
+    public function settingDetailVariant($id)
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $productName = $_POST['product_name'];
+        $variants = explode(',', $_POST['variants']);
+        $variant_ids = explode(',', $_POST['variant_ids']);
+    }
+
+    $productID = $_SESSION['product_id'];
+    $products = new Product();
+    $variant_value_id = $products->SelectProductVariantValueID($productID, $variants, $variant_ids);
+
+    // Gọi InsertCombinationID và nhận giá trị combination_id
+    $combination_id = $products->InsertCombinationID($variant_value_id);
+    
+    // Kiểm tra nếu thành công, gán vào session
+    if ($combination_id) {
+        $_SESSION['id_combination'] = $combination_id;
+        header('Location: /admin/createdetail/variant/' . $combination_id);
+        exit();
+    } else {
+        echo "Insert combination ID thất bại.";
+    }
+}
+public function addSku(){
+    $is_valid = ProductValidation::createSku();
+        if (!$is_valid) {
+            NotificationHelper::error('store_product', 'Thêm sản phẩm thất bại');
+            header('location: /admin/products');
+            exit;
+        }
+        $name = $_POST['name'];
+        $sku = $_POST['sku'];
+        $product_id = $_POST['product_id'];
+        $description = $_POST['description'];
+        // Kiểm tra các tên có tồn tại hay chưa
+        $product = new Product();
+
+        $data = [
+            'name' => $name,
+            'price' => $_POST['price'],
+            'description' => $description,
+            'product_id' => $product_id,
+            'sku' => $sku,
+        ];
+        $is_upload = ProductValidation::updateImage();
+        //  var_dump($is_upload);
+        if ($is_upload) {
+            $data['image'] = $is_upload;
+        }
+
+        $result = $product->createSku($data);
+
+        if ($result) {
+            $combination_id = $_SESSION['id_combination'];
+            $sku_id = $_SESSION['sku_id'];
+            $addFkSku= $product->addFkSku($combination_id, $sku_id);
+            unset($_SESSION['id_combination']);
+            unset($_SESSION['sku_id']);
+            header('Location: /admin/productvariant/setting');
+        } else {
+            NotificationHelper::error('create_product', 'Thêm sản phẩm thất bại');
+            header('Location: /admin/productvariant/setting');
+            exit;
+        }
+}
+
 }
