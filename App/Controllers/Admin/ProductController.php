@@ -357,11 +357,9 @@ class ProductController
     public function settingVariant()
     {
         $id = $_SESSION['id'];
+        unset($_SESSION['id']);
         $products = new Product();
         $data = $products->SettingVariantByProductId($id);
-        // echo '<pre>';
-        // var_dump($data);
-        // die;
         Header::render();
         // hiển thị form thêm
         Notification::render();

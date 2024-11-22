@@ -410,7 +410,7 @@ class Product extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT product_variant_values.product_id AS product_id, product_variant_values.id AS id_varaiant_value, products.name AS product_name, product_variants.name AS variant_name, product_variant_options.name AS value_variant, product_variant_values.product_variant_id AS variant_id FROM `product_variant_values` INNER JOIN product_variant_options on product_variant_values.option_id = product_variant_options.id INNER JOIN product_variants on product_variant_options.product_variant_id = product_variants.id INNER JOIN products on product_variants.product_id = products.id WHERE product_variant_values.product_id = $id";
+            $sql = "SELECT product_variant_values.product_id AS product_id, product_variant_values.id AS id_varaiant_value, products.name AS product_name, product_variants.name AS variant_name, product_variant_options.name AS value_variant, product_variant_values.product_variant_id AS variant_id FROM `products` INNER JOIN product_variant_values on products.id = product_variant_values.product_id INNER JOIN product_variant_options on product_variant_values.option_id = product_variant_options.id INNER JOIN product_variants on product_variant_options.product_variant_id = product_variants.id WHERE product_variant_values.product_id = $id";
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {
