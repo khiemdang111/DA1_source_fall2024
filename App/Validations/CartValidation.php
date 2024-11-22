@@ -31,6 +31,18 @@ class CartValidation
             }
         }
         // Email
+        if (!isset($_POST['province']) || $_POST['province'] === '') {
+            NotificationHelper::error('province_2', 'Không để trống Tỉnh');
+            $is_valid = false;
+        }
+        if (!isset($_POST['district']) || $_POST['district'] === '') {
+            NotificationHelper::error('district_2', 'Không để trống huyện');
+            $is_valid = false;
+        }
+        if (!isset($_POST['ward']) || $_POST['ward'] === '') {
+            NotificationHelper::error('ward_2', 'Không để trống phường');
+            $is_valid = false;
+        }
         if (!isset($_POST['address']) || $_POST['address'] === '') {
             NotificationHelper::error('address_2', 'Không để trống địa chỉ');
             $is_valid = false;

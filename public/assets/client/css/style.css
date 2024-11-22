@@ -11775,6 +11775,14 @@ h5,
 .name_product {
   font-size: 15px;
 }
+.select-form-order{
+  width: 100%;
+  padding: 6px;
+  border-radius: 5px;
+}
+
+
+
 .item_dflex{
   border-bottom: 2px dashed;
   border-color: #beabab;

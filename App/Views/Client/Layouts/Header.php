@@ -14,7 +14,7 @@ class Header extends BaseView
 		$is_login = AuthHelper::checkLogin();
 
 
-?>
+		?>
 		<!DOCTYPE html>
 		<html lang="en">
 
@@ -40,9 +40,9 @@ class Header extends BaseView
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/style.css">
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/bootstrap/bootrap.css">
 			<meta property="og:title" content="<?php echo $data['title']; ?>" />
-    <meta property="og:description" content="<?php echo $data['description']; ?>" />
-    <meta property="og:image" content="<?php echo $data['image']; ?>" />
-    <meta property="og:url" content="<?php echo $data['url']; ?>" />
+			<meta property="og:description" content="<?php echo $data['description']; ?>" />
+			<meta property="og:image" content="<?php echo $data['image']; ?>" />
+			<meta property="og:url" content="<?php echo $data['url']; ?>" />
 		</head>
 
 		<body>
@@ -72,7 +72,7 @@ class Header extends BaseView
 								<div class="reg row justify-content-between">
 									<?php
 									if ($is_login):
-									?>
+										?>
 										<div class="dropdown_hmenu">
 											<a class="a_dropdown_hmenu" href="#">Xin Chào,<?= $_SESSION['user']['name'] ?> ▼</a>
 											<div class="dropdown-content">
@@ -83,11 +83,12 @@ class Header extends BaseView
 										</div>
 										<!-- <p class="mr-2 text-light">Xin Chào,<?= $_SESSION['user']['name'] ?></p> -->
 										<!-- <a href="/logout" class="text-light px-4">Đăng xuất</a> -->
-									<?php
+										<?php
 									else:
-									?>
-										<p class="mb-0"><a href="/register" class="mr-2">Đăng ký</a> <a href="/login">Đăng Nhập</a></p>
-									<?php
+										?>
+										<p class="mb-0"><a href="/register" class="mr-2">Đăng ký</a> <a href="/login">Đăng Nhập</a>
+										</p>
+										<?php
 									endif;
 									?>
 								</div>
@@ -145,14 +146,15 @@ class Header extends BaseView
 								<li class="nav-item"><a href="/contact" class="nav-link">Liên hệ</a></li>
 							</ul>
 						</div>
-						<form action="/search" method="get"  id="search-form">
+						<form action="/search" method="get" id="search-form">
 							<div class="searchbar">
 								<div class="searchbar-wrapper">
 									<div class="searchbar-left">
 										<div class="search-icon-wrapper">
 											<span class="search-icon searchbar-icon">
 												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-													<path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
+													<path
+														d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z">
 													</path>
 												</svg>
 											</span>
@@ -183,9 +185,9 @@ class Header extends BaseView
 
 			<source>
 
-	<?php
+			<?php
 
 	}
 }
 
-	?>
+?>

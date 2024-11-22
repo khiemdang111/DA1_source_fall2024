@@ -273,7 +273,7 @@ class CartController
     }
 
 
-    public static function getoder()
+    public static function getorder()
     {
         if (isset($_COOKIE['cart'])) {
             $product = new Product();
@@ -292,9 +292,6 @@ class CartController
         }
         return $cart_data;
     }
-
-
-
     public static function order()
     {
         $is_login = AuthHelper::checkLogin();
@@ -305,14 +302,21 @@ class CartController
                 header("Location: /checkout");
                 exit();
             }
-            $cart_data = self::getoder();
+            $cart_data = self::getorder();
             $total = CartHelper::tatol($cart_data);
+            
+           
             $data = [
                 'name' => $_POST['name'],
                 'phone' => $_POST['phone'],
+                'province' =>  $_POST['province_'],
+                'district' => $_POST['district_'],
+                'ward' => $_POST['ward_'],
                 'address' => $_POST['address'],
                 'PaymentMethod' => $_POST['PaymentMethod'],
             ];
+            // var_dump($data);
+            // die;
             $_SESSION['information'] = $data;
             PayHelper::VNpay($total);
         } else {

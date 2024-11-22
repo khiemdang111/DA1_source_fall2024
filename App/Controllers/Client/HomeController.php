@@ -22,17 +22,17 @@ class HomeController
     // hiển thị danh sách
     public static function index()
     {
+
         $viewedProducts = isset($_COOKIE['viewed_product']) ? json_decode($_COOKIE['viewed_product'], true) : [];
         $productIds = array_column($viewedProducts, 'product_id');
         $ids = implode(',', array_map('intval', $productIds));
-        
         $category = new Category();
         $categories = $category->getAllCategoryByStatus();
         // lấy dữ liệu sản phẩm từ database
         $product = new Product();
         $products = $product->getAllProductByStatus();
 
-        $product_watched =  $product->getProductByWatched($ids);
+        $product_watched = $product->getProductByWatched($ids);
         $products = array_filter($products, function ($product) use ($product_watched) {
 
             foreach ($product_watched as $watched) {
@@ -42,7 +42,6 @@ class HomeController
             }
             return true;
         });
-
         $data = [
             'categories' => $categories,
             'products' => array_merge($product_watched, $products),
@@ -50,19 +49,17 @@ class HomeController
         Header::render();
         Notification::render();
         NotificationHelper::unset();
+        NotificationHelper::unsetorder();
         Home::render($data);
         Footer::render();
     }
     public static function thanks()
     {
-        $cart_data = CartController::getoder();
+        $cart_data = CartController::getorder();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $vnp_ResponseCode = $_GET['vnp_ResponseCode'] ?? null;
             if ($vnp_ResponseCode == '00') {
-                $order_id = CartHelper::getOrder_id($cart_data);
                 CartHelper::createCart($cart_data);
-                Notification::render();
-                NotificationHelper::unset();
                 $timeStr = $_GET['vnp_PayDate'];
                 // Chuyển chuỗi sang timestamp
                 $timestamp = strtotime(substr($timeStr, 0, 8) . ' ' . substr($timeStr, 8));
@@ -77,7 +74,7 @@ class HomeController
                     "vnp_ResponseCode" => $_GET['vnp_ResponseCode'],
                     "vnp_TransactionStatus" => $_GET['vnp_TransactionStatus'],
                     "vnp_TxnRef" => $_GET['vnp_TxnRef'],
-                    "order_id" => $order_id
+                    "order_id" => $_SESSION['order_id'],
                 ];
                 $vnpays = new vnpays();
                 $vnpays->createVnpay($data);

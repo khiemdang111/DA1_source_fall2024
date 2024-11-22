@@ -35,9 +35,9 @@ class CartHelper
             }
         }
         $data_total = [
-         'money' => $money,
-         'unitPrice' => $unitPrice,
-         'total' => $total,
+            'money' => $money,
+            'unitPrice' => $unitPrice,
+            'total' => $total,
 
         ];
         return $data_total;
@@ -57,8 +57,11 @@ class CartHelper
         $oders = [
             'total' => $total['total'],
             'orderStatus' => 1,
-            'name' =>  $_SESSION['information']['name'],
+            'name' => $_SESSION['information']['name'],
             'phone' => $_SESSION['information']['phone'],
+            'province' => $_SESSION['information']['province'],
+            'district' => $_SESSION['information']['district'],
+            'ward' => $_SESSION['information']['ward'],
             'address' => $_SESSION['information']['address'],
             'date' => $date,
             'PaymentMethod' => $_SESSION['information']['PaymentMethod'],
@@ -72,11 +75,12 @@ class CartHelper
     {
 
         $order_id = self::getOrder_id($cart_data);
+        $_SESSION['order_id'] = $order_id;
         $i = 0;
         foreach ($cart_data as $cart) {
             if ($cart['data']) {
                 $i++;
-              $price = self::tatol($cart_data);
+                $price = self::tatol($cart_data);
                 $order_detail = [
                     'quantity' => $cart['quantity'],
                     'unitPrice' => $price['unitPrice'],
@@ -84,11 +88,9 @@ class CartHelper
                     'product_id' => $cart['data']['id'],
                     'order_id' => $order_id,
                 ];
-                 $oder = new Order_detail();
-                 $result = $oder->createorderDetail($order_detail);
-                //  var_dump($result);
-                //  die;
-            } 
+                $oder = new Order_detail();
+                $result = $oder->createorderDetail($order_detail);
+            }
         }
         $mail = new MailController();
         $form = self::form_Html();
@@ -103,10 +105,12 @@ class CartHelper
     }
     public static function form_Html()
     {
-        $data = CartController::getoder();
+        $data = CartController::getorder();
         $phone = $_SESSION['information']['phone'];
-        $total_price = 0;
+        $address = $_SESSION['information']['address'] . " " . $_SESSION['information']['ward'] . " " . $_SESSION['information']['district'] . " " . $_SESSION['information']['province'];
+
         $i = 0;
+        $stt = 1;
         $fullname = $_SESSION['information']['name'];
         $date = date("d/m/Y H:i:s");
         // Tạo biến chứa HTML và PHP
@@ -136,27 +140,44 @@ class CartHelper
         </style>
     </head>
     <body>
+
+
+        
 HTML;
         $html .= <<<ROW
         <h2>Thông tin đơn hàng của {$fullname}</h2>
+          <table>
+            <thead>
+                 <tr>STT</th>
+                  <th>Tên Người đặt </th>
+                  <th>Số điện thoại</th>
+                  <th>Ngày đặt</th>
+                  <th>Địa chỉ</th>
+                   </tr>
+             </thead>
+            <tbody>
+               <tr>
+                <td>{$stt}</td>
+                <td>{$fullname}</td>
+                <td>{$phone}</td>
+                <td>{$date}</td>
+                <td>{$address}</td>
+               </tr>
+             </tbody>
+        </table>
+   </br>
+
         <table>
             <thead>
-
-
-      
-                <table>
-                 <thead>
-              <tr>
+               <tr>
                   <th>STT</th>
-                  <th>Số điện thoại</th>
                   <th>Tên sản phẩm</th>
                   <th>Số lượng</th>
-                  <th>Ngày đặt</th>
                   <th>Đơn giá</th>
                   <th>Thành tiền</th>
               </tr>
           </thead>
-            <tbody>
+        <tbody>
 
 ROW;
         foreach ($data as $cart) {
@@ -171,10 +192,8 @@ ROW;
                 $html .= <<<ROW2
             <tr>
                 <td>{$i}</td>
-                <td>{$phone}</td>
                 <td>{$name}</td>
                 <td>{$quantity}</td>
-                <td>{$date}</td>
                 <td>{$unit_price}</td>
                 <td>{$total_price_formatted}</td>
             </tr>
@@ -185,8 +204,7 @@ ROW2;
            </tbody>
             <tfoot>
                 <tr>
-                    
-                    <td colspan="5" class="total">Tổng cộng</td>
+                    <td colspan="3" class="total">Tổng cộng</td>
                     <td colspan="2" class="total">{$total} </td>
                 </tr>
             </tfoot>

@@ -126,16 +126,43 @@ class Checkout extends BaseView
 										<input name="phone" type="text" class="form-control" placeholder="">
 									</div>
 								</div>
-								<div class="w-100"></div>
 
-								<div class="w-100"></div>
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="country">Tỉnh</label>
+										<div class="select-wrap">
+											<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+											<select id="province" name="province" class="select-form-order">
+											</select>
 
-
-								<div class="w-100"></div>
-
-
-								<div class="w-100"></div>
-
+										</div>
+									</div>
+								</div>
+								<input type="hidden" id="province-input" value="" name="province_">
+								<div class=" col-md-6">
+									<div class="form-group">
+										<label for="country">Huyện</label>
+										<div class="select-wrap">
+											<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+											<select name="district" id="district" class="select-form-order">
+												<option value="">Chọn quận</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<input type="hidden" id="district-input"  name="district_">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label for="country">Phường</label>
+										<div class="select-wrap">
+											<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+											<select name="ward" id="ward" class="select-form-order">
+												<option value="">Chọn phường</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<input type="hidden" id="ward-input"  name="ward_">
 								<div class="col-md-12">
 									<div class="form-group">
 										<label for="">Địa chỉ</label>
@@ -157,7 +184,7 @@ class Checkout extends BaseView
 										</div>
 									</div>
 								</div>
-								<div class="w-100"></div>
+
 
 							</div>
 						</div>
@@ -208,6 +235,73 @@ class Checkout extends BaseView
 				</form>
 
 		</section>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+			integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.1/axios.min.js"
+			integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
+			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script>
+
+			const host = "https://provinces.open-api.vn/api/";
+			var callAPI = (api) => {
+				return axios.get(api)
+					.then((response) => {
+						renderData(response.data, "province");
+					});
+			}
+			callAPI('https://provinces.open-api.vn/api/?depth=1');
+			var callApiDistrict = (api) => {
+				return axios.get(api)
+					.then((response) => {
+						renderData(response.data.districts, "district");
+					});
+			}
+			var callApiWard = (api) => {
+				return axios.get(api)
+					.then((response) => {
+						renderData(response.data.wards, "ward");
+					});
+			}
+
+			var renderData = (array, select) => {
+				let row = ' <option  value="">Chọn </option>';
+				array.forEach(element => {
+					row += `<option value="${element.code}">${element.name}</option>`
+				});
+				document.querySelector("#" + select).innerHTML = row
+			}
+			$("#province").change(() => {
+				callApiDistrict(host + "p/" + $("#province").val() + "?depth=2");
+				printResult();
+			});
+			$("#district").change(() => {
+				callApiWard(host + "d/" + $("#district").val() + "?depth=2");
+				printResult();
+			});
+			$("#ward").change(() => {
+				printResult();
+			})
+
+			var printResult = () => {
+				if ($("#district").val() !== "" && $("#province").val() !== "" && $("#ward").val() !== "") {
+					// Lấy giá trị từ các dropdown
+					let province = $("#province option:selected").text();
+					let district = $("#district option:selected").text();
+					let ward = $("#ward option:selected").text();
+					// Lưu giá trị vào input
+					$("#province-input").val(province);
+					$("#district-input").val(district);
+					$("#ward-input").val(ward);
+
+					// Debug (Kiểm tra giá trị được lưu)
+					console.log("Tỉnh:", province, "Huyện:", district, "Phường:", ward);
+				}
+			};
+
+
+		</script>
+
 
 		<?php
 	}

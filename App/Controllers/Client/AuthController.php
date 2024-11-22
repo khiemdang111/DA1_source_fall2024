@@ -156,7 +156,7 @@ class AuthController
         Header::render();
         Notification::render();
         NotificationHelper::unset();
-        Forgetpass::render();
+        index::render();
         Footer::render();
     }
 
