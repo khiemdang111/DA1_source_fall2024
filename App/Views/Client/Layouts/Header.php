@@ -39,6 +39,10 @@ class Header extends BaseView
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/flaticon.css">
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/style.css">
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/bootstrap/bootrap.css">
+			<meta property="og:title" content="<?php echo $data['title']; ?>" />
+    <meta property="og:description" content="<?php echo $data['description']; ?>" />
+    <meta property="og:image" content="<?php echo $data['image']; ?>" />
+    <meta property="og:url" content="<?php echo $data['url']; ?>" />
 		</head>
 
 		<body>

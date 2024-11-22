@@ -12,7 +12,15 @@ class Post extends BaseModel
 
     public function getAllPost()
     {
-        return $this->getAll();
+        $result = [];
+        try {
+            $sql = "SELECT * FROM $this->table";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
     }
     public function getOnePost($id)
     {

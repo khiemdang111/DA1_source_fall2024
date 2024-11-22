@@ -64,6 +64,7 @@ class PostController
         
         
     }
+    
 
     public static function Blog_single($id){
         $post = new Post();

@@ -34,15 +34,15 @@ class index extends BaseView
             
           <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
           	<div class="blog-entry d-md-flex">
-          		<a href="blog-single.html" class="block-20 img" style="background-image: url('<?= APP_URL ?>/public/uploads/posts/<?= $item['img'] ?>');">
+          		<a href="/Blog_single/<?=$item['id'] ?>" class="block-20 img" style="background-image: url('<?= APP_URL ?>/public/uploads/posts/<?= $item['img'] ?>');">
               </a>
               <div class="text p-4 bg-light">
               	<div class="meta">
-              		<p><span class="fa fa-calendar"></span><a href="#"> <?= $item['created_at'] ?></p>
+              		<p><span class="fa fa-calendar"></span><a href="/Blog_single/<?=$item['id'] ?>"> <?= date('d/m/Y', strtotime($item['created_at'])) ?></p>
               	</div>
-                <h3 class="heading mb-3"><a href="#"> <?= $item['title'] ?></a></h3>
+                <h3 class="heading mb-3"><a href="/Blog_single/<?=$item['id'] ?>"> <?= $item['title'] ?></a></h3>
                 <p> <?= $item['summary'] ?></p>
-                <a href=" /Blog_single/<?=$item['id'] ?>" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+                <a href=" /Blog_single/<?=$item['id'] ?>" class="btn-custom">Xem thêm <span class="fa fa-long-arrow-right"></span></a>
 
               </div>
             </div>
