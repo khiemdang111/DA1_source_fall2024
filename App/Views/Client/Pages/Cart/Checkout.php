@@ -24,6 +24,7 @@ class Checkout extends BaseView
 							<th>Số lượng</th>
 							<th>Tổng</th>
 							<th>&nbsp;</th>
+							<th>&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -94,6 +95,18 @@ class Checkout extends BaseView
 										<td>
 											<?= number_format($unit_price) ?> VND
 										</td>
+
+										<td>
+											<form action="/checkout/delete" method="post">
+												<input type="hidden" name="method" id="" value="DELETE">
+												<input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
+												<button type="submit" class="close">
+													<span aria-hidden="true"><i class="fa fa-close"></i></span>
+												</button>
+											</form>
+
+										</td>
+
 										<?php
 									endif;
 									?>
@@ -150,7 +163,7 @@ class Checkout extends BaseView
 										</div>
 									</div>
 								</div>
-								<input type="hidden" id="district-input"  name="district_">
+								<input type="hidden" id="district-input" name="district_">
 								<div class="col-md-6">
 									<div class="form-group">
 										<label for="country">Phường</label>
@@ -162,7 +175,7 @@ class Checkout extends BaseView
 										</div>
 									</div>
 								</div>
-								<input type="hidden" id="ward-input"  name="ward_">
+								<input type="hidden" id="ward-input" name="ward_">
 								<div class="col-md-12">
 									<div class="form-group">
 										<label for="">Địa chỉ</label>
@@ -176,7 +189,7 @@ class Checkout extends BaseView
 											<div class="icon"><span class="ion-ios-arrow-down"></span></div>
 											<select id="" class="form-control" name="PaymentMethod">
 												<option value="">Vui lòng chọn ...</option>
-												<option value="COD">Thanh toán COD</option>
+												<option value="COD">Thanh toán khi nhận hàng</option>
 												<option value="VNPAY">Thanh toán qua VNPAY</option>
 												<option value="MOMO">Thanh toán qua MoMo</option>
 

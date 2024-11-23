@@ -94,13 +94,6 @@ class CartHelper
         $mail = new MailController();
         $form = self::form_Html();
         $mail->index($form);
-        if ($result) {
-            setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
-        } else {
-            NotificationHelper::error('update_products', 'Đặt hàng thất bại!');
-            header("Location: /");
-        }
-        // echo 'vô';
     }
     public static function form_Html()
     {

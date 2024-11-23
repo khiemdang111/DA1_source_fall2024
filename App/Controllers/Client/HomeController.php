@@ -67,6 +67,7 @@ class HomeController
                 $vnp_ResponseCode = $_GET['vnp_ResponseCode'] ?? null;
                 if ($vnp_ResponseCode == '00') {
                     CartHelper::createCart($cart_data);
+                    setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
                     $timeStr = $_GET['vnp_PayDate'];
                     // Chuyển chuỗi sang timestamp
                     $timestamp = strtotime(substr($timeStr, 0, 8) . ' ' . substr($timeStr, 8));
@@ -80,7 +81,7 @@ class HomeController
                         "vnp_PayDate" => $date,
                         "vnp_ResponseCode" => $_GET['vnp_ResponseCode'],
                         "vnp_TransactionStatus" => $_GET['vnp_TransactionStatus'],
-                        "vnp_TxnRef" => $_GET['vnp_TxnRef'],
+                        "vnp_TxnRef" => $_GET['vnp_TxnRef'], 
                         "order_id" => $_SESSION['order_id'],
                     ];
                     $vnpays = new vnpays();

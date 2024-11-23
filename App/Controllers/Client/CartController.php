@@ -45,8 +45,8 @@ class CartController
                 }
                 $total_quantity = array_sum(array_column($cart_data, 'quantity'));
                 $_SESSION['total_quantity'] = $total_quantity;
-                    // var_dump($total_quantity);
-                    // die;
+                // var_dump($total_quantity);
+                // die;
                 Header::render();
                 Notification::render();
                 NotificationHelper::unset();
@@ -71,7 +71,7 @@ class CartController
 
     public static function add()
     {
-        
+
         // Tạo đối tượng Product để lấy thông tin sản phẩm nếu cần
         $product = new Product();
 
@@ -110,7 +110,7 @@ class CartController
                         $cart_data[$key]['quantity'] += 1;
                     }
                 }
-             
+
                 // 
                 // if ($cart_data[$key]['product_id'] == $product_id && isset($_POST['number'])) {
                 //     $cart_data[$key]['quantity'] += $number;
@@ -133,9 +133,7 @@ class CartController
                     'quantity' => 1,
                 ];
             }
-            
             // Nếu sản phẩm chưa có trong giỏ hàng, thêm sản phẩm với số lượng 1
-
             $cart_data[] = $product_array;
         }
 
@@ -156,7 +154,6 @@ class CartController
     {
         $product_id = $_POST['id'];
         $quantity = $_POST['quantity'];
-
         if (isset($_COOKIE['cart'])) {
             // nếu đã tồn tại cookie cart thì lấy giá trị của cookie cart 
             // nếu đã tồn tại cookie cart thì lấy giá trị của cookie cart 
@@ -222,20 +219,25 @@ class CartController
                 }
             }
             NotificationHelper::success('cart', 'Đã xoá sản phẩm khỏi giỏ hàng');
-           // header('location: /cart');
+            // header('location: /cart');
 
-           $currentURL = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-        // var_dump($currentURL);
-        // die;
-        // Chuyển hướng về trang giỏ hàng để cập nhật
-        // header('location: /cart');
-        if ($currentURL === 'http://127.0.0.1:8080/home/delete') {
-            header('location: /');
-            exit();
-        } else {
-            header('location: /cart');
-            exit();
-        }
+            $currentURL = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            // var_dump($currentURL);
+            // die;
+            // Chuyển hướng về trang giỏ hàng để cập nhật
+            // header('location: /cart');
+            if ($currentURL === 'http://127.0.0.1:8080/home/delete') {
+                header('location: /');
+                exit();
+            } else if ($currentURL === 'http://127.0.0.1:8080/checkout/delete') {
+                header('location: /checkout');
+                exit();
+            } else {
+                header('location: /cart');
+                exit();
+            }
+
+
         }
     }
     public static function deleteAll()
@@ -281,12 +283,10 @@ class CartController
                 }
             } else {
                 NotificationHelper::error('checkout', 'Vui lòng đăng nhập hoặc thêm sản phẩm vào giỏ hàng để thanh toán');
-
                 header('location: /');
             }
         } else {
             NotificationHelper::error('checkout', 'Vui lòng đăng nhập dể thực hiện chức năng này');
-
             header('location: /');
         }
     }
@@ -323,12 +323,10 @@ class CartController
             }
             $cart_data = self::getorder();
             $total = CartHelper::tatol($cart_data);
-            
-           
             $data = [
                 'name' => $_POST['name'],
                 'phone' => $_POST['phone'],
-                'province' =>  $_POST['province_'],
+                'province' => $_POST['province_'],
                 'district' => $_POST['district_'],
                 'ward' => $_POST['ward_'],
                 'address' => $_POST['address'],
@@ -337,7 +335,16 @@ class CartController
             // var_dump($data);
             // die;
             $_SESSION['information'] = $data;
-            PayHelper::VNpay($total);
+            if ($_POST['PaymentMethod'] === 'COD') {
+                CartHelper::createCart($cart_data);
+                setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
+                NotificationHelper::success('cart', 'Đặt hàng thành công');
+                header('location: /');
+                exit();
+            } else {
+                PayHelper::VNpay($total);
+            }
+
         } else {
             NotificationHelper::error('cart', 'Vui lòng đăng nhập để thực hiện chức năng này');
             header('location: /');

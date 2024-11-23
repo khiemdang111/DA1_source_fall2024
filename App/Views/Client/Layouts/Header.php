@@ -102,7 +102,7 @@ class Header extends BaseView
 							<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false">
 								<span class="flaticon-shopping-bag"></span>
-								<div class="d-flex justify-content-center align-items-center"><small><?= $_SESSION['total_quantity'] ?? '' ?></small></div>
+								<div class="d-flex justify-content-center align-items-center"><small></small></div>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
 								<?php

@@ -70,6 +70,7 @@ Route::delete('/cart/delete-all', 'App\Controllers\Client\CartController@deleteA
 // trang đặt hàng
 Route::get('/checkout', 'App\Controllers\Client\CartController@checkout');
 Route::put('/checkout/update', 'App\Controllers\Client\CartController@update');
+Route::delete('/checkout/delete', 'App\Controllers\Client\CartController@deleteItem');
 Route::post('/order', 'App\Controllers\Client\CartController@order');
 Route::get('/thanks', 'App\Controllers\Client\HomeController@thanks');
 Route::get('/history', 'App\Controllers\Client\AuthController@history');
