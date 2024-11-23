@@ -96,21 +96,20 @@ class Checkout extends BaseView
 											<?= number_format($unit_price) ?> VND
 										</td>
 
-										<td>
-											<form action="/checkout/delete" method="post">
-												<input type="hidden" name="method" id="" value="DELETE">
-												<input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
-												<button type="submit" class="close">
-													<span aria-hidden="true"><i class="fa fa-close"></i></span>
-												</button>
-											</form>
 
-										</td>
 
 										<?php
 									endif;
 									?>
-
+									<td>
+										<form action="/checkout/delete" method="post">
+											<input type="hidden" name="method" id="" value="DELETE">
+											<input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
+											<button type="submit" class="close">
+												<span aria-hidden="true"><i class="fa fa-close"></i></span>
+											</button>
+										</form>
+									</td>
 								</tr>
 
 
