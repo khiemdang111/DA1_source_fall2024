@@ -8,6 +8,7 @@ use App\Helpers\ViewProductHelper;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
@@ -116,10 +117,11 @@ class ProductController
             $recommendedProducts = "";  
         }
         $product = new Product();
+        $variants = new ProductVariant();
         $recommended = $product->recommendedProducts($recommendedProducts);
 
         $detail = $product->getOneProductByCategoryDetailStatus($id);
-        $variant = $product->getAllVariantByProductId($id);
+        $variant = $variants->getAllVariantByProductId($id);
          if(!$detail){
             NotificationHelper::error('detail','Không thể xem sản phẩm');
             header('Location: /');
