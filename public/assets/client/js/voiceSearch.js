@@ -13,16 +13,11 @@ if (SpeechRecognition) {
     const recognition = new SpeechRecognition();
     recognition.continuous = false; // Dừng nhận diện sau mỗi câu
     recognition.interimResults = false; // Chỉ nhận kết quả cuối cùng
-
-    // Adjust input padding for mic button
-    searchFormInput.style.paddingRight = "50px";
-
-    // Voice commands info
-    // info.textContent = 'Voice Commands: "stop recording", "reset input", "go"';
+  
 
     // Event: mic button click
     micBtn.addEventListener("click", () => {
-        if (micIcon.classList.contains("fa-microphone")) {
+        if (micIcon.classList.contains("fa-microphone-slash")) {
             recognition.start();
         } else {
             recognition.stop();
@@ -31,14 +26,14 @@ if (SpeechRecognition) {
 
     // Event: start recognition
     recognition.addEventListener("start", () => {
-        micIcon.classList.replace("fa-microphone", "fa-microphone-slash");
+        micIcon.classList.replace("fa-microphone-slash", "fa-microphone");
         searchFormInput.focus();
         console.log("Voice activated, SPEAK");
     });
 
     // Event: end recognition
     recognition.addEventListener("end", () => {
-        micIcon.classList.replace("fa-microphone-slash", "fa-microphone");
+        micIcon.classList.replace("fa-microphone", "fa-microphone-slash");
         console.log("Speech recognition service disconnected");
     });
 
@@ -61,7 +56,7 @@ if (SpeechRecognition) {
 
     // Restart recognition after stopping (optional)
     recognition.addEventListener("end", () => {
-        if (micIcon.classList.contains("fa-microphone-slash")) {
+        if (micIcon.classList.contains("fa-microphone")) {
             recognition.start();
         }
     });

@@ -168,7 +168,7 @@ class Header extends BaseView
 
 									<div class="searchbar-right">
 										<button type="button" id="mic-btn">
-											<i class="fas fa-microphone"></i>
+											<i class="fas fa-microphone-slash"></i>
 										</button>
 									</div>
 
