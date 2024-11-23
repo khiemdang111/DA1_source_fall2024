@@ -3,12 +3,14 @@
 namespace App\Controllers\Client;
 
 use App\Models\User;
+use App\Models\vnpays;
 use App\Views\Client\Pages\Auth\Login;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
 use App\Helpers\AuthHelper;
 use App\Validations\AuthValidation;
 use App\Helpers\NotificationHelper;
+use App\Models\Order;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Pages\Auth\Edit;
 use App\Views\Client\Pages\Auth\Forgetpass;
@@ -73,7 +75,7 @@ class AuthController
         $data = [
             'username' => $_POST['username'],
             'password' => $hash_password,
-            'name' => $_POST['name'],         
+            'name' => $_POST['name'],
             'email' => $_POST['email'],
             'phone' => $_POST['phone'],
             'address' => $_POST['address']
@@ -153,11 +155,20 @@ class AuthController
 
     public static function history()
     {
-        Header::render();
-        Notification::render();
-        NotificationHelper::unset();
-        index::render();
-        Footer::render();
+        $is_login = AuthHelper::checkLogin();
+        if ($is_login) {
+            $order = new vnpays();
+            $data = $order->getAllvnpays();
+            Header::render();
+            Notification::render();
+            NotificationHelper::unset();
+            index::render($data);
+            Footer::render();
+        } else {
+            NotificationHelper::error('er', 'Bạn hông có quyền truyên cập trang này');
+            header('location: /');
+        }
+
     }
 
     public static function forgetpass()
@@ -213,14 +224,7 @@ class AuthController
         // Lấy dữ liệu từ POST
         $newPassword = $_POST['new_password'];
         $confirmPassword = $_POST['confirm_password'];
-// var_dump(
-//     $newPassword
-// );
-// var_dump(
-//     $confirmPassword
-// );
-// die();
-        // Kiểm tra dữ liệu nhập vào
+
         if (!$newPassword || !$confirmPassword) {
             NotificationHelper::error('password_update', 'Vui lòng nhập đầy đủ thông tin!');
             header("Location: /resetPassword");
@@ -233,28 +237,28 @@ class AuthController
             exit();
         }
 
-      
+
         // Mã hóa mật khẩu mới
         $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-      
+
 
         // Lấy thông tin người dùng từ session (giả sử bạn lưu email hoặc username trong session)
-      //  $username = $_SESSION['username']; 
+        //  $username = $_SESSION['username']; 
         // Hoặc bạn có thể sử dụng email
-        if (!$_SESSION['id'] ) {
+        if (!$_SESSION['id']) {
             NotificationHelper::error('user_not_found', 'Không tìm thấy thông tin người dùng!');
             header("Location: /resetPassword");
             exit();
         }
- 
-   $data = [
-    'password' => $hashedPassword,
-   ];
+
+        $data = [
+            'password' => $hashedPassword,
+        ];
 
         // Cập nhật mật khẩu vào cơ sở dữ liệu
         $newUser = new User();
-        $updateResult = $newUser->update($_SESSION['id'],$data);
-//    var_dump(!$updateResult);
+        $updateResult = $newUser->update($_SESSION['id'], $data);
+        //    var_dump(!$updateResult);
 //    die;
         // Kiểm tra kết quả
         if ($updateResult) {

@@ -23,6 +23,7 @@ use App\Helpers\AuthHelper;
 
 // *** Client
 Route::get('/', 'App\Controllers\Client\HomeController@index');
+Route::delete('/home/delete', 'App\Controllers\Client\CartController@deleteItem');
 
 Route::get('/products', 'App\Controllers\Client\ProductController@index');
 Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');

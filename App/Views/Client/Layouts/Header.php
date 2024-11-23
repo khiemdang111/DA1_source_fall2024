@@ -4,6 +4,7 @@ namespace App\Views\Client\Layouts;
 
 use App\Controllers\Client\ProductController;
 use App\Helpers\AuthHelper;
+use App\Helpers\CartHelper;
 use App\Models\Product;
 use App\Views\BaseView;
 
@@ -12,7 +13,6 @@ class Header extends BaseView
 	public static function render($data = null)
 	{
 		$is_login = AuthHelper::checkLogin();
-
 
 		?>
 		<!DOCTYPE html>
@@ -39,10 +39,6 @@ class Header extends BaseView
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/flaticon.css">
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/style.css">
 			<link rel="stylesheet" href="<?= APP_URL ?>/public/assets/client/css/bootstrap/bootrap.css">
-			<meta property="og:title" content="<?php echo $data['title']; ?>" />
-			<meta property="og:description" content="<?php echo $data['description']; ?>" />
-			<meta property="og:image" content="<?php echo $data['image']; ?>" />
-			<meta property="og:url" content="<?php echo $data['url']; ?>" />
 		</head>
 
 		<body>
@@ -59,14 +55,14 @@ class Header extends BaseView
 							<div class="col-md-6 d-flex justify-content-md-end">
 								<div class="social-media mr-4">
 									<p class="mb-0 d-flex">
-										<a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-facebook"><i
-													class="sr-only">Facebook</i></span></a>
-										<a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-twitter"><i
-													class="sr-only">Twitter</i></span></a>
-										<a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-instagram"><i
-													class="sr-only">Instagram</i></span></a>
-										<a href="#" class="d-flex align-items-center justify-content-center"><span class="fa fa-dribbble"><i
-													class="sr-only">Dribbble</i></span></a>
+										<a href="#" class="d-flex align-items-center justify-content-center"><span
+												class="fa fa-facebook"><i class="sr-only">Facebook</i></span></a>
+										<a href="#" class="d-flex align-items-center justify-content-center"><span
+												class="fa fa-twitter"><i class="sr-only">Twitter</i></span></a>
+										<a href="#" class="d-flex align-items-center justify-content-center"><span
+												class="fa fa-instagram"><i class="sr-only">Instagram</i></span></a>
+										<a href="#" class="d-flex align-items-center justify-content-center"><span
+												class="fa fa-dribbble"><i class="sr-only">Dribbble</i></span></a>
 									</p>
 								</div>
 								<div class="reg row justify-content-between">
@@ -98,29 +94,91 @@ class Header extends BaseView
 					</div>
 				</div>
 
-				<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light menu_header" id="ftco-navbar">
+				<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light menu_header"
+					id="ftco-navbar">
 					<div class="container">
 						<a class="navbar-brand" href="index.html">Wine <span>CanTho</span></a>
 						<div class="order-lg-last btn-group">
-							<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">
+							<a href="#" class="btn-cart dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+								aria-haspopup="true" aria-expanded="false">
 								<span class="flaticon-shopping-bag"></span>
-								<div class="d-flex justify-content-center align-items-center"><small>3</small></div>
+								<div class="d-flex justify-content-center align-items-center"><small><?= $_SESSION['total_quantity'] ?? '' ?></small></div>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right">
+								<?php
+								if (isset($_COOKIE['cart'])) {
+									$product = new Product();
+									$cookie_data = $_COOKIE['cart'];
+									$cart_data = json_decode($cookie_data, true);
+									if (count($cart_data)) {
+										foreach ($cart_data as $key => $value) {
+											$product_id = $value['product_id'];
+											$result = $product->getOneProduct($product_id);
+											$cart_data[$key]['data'] = $result;
+										}
+										$total_price = 0;
+										$i = 0;
+										foreach ($cart_data as $cart):
+											if ($cart['data']):
+												$i++;
+												?>
+												<div class="dropdown-item d-flex align-items-start" href="#">
+													<div class="img"
+														style="background-image: url(public/uploads/products/<?= $cart['data']['image'] ?>);">
+													</div>
+													<div class="text pl-3">
+														<h4><?= $cart['data']['name'] ?></h4>
+														<?php
+														if ($cart['data']['discount_price'] > 0):
+															$discount_price = $cart['quantity'] * $cart['data']['discount_price'];
+															$total_price += $discount_price;
+															?>
+															<p class="mb-0"><del><?= number_format($cart['data']['price']) ?> VND</del>
+																<?= number_format($cart['data']['discount_price']) ?> VND<span></span></p>
+														<?php else:
+															$discount_price = $cart['quantity'] * $cart['data']['price'];
+															$total_price += $discount_price;
+															?>
+															<p class="mb-0"><?= number_format($cart['data']['price']) ?> VND</p>
+														<?php endif; ?>
+														<p class="mb-0"><span class="quantity">Số
+																lượng: <?= $cart['quantity'] ?></span></p>
+													</div>
+													<form action="/home/delete" method="post">
+														<input type="hidden" name="method" id="" value="DELETE">
+														<input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
+														<button type="submit" class="close">
+															<span aria-hidden="true"><i class="fa fa-close"></i></span>
+														</button>
+													</form>
+												</div>
 
-								<div class="dropdown-item d-flex align-items-start" href="#">
-									<div class="img" style="background-image: url(images/prod-1.jpg);"></div>
-									<div class="text pl-3">
-										<h4>Bacardi 151</h4>
-										<p class="mb-0"><a href="#" class="price">$25.99</a></p>
-										<p class="mb-0"><a href="#" class="price"> $25.99</a><span class="quantity ml-3">Quantity: 01</span></p>
-									</div>
-								</div>
-								<a class="dropdown-item text-center btn-link d-block w-100" href="/cart">
-									Xem giỏ hàng
-									<span class="ion-ios-arrow-round-forward"></span>
-								</a>
+
+												<?php
+
+											endif;
+										endforeach;
+										?>
+										<h6 class="text-danger text-center mt-1">Tổng : <?= number_format($total_price) ?> VND </h6>
+										<a class="dropdown-item text-center btn-link d-block w-100" href="/cart">
+											Xem giỏ hàng
+											<span class="ion-ios-arrow-round-forward"></span>
+										</a>
+										<?php
+									} else {
+										?>
+										<h5 class="text-danger text-center pt-3">Không có sản phẩm</h5>
+										<?php
+									}
+								} else {
+									?>
+									<h5 class="text-danger text-center">Không có sản phẩm</h5>
+									<?php
+								}
+								?>
+
+
+
 								<!-- /* From Uiverse.io by TimTrayler */ -->
 
 

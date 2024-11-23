@@ -9,7 +9,7 @@ class Home extends BaseView
 {
 	public static function render($data = null)
 	{
-		
+	
 ?>
 
 		<div class="hero-wrap" style="background-image: url('<?= APP_URL ?>/public/assets/client/images/bg_2.jpg');"

@@ -38,7 +38,6 @@ class CartHelper
             'money' => $money,
             'unitPrice' => $unitPrice,
             'total' => $total,
-
         ];
         return $data_total;
     }

@@ -43,6 +43,10 @@ class CartController
                     //  var_dump($cart_data);
                     //  die;
                 }
+                $total_quantity = array_sum(array_column($cart_data, 'quantity'));
+                $_SESSION['total_quantity'] = $total_quantity;
+                    // var_dump($total_quantity);
+                    // die;
                 Header::render();
                 Notification::render();
                 NotificationHelper::unset();
@@ -67,6 +71,7 @@ class CartController
 
     public static function add()
     {
+        
         // Tạo đối tượng Product để lấy thông tin sản phẩm nếu cần
         $product = new Product();
 
@@ -105,6 +110,7 @@ class CartController
                         $cart_data[$key]['quantity'] += 1;
                     }
                 }
+             
                 // 
                 // if ($cart_data[$key]['product_id'] == $product_id && isset($_POST['number'])) {
                 //     $cart_data[$key]['quantity'] += $number;
@@ -127,7 +133,7 @@ class CartController
                     'quantity' => 1,
                 ];
             }
-
+            
             // Nếu sản phẩm chưa có trong giỏ hàng, thêm sản phẩm với số lượng 1
 
             $cart_data[] = $product_array;
@@ -216,7 +222,20 @@ class CartController
                 }
             }
             NotificationHelper::success('cart', 'Đã xoá sản phẩm khỏi giỏ hàng');
+           // header('location: /cart');
+
+           $currentURL = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        // var_dump($currentURL);
+        // die;
+        // Chuyển hướng về trang giỏ hàng để cập nhật
+        // header('location: /cart');
+        if ($currentURL === 'http://127.0.0.1:8080/home/delete') {
+            header('location: /');
+            exit();
+        } else {
             header('location: /cart');
+            exit();
+        }
         }
     }
     public static function deleteAll()

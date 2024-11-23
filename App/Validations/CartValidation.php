@@ -9,7 +9,6 @@ class CartValidation
     public static function create(): bool
     {
         $is_valid = true;
-
         // Tên đăng nhập
         if (!isset($_POST['name']) || $_POST['name'] === '') {
             NotificationHelper::error('name_', 'Họ tên không được để trống');

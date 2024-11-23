@@ -72,6 +72,9 @@ nav,
 section {
   display: block;
 }
+.account_order{
+    text-align: center;
+}
 
 body {
   margin: 0;
