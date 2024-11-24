@@ -258,7 +258,7 @@ class ProductController
 
         $keyword = $_GET['keywords'] ?? '';
         $keyword = trim($keyword);
-        $keyword = preg_replace('/[^a-zA-Z0-9\s]/', '', $keyword);
+      
         if (empty($keyword)) {
             $_SESSION['keywords'] = null; 
        
