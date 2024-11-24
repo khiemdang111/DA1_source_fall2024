@@ -75,8 +75,7 @@ Route::delete('/checkout/delete', 'App\Controllers\Client\CartController@deleteI
 Route::post('/order', 'App\Controllers\Client\CartController@order');
 Route::get('/thanks', 'App\Controllers\Client\HomeController@thanks');
 Route::get('/history', 'App\Controllers\Client\AuthController@history');
- //     Route::post('/bill', 'App\Controllers\Client\CartController@return');
-
+Route::get('/order/detail/{id}', 'App\Controllers\Client\AuthController@historyDetail');
 // thêm bình luận 
 Route::post('/comments', 'App\Controllers\Client\CommentController@store');
 Route::put('/comments/{id}', 'App\Controllers\Client\CommentController@edit');

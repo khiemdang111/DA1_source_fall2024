@@ -11790,6 +11790,10 @@ h5,
   border-bottom: 2px dashed;
   border-color: #beabab;
 }
+.item_dflex_bottom{
+  border-bottom: 2px solid;
+  border-color: #beabab;
+}
 .table {
   min-width: 1000px !important;
   width: 100%;

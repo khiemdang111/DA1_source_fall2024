@@ -22,23 +22,26 @@ class CartHelper
         $i = 0;
         foreach ($cart_data as $cart) {
             if ($cart['data']) {
-                $i++;
+            
                 if ($cart['data']['discount_price'] > 0) {
                     $money = $cart['quantity'] * $cart['data']['discount_price'];
+                   // $price = $cart['data']['price'];
                     $unitPrice = $cart['data']['discount_price'];
                     $total += $money;
                 } else {
                     $money = $cart['quantity'] * $cart['data']['price'];
                     $unitPrice = $cart['data']['price'];
+                    $price = 0;
                     $total += $money;
                 }
+                $data_total = [
+                    'money' => $money,
+                    'unitPrice' => $unitPrice,
+                    'total' => $total,
+                ];
             }
         }
-        $data_total = [
-            'money' => $money,
-            'unitPrice' => $unitPrice,
-            'total' => $total,
-        ];
+       
         return $data_total;
     }
 
@@ -51,11 +54,16 @@ class CartHelper
             $user_COOKIE = json_decode($_COOKIE['user'], true);
             $user_id = $user_COOKIE['id'];
         }
+        if ($_SESSION['information']['PaymentMethod'] === "COD") {
+            $orderStatus = 0;
+        } else {
+            $orderStatus = 1;
+        }
         $total = self::tatol($cart_data);
         $date = date('Y-m-d');
         $oders = [
             'total' => $total['total'],
-            'orderStatus' => 1,
+            'orderStatus' => $orderStatus,
             'name' => $_SESSION['information']['name'],
             'phone' => $_SESSION['information']['phone'],
             'province' => $_SESSION['information']['province'],
@@ -72,20 +80,30 @@ class CartHelper
     }
     public static function createCart($cart_data)
     {
-
         $order_id = self::getOrder_id($cart_data);
         $_SESSION['order_id'] = $order_id;
-        $i = 0;
+       
         foreach ($cart_data as $cart) {
             if ($cart['data']) {
-                $i++;
-                $price = self::tatol($cart_data);
+                
+                // $price = self::tatol($cart_data);
+                if ($cart['data']['discount_price'] > 0) {
+                    $money = $cart['quantity'] * $cart['data']['discount_price'];
+                    $price = $cart['data']['price'];
+                    $unitPrice = $cart['data']['discount_price'];
+                } else {
+                    $money = $cart['quantity'] * $cart['data']['price'];
+                    $unitPrice = $cart['data']['price'];
+                    $price = 0;
+                }
                 $order_detail = [
                     'quantity' => $cart['quantity'],
-                    'unitPrice' => $price['unitPrice'],
-                    'totalPrice' => $price['money'],
+                    'originalPrice' =>  $price,
+                    'unitPrice' => $unitPrice,
+                    'totalPrice' =>  $money,
                     'product_id' => $cart['data']['id'],
                     'order_id' => $order_id,
+
                 ];
                 $oder = new Order_detail();
                 $result = $oder->createorderDetail($order_detail);
@@ -100,7 +118,6 @@ class CartHelper
         $data = CartController::getorder();
         $phone = $_SESSION['information']['phone'];
         $address = $_SESSION['information']['address'] . " " . $_SESSION['information']['ward'] . " " . $_SESSION['information']['district'] . " " . $_SESSION['information']['province'];
-
         $i = 0;
         $stt = 1;
         $fullname = $_SESSION['information']['name'];
@@ -174,13 +191,24 @@ HTML;
 ROW;
         foreach ($data as $cart) {
             if ($cart['data']) {
+                $total = 0;
                 $i++;
                 $name = $cart['data']['name'];
                 $quantity = $cart['quantity'];
-                $tatol = self::tatol($data);
-                $total_price_formatted = number_format($tatol['money']) . " VND";
-                $unit_price = number_format($tatol['unitPrice']) . " VND";
-                $total = number_format($tatol['total']) . " VND";
+                if ($cart['data']['discount_price'] > 0) {
+                    $money = $cart['quantity'] * $cart['data']['discount_price'];
+                   
+                    $unitPrice = $cart['data']['discount_price'];
+                    $total += $money;
+                } else {
+                    $money = $cart['quantity'] * $cart['data']['price'];
+                    $unitPrice = $cart['data']['price'];
+                    $price = 0;
+                    $total += $money;
+                }
+                $total_price_formatted = number_format( $money) . " VND";
+                $unit_price = number_format( $unitPrice) . " VND";
+                $total = number_format( $total) . " VND";
                 $html .= <<<ROW2
             <tr>
                 <td>{$i}</td>

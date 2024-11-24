@@ -10,13 +10,14 @@ class index extends BaseView
 {
   public static function render($data = null)
   {
-    //   var_dump($data);
+    // echo '<pre>';
+    // var_dump($data[0]['id']);
     // die;
     ?>
 
     <div class="container">
       <div class="row p-5">
-        <div class="col-md-4">
+        <div class="col-md-3">
           <div class="sidebar-box ftco-animate">
             <div class="categories">
               <h3>Lịch sử mua hàng </h3>
@@ -26,7 +27,7 @@ class index extends BaseView
             </div>
           </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-9">
           <div class="card border-dark mb-3">
             <div class="card-header">Lịch sử thanh toán</div>
 
@@ -37,14 +38,14 @@ class index extends BaseView
                 // die;
                 ?>
                 <div class="item">
-                  <div class="d-flex justify-content-between  m-2 item_dflex">
-                    <div class="item">Ngày thanh toán : <span class=""><?= $item['vnp_PayDate'] ?></span></div>
+                  <div class="d-flex justify-content-between m-1 item_dflex">
+                    <div class="item">Ngày thanh toán : <span class=""><?= $item['date'] ?></span></div>
                   </div>
                   <div class="row m-2 item_dflex ">
                     <table border="1" class="w-100 m-1 account_order">
                       <thead>
                         <tr>
-                          <th>Mã thanh toán</th>
+                          <th>Mã đơn hàng</th>
                           <th>Số tiền thanh toán</th>
                           <th>Phương thức thanh toán</th>
                           <th>Trạng thái</th>
@@ -52,22 +53,35 @@ class index extends BaseView
                       </thead>
                       <tbody>
                         <tr>
-                          <td><?= $item['vnpay_id'] ?></td>
-                          <td><?= number_format($item['total'])  ?></td>
-                          <td><?= $item['paymentMethod'] ?></td>
+                          <td><?= $item['id'] ?></td>
+                          <td><?= number_format($item['total']) ?></td>
+
                           <td>
-                              <?php 
-                              if ($item['vnp_TransactionStatus'] === "00"):
+                            <?php
+                            if ($item['paymentMethod'] === "COD"):
                               ?>
-                              Đã thanh toán 
-                              <?php 
-                              else :
+                              Thanh toán khi nhận hàng
+                              <?php
+                            else:
                               ?>
-Chưa thanh toán
-                              <?php 
-                              endif;
+                             VNPAY
+                              <?php
+                            endif;
+                            ?>
+                          </td>
+                          <td>
+                            <?php
+                            if ($item['orderStatus'] === "0"):
                               ?>
-                        </td>
+                              Chưa thanh toán
+                              <?php
+                            else:
+                              ?>
+                              Đã thanh toán
+                              <?php
+                            endif;
+                            ?>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -75,7 +89,7 @@ Chưa thanh toán
                   </div>
 
                   <div class="d-flex m-2 justify-content-end">
-                    <a href="" class="btn btn-primary m-1">Chi tiết Thanh toán</a>
+                    <a href="/order/detail/<?=$item['id']?>" class="btn btn-primary m-1">Xem chi tiết</a>
                     <!-- <a href="" class="btn btn-primary m-1">Mua lại</a> -->
                   </div>
                 </div>

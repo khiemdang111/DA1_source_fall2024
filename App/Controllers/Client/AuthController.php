@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Client;
 
+use App\Models\Order_detail;
 use App\Models\User;
 use App\Models\vnpays;
 use App\Views\Client\Pages\Auth\Login;
@@ -19,6 +20,7 @@ use App\Views\Client\Pages\Order\index;
 use App\Views\Client\Pages\Auth\Verification;
 use App\Views\Client\Pages\Auth\ResetPassword;
 use App\Views\Client\Pages\Auth\updatePassword;
+use App\Views\Client\Pages\Order\detail;
 
 class AuthController
 {
@@ -157,20 +159,43 @@ class AuthController
     {
         $is_login = AuthHelper::checkLogin();
         if ($is_login) {
-            $order = new vnpays();
-            $data = $order->getAllvnpays();
+            $order = new Order();
+            $data = $order->getAllOrderbyUser_id();
             Header::render();
             Notification::render();
             NotificationHelper::unset();
             index::render($data);
             Footer::render();
         } else {
-            NotificationHelper::error('er', 'Bạn hông có quyền truyên cập trang này');
+            NotificationHelper::error('er', 'Bạn không có quyền truyên cập trang này');
             header('location: /');
         }
 
     }
 
+
+
+    public static function historyDetail(int $id)
+    {
+
+        $is_login = AuthHelper::checkLogin();
+        if ($is_login) {
+            $detail = new Order_detail();
+            $data = $detail->getAllOrder_id($id);
+            // echo '<pre>';
+            // var_dump($data);
+            // die;
+            Header::render();
+            Notification::render();
+            NotificationHelper::unset();
+            detail::render($data);
+            Footer::render();
+        } else {
+            NotificationHelper::error('err', 'Bạn không có quyền truyên cập trang này');
+            header('location: /');
+        }
+
+    }
     public static function forgetpass()
     {
         Header::render();
@@ -254,13 +279,8 @@ class AuthController
         $data = [
             'password' => $hashedPassword,
         ];
-
-        // Cập nhật mật khẩu vào cơ sở dữ liệu
         $newUser = new User();
         $updateResult = $newUser->update($_SESSION['id'], $data);
-        //    var_dump(!$updateResult);
-//    die;
-        // Kiểm tra kết quả
         if ($updateResult) {
             NotificationHelper::success('password_update', 'Cập nhật mật khẩu thành công!');
             unset($_SESSION['username']); // Xóa session để đảm bảo an toàn

@@ -62,10 +62,11 @@ class HomeController
     {
         $is_login = AuthHelper::checkLogin();
         if($is_login){
-            $cart_data = CartController::getorder();
+           
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $vnp_ResponseCode = $_GET['vnp_ResponseCode'] ?? null;
                 if ($vnp_ResponseCode == '00') {
+                    $cart_data = CartController::getorder();
                     CartHelper::createCart($cart_data);
                     setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
                     $timeStr = $_GET['vnp_PayDate'];

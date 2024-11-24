@@ -39,14 +39,9 @@ class CartController
                     $result = $product->getOneProduct($product_id);
                     // var_dump($result);
                     $cart_data[$key]['data'] = $result;
-                    //  echo "<pre>";
-                    //  var_dump($cart_data);
-                    //  die;
+
                 }
-                $total_quantity = array_sum(array_column($cart_data, 'quantity'));
-                $_SESSION['total_quantity'] = $total_quantity;
-                // var_dump($total_quantity);
-                // die;
+
                 Header::render();
                 Notification::render();
                 NotificationHelper::unset();
@@ -322,7 +317,6 @@ class CartController
                 exit();
             }
             $cart_data = self::getorder();
-            $total = CartHelper::tatol($cart_data);
             $data = [
                 'name' => $_POST['name'],
                 'phone' => $_POST['phone'],
@@ -332,8 +326,6 @@ class CartController
                 'address' => $_POST['address'],
                 'PaymentMethod' => $_POST['PaymentMethod'],
             ];
-            // var_dump($data);
-            // die;
             $_SESSION['information'] = $data;
             if ($_POST['PaymentMethod'] === 'COD') {
                 CartHelper::createCart($cart_data);
@@ -342,6 +334,7 @@ class CartController
                 header('location: /');
                 exit();
             } else {
+                $total = CartHelper::tatol($cart_data);
                 PayHelper::VNpay($total);
             }
 
