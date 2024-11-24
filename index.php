@@ -87,15 +87,15 @@ Route::post('/admin/products', 'App\Controllers\Admin\ProductController@store');
 Route::get('/admin/products/{id}', 'App\Controllers\Admin\ProductController@edit');
 Route::put('/admin/update/{id}', 'App\Controllers\Admin\ProductController@update');
 Route::post('/admin/delete/products/{id}', 'App\Controllers\Admin\ProductController@delete');
-Route::get('/admin/productvariant/{id}', 'App\Controllers\Admin\ProductController@createVariant');
-Route::post('/admin/productvariant', 'App\Controllers\Admin\ProductController@storeVariant');
-Route::get('/admin/variant/add', 'App\Controllers\Admin\ProductController@createAttributeVariant');
-Route::post('/admin/addAttribute', 'App\Controllers\Admin\ProductController@storeAttribute');
-Route::get('/admin/productvariant/setting', 'App\Controllers\Admin\ProductController@settingVariant');
-Route::post('/admin/settingdetail/variant/{id}', 'App\Controllers\Admin\ProductController@settingDetailVariant');
-Route::get('/admin/createdetail/variant/{id}', 'App\Controllers\Admin\ProductController@detailSettingVariant');
-Route::post('/admin/skus', 'App\Controllers\Admin\ProductController@addSku');
-Route::get('/admin/products/search', 'App\Controllers\Admin\ProductController@searchProduct');
+Route::get('/admin/productvariant/{id}', 'App\Controllers\Admin\ProductVariantController@createVariant');
+Route::post('/admin/productvariant', 'App\Controllers\Admin\ProductVariantController@storeVariant');
+Route::get('/admin/variant/add', 'App\Controllers\Admin\ProductVariantController@createAttributeVariant');
+Route::post('/admin/addAttribute', 'App\Controllers\Admin\ProductVariantController@storeAttribute');
+Route::get('/admin/productvariant/setting', 'App\Controllers\Admin\ProductVariantController@settingVariant');
+Route::post('/admin/settingdetail/variant/{id}', 'App\Controllers\Admin\ProductVariantController@settingDetailVariant');
+Route::get('/admin/createdetail/variant/{id}', 'App\Controllers\Admin\ProductVariantController@detailSettingVariant');
+Route::post('/admin/skus', 'App\Controllers\Admin\ProductVariantController@addSku');
+Route::get('/admin/products/search', 'App\Controllers\Admin\ProductVariantController@searchProduct');
 
 
 //  *** Category
