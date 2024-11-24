@@ -362,7 +362,6 @@ class ProductVariant extends BaseModel
       return $result;
     }
   }
-  // public function InsertCombinationID($variant_value_id)
   // {
   //   // Kết nối MySQLi
   //   $conn = $this->_conn->MySQLi();
@@ -414,50 +413,50 @@ class ProductVariant extends BaseModel
 
   public function InsertCombinationID($variant_value_id)
   {
-      $conn = $this->_conn->MySQLi(); // Giữ kết nối MySQLi
-      $data = $variant_value_id;
-  
-      // Tìm ID lớn nhất hiện tại trong bảng và tăng thêm 1
-      $result = $conn->query("SELECT MAX(id) AS max_id FROM product_variant_option_combination");
-      $row = $result->fetch_assoc();
-      $next_id = isset($row['max_id']) ? $row['max_id'] + 1 : 1; // Nếu bảng rỗng, bắt đầu từ 1
-  
-      // Chèn bản ghi mới với ID là $next_id
-      $stmt = $conn->prepare("INSERT INTO product_variant_option_combination (id) VALUES (?)");
-      $stmt->bind_param('i', $next_id);
-      $stmt->execute();
-  
-      // Lấy ID tự động tăng vừa được chèn
-      $combination_id = $next_id;
-      $_SESSION['id_combination'] = $combination_id;
-      // Duyệt qua từng phần tử trong mảng $data và cập nhật bảng product_variant_values
-      echo '<pre>';
-      foreach ($data as $item) {
-            if (isset($item['product_variant_values_id'])) {
-              // Kiểm tra và ép kiểu dữ liệu
-              $variant_ids = is_array($item['product_variant_values_id'])
-                ? array_map('intval', $item['product_variant_values_id'])
-                : [(int) $item['product_variant_values_id']];
-              // Cập nhật bảng product_variant_values
-              foreach ($variant_ids as $variant_id) {
-                $sql = "UPDATE product_variant_values SET combination_id = ? WHERE id = ?";
-                $updateStmt = $conn->prepare($sql);
-                if (!$updateStmt) {
-                  throw new \Exception("Lỗi khi chuẩn bị câu lệnh: " . $conn->error);
-                }
-                $updateStmt->bind_param('ii', $combination_id, $variant_id);
-                if (!$updateStmt->execute()) {
-                  throw new \Exception("Lỗi khi thực thi câu lệnh: " . $updateStmt->error);
-                }
-                $updateStmt->close(); // Đóng statement sau mỗi lần cập nhật
-              }
-            }
+    $conn = $this->_conn->MySQLi(); // Giữ kết nối MySQLi
+    $data = $variant_value_id;
+
+    // Tìm ID lớn nhất hiện tại trong bảng và tăng thêm 1
+    $result = $conn->query("SELECT MAX(id) AS max_id FROM product_variant_option_combination");
+    $row = $result->fetch_assoc();
+    $next_id = isset($row['max_id']) ? $row['max_id'] + 1 : 1; // Nếu bảng rỗng, bắt đầu từ 1
+
+    // Chèn bản ghi mới với ID là $next_id
+    $stmt = $conn->prepare("INSERT INTO product_variant_option_combination (id) VALUES (?)");
+    $stmt->bind_param('i', $next_id);
+    $stmt->execute();
+
+    // Lấy ID tự động tăng vừa được chèn
+    $combination_id = $next_id;
+    $_SESSION['id_combination'] = $combination_id;
+    // Duyệt qua từng phần tử trong mảng $data và cập nhật bảng product_variant_values
+    echo '<pre>';
+    foreach ($data as $item) {
+      if (isset($item['product_variant_values_id'])) {
+        // Kiểm tra và ép kiểu dữ liệu
+        $variant_ids = is_array($item['product_variant_values_id'])
+          ? array_map('intval', $item['product_variant_values_id'])
+          : [(int) $item['product_variant_values_id']];
+        // Cập nhật bảng product_variant_values
+        foreach ($variant_ids as $variant_id) {
+          $sql = "UPDATE product_variant_values SET combination_id = ? WHERE id = ?";
+          $updateStmt = $conn->prepare($sql);
+          if (!$updateStmt) {
+            throw new \Exception("Lỗi khi chuẩn bị câu lệnh: " . $conn->error);
           }
-      
-          // Trả về kết quả thành công
-          return true;
+          $updateStmt->bind_param('ii', $combination_id, $variant_id);
+          if (!$updateStmt->execute()) {
+            throw new \Exception("Lỗi khi thực thi câu lệnh: " . $updateStmt->error);
+          }
+          $updateStmt->close(); // Đóng statement sau mỗi lần cập nhật
+        }
+      }
+    }
+
+    // Trả về kết quả thành công
+    return true;
   }
-  
+
 
   public function createSku($data)
   {
@@ -548,6 +547,30 @@ class ProductVariant extends BaseModel
     } catch (\Throwable $th) {
       error_log('Lỗi khi cập nhật dữ liệu trong bảng product_variant_option_combination: ' . $th->getMessage());
       return false;
+    }
+  }
+  public function getAllAttribute($id)
+  {
+    $result = [];
+    try {
+      $sql = "SELECT * FROM `product_variants` WHERE product_variants.id = $id";
+      $result = $this->_conn->MySQLi()->query($sql);
+      return $result->fetch_all(MYSQLI_ASSOC);
+    } catch (\Throwable $th) {
+      error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+      return $result;
+    }
+  }
+  public function getAllAttributeAndOptionName($id)
+  {
+    $result = [];
+    try {
+      $sql = "SELECT product_variants.name AS variant_name, product_variant_options.id AS variant_option_id ,product_variant_options.name AS variant_option_name FROM `product_variants` INNER JOIN  product_variant_options on product_variants.id = product_variant_options.product_variant_id WHERE product_variants.id = $id";
+      $result = $this->_conn->MySQLi()->query($sql);
+      return $result->fetch_all(MYSQLI_ASSOC);
+    } catch (\Throwable $th) {
+      error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+      return $result;
     }
   }
 }

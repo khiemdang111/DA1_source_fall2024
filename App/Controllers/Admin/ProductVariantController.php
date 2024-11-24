@@ -17,6 +17,7 @@ use App\Views\Admin\Pages\ProductVariant\SettingVariant;
 use App\Views\Admin\Pages\ProductVariant\SettingPriceVariant;
 use App\Views\Admin\Pages\ProductVariant\DetailSettingVariant;
 use App\Views\Admin\Pages\ProductVariant\createAttributeVariant;
+use App\Views\Admin\Pages\ProductVariant\EditAttributeVariant;
 use App\Views\Admin\Pages\Recycle\ProductRecycle;
 
 class ProductVariantController
@@ -142,17 +143,17 @@ class ProductVariantController
             $variants = explode(',', $_POST['variants']);
             $variant_ids = explode(',', $_POST['variant_ids']);
         }
-    
+
         $productID = $_SESSION['product_id'];
         $products = new ProductVariant();
         $variant_value_id = $products->SelectProductVariantValueID($productID, $variants, $variant_ids);
-    
+
         // Gọi InsertCombinationID và nhận giá trị combination_id
-    
+
         $combination_id = $products->InsertCombinationID($variant_value_id);
         // Kiểm tra nếu thành công, gán vào session
         if ($combination_id) {
-           $combination_id = $_SESSION['id_combination'] ;
+            $combination_id = $_SESSION['id_combination'];
             header('Location: /admin/createdetail/variant/' . $combination_id);
             exit();
         } else {
@@ -163,7 +164,7 @@ class ProductVariantController
     {
 
         $product = new ProductVariant();
-        $id =  $_SESSION['id_combination'];
+        $id = $_SESSION['id_combination'];
         $data = $product->DetailVariant($id);
         Header::render();
         Notification::render();
@@ -172,8 +173,9 @@ class ProductVariantController
         Footer::render();
     }
 
-public function addSku(){
-    $is_valid = ProductValidation::createSku();
+    public function addSku()
+    {
+        $is_valid = ProductValidation::createSku();
         if (!$is_valid) {
             NotificationHelper::error('store_product', 'Thêm sản phẩm thất bại');
             header('location: /admin/products');
@@ -204,7 +206,7 @@ public function addSku(){
         if ($result) {
             $combination_id = $_SESSION['id_combination'];
             $sku_id = $_SESSION['sku_id'];
-            $addFkSku= $product->addFkSku($combination_id, $sku_id);
+            $addFkSku = $product->addFkSku($combination_id, $sku_id);
             unset($_SESSION['id_combination']);
             unset($_SESSION['sku_id']);
             header('Location: /admin/products');
@@ -213,7 +215,29 @@ public function addSku(){
             header('Location: /admin/productvariant/setting');
             exit;
         }
-}
-
-
+    }
+    public function editAttributeVariant($id){
+        $product = new ProductVariant();
+        $variant = $product->getAllAttribute($id);
+        $option_name = $product->getAllAttributeAndOptionName($id);
+        $data = [
+            'variant' => $variant,
+            'option_name' => $option_name,
+        ];
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        EditAttributeVariant::render($data);
+        Footer::render();
+    }
+    public function updateVariantAttribute($id){
+        // $product = new ProductVariant();
+        // $variant = $product->updateVariantAttribute($id);
+        $data = [
+            'variant_name' => $_POST['variant_name'],
+            'variant_option_name' => $_POST['variant_option_name'],
+        ];
+        var_dump($data);
+        die;
+    }
 }

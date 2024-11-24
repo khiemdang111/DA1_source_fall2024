@@ -21,8 +21,7 @@ class CreateAttributeVariant extends BaseView
                 <h4>Tất cả các thuộc tính</h4>
               </div>
               <div class="card-body pt-4">
-                <form action="/admin/productvariant" id="" method="post" enctype="multipart/form-data">
-                  <input type="hidden" name="method" id="" value="POST">
+                <form action="" id="" method="post" enctype="multipart/form-data">
                   <div class="row g-6">
                     <div class="col-5 col-md-5 col-xl-5">
                       <table class="table table-striped">
@@ -37,58 +36,46 @@ class CreateAttributeVariant extends BaseView
                           <?php
                           // Mảng để nhóm các option_name theo name
                           $grouped_data = [];
-
                           // Nhóm dữ liệu
                           foreach ($data as $item) {
                             $name = $item['name'];
                             if (!isset($grouped_data[$name])) {
                               $grouped_data[$name] = [];
                             }
-                            $grouped_data[$name][] = $item['option_name'];
+                            $grouped_data[$name][] = [
+                              'id' => $item['id'],
+                              'option_name' => $item['option_name']
+                            ];
                           }
 
                           // Hiển thị bảng
-                          foreach ($grouped_data as $name => $option_names):
+                          foreach ($grouped_data as $name => $options):
+                            // Lấy ID đầu tiên trong nhóm để sử dụng cho nút chỉnh sửa
+                            $first_option = reset($options);
                             ?>
                             <tr class="items_properties">
-                              <input type="hidden">
                               <td scope="row">
                                 <?= $name ?>
                               </td>
                               <td>
-                                <?= implode(', ', $option_names) // Hiển thị danh sách option_name, cách nhau bởi dấu phẩy ?>
+                                <?= implode(', ', array_column($options, 'option_name')) // Hiển thị danh sách option_name, cách nhau bởi dấu phẩy ?>
                               </td>
                               <td>
                                 <div class="d-flex justify-content-center">
-                                  <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                      data-bs-toggle="dropdown">
-                                      <i class="bx bx-edit-alt"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                      <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop" href="/admin/productvariant/<?= $item['id'] ?>">
-                                        Thuộc tính</button>
-                                      <button type="button" class="dropdown-item" data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop" href="/admin/products/<?= $item['id'] ?>">Thành
-                                        phần</button>
-                                    
-                                    </div>
-                                  </div>
-                                  <!-- Button trigger modal -->
-                                  <form class="" action="/admin/delete/products/<?= $item['id'] ?>" method="post"
-                                    style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
-                                    <input type="hidden" name="method" value="POST" id="">
-                                    <button class="dropdown-item w-20"><i class="bx bx-trash me-1"></i> </button>
-                                  </form>
+                                  <a href="/admin/productvariant/edit/<?= $first_option['id'] ?>">
+                                    <i class="bx bx-edit-alt"></i>
+                                  </a>
+                                  <a href="/admin/productvariant/del/<?= $first_option['id'] ?>">
+                                    <i class="bx bx-trash me-1"></i>
+                                  </a>
                                 </div>
                               </td>
                             </tr>
                             <?php
                           endforeach;
                           ?>
-
                         </tbody>
+
                       </table>
                     </div>
                     <div class="col-7 col-md-7 col-xl-7">
@@ -104,7 +91,8 @@ class CreateAttributeVariant extends BaseView
                               <input type="hidden" name="product_id" value="<?= $data[0]['product_id'] ?>">
                               <div class="col-md-12">
                                 <label for="product_variant_name" class="form-label">Tên thuộc tính<span
-                                    class="text-danger"> *</span></label>
+                                    class="text-danger">
+                                    *</span></label>
                                 <input class="form-control" type="text" id="product_variant_name"
                                   name="product_variant_name" placeholder="VD: màu, kích thước" />
                               </div>
