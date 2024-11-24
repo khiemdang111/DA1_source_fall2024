@@ -40,6 +40,7 @@ class index extends BaseView
                   class="form-control"
                   name="keywords"
                   placeholder="Tìm kiếm"
+                  value="<?=  (isset($_SESSION['keywords']) ? $_SESSION['keywords']: "") ?>" 
                   aria-label="Tìm kiếm"
                   aria-describedby="basic-addon-search31" />
               </div>

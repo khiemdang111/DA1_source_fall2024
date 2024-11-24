@@ -23,22 +23,22 @@ class ProductController
 {
 
     private static function getQueryParams()
-{
-    $queryParams = [];
-    if (isset($_GET['sort'])) {
-        $queryParams['sort'] = $_GET['sort'];
+    {
+        $queryParams = [];
+        if (isset($_GET['sort'])) {
+            $queryParams['sort'] = $_GET['sort'];
+        }
+        if (isset($_GET['origin'])) {
+            $queryParams['origin'] = $_GET['origin'];
+        }
+        if (isset($_GET['categories'])) {
+            $queryParams['categories'] = $_GET['categories'];
+        }
+        if (isset($_GET['price'])) {
+            $queryParams['price'] = $_GET['price'];
+        }
+        return $queryParams;
     }
-    if (isset($_GET['origin'])) {
-        $queryParams['origin'] = $_GET['origin'];
-    }
-    if (isset($_GET['categories'])) {
-        $queryParams['categories'] = $_GET['categories'];
-    }
-    if (isset($_GET['price'])) {
-        $queryParams['price'] = $_GET['price'];
-    }
-    return $queryParams;
-}
     // hiển thị danh sách
     public static function index()
     {
@@ -61,14 +61,12 @@ class ProductController
             'products' => $products,
             'categories' => $categories,
             'origins' => $origins,
-         
+
         ];
         Header::render();
 
         Index::render($data);
         Footer::render();
-
-        
     }
     public static function fetchRecommendedProducts($product_id)
     {
@@ -106,15 +104,15 @@ class ProductController
             setcookie('viewed_product', json_encode($viewedProducts), time() + (86400 * 30), "/");
             $_COOKIE['viewed_product'] = json_encode($viewedProducts);
         }
-        
+
         $recommendedProducts = self::fetchRecommendedProducts($id);
         if (is_array($recommendedProducts) && !empty($recommendedProducts)) {
             $recommendedProducts = array_map(function ($name) {
-                return "'" . addslashes($name) . "'";  
+                return "'" . addslashes($name) . "'";
             }, $recommendedProducts);
             $recommendedProducts = implode(',', $recommendedProducts);
         } else {
-            $recommendedProducts = "";  
+            $recommendedProducts = "";
         }
         $product = new Product();
         $variants = new ProductVariant();
@@ -122,8 +120,8 @@ class ProductController
 
         $detail = $product->getOneProductByCategoryDetailStatus($id);
         $variant = $variants->getAllVariantByProductId($id);
-         if(!$detail){
-            NotificationHelper::error('detail','Không thể xem sản phẩm');
+        if (!$detail) {
+            NotificationHelper::error('detail', 'Không thể xem sản phẩm');
             header('Location: /');
         }
         $category_id = $detail[0]['category_id'];
@@ -159,26 +157,40 @@ class ProductController
     }
 
     public function searchProduct()
-    {
-
+    {        
         $keyword = $_GET['keywords'] ?? '';
-
+        $keyword = trim($keyword);
+        $keyword = preg_replace('/[^a-zA-Z0-9\s]/', '', $keyword);
+        if (empty($keyword)) {
+            $_SESSION['keywords'] = null; 
+       
+            $data = [
+                'products' => [],
+                'categories' => (new Category())->getAllCategoryByStatus(),
+                'origins' => (new Origin())->getAllOriginsByStatus(),
+            ];
+            Header::render();
+            Index::render($data);
+            Footer::render();
+            return;  
+        }
+        $_SESSION['keywords'] = $keyword;
+    
         $product = new Product();
         $key_product = $product->search($keyword);
-  
+
         $category = new Category();
         $categories = $category->getAllCategoryByStatus();
-        $product = new Product();
-        
+    
         $origins = new Origin();
         $origins = $origins->getAllOriginsByStatus();
         $data = [
             'products' => $key_product,
-           'categories' => $categories,
+            'categories' => $categories,
             'origins' => $origins,
         ];
         Header::render();
         Index::render($data);
         Footer::render();
-    }
+    } 
 }

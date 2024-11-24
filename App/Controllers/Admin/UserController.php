@@ -244,6 +244,18 @@ class UserController
     {
 
         $keyword = $_GET['keywords'] ?? '';
+        $keyword = trim($keyword);
+        $keyword = preg_replace('/[^a-zA-Z0-9\s]/', '', $keyword);
+        if (empty($keyword)) {
+            $_SESSION['keywords'] = null; 
+       
+            $data = [];
+            Header::render();
+            Index::render($data);
+            Footer::render();
+            return;  
+        }
+        $_SESSION['keywords'] = $keyword;
 
         $user = new User();
         $data = $user->search($keyword);

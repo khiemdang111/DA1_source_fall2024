@@ -1,5 +1,6 @@
 <?php
 session_start();
+unset($_SESSION['keywords']); 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
@@ -97,7 +98,7 @@ Route::get('/admin/productvariant/setting', 'App\Controllers\Admin\ProductVarian
 Route::post('/admin/settingdetail/variant/{id}', 'App\Controllers\Admin\ProductVariantController@settingDetailVariant');
 Route::get('/admin/createdetail/variant/{id}', 'App\Controllers\Admin\ProductVariantController@detailSettingVariant');
 Route::post('/admin/skus', 'App\Controllers\Admin\ProductVariantController@addSku');
-Route::get('/admin/products/search', 'App\Controllers\Admin\ProductVariantController@searchProduct');
+Route::get('/admin/products/search', 'App\Controllers\Admin\ProductController@searchProduct');
 Route::get('/admin/productvariant/edit/{id}', 'App\Controllers\Admin\ProductVariantController@editAttributeVariant');
 Route::post('/admin/product-variant/update/{id}', 'App\Controllers\Admin\ProductVariantController@updateVariantAttribute');
 

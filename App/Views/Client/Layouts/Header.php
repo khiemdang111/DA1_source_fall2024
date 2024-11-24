@@ -221,7 +221,7 @@ class Header extends BaseView
 
 									<div class="searchbar-center">
 										<div class="searchbar-input-spacer"></div>
-										<input type="search" class="searchbar-input" name="keywords" placeholder="Tìm kiếm">
+										<input type="search" class="searchbar-input" name="keywords" value="<?=  (isset($_SESSION['keywords']) ? $_SESSION['keywords']: "") ?>" placeholder="Tìm kiếm">
 									</div>
 
 									<div class="searchbar-right">

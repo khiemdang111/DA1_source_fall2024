@@ -31,21 +31,22 @@ class index extends BaseView
             </div>
             <!-- Basic Bootstrap Table -->
             <div class="card">
-            <div class="card-header">
-                        <form action="/admin/posts/search" method="get">
-                            <div class="input-group input-group-merge">
-                                <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    name="keywords"
-                                    placeholder="Tìm kiếm"
-                                    aria-label="Tìm kiếm"
-                                    aria-describedby="basic-addon-search31" />
-                            </div>
+                <div class="card-header">
+                    <form action="/admin/posts/search" method="get">
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+                            <input
+                                type="text"
+                                class="form-control"
+                                name="keywords"
+                                value="<?=  (isset($_SESSION['keywords']) ? $_SESSION['keywords']: "") ?>" 
+                                placeholder="Tìm kiếm"
+                                aria-label="Tìm kiếm"
+                                aria-describedby="basic-addon-search31" />
+                        </div>
 
-                        </form>
-                    </div>
+                    </form>
+                </div>
                 <div class="table-responsive text-nowrap">
                     <?php
                     if (count($data)):
@@ -86,7 +87,7 @@ class index extends BaseView
                                                     <a class="dropdown-item" href="/admin/posts/<?= $item['id'] ?>"><i class="bx bx-edit-alt me-1"></i> Sửa</a>
                                                     <form class="w-100" action="/admin/delete/posts/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
                                                         <input type="hidden" name="method" value="POST" id="">
-                                            
+
                                                         <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Xóa</button>
                                                     </form>
                                                 </div>

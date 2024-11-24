@@ -224,3 +224,10 @@
 
 })(jQuery);
 
+window.addEventListener('beforeunload', function() {
+   
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "index.php", true); 
+    xhr.send();
+});
+
