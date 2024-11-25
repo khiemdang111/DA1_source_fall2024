@@ -260,4 +260,16 @@ class Product extends BaseModel
             return $result;
         }
     }
+    public function getAllProductLimit8()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT products.*, categories.name AS category_name FROM $this->table INNER JOIN categories on products.category_id = categories.id WHERE products.status = " . self::STATUS_ENABLE . "  ORDER BY id DESC LIMIT 6";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
 }

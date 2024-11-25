@@ -9,8 +9,8 @@ class Home extends BaseView
 {
 	public static function render($data = null)
 	{
-	
-?>
+
+		?>
 
 		<div class="hero-wrap" style="background-image: url('<?= APP_URL ?>/public/assets/client/images/bg_2.jpg');"
 			data-stellar-background-ratio="0.5">
@@ -149,10 +149,10 @@ class Home extends BaseView
 				<div class="row">
 					<?php
 					if (count($data) && count($data['products'])):
-					?>
+						?>
 						<?php
 						foreach ($data['products'] as $item):
-						?>
+							?>
 							<div class="col-md-3 d-flex">
 								<div class="product ftco-animate">
 									<div class="img d-flex align-items-center justify-content-center"
@@ -162,7 +162,8 @@ class Home extends BaseView
 												<form action="/cart/add" method="post">
 													<input type="hidden" name="method" id="" value="POST">
 													<input type="hidden" name="id" id="" value="<?= $item['id'] ?>" required>
-													<button type="submit" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag">
+													<button type="submit" class="d-flex align-items-center justify-content-center"><span
+															class="flaticon-shopping-bag">
 														</span></button>
 												</form>
 												<a href="#" type="submit" class="d-flex align-items-center justify-content-center"><span
@@ -179,16 +180,15 @@ class Home extends BaseView
 										<h2><?= $item['name'] ?></h2>
 										<p class="mb-0">
 											<?php
-											if ($item['discount_price'] > 0) :
-											?>
+											if ($item['discount_price'] > 0):
+												?>
 												<span class="price price-sale"><?= number_format($item['price']) ?></span> <span
-													class="price"><?= number_format(  $item['discount_price']) ?></span>
+													class="price"><?= number_format($item['discount_price']) ?></span>
 
-											<?php
+												<?php
 											else:
-											?>
-												 <span
-												 class="price"><?= number_format($item['price'] ) ?></span>
+												?>
+												<span class="price"><?= number_format($item['price']) ?></span>
 
 											<?php endif; ?>
 
@@ -196,22 +196,22 @@ class Home extends BaseView
 									</div>
 								</div>
 							</div>
-						<?php
+							<?php
 						endforeach;
 						?>
+					</div>
+				</div>
+				<?php
+					endif;
+					?>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-4">
+					<a href="/products" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
+							class="fa fa-long-arrow-right"></span></a>
 				</div>
 			</div>
-		<?php
-					endif;
-		?>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-md-4">
-				<a href="product.html" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
-						class="fa fa-long-arrow-right"></span></a>
 			</div>
-		</div>
-		</div>
 		</section>
 
 		<section class="ftco-section testimony-section img"
@@ -327,58 +327,39 @@ class Home extends BaseView
 					</div>
 				</div>
 				<div class="row d-flex">
-					<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-						<div class="blog-entry d-flex">
-							<a href="blog-single.html" class="block-20 img"
-								style="background-image: url('<?= APP_URL ?>/public/assets/client/images/image_1.jpg');">
-							</a>
-							<div class="text p-4 bg-light">
-								<div class="meta">
-									<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-								</div>
-								<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-								<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
+					<?php
+					foreach ($data['posts'] as $item):
+						?>
+						<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
+							<div class="blog-entry d-md-flex">
+								<a href="/Blog_single/<?= $item['id'] ?>" class="block-20 img"
+									style="background-image: url('<?= APP_URL ?>/public/uploads/posts/<?= $item['img'] ?>');">
+								</a>
+								<div class="text p-4 bg-light">
+									<div class="meta">
+										<p><span class="fa fa-calendar"></span><a href="/Blog_single/<?= $item['id'] ?>">
+												<?= date('d/m/Y', strtotime($item['created_at'])) ?></p>
+									</div>
+									<h3 class="heading mb-3"><a href="/Blog_single/<?= $item['id'] ?>"> <?= $item['title'] ?></a></h3>
+									<p> <?= $item['summary'] ?></p>
+									<a href=" /Blog_single/<?= $item['id'] ?>" class="btn-custom">Xem thêm <span
+											class="fa fa-long-arrow-right"></span></a>
 
+								</div>
 							</div>
 						</div>
+						<?php
+					endforeach;
+					?>
+				</div>
+				<div class="row justify-content-center">
+					<div class="col-md-4">
+						<a href="/post" class="btn btn-primary d-block">Xem tất cả bài viết <span
+								class="fa fa-long-arrow-right"></span></a>
 					</div>
-					<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-						<div class="blog-entry d-flex">
-							<a href="blog-single.html" class="block-20 img"
-								style="background-image: url('<?= APP_URL ?>/public/assets/client/images/image_2.jpg');">
-							</a>
-							<div class="text p-4 bg-light">
-								<div class="meta">
-									<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-								</div>
-								<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-								<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
-						<div class="blog-entry d-flex">
-							<a href="blog-single.html" class="block-20 img"
-								style="background-image: url('<?= APP_URL ?>/public/assets/client/images/image_3.jpg');">
-							</a>
-							<div class="text p-4 bg-light">
-								<div class="meta">
-									<p><span class="fa fa-calendar"></span> 23 April 2020</p>
-								</div>
-								<h3 class="heading mb-3"><a href="#">The Recipe from a Winemaker’s Restaurent</a></h3>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-								<a href="#" class="btn-custom">Continue <span class="fa fa-long-arrow-right"></span></a>
-
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-6 d-flex align-items-stretch ftco-animate"></div>
 				</div>
 			</div>
 		</section>
-<?php
+		<?php
 	}
 }

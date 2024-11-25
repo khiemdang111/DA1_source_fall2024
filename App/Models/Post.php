@@ -65,5 +65,16 @@ class Post extends BaseModel
         $result = $this->_conn->MySQLi()->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-   
+    public function getAllPostLimit4()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM $this->table ORDER BY id DESC LIMIT 4 ";
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
 }

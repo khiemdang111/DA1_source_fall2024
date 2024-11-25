@@ -12,6 +12,7 @@ use App\Views\Client\Layouts\Header;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Product;
+use App\Models\Post;
 use App\Models\User;
 use App\Helpers\AuthHelper;
 use Mailer;
@@ -22,7 +23,7 @@ class HomeController
     // hiển thị danh sách
     public static function index()
     {
-       
+
 
         $viewedProducts = isset($_COOKIE['viewed_product']) ? json_decode($_COOKIE['viewed_product'], true) : [];
         $productIds = array_column($viewedProducts, 'product_id');
@@ -31,8 +32,10 @@ class HomeController
         $categories = $category->getAllCategoryByStatus();
         // lấy dữ liệu sản phẩm từ database
         $product = new Product();
-        $products = $product->getAllProductByStatus();
+        $products = $product->getAllProductLimit8();
 
+        $posts = new Post();
+        $post = $posts->getAllPostLimit4();
         $product_watched = $product->getProductByWatched($ids);
         $products = array_filter($products, function ($product) use ($product_watched) {
 
@@ -43,14 +46,14 @@ class HomeController
             }
             return true;
         });
-       
+
         $data = [
             'categories' => $categories,
             'products' => array_merge($product_watched, $products),
-          
+            'posts' => $post
         ];
-       
-      
+
+
         Header::render();
         Notification::render();
         NotificationHelper::unset();
@@ -61,8 +64,8 @@ class HomeController
     public static function thanks()
     {
         $is_login = AuthHelper::checkLogin();
-        if($is_login){
-           
+        if ($is_login) {
+
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $vnp_ResponseCode = $_GET['vnp_ResponseCode'] ?? null;
                 if ($vnp_ResponseCode == '00') {
@@ -82,7 +85,7 @@ class HomeController
                         "vnp_PayDate" => $date,
                         "vnp_ResponseCode" => $_GET['vnp_ResponseCode'],
                         "vnp_TransactionStatus" => $_GET['vnp_TransactionStatus'],
-                        "vnp_TxnRef" => $_GET['vnp_TxnRef'], 
+                        "vnp_TxnRef" => $_GET['vnp_TxnRef'],
                         "order_id" => $_SESSION['order_id'],
                     ];
                     $vnpays = new vnpays();
@@ -95,10 +98,10 @@ class HomeController
                     exit();
                 }
             }
-        }else{
+        } else {
             NotificationHelper::error('s', 'Bnạ không có quyền truy cập trang này!');
             header('location: /');
         }
-       
+
     }
 }
