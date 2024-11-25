@@ -29,7 +29,6 @@ class detail extends BaseView
         <div class="col-md-9">
           <div class="card border-dark ">
             <div class="card-header">Chi tiết thanh toán - <span class="text-danger">
-
                 <?php
                 if ($data[0]['orderStatus'] === 1):
                   ?>

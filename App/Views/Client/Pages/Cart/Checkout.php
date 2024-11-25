@@ -165,7 +165,7 @@ class Checkout extends BaseView
 								<input type="hidden" id="district-input" name="district_">
 								<div class="col-md-6">
 									<div class="form-group">
-										<label for="country">Phường</label>
+										<label for="country">Phường/Xã</label>
 										<div class="select-wrap">
 											<div class="icon"><span class="ion-ios-arrow-down"></span></div>
 											<select name="ward" id="ward" class="select-form-order">
@@ -191,7 +191,6 @@ class Checkout extends BaseView
 												<option value="COD">Thanh toán khi nhận hàng</option>
 												<option value="VNPAY">Thanh toán qua VNPAY</option>
 												<option value="MOMO">Thanh toán qua MoMo</option>
-
 											</select>
 										</div>
 									</div>
