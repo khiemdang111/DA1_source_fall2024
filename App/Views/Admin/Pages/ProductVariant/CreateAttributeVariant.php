@@ -14,7 +14,7 @@ class CreateAttributeVariant extends BaseView
 
       <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-5 col-md-5 col-xl-5">
             <div class="card mb-6">
               <!-- Account -->
               <div class="card-body">
@@ -23,7 +23,7 @@ class CreateAttributeVariant extends BaseView
               <div class="card-body pt-4">
                 <form action="" id="" method="post" enctype="multipart/form-data">
                   <div class="row g-6">
-                    <div class="col-5 col-md-5 col-xl-5">
+                    <div class="col-12 col-md-12 col-xl-12">
                       <table class="table table-striped">
                         <thead>
                           <tr>
@@ -78,48 +78,52 @@ class CreateAttributeVariant extends BaseView
 
                       </table>
                     </div>
-                    <div class="col-7 col-md-7 col-xl-7">
-                      <div class="card">
-                        <!-- Account -->
-                        <div class="card-body">
-                          <h4 class="text-center">Thêm thuộc tính</h4>
-                        </div>
-                        <div class="card-body pt-4">
-                          <form action="/admin/addAttribute" id="" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="method" id="" value="POST">
-                            <div class="row g-6">
-                              <input type="hidden" name="product_id" value="<?= $data[0]['product_id'] ?>">
-                              <div class="col-md-12">
-                                <label for="product_variant_name" class="form-label">Tên thuộc tính<span
-                                    class="text-danger">
-                                    *</span></label>
-                                <input class="form-control" type="text" id="product_variant_name"
-                                  name="product_variant_name" placeholder="VD: màu, kích thước" />
-                              </div>
-                              <div class="col-md-12">
-                                <label for="product_variant_value" class="form-label">Giá trị<span class="text-danger">
-                                    *</span></label>
-                                <input class="form-control" type="text" id="product_variant_value"
-                                  name="product_variant_value" placeholder="VD: lớn, trung bình, nhỏ..." />
-                              </div>
-                            </div>
-                            <div class="mt-6">
-                              <button type="submit" class="btn btn-primary me-3" name>Lưu</button>
-                              <button type="reset" class="btn btn-outline-secondary" name>Nhập lại</button>
-                            </div>
-                          </form>
-                        </div>
-                        <!-- /Account -->
+                  </div>
+                </form>
+              </div>
+            </div>
+            </div>
+            <div class="col-7 col-md-7 col-xl-7">
+              <div class="card">
+                <!-- Account -->
+                <div class="card-body">
+                  <h4 class="text-center">Thêm thuộc tính</h4>
+                </div>
+                <div class="card-body pt-4">
+                  <form action="/admin/addAttribute" id="" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="method" value="POST">
+                    <div class="row g-6">
+                      <input type="hidden" name="product_id" value="<?= $data[0]['product_id'] ?>">
+                      <div class="col-md-12">
+                        <label for="product_variant_name" class="form-label">Tên thuộc tính<span class="text-danger">
+                            *</span></label>
+                        <input class="form-control" type="text" id="product_variant_name" name="product_variant_name"
+                          placeholder="VD: màu, kích thước" />
+                      </div>
+                      <div class="col-md-12">
+                        <label for="product_variant_value" class="form-label">Giá trị<span class="text-danger">
+                            *</span></label>
+                        <input class="form-control" type="text" id="product_variant_value" name="product_variant_value"
+                          placeholder="VD: lớn, trung bình, nhỏ..." />
                       </div>
                     </div>
-                  </div>
+                    <div class="mt-6">
+                      <button type="submit" class="btn btn-primary me-3" name>Lưu</button>
+                      <button type="reset" class="btn btn-outline-secondary" name>Nhập lại</button>
+                    </div>
+                  </form>
+                </div>
+                <!-- /Account -->
               </div>
-              </form>
             </div>
-            <!-- /Account -->
           </div>
         </div>
+        </form>
       </div>
+      <!-- /Account -->
+    </div>
+    </div>
+    </div>
     </div>
     <?php
   }

@@ -10,15 +10,11 @@ use App\Validations\ProductValidation;
 use App\Views\Admin\Layouts\Footer;
 use App\Views\Admin\Layouts\Header;
 use App\Views\Admin\Components\Notification;
-use App\Views\Admin\Pages\Product\Create;
-use App\Views\Admin\Pages\Product\Edit;
-use App\Views\Admin\Pages\Product\Index;
 use App\Views\Admin\Pages\ProductVariant\SettingVariant;
 use App\Views\Admin\Pages\ProductVariant\SettingPriceVariant;
 use App\Views\Admin\Pages\ProductVariant\DetailSettingVariant;
 use App\Views\Admin\Pages\ProductVariant\createAttributeVariant;
 use App\Views\Admin\Pages\ProductVariant\EditAttributeVariant;
-use App\Views\Admin\Pages\Recycle\ProductRecycle;
 
 class ProductVariantController
 {
