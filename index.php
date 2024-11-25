@@ -20,10 +20,12 @@ use App\Helpers\AuthHelper;
 
  AuthHelper::middleware();
 
+// ******** Error ***** //
+Route::get('/notfound', controllerMethod: 'App\Controllers\Client\HomeController@notFound');
 
 
 // *** Client
-Route::get('/', 'App\Controllers\Client\HomeController@index');
+Route::get('/', controllerMethod: 'App\Controllers\Client\HomeController@index');
 Route::delete('/home/delete', 'App\Controllers\Client\CartController@deleteItem');
 
 Route::get('/products', 'App\Controllers\Client\ProductController@index');

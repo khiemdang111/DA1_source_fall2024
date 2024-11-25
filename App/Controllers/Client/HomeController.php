@@ -15,6 +15,7 @@ use App\Models\Product;
 use App\Models\Post;
 use App\Models\User;
 use App\Helpers\AuthHelper;
+use App\Views\Error\NotFound;
 use Mailer;
 use App\Views\Client\Pages\Cart\Bill;
 
@@ -103,5 +104,8 @@ class HomeController
             header('location: /');
         }
 
+    }
+    public static function notFound(){
+        NotFound::render();
     }
 }
