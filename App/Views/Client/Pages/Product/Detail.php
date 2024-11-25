@@ -74,7 +74,7 @@ class Detail extends BaseView
                         endif;
                         ?>
                         <p>
-                            <?= $data['product'][0]['description'] ?>
+                            <?= $data['product'][0]['short_description'] ?>
                         </p>
                         <div class="form-group">
                             <?php
@@ -121,8 +121,6 @@ class Detail extends BaseView
                                 <?php
                             }
                             ?>
-
-
                         </div>
                         <form action="/cart/add" method="post">
                             <div class="row mt-4">
@@ -189,7 +187,7 @@ class Detail extends BaseView
                                                             ?>
                                                             <!-- Comment Row -->
                                                             <div class="d-flex flex-row comment-row m-t-0 my-3">
-                                                                <div class="p-2">
+                                                            <div class="p-2">
                                                                 <?php
                                                                     if ($item['avatar']) :
                                                                     ?>

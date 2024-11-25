@@ -19,7 +19,7 @@ class Edit extends BaseView
               <!-- Account -->
               <div class="card-body">
                 <div class="">
-                  <h2 class="text-center">Cập nhật sản phẩm dfhjk</h2>
+                  <h2 class="text-center">Cập nhật sản phẩm</h2>
                 </div>
               </div>
               <div class="card-body pt-4">
@@ -27,7 +27,7 @@ class Edit extends BaseView
                   <input type="hidden" name="method" id="" value="PUT">
                   <div class="row g-6">
                   <div class="col-md-12">
-                      <label for="name" class="form-label">Tên <span class="text-danger"> *</span></label>
+                      <label for="name" class="form-label">ID: <span class="text-danger"> *</span></label>
                       <input value="<?= $data['product']['id'] ?>" class="form-control" type="text" id="name" name="name" disabled/>
                     </div>
                     <div class="col-md-12">
@@ -62,8 +62,20 @@ class Edit extends BaseView
                     </div>
                     <div class="col-md-12">
                       <label for="description" class="form-label">Mô tả <span class="text-danger"> *</span></label>
-                      <textarea class="form-control" type="text" id="description" rows="5" name="description"
+                      <textarea class="form-control" type="text" id="description" rows="7" name="description"
                         placeholder="Nhập mô tả"><?= $data['product']['description'] ?></textarea>
+                    </div>
+                    <div class="col-md-12">
+                      <label for="short_description" class="form-label">Mô tả ngắn<span class="text-danger"> *</span></label>
+                      <textarea class="form-control" type="text" id="short_description" rows="5" name="short_description"
+                        placeholder="Nhập mô tả"><?= $data['product']['short_description'] ?></textarea>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="status" class="form-label">Trạng thái <span class="text-danger"> *</span></label>
+                      <select name="status" class="select2 form-select">
+                      <option value="1" <?php if ($data['product']['status'] == 1) echo 'selected="selected"'; ?>>Hiển thị</option>
+                      <option value="2" <?php if ($data['product']['status'] == 2) echo 'selected="selected"'; ?>>Ẩn</option>
+                      </select>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="category_id">Danh mục <span class="text-danger"> *</span></label>
@@ -79,22 +91,10 @@ class Edit extends BaseView
                       </select>
                     </div>
                     <div class="col-md-6">
-                      <label for="ogirin_id" class="form-label">Thương hiệu <span class="text-danger"> *</span></label>
-                      <select id="ogirin_id" class="select2 form-select">
-                        <option value="">Chọn thương hiệu</option>
-                        <option value="en">English</option>
-                        <option value="fr">French</option>
-                        <option value="de">German</option>
-                        <option value="pt">Portuguese</option>
-                      </select>
+                      <label for="ogirin" class="form-label">Thương hiệu <span class="text-danger"> *</span></label>
+                      <input type="text" class="form-control" id="origin" name="origin" value="<?= $data['product']['origin'] ?>"/>
                     </div>
-                    <div class="col-md-6">
-                      <label for="status" class="form-label">Trạng thái <span class="text-danger"> *</span></label>
-                      <select name="status" class="select2 form-select">
-                      <option value="1" <?php if ($data['product']['status'] == 1) echo 'selected="selected"'; ?>>Hiển thị</option>
-                      <option value="2" <?php if ($data['product']['status'] == 2) echo 'selected="selected"'; ?>>Ẩn</option>
-                      </select>
-                    </div>
+                    
                   </div>
                   <div class="mt-6">
                     <button type="submit" class="btn btn-primary me-3" name>Lưu</button>

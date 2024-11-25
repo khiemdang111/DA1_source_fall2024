@@ -62,8 +62,21 @@ class Create extends BaseView
                     </div>
                     <div class="col-md-12">
                       <label for="description" class="form-label">Mô tả <span class="text-danger"> *</span></label>
-                      <textarea class="form-control" type="text" id="description" rows="5" name="description"
+                      <textarea class="form-control" type="text" id="description" rows="7" name="description"
                         placeholder="Nhập mô tả"></textarea>
+                    </div>
+                    <div class="col-md-12">
+                      <label for="short_description" class="form-label">Mô tả ngắn <span class="text-danger"> *</span></label>
+                      <textarea class="form-control" type="text" id="short_description" rows="5" name="short_description"
+                        placeholder="Nhập mô tả"></textarea>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="form-label" for="status"> Trạng thái <span class="text-danger"> *</span></label>
+                      <select id="status" name="status" class="select2 form-select">
+                        <option value="">Chọn trang thái </option>
+                        <option value="1">Hoạt động </option>
+                        <option value="0">Không hoạt động </option>
+                      </select>
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="category_id">Danh mục <span class="text-danger"> *</span></label>
@@ -80,21 +93,8 @@ class Create extends BaseView
                       </select>
                     </div>
                     <div class="col-md-6">
-                      <label class="form-label" for="status"> Trạng thái <span class="text-danger"> *</span></label>
-                      <select id="status" name="status" class="select2 form-select">
-                        <option value="">Chọn trang thái </option>
-                        <option value="1">Hoạt động </option>
-                        <option value="0">Không hoạt động </option>
-                      </select>
-                    </div>
-                    <div class="col-md-12">
-                      <label for="ogirin_id" class="form-label">Thương hiệu <span class="text-danger"> *</span></label>
-                      <select id="ogirin_id" name="ogirin_id" class="select2 form-select">
-                        <option value="">Chọn thương hiệu</option>
-                        <option value="1">English</option>
-                        <option value="2">French</option>
-                        <option value="3">German</option>
-                      </select>
+                      <label for="ogirin" class="form-label">Thương hiệu <span class="text-danger"> *</span></label>
+                      <input type="text" class="form-control" id="origin" name="origin" />
                     </div>
                     
                   </div>
