@@ -12,6 +12,7 @@ use App\Views\Admin\Pages\User\Edit;
 use App\Views\Admin\Pages\User\index;
 use App\Validations\UserValidation;
 use App\Views\Admin\Pages\Recycle\UserRecycle;
+use App\Helpers\AuthHelper;
 
 class UserController
 {
@@ -20,7 +21,7 @@ class UserController
     // hiển thị danh sách
     public static function index()
     {
-
+        AuthHelper::checkPermission([0]);
         $user = new User();
         $data = $user->getAllUser();
 
@@ -34,6 +35,7 @@ class UserController
 
     public static function create()
     {
+        AuthHelper::checkPermission([0]);
         Header::render();
         Notification::render();
         NotificationHelper::unset();
@@ -91,7 +93,7 @@ class UserController
 
     public static function edit(int $id)
     {
-
+        AuthHelper::checkPermission([0]);
         $user = new User();
         $data = $user->getOneUser($id);
         if (!$data) {
@@ -195,6 +197,7 @@ class UserController
         }
     }
     public function userRecycle() {
+        AuthHelper::checkPermission([0]);
         $user = new User();
         $data = $user->getAllUserByStatusRecycle();
 

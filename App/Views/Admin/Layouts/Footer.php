@@ -34,7 +34,7 @@ class Footer extends BaseView
     <script src="<?= APP_URL ?>/public/assets/admin/assets/vendor/js/bootstrap.js"></script>
     <script src="<?= APP_URL ?>/public/assets/admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="<?= APP_URL ?>/public/assets/admin/assets/vendor/js/menu.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->

@@ -96,7 +96,7 @@ class AuthHelper
                 header('Location: /login');
                 exit();
             }
-            if ($_SESSION['user']['role'] != 0) {
+            if ($_SESSION['user']['role'] != 0 && $_SESSION['user']['role'] != 4 && $_SESSION['user']['role'] != 5) {
                 NotificationHelper::error('admin', 'Tài khoản này không có quyền truy cập');
                 header('Location: /');
                 exit();
@@ -146,7 +146,7 @@ class AuthHelper
         NotificationHelper::success('update_user', 'Cập nhật thông tin tài khoản thành công');
         return true;
     }
-    
+
 
     public static function checkExistedInfo($column, $info)
     {
@@ -157,6 +157,41 @@ class AuthHelper
         } else {
             return $result;
         }
+    }
+    public static function checkPermission($requiredRole)
+    {
+        // Kiểm tra nếu người dùng chưa đăng nhập
+        if (!isset($_SESSION['user'])) {
+            $_SESSION['alert'] = [
+                'title' => 'Error!',
+                'text' => 'Vui lòng đăng nhập để thực hiện thao tác này',
+                'icon' => 'error'
+            ];
+            header('Location: /login');
+            exit();
+        }
+
+        // Lấy role của người dùng từ session
+        $userRole = $_SESSION['user']['role'];
+
+        // Nếu role = 0, cho phép tất cả
+        if ($userRole == 0) {
+            return true;
+        }
+
+        // Kiểm tra quyền
+        if (in_array($userRole, $requiredRole)) {
+            return true;
+        }
+
+        // Thêm thông báo lỗi vào session
+        $_SESSION['alert'] = [
+            'title' => 'Error!',
+            'text' => 'Bạn không có quyền truy cập chức năng này',
+            'icon' => 'error'
+        ];
+        header('Location: /admin');
+        exit();
     }
 
 

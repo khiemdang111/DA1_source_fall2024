@@ -17,6 +17,7 @@ use App\Views\Admin\Pages\Product\SettingPriceVariant;
 use App\Views\Admin\Pages\Product\DetailSettingVariant;
 use App\Views\Admin\Pages\Product\createAttributeVariant;
 use App\Views\Admin\Pages\Recycle\ProductRecycle;
+use App\Helpers\AuthHelper;;
 
 class ProductController
 {
@@ -26,11 +27,12 @@ class ProductController
     public static function index()
     {
 
-        $product = new Product();
+        AuthHelper::checkPermission([0, 4]);
+        $product = new Product();        
         $data = $product->getAllProductByStatus();
         Header::render();
         Notification::render();
-        //hủy thông báo
+        //hủy thông báo     
         NotificationHelper::unset();
         Index::render($data);
         Footer::render();
@@ -40,7 +42,7 @@ class ProductController
     // hiển thị giao diện form thêm
     public static function create()
     {
-
+        AuthHelper::checkPermission([0, 4]);
         // $product = new Product();
         $category = new Category();
         $categories = $category->getAllCategory();
@@ -118,7 +120,7 @@ class ProductController
 
     public static function edit(int $id)
     {
-
+        AuthHelper::checkPermission([0, 4]);
         $product = new product();
         $data_product = $product->getOneproduct($id);
         $category = new category();
@@ -213,6 +215,7 @@ class ProductController
 
     public static function productRecycle()
     {
+        AuthHelper::checkPermission([0]);
         $product = new Product();
         $data = $product->getAllProductByStatusRecycle();
         Header::render();

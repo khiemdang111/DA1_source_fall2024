@@ -11,6 +11,7 @@ use App\Views\Admin\Components\Notification;
 use App\Views\Admin\Pages\Category\Create;
 use App\Views\Admin\Pages\Category\Edit;
 use App\Views\Admin\Pages\Category\Index;
+use App\Helpers\AuthHelper;
 
 class CategoryController
 {
@@ -19,6 +20,7 @@ class CategoryController
     // hiển thị danh sách
     public static function index()
     {
+        AuthHelper::checkPermission([0, 4]);
         $category = new Category();
         $data = $category->getAllCategoryByStatus();
 
@@ -34,7 +36,7 @@ class CategoryController
     // hiển thị giao diện form thêm
     public static function create()
     {
-
+        AuthHelper::checkPermission([0, 4]);
         // var_dump($_SESSION);
         Header::render();
         // hiển thị form thêm
@@ -94,6 +96,7 @@ class CategoryController
     // hiển thị giao diện form sửa
     public static function edit(int $id)
     {
+        AuthHelper::checkPermission([0, 4]);
         $category = new Category();
         $data = $category->getOneCategory($id);
         if (!$data) {

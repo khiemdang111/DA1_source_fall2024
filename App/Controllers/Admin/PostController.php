@@ -16,6 +16,7 @@ use App\Views\Admin\Pages\Post\Create;
 use App\Views\Admin\Pages\Post\Edit;
 use App\Views\Admin\Pages\Post\index;
 use App\Views\Admin\Pages\Recycle\PostRecycle;
+use App\Helpers\AuthHelper;
 
 
 
@@ -28,7 +29,7 @@ class PostController
     // hiển thị danh sách
     public static function index()
     {
-
+        AuthHelper::checkPermission([0, 5]);
         $post = new Post();
         $data = $post->getAllByStatus();
 
@@ -41,6 +42,7 @@ class PostController
 
     public static function create()
     {
+        AuthHelper::checkPermission([0, 5]);
         $user = new User();
         $user_all = $user->getAllUser();
 
@@ -109,7 +111,7 @@ class PostController
 
     public static function edit(int $id)
     {
-
+        AuthHelper::checkPermission([0, 5]);
         $user = new User();
         $user_all = $user->getAllUser();
 
@@ -201,7 +203,7 @@ class PostController
     }
     public static function PostRecycle()
     {
-
+        AuthHelper::checkPermission([0]);
         $post = new Post();
         $data = $post->getAllPostByStatusRecycle();
 
