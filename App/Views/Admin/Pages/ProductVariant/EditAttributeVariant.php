@@ -26,49 +26,70 @@ class EditAttributeVariant extends BaseView
                 <div class="card-body pt-4">
                   <form action="/admin/product-variant/update/<?= $variant[0]['id'] ?>" method="post">
                     <input type="hidden" name="method" value="POST">
+                    <input type="hidden" name="table" value="product_variants">
                     <div class="col-md-12 mb-3">
                       <label for="variant_name" class="form-label">Thuộc tính</label>
+                      <input type="hidden" name="variant_id" value="<?= $variant[0]['id'] ?>">
                       <input type="text" class="form-control" name="variant_name" id="variant_name"
                         value="<?= $variant[0]['name'] ?>">
                     </div>
                     <button type="submit" class="btn btn-primary">Cập nhật</button>
-                    <button type="reset" class="btn btn-secondary">Nhập lại</button>
                 </div>
                 </form>
               </div>
             </div>
             <div class="col-md-6"></div>
-            <div class="col-md-4 mt-3">
+            <div class="col-md-6 mt-3">
               <div class="card">
                 <div class="card-body">
+                <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Thêm mới
+  </button>
+  <ul class="dropdown-menu">
+    <li><button class="dropdown-item" type="button">Action</button></li>
+    <li><button class="dropdown-item" type="button">Another action</button></li>
+    <li><button class="dropdown-item" type="button">Something else here</button></li>
+  </ul>
+</div>
+
                   <table class="table table-striped">
                     <thead>
                       <tr>
                         <th>Tên</th>
-                        <th class="" style="width: 40%">Tùy chỉnh</th>
+                        <th>Tùy chỉnh</th>
                       </tr>
                     </thead>
 
                     <tbody>
+                      <input type="hidden" name="method" value="POST">
                       <?php
                       foreach ($option_name as $item):
                         ?>
                         <tr>
-                          <th><?= $item['variant_option_name'] ?></th>
+                          <th class="w-75">            
+                            <form class="" action="/admin/product-variant/update/<?= $item['variant_option_id'] ?>"
+                              method="post" style="display: inline-block;">
+                              <input type="hidden" name="method" value="POST" id="">
+                              <input type="text" name="variant_name" class="form-control"
+                              value="<?= $item['variant_option_name'] ?>">
+                              <input type="hidden" name="table" value="product_variant_options">
+                              <input type="hidden" name="variant_id" placeholder="" value="<?= $item['variant_option_id'] ?>">
+                              <button type="submit" class="btn btn-primary mt-3">
+                                Cập nhật</button>
+                            </form>
+                            
+                          </th>
                           <td>
-                            <div class="dropdown">
-                              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                              </button>
-                              <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/admin/products/<?= $item['id'] ?>"><i
-                                    class="bx bx-edit-alt me-1"></i> Sửa</a>
-                                <form class="w-100" action="/admin/delete/products/<?= $item['id'] ?>" method="post"
-                                  style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
-                                  <input type="hidden" name="method" value="POST" id="">
-                                  <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Xóa</button>
-                                </form>
-                              </div>
+                            <form class="w-20" action="/admin/delete/attributeVariant/<?= $item['variant_option_id'] ?>"
+                              method="post" style="display: inline-block;"
+                              onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
+                              <input type="hidden" name="method" value="POST" id="">
+                              <input type="hidden" name="table" value="product_variant_options">
+                              <input type="hidden" name="variant_id" value="<?= $item['variant_option_id'] ?>">
+                              <button type="submit" class="btn btn-outline-danger">
+                                <i class="bx bx-trash"></i></button>
+                            </form>
                             </div>
                           </td>
                         </tr>

@@ -212,7 +212,8 @@ class ProductVariantController
             exit;
         }
     }
-    public function editAttributeVariant($id){
+    public function editAttributeVariant($id)
+    {
         $product = new ProductVariant();
         $variant = $product->getAllAttribute($id);
         $option_name = $product->getAllAttributeAndOptionName($id);
@@ -226,14 +227,38 @@ class ProductVariantController
         EditAttributeVariant::render($data);
         Footer::render();
     }
-    public function updateVariantAttribute($id){
-        // $product = new ProductVariant();
-        // $variant = $product->updateVariantAttribute($id);
+    public function updateVariantAttribute($id)
+    {
         $data = [
-            'variant_name' => $_POST['variant_name'],
-            'variant_option_name' => $_POST['variant_option_name'],
+            'id' => $_POST['variant_id'],
+            'name' => $_POST['variant_name'],
         ];
-        var_dump($data);
-        die;
+        $table = $_POST['table'];
+        $productvariant = new ProductVariant();
+        $result = $productvariant->updateAttribute($data, $table);
+        if ($result) {
+            NotificationHelper::success('success_add_attribute', 'Cập nhật thành công');
+            header('Location: /admin/variant/add');
+        } else {
+            NotificationHelper::error('error_add_attribute', 'Cập nhật thất bại!');
+            header("Location: /admin/variant/add");
+        }
+    }
+    public function delVariantAttribute($id)
+    {
+        $data = [
+            'id' => $_POST['variant_id'],
+            'status' => 0,
+        ];
+        $table = $_POST['table'];
+        $productvariant = new ProductVariant();
+        $result = $productvariant->delAttribute($data, $table);
+        if ($result) {
+            NotificationHelper::success('success_add_attribute', 'Cập nhật thành công');
+            header('Location: /admin/variant/add');
+        } else {
+            NotificationHelper::error('error_add_attribute', 'Cập nhật thất bại!');
+            header("Location: /admin/variant/add");
+        }
     }
 }

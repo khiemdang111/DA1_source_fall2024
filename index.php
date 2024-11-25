@@ -102,6 +102,7 @@ Route::post('/admin/skus', 'App\Controllers\Admin\ProductVariantController@addSk
 Route::get('/admin/products/search', 'App\Controllers\Admin\ProductController@searchProduct');
 Route::get('/admin/productvariant/edit/{id}', 'App\Controllers\Admin\ProductVariantController@editAttributeVariant');
 Route::post('/admin/product-variant/update/{id}', 'App\Controllers\Admin\ProductVariantController@updateVariantAttribute');
+Route::post('/admin/delete/attributeVariant/{id}', 'App\Controllers\Admin\ProductVariantController@delVariantAttribute');
 
 
 //  *** Category

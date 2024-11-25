@@ -91,7 +91,7 @@ class ProductVariant extends BaseModel
   {
     $result = [];
     try {
-      $sql = "SELECT products.*, product_variants.id AS product_variant_id, product_variants.name AS product_variant_name  FROM `products` INNER JOIN product_variants on products.id = product_variants.product_id;";
+      $sql = "SELECT products.*, product_variants.id AS product_variant_id, product_variants.name AS product_variant_name  FROM `products` INNER JOIN product_variants on products.id = product_variants.product_id WHERE product_variants.status = " . self::STATUS_ENABLE . "";
       $result = $this->_conn->MySQLi()->query($sql);
       return $result->fetch_all(MYSQLI_ASSOC);
     } catch (\Throwable $th) {
@@ -103,7 +103,7 @@ class ProductVariant extends BaseModel
   {
     $result = [];
     try {
-      $sql = "SELECT product_variant_options.*, products.id AS pro_id, product_variants.name AS pro_variant_name , product_variants.id AS pro_variant_id FROM product_variant_options INNER JOIN product_variants on product_variant_options.product_variant_id = product_variants.id INNER JOIN products on product_variants.product_id = products.id;";
+      $sql = "SELECT product_variant_options.*, products.id AS pro_id, product_variants.name AS pro_variant_name , product_variants.id AS pro_variant_id FROM product_variant_options INNER JOIN product_variants on product_variant_options.product_variant_id = product_variants.id INNER JOIN products on product_variants.product_id = products.id WHERE product_variants.status = " . self::STATUS_ENABLE . "";
       $result = $this->_conn->MySQLi()->query($sql);
       return $result->fetch_all(MYSQLI_ASSOC);
     } catch (\Throwable $th) {
@@ -148,7 +148,7 @@ class ProductVariant extends BaseModel
   {
     $result = [];
     try {
-      $sql = "SELECT product_variants.*, product_variant_options.name AS option_name FROM `product_variants` INNER JOIN product_variant_options on product_variants.id = product_variant_options.product_variant_id;";
+      $sql = "SELECT product_variants.*, product_variant_options.name AS option_name, product_variant_options.status AS option_status FROM `product_variants` INNER JOIN product_variant_options on product_variants.id = product_variant_options.product_variant_id WHERE product_variants.status =1 AND product_variant_options.status = 1";
       $result = $this->_conn->MySQLi()->query($sql);
       return $result->fetch_all(MYSQLI_ASSOC);
     } catch (\Throwable $th) {
@@ -571,6 +571,82 @@ class ProductVariant extends BaseModel
     } catch (\Throwable $th) {
       error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
       return $result;
+    }
+  }
+  public function updateAttribute($data, $table)
+  {
+    $tb = $table;
+    $name = $data['name'];
+    $id = $data['id'];
+    try {
+      // Kết nối cơ sở dữ liệu
+      $conn = $this->_conn->MySQLi();
+      if (!$conn) {
+        throw new \Exception('Không thể kết nối cơ sở dữ liệu: ' . mysqli_connect_error());
+      }
+
+      // Chuẩn bị câu lệnh SQL UPDATE
+      $sql = "UPDATE $tb SET name = ? WHERE id = ?";
+      // Chuẩn bị statement
+      $stmt = $conn->prepare($sql);
+
+      if (!$stmt) {
+        throw new \Exception('Lỗi khi chuẩn bị câu lệnh: ' . $conn->error);
+      }
+
+      // Gắn các giá trị vào statement
+      $stmt->bind_param("si", $name, $id); // "ii" cho 2 giá trị kiểu integer
+
+      // Thực hiện câu lệnh
+      if (!$stmt->execute()) {
+        throw new \Exception('Lỗi khi thực thi câu lệnh: ' . $stmt->error);
+      }
+
+      // Đóng statement
+      $stmt->close();
+
+      return true;
+    } catch (\Throwable $th) {
+      error_log('Lỗi khi cập nhật dữ liệu trong bảng product_variant_option_combination: ' . $th->getMessage());
+      return false;
+    }
+  }
+  public function delAttribute($data, $table)
+  {
+    $tb = $table;
+    $status = $data['status'];
+    $id = $data['id'];
+    try {
+      // Kết nối cơ sở dữ liệu
+      $conn = $this->_conn->MySQLi();
+      if (!$conn) {
+        throw new \Exception('Không thể kết nối cơ sở dữ liệu: ' . mysqli_connect_error());
+      }
+
+      // Chuẩn bị câu lệnh SQL UPDATE
+      $sql = "UPDATE $tb SET status = ? WHERE id = ?";
+      // Chuẩn bị statement
+      $stmt = $conn->prepare($sql);
+
+      if (!$stmt) {
+        throw new \Exception('Lỗi khi chuẩn bị câu lệnh: ' . $conn->error);
+      }
+
+      // Gắn các giá trị vào statement
+      $stmt->bind_param("si", $status, $id); // "ii" cho 2 giá trị kiểu integer
+
+      // Thực hiện câu lệnh
+      if (!$stmt->execute()) {
+        throw new \Exception('Lỗi khi thực thi câu lệnh: ' . $stmt->error);
+      }
+
+      // Đóng statement
+      $stmt->close();
+
+      return true;
+    } catch (\Throwable $th) {
+      error_log('Lỗi khi cập nhật dữ liệu trong bảng product_variant_option_combination: ' . $th->getMessage());
+      return false;
     }
   }
 }

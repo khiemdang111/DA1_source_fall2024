@@ -21,7 +21,6 @@ class CreateAttributeVariant extends BaseView
                 <h4>Tất cả các thuộc tính</h4>
               </div>
               <div class="card-body pt-4">
-                <form action="" id="" method="post" enctype="multipart/form-data">
                   <div class="row g-6">
                     <div class="col-12 col-md-12 col-xl-12">
                       <table class="table table-striped">
@@ -60,14 +59,20 @@ class CreateAttributeVariant extends BaseView
                               <td>
                                 <?= implode(', ', array_column($options, 'option_name')) // Hiển thị danh sách option_name, cách nhau bởi dấu phẩy ?>
                               </td>
-                              <td>
+                              <td class="d-flex justify-content-between">
                                 <div class="d-flex justify-content-center">
-                                  <a href="/admin/productvariant/edit/<?= $first_option['id'] ?>">
+                                  <a class="btn btn-outline-info mx-1" href="/admin/productvariant/edit/<?= $first_option['id'] ?>">
                                     <i class="bx bx-edit-alt"></i>
                                   </a>
-                                  <a href="/admin/productvariant/del/<?= $first_option['id'] ?>">
-                                    <i class="bx bx-trash me-1"></i>
-                                  </a>
+                                  <form class="w-100" action="/admin/delete/attributeVariant/<?= $first_option['id'] ?>"
+                                    method="post" style="display: inline-block;"
+                                    onsubmit="return confirm('Bạn có chắc chắn muốn xóa?')">
+                                    <input type="hidden" name="method" value="POST" id="">
+                                    <input type="hidden" name="variant_id" value="<?= $first_option['id'] ?>">
+                                    <input type="hidden" name="table" value="product_variants">
+                                    <button type="submit" class="btn btn-outline-danger">
+                                      <i class="bx bx-trash"></i></button>
+                                  </form>
                                 </div>
                               </td>
                             </tr>
@@ -79,48 +84,47 @@ class CreateAttributeVariant extends BaseView
                       </table>
                     </div>
                   </div>
-                </form>
-              </div>
-            </div>
-            </div>
-            <div class="col-7 col-md-7 col-xl-7">
-              <div class="card">
-                <!-- Account -->
-                <div class="card-body">
-                  <h4 class="text-center">Thêm thuộc tính</h4>
-                </div>
-                <div class="card-body pt-4">
-                  <form action="/admin/addAttribute" id="" method="post" enctype="multipart/form-data">
-                    <input type="hidden" name="method" value="POST">
-                    <div class="row g-6">
-                      <input type="hidden" name="product_id" value="<?= $data[0]['product_id'] ?>">
-                      <div class="col-md-12">
-                        <label for="product_variant_name" class="form-label">Tên thuộc tính<span class="text-danger">
-                            *</span></label>
-                        <input class="form-control" type="text" id="product_variant_name" name="product_variant_name"
-                          placeholder="VD: màu, kích thước" />
-                      </div>
-                      <div class="col-md-12">
-                        <label for="product_variant_value" class="form-label">Giá trị<span class="text-danger">
-                            *</span></label>
-                        <input class="form-control" type="text" id="product_variant_value" name="product_variant_value"
-                          placeholder="VD: lớn, trung bình, nhỏ..." />
-                      </div>
-                    </div>
-                    <div class="mt-6">
-                      <button type="submit" class="btn btn-primary me-3" name>Lưu</button>
-                      <button type="reset" class="btn btn-outline-secondary" name>Nhập lại</button>
-                    </div>
-                  </form>
-                </div>
-                <!-- /Account -->
               </div>
             </div>
           </div>
+          <div class="col-7 col-md-7 col-xl-7">
+            <div class="card">
+              <!-- Account -->
+              <div class="card-body">
+                <h4 class="text-center">Thêm thuộc tính</h4>
+              </div>
+              <div class="card-body pt-4">
+                <form action="/admin/addAttribute" id="" method="post" enctype="multipart/form-data">
+                  <input type="hidden" name="method" value="POST">
+                  <div class="row g-6">
+                    <input type="hidden" name="product_id" value="<?= $data[0]['product_id'] ?>">
+                    <div class="col-md-12">
+                      <label for="product_variant_name" class="form-label">Tên thuộc tính<span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text" id="product_variant_name" name="product_variant_name"
+                        placeholder="VD: màu, kích thước" />
+                    </div>
+                    <div class="col-md-12">
+                      <label for="product_variant_value" class="form-label">Giá trị<span class="text-danger">
+                          *</span></label>
+                      <input class="form-control" type="text" id="product_variant_value" name="product_variant_value"
+                        placeholder="VD: lớn, trung bình, nhỏ..." />
+                    </div>
+                  </div>
+                  <div class="mt-6">
+                    <button type="submit" class="btn btn-primary me-3" name>Lưu</button>
+                    <button type="reset" class="btn btn-outline-secondary" name>Nhập lại</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /Account -->
+            </div>
+          </div>
         </div>
-        </form>
       </div>
-      <!-- /Account -->
+      </form>
+    </div>
+    <!-- /Account -->
     </div>
     </div>
     </div>
