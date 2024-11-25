@@ -8,7 +8,7 @@ class Index extends BaseView
 {
     public static function render($data = null)
     {
-?>
+        ?>
         <!-- / Navbar -->
 
         <!-- Content wrapper -->
@@ -37,14 +37,9 @@ class Index extends BaseView
                         <form action="/admin/categories/search" method="get">
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    name="keywords"
-                                    value="<?=  (isset($_SESSION['keywords']) ? $_SESSION['keywords']: "") ?>" 
-                                    placeholder="Tìm kiếm"
-                                    aria-label="Tìm kiếm"
-                                    aria-describedby="basic-addon-search31" />
+                                <input type="text" class="form-control" name="keywords"
+                                    value="<?= (isset($_SESSION['keywords']) ? $_SESSION['keywords'] : "") ?>"
+                                    placeholder="Tìm kiếm" aria-label="Tìm kiếm" aria-describedby="basic-addon-search31" />
                             </div>
 
                         </form>
@@ -55,7 +50,7 @@ class Index extends BaseView
                                 <tr>
                                     <th style="width: 15px">Id</th>
                                     <th>Tên</th>
-                                    <th>Mô tả</th>
+                                    <th style="width: 25%">Mô tả</th>
                                     <th>Trạng thái</th>
                                     <th>Tùy chỉnh</th>
                                 </tr>
@@ -63,11 +58,15 @@ class Index extends BaseView
                             <tbody class="table-border-bottom-0">
                                 <?php
                                 foreach ($data as $item):
-                                ?>
+                                    ?>
                                     <tr>
                                         <td><?= $item['id'] ?></td>
                                         <td><?= $item['name'] ?></td>
-                                        <td><?= $item['description'] ?></td>
+                                        <td class="" style="width: 300px">
+                                            <div style="width: 300px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                                <?= $item['description'] ?>
+                                            </div>
+                                        </td>
                                         <td><?= ($item['status'] == 1) ? 'Hiển thị' : 'Ẩn' ?></td>
                                         <td>
                                             <div class="dropdown">
@@ -76,8 +75,11 @@ class Index extends BaseView
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="/admin/categories/<?= $item['id'] ?>"><i class="bx bx-edit-alt me-1"></i> Sửa</a>
-                                                    <form class="w-100" action="/admin/delete/categories/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
+                                                    <a class="dropdown-item" href="/admin/categories/<?= $item['id'] ?>"><i
+                                                            class="bx bx-edit-alt me-1"></i> Sửa</a>
+                                                    <form class="w-100" action="/admin/delete/categories/<?= $item['id'] ?>"
+                                                        method="post" style="display: inline-block;"
+                                                        onsubmit="return confirm('Chắc chưa?')">
                                                         <input type="hidden" name="method" value="POST" id="">
                                                         <input type="hidden" name="id" value="<?= $item['id'] ?>">
                                                         <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Xóa</button>
@@ -86,7 +88,7 @@ class Index extends BaseView
                                             </div>
                                         </td>
                                     </tr>
-                                <?php
+                                    <?php
                                 endforeach;
                                 ?>
                             </tbody>
@@ -101,6 +103,6 @@ class Index extends BaseView
 
                 <!--/ Bootstrap Dark Table -->
             </div>
-    <?php
+            <?php
     }
 }
