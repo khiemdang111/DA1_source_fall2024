@@ -50,7 +50,7 @@ class Edit extends BaseView
                     </div>
                     <div class="col-md-6">
                       <label for="date" class="form-label">Ngày-tháng-năm <span class="text-danger"> *</span></label>
-                      <input value="<?= $data['product']['date'] ?>" type="date" class="form-control" id="birthday" name="date" placeholder="Address" />
+                      <input value="<?= $data['product']['date'] ?>" type="type" class="form-control" id="date" name="date" placeholder="Address" />
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="is_featured">Nổi bật <span class="text-danger"> *</span></label>

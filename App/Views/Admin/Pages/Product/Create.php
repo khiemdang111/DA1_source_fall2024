@@ -49,8 +49,8 @@ class Create extends BaseView
                       </div>
                     </div>
                     <div class="col-md-6">
-                      <label for="birthday" class="form-label">Ngày-tháng-năm <span class="text-danger"> *</span></label>
-                      <input type="date" class="form-control" id="birthday" name="birthday" placeholder="Address" />
+                      <label for="date" class="form-label">Ngày-tháng-năm <span class="text-danger"> *</span></label>
+                      <input type="date" class="form-control" id="date" name="date" placeholder="Address" />
                     </div>
                     <div class="col-md-6">
                       <label for="is_featured" class="form-label">Nổi bật</label>
