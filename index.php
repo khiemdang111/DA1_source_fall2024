@@ -30,6 +30,8 @@ Route::delete('/home/delete', 'App\Controllers\Client\CartController@deleteItem'
 
 Route::get('/products', 'App\Controllers\Client\ProductController@index');
 Route::get('/products/{id}', 'App\Controllers\Client\ProductController@detail');
+Route::post('/products/rating', 'App\Controllers\Client\ProductController@ratingAction');
+
 Route::get('/register', 'App\Controllers\Client\AuthController@Register');
 Route::post('/register', 'App\Controllers\Client\AuthController@registerAction');
 // lọc sản phẩm theo loại

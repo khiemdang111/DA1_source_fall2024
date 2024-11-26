@@ -185,4 +185,18 @@ class ProductValidation
         
         return $is_valid;
     }
+    public static function createRating(){
+        $is_valid = true;
+        if (!isset($_POST['rating_data'])  || $_POST['rating_data'] === "") {
+            NotificationHelper::error('rating_data', 'Không để trống đánh giá');
+            $is_valid = false;
+        } 
+        if (!isset($_POST['user_review'])  || $_POST['user_review'] === "") {
+            NotificationHelper::error('user_review', 'Không để trống nội dung');
+            $is_valid = false;
+        } 
+        return $is_valid;
+        
+    }
+
 }

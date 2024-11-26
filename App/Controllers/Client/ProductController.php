@@ -8,6 +8,7 @@ use App\Helpers\ViewProductHelper;
 use App\Models\Category;
 use App\Models\Comment;
 use App\Models\Product;
+use App\Models\Rating;
 use App\Models\ProductVariant;
 use App\Views\Client\Components\Notification;
 use App\Views\Client\Layouts\Footer;
@@ -15,6 +16,7 @@ use App\Views\Client\Layouts\Header;
 use App\Views\Client\Pages\Product\Category as ProductCategory;
 use App\Views\Client\Pages\Product\Detail;
 use App\Views\Client\Pages\Product\Index;
+use App\Validations\ProductValidation;
 
 use App\Models\Origin;
 
@@ -126,12 +128,18 @@ class ProductController
         }
         $category_id = $detail[0]['category_id'];
         $comment = new Comment();
+        $rating = new Rating();
         $data = [
             'product' => $detail,
             'recommended' => $recommended,
             'comments' => $comment->get5CommentNewestByProductAndStatus($id),
             'variant' => $variant,
+            'rating' => $rating->get5RatingNewestByProductAndStatus($id),
+            'average_rating' => $rating->getAverageRatingByProduct($id),
+            'countRating' => $rating->countRatingByProduct($id),
         ];
+        // var_dump($data);
+        // die;
 
         $view_result = ViewProductHelper::cookieView($id, $detail[0]['view']);
         Header::render();
@@ -157,12 +165,12 @@ class ProductController
     }
 
     public function searchProduct()
-    {        
+    {
         $keyword = $_GET['keywords'] ?? '';
         $keyword = trim($keyword);
         if (empty($keyword)) {
-            $_SESSION['keywords'] = null; 
-       
+            $_SESSION['keywords'] = null;
+
             $data = [
                 'products' => [],
                 'categories' => (new Category())->getAllCategoryByStatus(),
@@ -171,16 +179,16 @@ class ProductController
             Header::render();
             Index::render($data);
             Footer::render();
-            return;  
+            return;
         }
         $_SESSION['keywords'] = $keyword;
-    
+
         $product = new Product();
         $key_product = $product->search($keyword);
 
         $category = new Category();
         $categories = $category->getAllCategoryByStatus();
-    
+
         $origins = new Origin();
         $origins = $origins->getAllOriginsByStatus();
         $data = [
@@ -191,5 +199,39 @@ class ProductController
         Header::render();
         Index::render($data);
         Footer::render();
-    } 
+    }
+
+
+    public static function ratingAction()
+    {
+        $is_valid = ProductValidation::createRating();
+        $product_id = $_POST['product_id'] ?? null;
+        if (!$is_valid) {
+            NotificationHelper::error('create_rating', 'Gửi đánh giá thất bại!');
+            if (isset($_POST['product_id']) && $_POST['product_id']) {
+                header("Location: /products/$product_id");
+                exit();
+            } else {
+                header('Location: /');
+            }
+            exit();
+        }
+        $currentDateTime = date('Y-m-d H:i:s');
+        $data = [
+            'product_id' => $_POST['product_id'],
+            'user_id' => $_POST['user_id'],
+            'rating' => $_POST['rating_data'],
+            'content' => $_POST['user_review'],
+            'created' =>  $currentDateTime,
+
+        ];
+        $rating = new Rating();
+        $result = $rating->createRatings($data);
+        if ($result) {
+            NotificationHelper::success('create_rating', 'Gửi đánh giá thành công!');
+        } else {
+            NotificationHelper::error('create_rating', 'Gửi đánh giá thất bại!');
+        }
+        header("Location: /products/$product_id");
+    }
 }

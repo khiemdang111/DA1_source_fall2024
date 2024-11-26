@@ -14,7 +14,7 @@ class Header extends BaseView
 	{
 		$is_login = AuthHelper::checkLogin();
 
-		?>
+?>
 		<!DOCTYPE html>
 		<html lang="en">
 
@@ -68,7 +68,7 @@ class Header extends BaseView
 								<div class="reg row justify-content-between">
 									<?php
 									if ($is_login):
-										?>
+									?>
 										<div class="dropdown_hmenu">
 											<a class="a_dropdown_hmenu" href="#">Xin Chào,<?= $_SESSION['user']['name'] ?> ▼</a>
 											<div class="dropdown-content">
@@ -79,12 +79,12 @@ class Header extends BaseView
 										</div>
 										<!-- <p class="mr-2 text-light">Xin Chào,<?= $_SESSION['user']['name'] ?></p> -->
 										<!-- <a href="/logout" class="text-light px-4">Đăng xuất</a> -->
-										<?php
+									<?php
 									else:
-										?>
+									?>
 										<p class="mb-0"><a href="/register" class="mr-2">Đăng ký</a> <a href="/login">Đăng Nhập</a>
 										</p>
-										<?php
+									<?php
 									endif;
 									?>
 								</div>
@@ -121,7 +121,7 @@ class Header extends BaseView
 										foreach ($cart_data as $cart):
 											if ($cart['data']):
 												$i++;
-												?>
+								?>
 												<div class="dropdown-item d-flex align-items-start" href="#">
 													<div class="img"
 														style="background-image: url(public/uploads/products/<?= $cart['data']['image'] ?>);">
@@ -132,13 +132,13 @@ class Header extends BaseView
 														if ($cart['data']['discount_price'] > 0):
 															$discount_price = $cart['quantity'] * $cart['data']['discount_price'];
 															$total_price += $discount_price;
-															?>
+														?>
 															<p class="mb-0"><del><?= number_format($cart['data']['price']) ?> VND</del>
 																<?= number_format($cart['data']['discount_price']) ?> VND<span></span></p>
 														<?php else:
 															$discount_price = $cart['quantity'] * $cart['data']['price'];
 															$total_price += $discount_price;
-															?>
+														?>
 															<p class="mb-0"><?= number_format($cart['data']['price']) ?> VND</p>
 														<?php endif; ?>
 														<p class="mb-0"><span class="quantity">Số
@@ -154,7 +154,7 @@ class Header extends BaseView
 												</div>
 
 
-												<?php
+										<?php
 
 											endif;
 										endforeach;
@@ -164,16 +164,16 @@ class Header extends BaseView
 											Xem giỏ hàng
 											<span class="ion-ios-arrow-round-forward"></span>
 										</a>
-										<?php
+									<?php
 									} else {
-										?>
+									?>
 										<h5 class="text-danger text-center pt-3">Không có sản phẩm</h5>
-										<?php
+									<?php
 									}
 								} else {
 									?>
 									<h5 class="text-danger text-center">Không có sản phẩm</h5>
-									<?php
+								<?php
 								}
 								?>
 
@@ -221,7 +221,7 @@ class Header extends BaseView
 
 									<div class="searchbar-center">
 										<div class="searchbar-input-spacer"></div>
-										<input type="search" class="searchbar-input" name="keywords" value="<?=  (isset($_SESSION['keywords']) ? $_SESSION['keywords']: "") ?>" placeholder="Tìm kiếm">
+										<input type="search" class="searchbar-input" name="keywords" value="<?= (isset($_SESSION['keywords']) ? $_SESSION['keywords'] : "") ?>" placeholder="Tìm kiếm">
 									</div>
 
 									<div class="searchbar-right">
@@ -243,9 +243,9 @@ class Header extends BaseView
 
 			<source>
 
-			<?php
+	<?php
 
 	}
 }
 
-?>
+	?>

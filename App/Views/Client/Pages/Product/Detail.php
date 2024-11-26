@@ -13,7 +13,7 @@ class Detail extends BaseView
         // echo '<pre>';
         // var_dump($data);
         // die;
-        ?>
+?>
         <!-- giao diện mới -->
         <section class="hero-wrap hero-wrap-2" style="background-image: url('/public/uploads/image/bg_2.jpg');"
             data-stellar-background-ratio="0.5">
@@ -61,16 +61,16 @@ class Detail extends BaseView
 
                         <?php
                         if ($data['product'][0]['discount_price'] > 0):
-                            ?>
+                        ?>
                             <p class="price_product text-danger"><del><?= number_format($data['product'][0]['discount_price']) ?>
                                     VND</del></p>
                             <p class="price_product"><span><?= number_format($data['product'][0]['price']) ?> VND</span></p>
-                            <?php
+                        <?php
                         else:
-                            ?>
+                        ?>
 
                             <p class="price_product"><span><?= number_format($data['product'][0]['price']) ?> VND</span></p>
-                            <?php
+                        <?php
                         endif;
                         ?>
                         <p>
@@ -89,7 +89,7 @@ class Detail extends BaseView
 
                                 // Reset $countinput cho mỗi nhóm variant_name
                                 $countinput = 1;
-                                ?>
+                            ?>
                                 <td value="<?= $itemVariant_opt['variant_name'] ?>">
                                     <div class="mt-3">
                                         <h6><?= $itemVariant_opt['variant_name'] ?></h6>
@@ -97,7 +97,7 @@ class Detail extends BaseView
                                             <?php
                                             foreach ($data['variant'] as $itemVariant_value):
                                                 if ($itemVariant_value['variant_name'] === $itemVariant_opt['variant_name']):
-                                                    ?>
+                                            ?>
                                                     <div class="radio-inputs">
                                                         <label>
                                                             <input class="radio-input" type="radio"
@@ -108,9 +108,9 @@ class Detail extends BaseView
                                                             </span>
                                                         </label>
                                                     </div>
-                                                    <?php
-                                                    // Tăng $countinput sau mỗi lần tạo input
-                                
+                                            <?php
+                                                // Tăng $countinput sau mỗi lần tạo input
+
                                                 endif;
                                             endforeach;
                                             $countinput++;
@@ -118,7 +118,7 @@ class Detail extends BaseView
                                         </div>
                                     </div>
                                 </td>
-                                <?php
+                            <?php
                             }
                             ?>
                         </div>
@@ -184,11 +184,11 @@ class Detail extends BaseView
                                                 <div class="comment-widgets">
                                                     <?php if (isset($data) && isset($data['comments']) && $data && $data['comments']):
                                                         foreach ($data['comments'] as $item):
-                                                            ?>
+                                                    ?>
                                                             <!-- Comment Row -->
                                                             <div class="d-flex flex-row comment-row m-t-0 my-3">
-                                                            <div class="p-2">
-                                                                <?php
+                                                                <div class="p-2">
+                                                                    <?php
                                                                     if ($item['avatar']) :
                                                                     ?>
                                                                         <img class="rounded-circle" src="<?= APP_URL ?>/public/uploads/image/<?= $item['avatar'] ?>" alt="" width="50">
@@ -210,7 +210,7 @@ class Detail extends BaseView
                                                                             class="text-muted float-right mx-3"><?= $item['date'] ?></span>
                                                                         <?php
                                                                         if (isset($data) && $is_login && $_SESSION['user']['id'] === $item['user_id']):
-                                                                            ?>
+                                                                        ?>
 
 
                                                                             <button type="button" class="btn-sm" data-toggle="collapse"
@@ -250,7 +250,7 @@ class Detail extends BaseView
                                                                                 </div>
                                                                             </div>
 
-                                                                            <?php
+                                                                        <?php
                                                                         endif;
                                                                         ?>
 
@@ -258,18 +258,18 @@ class Detail extends BaseView
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <?php
+                                                        <?php
                                                         endforeach;
                                                     else:
                                                         ?>
                                                         <h5 class="commnets_no ">Chưa có bình luận</h5>
-                                                        <?php
+                                                    <?php
                                                     endif;
 
                                                     ?>
                                                     <?php
                                                     if (isset($data) && $is_login):
-                                                        ?>
+                                                    ?>
 
 
                                                         <div class="d-flex flex-row comment-row">
@@ -277,28 +277,28 @@ class Detail extends BaseView
                                                             <div class="p-2">
                                                                 <?php
                                                                 if ($is_login):
-                                                                    ?>
+                                                                ?>
                                                                     <?php
                                                                     if ($_SESSION['user']['avatar'] === null || $_SESSION['user']['avatar'] === ""):
-                                                                        ?>
+                                                                    ?>
                                                                         <img src="<?= APP_URL ?>/public/uploads/users/user.png" alt="user"
                                                                             width="50" class="rounded-circle">
-                                                                        <?php
+                                                                    <?php
                                                                     else:
-                                                                        ?>
+                                                                    ?>
                                                                         <img src="<?= APP_URL ?>/public/uploads/users/<?= $_SESSION['user']['avatar'] ?>"
                                                                             alt="user" width="50" class="rounded-circle">
 
-                                                                        <?php
+                                                                    <?php
                                                                     endif;
                                                                     ?>
-                                                                    <?php
+                                                                <?php
                                                                 else:
-                                                                    ?>
+                                                                ?>
                                                                     <img class="img_account"
                                                                         src="<?= APP_URL ?>/public/uploads/users/user.png" alt=""
                                                                         width="40%">
-                                                                    <?php
+                                                                <?php
                                                                 endif; ?>
                                                             </div>
                                                             <div class="comment-text w-100 magin">
@@ -326,11 +326,11 @@ class Detail extends BaseView
 
                                                             </div>
                                                         </div>
-                                                        <?php
+                                                    <?php
                                                     else:
-                                                        ?>
+                                                    ?>
                                                         <h6 class="mx-3">Vui lòng đăng nhập để bình luận</h6>
-                                                        <?php
+                                                    <?php
                                                     endif;
                                                     ?>
                                                 </div>
@@ -347,140 +347,152 @@ class Detail extends BaseView
                             </div>
                             <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-day-3-tab">
                                 <div class="row p-4">
+
                                     <div class="col-md-7">
-                                        <h3 class="mb-4">23 Reviews</h3>
-                                        <div class="review">
-                                            <div class="user-img" style="background-image: url(images/person_1.jpg)"></div>
-                                            <div class="desc">
-                                                <h4>
-                                                    <span class="text-left">Jacob Webb</span>
-                                                    <span class="text-right">25 April 2020</span>
-                                                </h4>
-                                                <p class="star">
-                                                    <span>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </span>
-                                                    <span class="text-right"><a href="#" class="reply"><i
-                                                                class="icon-reply"></i></a></span>
-                                                </p>
-                                                <p>When she reached the first hills of the Italic Mountains, she had a last view
-                                                    back on the skyline of her hometown Bookmarksgrov</p>
+                                        <h3 class="mb-4"><?= $data['countRating']['total_reviews'] ?> Đánh giá</h3>
+                                        <?php
+                                        foreach ($data['rating'] as $item):
+                                            // var_dump($item);
+
+                                        ?>
+                                            <div class="review">
+                                                <div class="user-img" style="background-image: url(<?= APP_URL ?>/public/uploads/users/<?= $item['avatar'] ?>)"></div>
+                                                <div class="desc">
+                                                    <h5>
+                                                        <span class="text-left"> <?= $item['username'] ?></span>
+
+                                                    </h5>
+                                                    <span class=""> <?= $item['created'] ?></span>
+
+                                                    <p class="star">
+                                                        <span>
+                                                            <?php
+                                                            // Hiển thị sao dựa trên giá trị rating
+                                                            for ($i = 1; $i <= 5; $i++):
+                                                                if ($i <= $item['rating']):
+                                                            ?>
+                                                                    <i class="fa fa-star text-warning"></i>
+                                                                <?php else: ?>
+                                                                    <i class="fa fa-star text-light"></i>
+                                                            <?php
+                                                                endif;
+                                                            endfor;
+                                                            ?>
+                                                        </span>
+                                                        <span class="text-right">
+                                                            <a href="#" class="reply"><i class="icon-reply"></i></a>
+                                                        </span>
+                                                    </p>
+                                                    <p> <?= $item['content'] ?></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="review">
-                                            <div class="user-img" style="background-image: url(images/person_2.jpg)"></div>
-                                            <div class="desc">
-                                                <h4>
-                                                    <span class="text-left">Jacob Webb</span>
-                                                    <span class="text-right">25 April 2020</span>
-                                                </h4>
-                                                <p class="star">
-                                                    <span>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </span>
-                                                    <span class="text-right"><a href="#" class="reply"><i
-                                                                class="icon-reply"></i></a></span>
-                                                </p>
-                                                <p>When she reached the first hills of the Italic Mountains, she had a last view
-                                                    back on the skyline of her hometown Bookmarksgrov</p>
-                                            </div>
-                                        </div>
-                                        <div class="review">
-                                            <div class="user-img" style="background-image: url(images/person_3.jpg)"></div>
-                                            <div class="desc">
-                                                <h4>
-                                                    <span class="text-left">Jacob Webb</span>
-                                                    <span class="text-right">25 April 2020</span>
-                                                </h4>
-                                                <p class="star">
-                                                    <span>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                    </span>
-                                                    <span class="text-right"><a href="#" class="reply"><i
-                                                                class="icon-reply"></i></a></span>
-                                                </p>
-                                                <p>When she reached the first hills of the Italic Mountains, she had a last view
-                                                    back on the skyline of her hometown Bookmarksgrov</p>
-                                            </div>
-                                        </div>
+                                        <?php
+                                        endforeach;
+
+                                        ?>
+
                                     </div>
                                     <div class="col-md-4">
                                         <div class="rating-wrap">
-                                            <h3 class="mb-4">Give a Review</h3>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    (98%)
-                                                </span>
-                                                <span>20 Reviews</span>
-                                            </p>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    (85%)
-                                                </span>
-                                                <span>10 Reviews</span>
-                                            </p>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    (98%)
-                                                </span>
-                                                <span>5 Reviews</span>
-                                            </p>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    (98%)
-                                                </span>
-                                                <span>0 Reviews</span>
-                                            </p>
-                                            <p class="star">
-                                                <span>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                    (98%)
-                                                </span>
-                                                <span>0 Reviews</span>
-                                            </p>
+                                            <h3 class="mb-4">Đưa ra đánh giá</h3>
+                                            <?php foreach ($data['average_rating'] as $item): ?>
+                                                <p class="star">
+                                                    <span>
+                                                        <?php
+
+                                                        for ($i = 1; $i <= 5; $i++):
+                                                            if ($i <= $item['rating']):
+                                                        ?>
+                                                                <i class="fa fa-star text-warning"></i>
+                                                            <?php else: ?>
+                                                                <i class="fa fa-star text-light"></i>
+                                                            <?php endif; ?>
+                                                        <?php endfor; ?>
+                                                        (<?= number_format($item['percentage'], 0) ?>%)
+                                                    </span>
+                                                    <span><?= $item['total_reviews'] ?> Reviews</span>
+                                                </p>
+                                            <?php endforeach; ?>
+
                                         </div>
+                                        <?php
+                                        if (isset($data) && $is_login):
+                                        ?>
+                                            <button class="col-md-12 btn btn-primary mt-3" data-toggle="modal" data-target="#exampleModalCenter">Gửi đánh giá</button>
+                                        <?php
+                                        else:
+                                        ?>
+                                            <h5 class="mt-3">Vui lòng đăng nhập để đánh giá</h5>
+                                        <?php
+                                        endif;
+                                        ?>
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <form method="POST" action="/products/rating">
+                                            <input type="hidden" name="method" value="POST" id="">
+                                            <input type="hidden" name="product_id"
+                                                value="<?= $data['product'][0]['id'] ?>">
+                                            <input type="hidden" name="user_id"
+                                                value="<?= $_SESSION['user']['id'] ?>">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Đánh giá & nhận xét</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <img src="<?= APP_URL ?>/public/uploads/products/<?= $data['product'][0]['image'] ?>" alt="" width="130px" height="70px">
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <h4><?= $data['product'][0]['name'] ?></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <h5 class="modal-title">Nội dung đánh giá</h5>
+                                                    <div class="mt-1 text-center">
+                                                        <i class="fa fa-star fa-lg star-light submit_star" id="submit_star_1" data-rating="1" aria-hidden="true"></i>
+                                                        <i class="fa fa-star fa-lg star-light submit_star" id="submit_star_2" data-rating="2" aria-hidden="true"></i>
+                                                        <i class="fa fa-star fa-lg star-light submit_star" id="submit_star_3" data-rating="3" aria-hidden="true"></i>
+                                                        <i class="fa fa-star fa-lg star-light submit_star" id="submit_star_4" data-rating="4" aria-hidden="true"></i>
+                                                        <i class="fa fa-star fa-lg star-light submit_star" id="submit_star_5" data-rating="5" aria-hidden="true"></i>
+                                                    </div>
+                                                    <div class="mt-3">
+                                                        <label for="user_review">Nội dung</label>
+                                                        <textarea id="user_review" name="user_review" cols="10" rows="5" class="form-control" placeholder="Viết đánh giá của bạn"></textarea>
+                                                    </div>
+                                                </div>
+                                                <!-- Hidden Inputs -->
+                                                <input type="hidden" id="rating_data" name="rating_data" value="0">
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                <button type="submit" class="btn btn-primary">Gửi</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Input hidden để lưu rating -->
+
+
                         </div>
+
+
+
                     </div>
                 </div>
+            </div>
             </div>
         </section>
         <section class="mb-5">
@@ -493,76 +505,76 @@ class Detail extends BaseView
                 </div>
                 <div class="row">
                     <!-- <?php
-                    if (count($data) && count($data['recommended'])):
-                        ?> -->
-                        <?php
-                        foreach ($data['recommended'] as $recommended):
-                            ?>
-                            <div class="col-md-3 d-flex">
-                                <div class="product ftco-animate">
-                                    <div class="img d-flex align-items-center justify-content-center"
-                                        style="background-image: url(<?= APP_URL ?>/public/uploads/products/<?= $recommended['image'] ?>);">
-                                        <div class="desc">
-                                            <div class="meta-prod d-flex">
-                                                <form action="/cart/add" method="post">
-                                                    <input type="hidden" name="method" id="" value="POST">
-                                                    <input type="hidden" name="id" id="" value="<?= $recommended['id'] ?>" required>
-                                                    <button type="submit" class="d-flex align-items-center justify-content-center"><span
-                                                            class="flaticon-shopping-bag">
-                                                        </span></button>
-                                                </form>
-                                                <a href="#" type="submit" class="d-flex align-items-center justify-content-center"><span
-                                                        class="flaticon-heart"></span></a>
-                                                <a href="/products/<?= $recommended['id'] ?>"
-                                                    class="d-flex align-items-center justify-content-center"><span
-                                                        class="flaticon-visibility"></span></a>
+                            if (count($data) && count($data['recommended'])):
+                            ?> -->
+                    <?php
+                                foreach ($data['recommended'] as $recommended):
+                    ?>
+                        <div class="col-md-3 d-flex">
+                            <div class="product ftco-animate">
+                                <div class="img d-flex align-items-center justify-content-center"
+                                    style="background-image: url(<?= APP_URL ?>/public/uploads/products/<?= $recommended['image'] ?>);">
+                                    <div class="desc">
+                                        <div class="meta-prod d-flex">
+                                            <form action="/cart/add" method="post">
+                                                <input type="hidden" name="method" id="" value="POST">
+                                                <input type="hidden" name="id" id="" value="<?= $recommended['id'] ?>" required>
+                                                <button type="submit" class="d-flex align-items-center justify-content-center"><span
+                                                        class="flaticon-shopping-bag">
+                                                    </span></button>
+                                            </form>
+                                            <a href="#" type="submit" class="d-flex align-items-center justify-content-center"><span
+                                                    class="flaticon-heart"></span></a>
+                                            <a href="/products/<?= $recommended['id'] ?>"
+                                                class="d-flex align-items-center justify-content-center"><span
+                                                    class="flaticon-visibility"></span></a>
 
-                                            </div>
                                         </div>
                                     </div>
-                                    <div class="text text-center">
-                                        <span class="sale"></span>
-                                        <span class="category"><?= $recommended['category_name'] ?></span>
-                                        <h2><?= $recommended['name'] ?></h2>
-                                        <p class="mb-0">
-                                            <?php
-                                            if ($recommended['discount_price'] > 0):
-                                                ?>
-                                                <span class="price price-sale"><?= number_format($recommended['price']) ?></span> <span
-                                                    class="price"><?= number_format($recommended['price'] - $recommended['discount_price']) ?></span>
+                                </div>
+                                <div class="text text-center">
+                                    <span class="sale"></span>
+                                    <span class="category"><?= $recommended['category_name'] ?></span>
+                                    <h2><?= $recommended['name'] ?></h2>
+                                    <p class="mb-0">
+                                        <?php
+                                        if ($recommended['discount_price'] > 0):
+                                        ?>
+                                            <span class="price price-sale"><?= number_format($recommended['price']) ?></span> <span
+                                                class="price"><?= number_format($recommended['price'] - $recommended['discount_price']) ?></span>
 
-                                                <?php
-                                            else:
-                                                ?>
-                                                <span class="price"><?= number_format($recommended['price']) ?></span>
+                                        <?php
+                                        else:
+                                        ?>
+                                            <span class="price"><?= number_format($recommended['price']) ?></span>
 
-                                            <?php endif; ?>
+                                        <?php endif; ?>
 
-                                        </p>
-                                    </div>
+                                    </p>
                                 </div>
                             </div>
-                            <?php
-                        endforeach;
-                        ?>
-                    </div>
-                </div>
-                <?php
-                    endif;
+                        </div>
+                    <?php
+                                endforeach;
                     ?>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-md-4">
-                    <a href="/products" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
-                            class="fa fa-long-arrow-right"></span></a>
                 </div>
             </div>
+        <?php
+                            endif;
+        ?>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <a href="/products" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
+                        class="fa fa-long-arrow-right"></span></a>
             </div>
+        </div>
+        </div>
         </section>
 
 
 
-        <?php
+<?php
 
     }
 }
