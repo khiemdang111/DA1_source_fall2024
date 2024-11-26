@@ -3,8 +3,10 @@
 namespace App\Helpers;
 
 use App\Controllers\Client\CartController;
+use App\Controllers\Client\GHTKController;
 use App\Controllers\Client\mail;
 use App\Controllers\Client\MailController;
+use App\Controllers\Client\ShippingController;
 use App\Controllers\Client\VNPAYController;
 use App\Models\Order;
 use App\Models\Order_detail;
@@ -22,10 +24,9 @@ class CartHelper
         $i = 0;
         foreach ($cart_data as $cart) {
             if ($cart['data']) {
-            
                 if ($cart['data']['discount_price'] > 0) {
                     $money = $cart['quantity'] * $cart['data']['discount_price'];
-                   // $price = $cart['data']['price'];
+                    // $price = $cart['data']['price'];
                     $unitPrice = $cart['data']['discount_price'];
                     $total += $money;
                 } else {
@@ -35,13 +36,11 @@ class CartHelper
                     $total += $money;
                 }
                 $data_total = [
-                    'money' => $money,
-                    'unitPrice' => $unitPrice,
                     'total' => $total,
                 ];
             }
         }
-       
+
         return $data_total;
     }
 
@@ -82,10 +81,10 @@ class CartHelper
     {
         $order_id = self::getOrder_id($cart_data);
         $_SESSION['order_id'] = $order_id;
-       
+
         foreach ($cart_data as $cart) {
             if ($cart['data']) {
-                
+
                 // $price = self::tatol($cart_data);
                 if ($cart['data']['discount_price'] > 0) {
                     $money = $cart['quantity'] * $cart['data']['discount_price'];
@@ -98,9 +97,9 @@ class CartHelper
                 }
                 $order_detail = [
                     'quantity' => $cart['quantity'],
-                    'originalPrice' =>  $price,
+                    'originalPrice' => $price,
                     'unitPrice' => $unitPrice,
-                    'totalPrice' =>  $money,
+                    'totalPrice' => $money,
                     'product_id' => $cart['data']['id'],
                     'order_id' => $order_id,
 
@@ -112,6 +111,26 @@ class CartHelper
         $mail = new MailController();
         $form = self::form_Html();
         $mail->index($form);
+        if (isset($_POST['delivery'])) {
+            $delivery = $_POST['delivery']; 
+            if ($delivery == 'conomy') {
+                $GHTK = new ShippingController();
+                $GHTK->createOrderGHTK();
+            } elseif ($delivery == 'fast') {
+
+            } else {
+                echo "Loại giao hàng không hợp lệ.";
+            }
+        } else {
+            if ($_SESSION['information']['delivery'] == 'conomy') {
+                $GHTK = new ShippingController();
+                $GHTK->createOrderGHTK();
+            } elseif ($_SESSION['information']['delivery'] == 'fast') {
+
+            } else {
+                echo "Loại giao hàng không hợp lệ.";
+            }
+        }
     }
     public static function form_Html()
     {
@@ -197,7 +216,7 @@ ROW;
                 $quantity = $cart['quantity'];
                 if ($cart['data']['discount_price'] > 0) {
                     $money = $cart['quantity'] * $cart['data']['discount_price'];
-                   
+
                     $unitPrice = $cart['data']['discount_price'];
                     $total += $money;
                 } else {
@@ -206,9 +225,9 @@ ROW;
                     $price = 0;
                     $total += $money;
                 }
-                $total_price_formatted = number_format( $money) . " VND";
-                $unit_price = number_format( $unitPrice) . " VND";
-                $total = number_format( $total) . " VND";
+                $total_price_formatted = number_format($money) . " VND";
+                $unit_price = number_format($unitPrice) . " VND";
+                $total = number_format($total) . " VND";
                 $html .= <<<ROW2
             <tr>
                 <td>{$i}</td>

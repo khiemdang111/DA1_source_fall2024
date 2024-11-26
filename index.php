@@ -38,7 +38,7 @@ Route::get('/products/categories/{id}','App\Controllers\Client\ProductController
 Route::post('/products/filter', 'App\Controllers\Client\ProductController@index');
 Route::get('/search', 'App\Controllers\Client\ProductController@searchProduct');
 
-
+Route::get('/ghn', 'App\Controllers\Client\ShippingController@createOrderGHN');
 
 
 Route::get('/forgetpass', 'App\Controllers\Client\AuthController@forgetpass');

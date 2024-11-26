@@ -65,8 +65,7 @@ class HomeController
     public static function thanks()
     {
         $is_login = AuthHelper::checkLogin();
-        if ($is_login) {
-
+        if($is_login){
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $vnp_ResponseCode = $_GET['vnp_ResponseCode'] ?? null;
                 if ($vnp_ResponseCode == '00') {

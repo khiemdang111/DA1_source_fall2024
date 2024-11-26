@@ -34,6 +34,7 @@ class Checkout extends BaseView
 						foreach ($data as $cart):
 							if ($cart['data']):
 								$i++;
+								
 								?>
 								<tr>
 									<td>
@@ -214,33 +215,60 @@ class Checkout extends BaseView
 							}
 						}
 						?>
-						<div class="col-xl-6 oder_cart">
-							<div class="col-xl-12 ftco-animate ">
-								<div class="cart-detail cart-total p-3 p-md-4">
-									<h3 class="billing-heading mb-4">Tổng cộng giỏ hàng</h3>
-									<p class="d-flex">
-										<span>Tổng cộng</span>
-										<span><?= number_format($total_price) ?></span>
-									</p>
-									<p class="d-flex">
-										<span>Phí vận chuyển</span>
-										<span>$0.00</span>
-									</p>
-									<p class="d-flex">
-										<span>Giảm giá</span>
-										<span>$3.00</span>
-									</p>
-									<hr>
-									<p class="d-flex total-price">
-										<span>Tổng</span>
-										<span><?= number_format($total_price) ?></span>
-									</p>
-									<p>
-										<button type="submit" class="btn btn-primary py-3 px-4">Đặt hàng</button>
-									</p>
+						<div class="col-md-6">
+							<div class="col-md-12 oder_cart mb-2">
+								<div class="col-xl-12 ftco-animate ">
+									<div class="cart-detail p-3 p-md-4">
+										<h3 class="billing-heading mb-4">Phương thức vận chuyển</h3>
+										<div class="form-group">
+											<div class="col-md-12">
+												<div class="radio">
+													<label><input type="radio" name="delivery" value="conomy" class="mr-2" />
+														Giao hàng tiết kiệm</label><img src="public/uploads/image/Giaohangtietkiem.jpg" alt="" width="20%">
+												</div>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-12">
+												<div class="radio">
+													<label><input type="radio" name="delivery" value="fast" class="mr-2" />
+													Giao hàng nhanh</label><img src="public/uploads/image/giaohangnhanh.jpg" alt="" width="20%">
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="col-xl-12 oder_cart">
+								<div class="col-xl-12 ftco-animate ">
+									<div class="cart-detail cart-total p-3 p-md-4">
+										<h3 class="billing-heading mb-4">Tổng cộng giỏ hàng</h3>
+										<p class="d-flex">
+											<span>Tổng cộng</span>
+											<span><?= number_format($total_price) ?></span>
+										</p>
+										<p class="d-flex">
+											<span>Phí vận chuyển</span>
+											<span>$0.00</span>
+										</p>
+										<p class="d-flex">
+											<span>Giảm giá</span>
+											<span>$3.00</span>
+										</p>
+										<hr>
+										<p class="d-flex total-price">
+											<span>Tổng</span>
+											<span><?= number_format($total_price) ?></span>
+										</p>
+										<p>
+											<button type="submit" class="btn btn-primary py-3 px-4">Đặt hàng</button>
+										</p>
+									</div>
 								</div>
 							</div>
 						</div>
+
 
 					</div>
 				</form>

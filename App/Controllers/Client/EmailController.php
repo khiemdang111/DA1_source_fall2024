@@ -187,4 +187,10 @@ class EmailController
         }
         return true;
     }
+
+    public static function ghn()
+    {
+      
+        
+    }
   }

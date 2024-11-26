@@ -51,13 +51,11 @@ class CartController
                 // setcookie("cart", "", time() -  3600 * 24 * 30 * 12, '/');
                 // $_SESSION['error'] = 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào';
                 NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
-
                 header('location: /');
             }
         } else {
             // $_SESSION['error'] = 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào';
             NotificationHelper::error('cart', 'Giỏ hàng trống. Vui lòng thêm sản phẩm vào');
-
             header('location: /');
             // var_dump($_SESSION['error']);
         }
@@ -308,6 +306,7 @@ class CartController
     }
     public static function order()
     {
+     
         $is_login = AuthHelper::checkLogin();
         if ($is_login) {
             $is_valid = CartValidation::create();
@@ -325,6 +324,7 @@ class CartController
                 'ward' => $_POST['ward_'],
                 'address' => $_POST['address'],
                 'PaymentMethod' => $_POST['PaymentMethod'],
+                'delivery' => $_POST['delivery'],
             ];
             $_SESSION['information'] = $data;
             if ($_POST['PaymentMethod'] === 'COD') {

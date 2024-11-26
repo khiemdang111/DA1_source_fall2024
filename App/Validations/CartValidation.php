@@ -15,7 +15,7 @@ class CartValidation
             $is_valid = false;
         }
         // Mật khẩu
-        
+
         if (!isset($_POST['phone']) || $_POST['phone'] === '') {
             NotificationHelper::error('phone_', 'Không để trống Số điện thoại');
             $is_valid = false;
@@ -48,6 +48,10 @@ class CartValidation
         }
         if (!isset($_POST['PaymentMethod']) || $_POST['PaymentMethod'] === '') {
             NotificationHelper::error('PaymentMethod2', 'Vui lòng chọn phương thức thanh toán');
+            $is_valid = false;
+        }
+        if (!isset($_POST['delivery']) || $_POST['delivery'] === '') {
+            NotificationHelper::error('delivery_error', 'Vui lòng chọn phương thức giao hàng');
             $is_valid = false;
         }
         return $is_valid;
