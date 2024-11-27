@@ -29,7 +29,7 @@ class ProductController
 
         AuthHelper::checkPermission([0, 4]);
         $product = new Product();        
-        $data = $product->getAllProductByStatus();
+        $data = $product->getAllProductByPagina();
         Header::render();
         Notification::render();
         //hủy thông báo     

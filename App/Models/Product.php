@@ -34,11 +34,6 @@ class Product extends BaseModel
     }
     public function getAllProductByStatus()
     {
-        $pages = isset($_GET['pages']) ? intval($_GET['pages']) : 1;
-
-        $row = 10; 
-        $from = ($pages - 1) * $row;
-        
         $result = [];
         try {
             $sql = "SELECT products.*, categories.name AS category_name
@@ -46,20 +41,10 @@ class Product extends BaseModel
             INNER JOIN categories ON products.category_id = categories.id
             WHERE products.status = " . self::STATUS_ENABLE . " 
               AND categories.status = " . self::STATUS_ENABLE . "
-            ORDER BY products.id DESC LIMIT " . $from. ",". $row;
+            ORDER BY products.id DESC";
 
-            $count = "SELECT COUNT(id) AS total FROM $this->table WHERE $this->table.status = 1";
-            $result_count = $this->_conn->MySQLi()->query($count);
-
-            // Lấy tổng số bài viết
-            $total = $result_count->fetch_assoc()['total'];
             $result = $this->_conn->MySQLi()->query($sql);
-             return [
-                'products' => $result->fetch_all(MYSQLI_ASSOC), // Lấy danh sách bài viết
-                'total' => intval($total), // Tổng số bài viết
-                'current_page' => $pages, // Trang hiện tại
-                'total_pages' => ceil($total / $row) // Tổng số trang
-            ];
+            return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {
             error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
             return $result;
@@ -284,6 +269,39 @@ class Product extends BaseModel
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {
             error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+    public function getAllProductByPagina()
+    {
+        $pages = isset($_GET['pages']) ? intval($_GET['pages']) : 1;
+
+        $row = 10; 
+        $from = ($pages - 1) * $row;
+        
+        $result = [];
+        try {
+            $sql = "SELECT products.*, categories.name AS category_name
+            FROM products
+            INNER JOIN categories ON products.category_id = categories.id
+            WHERE products.status = " . self::STATUS_ENABLE . " 
+              AND categories.status = " . self::STATUS_ENABLE . "
+            ORDER BY products.id DESC LIMIT " . $from. ",". $row;
+
+            $count = "SELECT COUNT(id) AS total FROM $this->table WHERE $this->table.status = 1";
+            $result_count = $this->_conn->MySQLi()->query($count);
+
+            // Lấy tổng số bài viết
+            $total = $result_count->fetch_assoc()['total'];
+            $result = $this->_conn->MySQLi()->query($sql);
+             return [
+                'products' => $result->fetch_all(MYSQLI_ASSOC), // Lấy danh sách bài viết
+                'total' => intval($total), // Tổng số bài viết
+                'current_page' => $pages, // Trang hiện tại
+                'total_pages' => ceil($total / $row) // Tổng số trang
+            ];
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
             return $result;
         }
     }
