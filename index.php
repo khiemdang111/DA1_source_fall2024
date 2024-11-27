@@ -151,7 +151,8 @@ Route::get('/admin/posts/search', 'App\Controllers\Admin\PostController@searchPo
 Route::get('/contact', 'App\Controllers\Client\PostController@Contact');
 Route::post('/contact', 'App\Controllers\Client\PostController@PostContact');
 
-
+//Lucky_spin
+Route::get('/lucky_spin', 'App\Controllers\Client\LuckyController@index');
 
 
 // *** Recycle Bin ***

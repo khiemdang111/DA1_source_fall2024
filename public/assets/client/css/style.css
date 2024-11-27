@@ -13415,3 +13415,156 @@ textarea.form-control {
   margin: auto;
   transform: translate(-35%, 10%);
 }
+
+.bodylucky {
+  font-family: Open Sans;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  /* background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url(https://source.unsplash.com/hNvr4nqFIcQ/2500x1800); */
+  background-size: cover;
+}
+
+.mainboxlucky {
+  position: relative;
+  width: 500px;
+  height: 500px;
+}
+
+.mainboxlucky:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: url(./arrow-bottom.png) no-repeat;
+  background-size: 5%;
+  left: 5%;
+  top: 48%;
+  transform: rotate(90deg);
+}
+
+.box {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border-radius: 50%;
+  border: 10px solid #949090;
+  overflow: hidden;
+  transition: all ease-in-out 5s;
+  transform: rotate(90deg);
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+.bodylucky .mainboxlucky .box .box1 span {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  position: absolute;
+}
+.bodylucky .mainboxlucky .box .box2 span {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  position: absolute;
+}
+
+.span1 {
+    clip-path: polygon(50% 50%, 0% 0%, 0% 100%);
+    background-color: #ff5733;
+    transform: rotate(0deg);
+}
+
+.span2 {
+    clip-path: polygon(50% 50%, 0% 0%, 100% 0%);
+    background-color: #33ff57;
+    transform: rotate(90deg);
+}
+
+.span3 {
+    clip-path: polygon(50% 50%, 100% 0%, -100% -100%);
+    background-color: #3357ff;
+    transform: rotate(180deg);
+}
+
+.span4 {
+    clip-path: polygon(50% 50%, 100% 0%, 100% 100%);
+    background-color: #ff33a6;
+    transform: rotate(270deg);
+}
+
+/* Chỉnh font cho từng ô */
+.font {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    position: absolute;
+    transform-origin: center;
+}
+
+.box1 .span1 b {
+    position: absolute;
+    top: 45%;
+    left: 11%;
+    transform: rotate(-45deg);
+}
+
+.box1 .span2 b {
+    position: absolute;
+    top: 14%;
+    right: 43%;
+    transform: rotate(45deg);
+}
+
+.box2 .span3 b {
+    position: absolute;
+    top: 15%;
+    left: 47%;
+    transform: rotate(135deg);
+}
+
+.box2 .span4 b {
+    position: absolute;
+    top: 45%;
+    left: 75%;
+    transform: rotate(135deg);
+}
+.arrow {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: #ff0000;
+    clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+    transform: translateX(-50%);
+    z-index: 10;
+}
+.spin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  border: 4px solid white;
+  background-color: #ff5722;
+  color: #fff;
+  box-shadow: 0 5px 20px #000;
+  font-weight: bold;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.spin:active {
+  width: 70px;
+  height: 70px;
+  font-size: 20px;
+}
