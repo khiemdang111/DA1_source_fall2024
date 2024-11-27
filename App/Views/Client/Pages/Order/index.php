@@ -49,38 +49,19 @@ class index extends BaseView
                           <th>Số tiền thanh toán</th>
                           <th>Phương thức thanh toán</th>
                           <th>Trạng thái</th>
+                       
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
                           <td><?= $item['id'] ?></td>
-                          <td><?= number_format($item['total']) ?></td>
+                          <td><?= number_format($item['total']) ?> VND</td>
 
                           <td>
-                            <?php
-                            if ($item['paymentMethod'] === "COD"):
-                              ?>
-                              Thanh toán khi nhận hàng
-                              <?php
-                            else:
-                              ?>
-                             VNPAY
-                              <?php
-                            endif;
-                            ?>
+                            <?= ($item['paymentMethod'] === "COD") ? ' Thanh toán khi nhận hàng ' : ' VNPAY' ?>
                           </td>
                           <td>
-                            <?php
-                            if ($item['orderStatus'] === "0"):
-                              ?>
-                              Chưa thanh toán
-                              <?php
-                            else:
-                              ?>
-                              Đã thanh toán
-                              <?php
-                            endif;
-                            ?>
+                            <?= ($item['orderStatus'] === "0") ? '  Chưa thanh toán' : 'Đã thanh toán' ?>
                           </td>
                         </tr>
                       </tbody>
@@ -89,7 +70,11 @@ class index extends BaseView
                   </div>
 
                   <div class="d-flex m-2 justify-content-end">
-                    <a href="/order/detail/<?=$item['id']?>" class="btn btn-primary m-1">Xem chi tiết</a>
+                    <a href="/order/delete" class="btn btn-primary m-1">Hủy đơn hàng</a>
+                    <!-- <a href="" class="btn btn-primary m-1">Mua lại</a> -->
+                  </div>
+                  <div class="d-flex m-2 justify-content-end">
+                    <a href="/order/detail/<?= $item['id'] ?>" class="btn btn-primary m-1">Xem chi tiết</a>
                     <!-- <a href="" class="btn btn-primary m-1">Mua lại</a> -->
                   </div>
                 </div>

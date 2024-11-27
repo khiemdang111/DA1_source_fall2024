@@ -17,7 +17,6 @@ use App\Views\Client\Components\Formmail;
 
 class CartHelper
 {
-    // hàm lấy tổng giá đơn hàng
     public static function tatol($cart_data)
     {
         $total = 0;
@@ -26,7 +25,6 @@ class CartHelper
             if ($cart['data']) {
                 if ($cart['data']['discount_price'] > 0) {
                     $money = $cart['quantity'] * $cart['data']['discount_price'];
-                    // $price = $cart['data']['price'];
                     $unitPrice = $cart['data']['discount_price'];
                     $total += $money;
                 } else {
@@ -35,6 +33,7 @@ class CartHelper
                     $price = 0;
                     $total += $money;
                 }
+
                 $data_total = [
                     'total' => $total,
                 ];
@@ -117,7 +116,8 @@ class CartHelper
                 $GHTK = new ShippingController();
                 $GHTK->createOrderGHTK();
             } elseif ($delivery == 'fast') {
-
+                $GHTK = new ShippingController();
+                $GHTK->createOrderGHN();
             } else {
                 echo "Loại giao hàng không hợp lệ.";
             }
@@ -126,7 +126,8 @@ class CartHelper
                 $GHTK = new ShippingController();
                 $GHTK->createOrderGHTK();
             } elseif ($_SESSION['information']['delivery'] == 'fast') {
-
+                $GHTK = new ShippingController();
+                $GHTK->createOrderGHN();
             } else {
                 echo "Loại giao hàng không hợp lệ.";
             }

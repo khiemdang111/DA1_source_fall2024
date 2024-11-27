@@ -24,7 +24,6 @@ class Checkout extends BaseView
 							<th>Số lượng</th>
 							<th>Tổng</th>
 							<th>&nbsp;</th>
-							<th>&nbsp;</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -34,7 +33,7 @@ class Checkout extends BaseView
 						foreach ($data as $cart):
 							if ($cart['data']):
 								$i++;
-								
+
 								?>
 								<tr>
 									<td>
@@ -68,14 +67,7 @@ class Checkout extends BaseView
 									?>
 
 									<td>
-										<form action="/checkout/update" method="post">
-											<input type="hidden" name="method" id="" value="PUT">
-											<input class="quantity form-control input-number number_cart" type="number" name="quantity"
-												value="<?= $cart['quantity'] ?>" onchange="this.form.submit()" class="form-control"
-												min=1>
-											<input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
-											<input type="hidden" name="update-cart-item">
-										</form>
+										<?= $cart['quantity'] ?>
 									</td>
 									<?php
 									if ($cart['data']['discount_price'] > 0):
@@ -89,7 +81,7 @@ class Checkout extends BaseView
 
 										</td>
 										<?php
-									else:
+									   else:
 										$unit_price = $cart['quantity'] * $cart['data']['price'];
 										$total_price += $unit_price;
 										?>
@@ -102,15 +94,7 @@ class Checkout extends BaseView
 										<?php
 									endif;
 									?>
-									<td>
-										<form action="/checkout/delete" method="post">
-											<input type="hidden" name="method" id="" value="DELETE">
-											<input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
-											<button type="submit" class="close">
-												<span aria-hidden="true"><i class="fa fa-close"></i></span>
-											</button>
-										</form>
-									</td>
+									
 								</tr>
 
 
@@ -224,7 +208,8 @@ class Checkout extends BaseView
 											<div class="col-md-12">
 												<div class="radio">
 													<label><input type="radio" name="delivery" value="conomy" class="mr-2" />
-														Giao hàng tiết kiệm</label><img src="public/uploads/image/Giaohangtietkiem.jpg" alt="" width="20%">
+														Giao hàng tiết kiệm</label><img
+														src="public/uploads/image/Giaohangtietkiem.jpg" alt="" width="20%">
 												</div>
 											</div>
 										</div>
@@ -232,7 +217,8 @@ class Checkout extends BaseView
 											<div class="col-md-12">
 												<div class="radio">
 													<label><input type="radio" name="delivery" value="fast" class="mr-2" />
-													Giao hàng nhanh</label><img src="public/uploads/image/giaohangnhanh.jpg" alt="" width="20%">
+														Giao hàng nhanh</label><img src="public/uploads/image/giaohangnhanh.jpg"
+														alt="" width="20%">
 												</div>
 											</div>
 										</div>
@@ -259,7 +245,12 @@ class Checkout extends BaseView
 										<hr>
 										<p class="d-flex total-price">
 											<span>Tổng</span>
-											<span><?= number_format($total_price) ?></span>
+											<span>
+												<?php 
+												
+												?>
+												<?= number_format($total_price) ?>
+											</span>
 										</p>
 										<p>
 											<button type="submit" class="btn btn-primary py-3 px-4">Đặt hàng</button>

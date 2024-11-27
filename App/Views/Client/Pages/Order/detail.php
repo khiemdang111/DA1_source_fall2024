@@ -11,7 +11,7 @@ class detail extends BaseView
   public static function render($data = null)
   {
     $data_adress = $data[0]['address'] . " " . $data[0]['ward'] . " " . $data[0]['district'] . " " . $data[0]['province'];
-//         echo '<pre>';
+    //         echo '<pre>';
 // var_dump($data[0]['total']);
     ?>
     <div class="container">
@@ -29,17 +29,7 @@ class detail extends BaseView
         <div class="col-md-9">
           <div class="card border-dark ">
             <div class="card-header">Chi tiết thanh toán - <span class="text-danger">
-                <?php
-                if ($data[0]['orderStatus'] === 1):
-                  ?>
-                  Đã thanh toán
-                  <?php
-                else:
-                  ?>
-                  Chưa thanh toán
-                  <?php
-                endif;
-                ?>
+                <?= ($data[0]['orderStatus'] === "0") ? '  Chưa thanh toán' : 'Đã thanh toán' ?>
               </span></div>
             <div class="item">
               <div class="d-flex justify-content-between m-1 item_dflex">
@@ -66,21 +56,10 @@ class detail extends BaseView
                     </thead>
                     <tbody>
                       <tr>
-                        <td>Trịnh Hải đảo</td>
-                        <td>0839644625</td>
+                        <td><?= $data[0]['name'] ?></td>
+                        <td><?= $data[0]['phone'] ?></td>
                         <td>
-                          <?php
-                          if ($data[0]['paymentMethod'] === "COD"):
-                            ?>
-                            Thanh toán khi nhận hàng
-                            <?php
-                          else:
-                            ?>
-                            VNPAY
-                            <?php
-                          endif;
-                          ?>
-
+                        <?= ($data[0]['paymentMethod'] === "COD") ? ' Thanh toán khi nhận hàng ' : ' VNPAY' ?>  
                         </td>
                         <td><?= $data[0]['date'] ?></td>
                       </tr>
@@ -107,7 +86,8 @@ class detail extends BaseView
                 foreach ($data as $item):
                   ?>
                   <div class="row m-2 item_dflex">
-                    <div class="col-xl-2"><img src="/public/uploads/products/<?= $item['product_image'] ?>" alt="" width="100%"></div>
+                    <div class="col-xl-2"><img src="/public/uploads/products/<?= $item['product_image'] ?>" alt="" width="100%">
+                    </div>
                     <div class="col-xl-5">
                       <h6 class="m-0"><?= $item['product_name'] ?></h6>
                       <h6 class="mt-3 mb-0">Số lượng : <?= $item['quantity'] ?></h6>
@@ -119,20 +99,21 @@ class detail extends BaseView
                         if ($item['originalPrice'] > 0):
                           ?>
                           <div class="item">Giá : </div>
-                          <div class="item"> <del><?= number_format( $item['originalPrice']) ?> VND</del> <?= number_format($item['unitPrice'])  ?> VND </div>
-                        <?php
+                          <div class="item"> <del><?= number_format($item['originalPrice']) ?> VND</del>
+                            <?= number_format($item['unitPrice']) ?> VND </div>
+                          <?php
                         else:
                           ?>
                           <div class="item">Giá : </div>
-                          <div class="item"><?= number_format( $item['unitPrice']) ?> VND</div>
-                        <?php
+                          <div class="item"><?= number_format($item['unitPrice']) ?> VND</div>
+                          <?php
                         endif;
                         ?>
 
                       </div>
                       <div class="d-flex justify-content-between">
                         <div class="item">Tổng tiền : </div>
-                        <div class="item"> <?= number_format($item['totalPrice'])  ?> VND</div>
+                        <div class="item"> <?= number_format($item['totalPrice']) ?> VND</div>
                       </div>
 
                     </div>
@@ -154,7 +135,7 @@ class detail extends BaseView
                   <path
                     d="M12 8c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4-1.794-4-4-4zm0 6c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2z">
                   </path>
-                </svg> Tổng số tiền : <?= number_format($data[0]['total'])?> VND
+                </svg> Tổng số tiền : <?= number_format($data[0]['total']) ?> VND
               </div>
               <div class="d-flex m-2 justify-content-end">
                 <a href="/" class="btn btn-primary m-1">Mua lại</a>

@@ -3,16 +3,20 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\NotificationHelper;
+use App\Models\Order_detail;
 use App\Models\User;
 use App\Views\Admin\Layouts\Footer;
 use App\Views\Admin\Layouts\Header;
 use App\Views\Admin\Components\Notification;
 use App\Views\Admin\Pages\User\Create;
 use App\Views\Admin\Pages\User\Edit;
+use App\Views\Admin\Pages\User\History_detail;
 use App\Views\Admin\Pages\User\index;
 use App\Validations\UserValidation;
 use App\Views\Admin\Pages\Recycle\UserRecycle;
 use App\Helpers\AuthHelper;
+use App\Models\Order;
+use App\Views\Admin\Pages\User\History;
 
 class UserController
 {
@@ -101,7 +105,7 @@ class UserController
             header('location: /admin/users');
             exit;
         }
-// var_dump($data['avatar']);
+        // var_dump($data['avatar']);
 // die;
         Header::render();
         Notification::render();
@@ -125,7 +129,7 @@ class UserController
     // // xử lý chức năng sửa (cập nhật)
     public static function update(int $id)
     {
-       // Kiểm tra tính hợp lệ của dữ liệu
+        // Kiểm tra tính hợp lệ của dữ liệu
         $is_valid = UserValidation::edit();
 
         if (!$is_valid) {
@@ -135,7 +139,7 @@ class UserController
         }
 
         $user = new User();
-// var_dump($_POST);
+        // var_dump($_POST);
 // die;
 // //         Chuẩn bị dữ liệu để cập nhật
 
@@ -149,7 +153,7 @@ class UserController
             'status' => $_POST['status'],
             'role' => $_POST['role'],
         ];
-// var_dump($data);
+        // var_dump($data);
 // die;
         // Cập nhật mật khẩu chỉ khi có mật khẩu mới
         if ($_POST['password'] !== '') {
@@ -196,7 +200,8 @@ class UserController
             header("Location: /admin/users");
         }
     }
-    public function userRecycle() {
+    public function userRecycle()
+    {
         AuthHelper::checkPermission([0]);
         $user = new User();
         $data = $user->getAllUserByStatusRecycle();
@@ -206,9 +211,10 @@ class UserController
         NotificationHelper::unset();
         UserRecycle::render($data);
         Footer::render();
-     
+
     }
-    public static function restore(int $id){
+    public static function restore(int $id)
+    {
         $user = new User();
         $is_exist = $user->getOneUser($id);
         if ($is_exist && $is_exist['id'] === $id) {
@@ -225,7 +231,8 @@ class UserController
             header("Location: /admin/recycle/users");
         }
     }
-    public static function deletePermanently(int $id){
+    public static function deletePermanently(int $id)
+    {
         $user = new User();
         $is_exist = $user->getOneUser($id);
         if ($is_exist && $is_exist['id'] === $id) {
@@ -248,23 +255,47 @@ class UserController
 
         $keyword = $_GET['keywords'] ?? '';
         $keyword = trim($keyword);
-        
+
         if (empty($keyword)) {
-            $_SESSION['keywords'] = null; 
-       
+            $_SESSION['keywords'] = null;
+
             $data = [];
             Header::render();
             Index::render($data);
             Footer::render();
-            return;  
+            return;
         }
         $_SESSION['keywords'] = $keyword;
 
         $user = new User();
         $data = $user->search($keyword);
-      
+
         Header::render();
         Index::render($data);
         Footer::render();
+    }
+
+    public static function history($id)
+    {
+            $order = new Order();
+            $data = $order->getAllOrderbyUser_id_admin($id);
+            Header::render();
+            History::render($data);
+            Footer::render();
+    }
+
+    public static function historyDetail(int $id)
+    {
+        
+            AuthHelper::detail_history($id);
+            $detail = new Order_detail();
+            $data = $detail->getAllOrder_id($id);
+            Header::render();
+            Notification::render();
+            NotificationHelper::unset();
+            History_detail::render($data);
+            Footer::render();
+      
+
     }
 }

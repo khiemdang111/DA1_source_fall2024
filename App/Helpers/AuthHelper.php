@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Order;
 use App\Models\User;
 
 
@@ -127,6 +128,20 @@ class AuthHelper
             return false;
         }
         return true;
+    }
+    public static function detail_history($id)
+    {
+        $detail = explode('/', string: $_SERVER['REQUEST_URI']);
+        $detail = $detail[3];
+        $detail = new Order();
+        $result = $detail->getOne($id);
+        if (!$result) {
+            NotificationHelper::error('user_id', 'Bạn không có quyền xem thông tin khoản khoản này');
+            header("Location: /history");
+            exit(); 
+        }else{
+            
+        }
     }
     public static function update($id, $data)
     {

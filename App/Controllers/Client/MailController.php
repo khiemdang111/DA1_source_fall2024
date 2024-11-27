@@ -39,8 +39,7 @@ class MailController
             // $mail->addAddress('dangkhiemct111@gmail.com', 'Quốc khiêm');     //Add a recipient
             // $mail->addAddress('loc2005care@gmail.com', 'Lộc');     //Add a recipient
             $mail->addAddress($email);
-            //Name is optional
-            // $mail->addReplyTo('info@example.com', 'Information');
+           
             $mail->addCC('daothpc08990@gmail.com');
             $mail->addBCC('winecantho@gmail.com');
             //Attachments

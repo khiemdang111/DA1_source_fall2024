@@ -44,6 +44,22 @@ class Order extends BaseModel
             return $result;
         }
     }
+    public function getAllOrderbyUser_id_admin($id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT orders.id,orders.total,orders.orderStatus,orders.date,orders.paymentMethod,orders.user_id FROM orders WHERE orders.user_id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+
     public function createOder(array $data)
     {
         // $sql ="INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1')";

@@ -101,7 +101,6 @@ class AuthController
 
     public static function edit($id)
     {
-
         $is_login = AuthHelper::checkLogin();
         if (!$is_login) {
             header('Location: /login');
@@ -158,7 +157,10 @@ class AuthController
     public static function history()
     {
         $is_login = AuthHelper::checkLogin();
-        if ($is_login) {
+        if (!$is_login) {
+            NotificationHelper::error('er', 'Vui lòng đăng nhập để xem thông tin chuyển khoản');
+            header('location: /');
+        } else {
             $order = new Order();
             $data = $order->getAllOrderbyUser_id();
             Header::render();
@@ -166,25 +168,16 @@ class AuthController
             NotificationHelper::unset();
             index::render($data);
             Footer::render();
-        } else {
-            NotificationHelper::error('er', 'Bạn không có quyền truyên cập trang này');
-            header('location: /');
         }
 
     }
-
-
-
     public static function historyDetail(int $id)
     {
-
         $is_login = AuthHelper::checkLogin();
         if ($is_login) {
+            AuthHelper::detail_history($id);
             $detail = new Order_detail();
             $data = $detail->getAllOrder_id($id);
-            // echo '<pre>';
-            // var_dump($data);
-            // die;
             Header::render();
             Notification::render();
             NotificationHelper::unset();

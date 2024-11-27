@@ -88,6 +88,8 @@ class HomeController
                         "vnp_TxnRef" => $_GET['vnp_TxnRef'],
                         "order_id" => $_SESSION['order_id'],
                     ];
+                    // var_dump($data);
+                    // die;
                     $vnpays = new vnpays();
                     $vnpays->createVnpay($data);
                     Bill::render();

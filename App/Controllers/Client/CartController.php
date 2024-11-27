@@ -39,7 +39,6 @@ class CartController
                     $result = $product->getOneProduct($product_id);
                     // var_dump($result);
                     $cart_data[$key]['data'] = $result;
-
                 }
 
                 Header::render();
@@ -83,7 +82,7 @@ class CartController
             $cookie_data = $_COOKIE['cart'];
             $cart_data = json_decode($cookie_data, true);
         } else {
-            // Nếu chưa có cookie, khởi tạo giỏ hàng trống
+        
             $cart_data = [];
         }
 
@@ -322,10 +321,15 @@ class CartController
                 'province' => $_POST['province_'],
                 'district' => $_POST['district_'],
                 'ward' => $_POST['ward_'],
+                'province_code' => $_POST['province'],
+                'district_code' => $_POST['district'],
+                'ward_code' => $_POST['ward'],
                 'address' => $_POST['address'],
                 'PaymentMethod' => $_POST['PaymentMethod'],
                 'delivery' => $_POST['delivery'],
             ];
+            // var_dump($data);
+            // die;
             $_SESSION['information'] = $data;
             if ($_POST['PaymentMethod'] === 'COD') {
                 CartHelper::createCart($cart_data);

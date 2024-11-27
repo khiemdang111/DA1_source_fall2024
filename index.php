@@ -64,8 +64,6 @@ Route::get('/logout', 'App\Controllers\Client\AuthController@logout');
 // chi tiết tài khoản
 Route::get('/users/{id}', 'App\Controllers\Client\AuthController@edit');
 Route::put('/users/update/{id}', 'App\Controllers\Client\AuthController@update');
-
-
 // trang giỏ hàng
 Route::get('/cart', 'App\Controllers\Client\CartController@index');
 Route::post('/cart/add', 'App\Controllers\Client\CartController@add');
@@ -80,6 +78,7 @@ Route::post('/order', 'App\Controllers\Client\CartController@order');
 Route::get('/thanks', 'App\Controllers\Client\HomeController@thanks');
 Route::get('/history', 'App\Controllers\Client\AuthController@history');
 Route::get('/order/detail/{id}', 'App\Controllers\Client\AuthController@historyDetail');
+
 // thêm bình luận 
 Route::post('/comments', 'App\Controllers\Client\CommentController@store');
 Route::put('/comments/{id}', 'App\Controllers\Client\CommentController@edit');
@@ -130,6 +129,8 @@ Route::get('/admin/users/{id}', 'App\Controllers\Admin\UserController@edit');
 Route::put('/update/user/{id}', 'App\Controllers\Admin\UserController@update');
 Route::post('/admin/delete/users/{id}', 'App\Controllers\Admin\UserController@delete');
 Route::get('/admin/users/search', 'App\Controllers\Admin\UserController@searchUsers');
+Route::get('/admin/users/history/{id}', 'App\Controllers\Admin\UserController@history');
+Route::get('/admin/users/history/detail/{id}', 'App\Controllers\Admin\UserController@historyDetail');
 
 
 
