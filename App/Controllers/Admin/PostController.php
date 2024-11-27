@@ -31,7 +31,7 @@ class PostController
     {
         AuthHelper::checkPermission([0, 5]);
         $post = new Post();
-        $data = $post->getAllByStatus();
+        $data = $post->getAllPost();
 
         Header::render();
         Notification::render();

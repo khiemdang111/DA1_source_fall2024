@@ -62,7 +62,7 @@ class index extends BaseView
               </thead>
               <tbody class="table-border-bottom-0">
                 <?php
-                foreach ($data as $item):
+                foreach ($data['products'] as $item):
                   ?>
                   <tr>
                     <td><?= $item['id'] ?></td>
@@ -102,7 +102,37 @@ class index extends BaseView
           </div>
         </div>
         <!--/ Basic Bootstrap Table -->
+        <div class="row my-5 justify-content-center">
+          <nav aria-label="...">
+            <ul class="pagination d-flex justify-content-center">
+              <?php
+              $currentPage = isset($_GET['pages']) ? intval($_GET['pages']) : 1;
+              $totalPages = $data['total_pages'];
 
+              $prevPage = $currentPage - 1;
+              ?>
+              <li class="page-item <?= $currentPage <= 1 ? 'disabled' : '' ?>">
+                <a class="page-link" href="<?= $currentPage > 1 ? '/admin/products?pages=' . $prevPage : '#' ?>">
+                  << </a>
+              </li>
+
+              <?php
+              for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li class="page-item <?= $i === $currentPage ? 'active' : '' ?>">
+                  <a class="page-link" href="/admin/products?pages=<?= $i ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
+
+              <?php
+              $nextPage = $currentPage + 1;
+              ?>
+              <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                <a class="page-link" href="<?= $currentPage < $totalPages ? '/admin/products?pages=' . $nextPage : '#' ?>"> >> </a>
+              </li>
+            </ul>
+          </nav>
+
+        </div>
         <hr class="my-12" />
 
         <!-- Bootstrap Dark Table -->

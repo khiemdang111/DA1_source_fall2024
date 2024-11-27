@@ -32,7 +32,7 @@ class index extends BaseView
         <div class="row d-flex">
 
           <?php
-          foreach ($data as $item):
+          foreach ($data['posts'] as $item):
             ?>
             <div class="col-lg-6 d-flex align-items-stretch ftco-animate">
               <div class="blog-entry d-md-flex">
@@ -55,26 +55,38 @@ class index extends BaseView
             <?php
           endforeach;
           ?>
+        </div>
+        <div class="row my-3 justify-content-center">
+          <nav aria-label="...">
+            <ul class="pagination">
+              <?php
+              $currentPage = isset($_GET['pages']) ? intval($_GET['pages']) : 1;
+              $totalPages = $data['total_pages'];
 
+              $prevPage = $currentPage - 1;
+              ?>
+              <li class="page-item <?= $currentPage <= 1 ? 'disabled' : '' ?>">
+                <a class="page-link" href="<?= $currentPage > 1 ? '/post?pages=' . $prevPage : '#' ?>">
+                  << </a>
+              </li>
 
+              <?php
+              for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li class="page-item <?= $i === $currentPage ? 'active' : '' ?>">
+                  <a class="page-link" href="/post?pages=<?= $i ?>"><?= $i ?></a>
+                </li>
+              <?php endfor; ?>
 
+              <?php
+              $nextPage = $currentPage + 1;
+              ?>
+              <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                <a class="page-link" href="<?= $currentPage < $totalPages ? '/post?pages=' . $nextPage : '#' ?>"> >> </a>
+              </li>
+            </ul>
+          </nav>
 
         </div>
-        <!-- <div class="row mt-5">
-          <div class="col text-center">
-            <div class="block-27">
-              <ul>
-                <li><a href="#">&lt;</a></li>
-                <li class="active"><span>1</span></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li><a href="#">&gt;</a></li>
-              </ul>
-            </div>
-          </div>
-        </div> -->
       </div>
     </section>
     <?php

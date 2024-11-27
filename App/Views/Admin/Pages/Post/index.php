@@ -59,7 +59,7 @@ class index extends BaseView
                             </thead>
                             <tbody class="table-border-bottom-0">
                                 <?php
-                                foreach ($data as $item):
+                                foreach ($data['posts'] as $item):
                                     ?>
                                     <tr>
                                         <td> <?= $item['id'] ?></td>
@@ -109,6 +109,38 @@ class index extends BaseView
 
                     ?>
                 </div>
+            </div>
+            <div class="row my-3 justify-content-center">
+                <nav aria-label="...">
+                    <ul class="pagination d-flex justify-content-center">
+                        <?php
+                        $currentPage = isset($_GET['pages']) ? intval($_GET['pages']) : 1;
+                        $totalPages = $data['total_pages'];
+
+                        $prevPage = $currentPage - 1;
+                        ?>
+                        <li class="page-item <?= $currentPage <= 1 ? 'disabled' : '' ?>">
+                            <a class="page-link" href="<?= $currentPage > 1 ? '/admin/posts?pages=' . $prevPage : '#' ?>">
+                                << </a>
+                        </li>
+
+                        <?php
+                        for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <li class="page-item <?= $i === $currentPage ? 'active' : '' ?>">
+                                <a class="page-link" href="/admin/posts?pages=<?= $i ?>"><?= $i ?></a>
+                            </li>
+                        <?php endfor; ?>
+
+                        <?php
+                        $nextPage = $currentPage + 1;
+                        ?>
+                        <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
+                            <a class="page-link"
+                                href="<?= $currentPage < $totalPages ? '/admin/posts?pages=' . $nextPage : '#' ?>"> >> </a>
+                        </li>
+                    </ul>
+                </nav>
+
             </div>
             <!--/ Basic Bootstrap Table -->
         </div>
