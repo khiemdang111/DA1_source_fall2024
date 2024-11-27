@@ -10640,7 +10640,7 @@ h5,
   }
 }
 .ftco-navbar-light .navbar-brand {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.5);
 }
 .ftco-navbar-light .navbar-brand span {
   color: rgba(255, 255, 255, 0.5);
@@ -10895,7 +10895,7 @@ h5,
   }
 }
 .ftco-navbar-light.scrolled .nav-item.active > a {
-  color: #b7472a !important;
+  color: #fff !important;
 }
 .ftco-navbar-light.scrolled .nav-item.cta > a {
   color: #fff !important;
@@ -10939,7 +10939,7 @@ h5,
 .ftco-navbar-light.scrolled .nav-link {
   padding-top: 0.9rem !important;
   padding-bottom: 0.9rem !important;
-  color: #000000 !important;
+  color: #7d7979 !important;
 }
 .ftco-navbar-light.scrolled .nav-link.active {
   color: #b7472a !important;
@@ -10956,10 +10956,10 @@ h5,
   transition: 0.3s all ease-out;
 }
 .ftco-navbar-light.scrolled .navbar-brand {
-  color: #000000;
+  color: rgba(255, 255, 255, 0.5);
 }
 .ftco-navbar-light.scrolled .navbar-brand span {
-  color: #b7472a;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .navbar-brand {
