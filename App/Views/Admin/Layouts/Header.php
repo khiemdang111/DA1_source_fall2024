@@ -59,7 +59,7 @@ class Header extends BaseView
       
       <script src="<?= APP_URL ?>/ckeditor4/ckeditor/ckeditor.js"></script>
 
-
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
 

@@ -42,7 +42,8 @@ class Footer extends BaseView
 
     <!-- Main JS -->
     <script src="<?= APP_URL ?>/public/assets/admin/assets/js/main.js"></script>
-
+    
+    <script src="<?= APP_URL ?>/public/assets/admin/assets/js/sweetalert.js"></script>
     <!-- Page JS -->
     <script src="<?= APP_URL ?>/public/assets/admin/assets/js/dashboards-analytics.js"></script>
 

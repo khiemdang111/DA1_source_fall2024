@@ -8,7 +8,7 @@ class index extends BaseView
 {
   public static function render($data = null)
   {
-?>
+    ?>
 
 
     <!-- / Navbar -->
@@ -41,14 +41,9 @@ class index extends BaseView
             <form action="/admin/products/search" method="get">
               <div class="input-group input-group-merge">
                 <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                <input
-                  type="text"
-                  class="form-control"
-                  name="keywords"
-                  value="<?=  (isset($_SESSION['keywords']) ? $_SESSION['keywords']: "") ?>" 
-                  placeholder="Tìm kiếm"
-                  aria-label="Tìm kiếm"
-                  aria-describedby="basic-addon-search31" />
+                <input type="text" class="form-control" name="keywords"
+                  value="<?= (isset($_SESSION['keywords']) ? $_SESSION['keywords'] : "") ?>" placeholder="Tìm kiếm"
+                  aria-label="Tìm kiếm" aria-describedby="basic-addon-search31" />
               </div>
 
             </form>
@@ -68,7 +63,7 @@ class index extends BaseView
               <tbody class="table-border-bottom-0">
                 <?php
                 foreach ($data as $item):
-                ?>
+                  ?>
                   <tr>
                     <td><?= $item['id'] ?></td>
                     <td><?= $item['name'] ?></td>
@@ -82,17 +77,22 @@ class index extends BaseView
                           <i class="bx bx-dots-vertical-rounded"></i>
                         </button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="/admin/productvariant/<?= $item['id'] ?>"><i class="bx bx-cog me-1"></i> Cấu hình</a>
-                          <a class="dropdown-item" href="/admin/products/<?= $item['id'] ?>"><i class="bx bx-edit-alt me-1"></i> Sửa</a>
-                          <form class="w-100" action="/admin/delete/products/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
-                            <input type="hidden" name="method" value="POST" id="">
-                            <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Xóa</button>
+                          <a class="dropdown-item" href="/admin/productvariant/<?= $item['id'] ?>"><i
+                              class="bx bx-cog me-1"></i> Cấu hình</a>
+                          <a class="dropdown-item" href="/admin/products/<?= $item['id'] ?>"><i
+                              class="bx bx-edit-alt me-1"></i> Sửa</a>
+                          <form class="w-100" action="/admin/delete/products/<?= $item['id'] ?>" method="post"
+                            style="display: inline-block;">
+                            <input type="hidden" name="method" value="POST">
+                            <button class="dropdown-item delete-button button-del">
+                              <i class="bx bx-trash me-1"></i> Xóa
+                            </button>
                           </form>
                         </div>
                       </div>
                     </td>
                   </tr>
-                <?php
+                  <?php
                 endforeach;
 
 
@@ -111,6 +111,6 @@ class index extends BaseView
       </div>
 
 
-  <?php
+      <?php
   }
 }

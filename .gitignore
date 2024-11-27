@@ -11,3 +11,9 @@ cgi-bin
 .env
 
 .env.example
+
+node_modules
+
+package-lock.json
+
+package.json

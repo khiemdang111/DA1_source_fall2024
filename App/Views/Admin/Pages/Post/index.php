@@ -8,7 +8,7 @@ class index extends BaseView
 {
     public static function render($data = null)
     {
-?>
+        ?>
         <!-- / Navbar -->
 
         <!-- Content wrapper -->
@@ -35,14 +35,9 @@ class index extends BaseView
                     <form action="/admin/posts/search" method="get">
                         <div class="input-group input-group-merge">
                             <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="keywords"
-                                value="<?=  (isset($_SESSION['keywords']) ? $_SESSION['keywords']: "") ?>" 
-                                placeholder="Tìm kiếm"
-                                aria-label="Tìm kiếm"
-                                aria-describedby="basic-addon-search31" />
+                            <input type="text" class="form-control" name="keywords"
+                                value="<?= (isset($_SESSION['keywords']) ? $_SESSION['keywords'] : "") ?>"
+                                placeholder="Tìm kiếm" aria-label="Tìm kiếm" aria-describedby="basic-addon-search31" />
                         </div>
 
                     </form>
@@ -50,7 +45,7 @@ class index extends BaseView
                 <div class="table-responsive text-nowrap">
                     <?php
                     if (count($data)):
-                    ?>
+                        ?>
                         <table class="table">
                             <thead class="table-light">
                                 <tr>
@@ -65,14 +60,15 @@ class index extends BaseView
                             <tbody class="table-border-bottom-0">
                                 <?php
                                 foreach ($data as $item):
-                                ?>
+                                    ?>
                                     <tr>
                                         <td> <?= $item['id'] ?></td>
                                         <td class="text-truncate" style="max-width: 200px;">
                                             <?= $item['title'] ?>
                                         </td>
                                         <td>
-                                            <img src="<?= APP_URL ?>/public/uploads/posts/<?= $item['img'] ?>" alt="Avatar" class="rounded-circle" width="60px" height="60px" />
+                                            <img src="<?= APP_URL ?>/public/uploads/posts/<?= $item['img'] ?>" alt="Avatar"
+                                                class="rounded-circle" width="60px" height="60px" />
                                         </td>
                                         <td class="text-truncate" style="max-width: 200px;">
                                             <?= $item['summary'] ?>
@@ -80,31 +76,35 @@ class index extends BaseView
                                         <td class="text-truncate"><?= ($item['status'] == 0) ? 'Khóa ' : 'Hoạt động ' ?></td>
                                         <td>
                                             <div class="dropdown">
-                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                    data-bs-toggle="dropdown">
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="/admin/posts/<?= $item['id'] ?>"><i class="bx bx-edit-alt me-1"></i> Sửa</a>
-                                                    <form class="w-100" action="/admin/delete/posts/<?= $item['id'] ?>" method="post" style="display: inline-block;" onsubmit="return confirm('Chắc chưa?')">
-                                                        <input type="hidden" name="method" value="POST" id="">
-
-                                                        <button class="dropdown-item"><i class="bx bx-trash me-1"></i> Xóa</button>
+                                                    <a class="dropdown-item" href="/admin/posts/<?= $item['id'] ?>"><i
+                                                            class="bx bx-edit-alt me-1"></i> Sửa</a>
+                                                    <form class="w-100" action="/admin/delete/<?= $item['id'] ?>" method="post"
+                                                        style="display: inline-block;">
+                                                        <input type="hidden" name="method" value="POST">
+                                                        <button class="dropdown-item delete-button button-del">
+                                                            <i class="bx bx-trash me-1"></i> Xóa
+                                                        </button>
                                                     </form>
                                                 </div>
                                             </div>
                                         </td>
                                     </tr>
 
-                                <?php
+                                    <?php
                                 endforeach;
                                 ?>
                             </tbody>
                         </table>
-                    <?php
+                        <?php
                     else:
-                    ?>
+                        ?>
                         <h4 class="text-center text-danger">Không có dữ liệu</h4>
-                    <?php
+                        <?php
                     endif;
 
                     ?>
@@ -112,6 +112,6 @@ class index extends BaseView
             </div>
             <!--/ Basic Bootstrap Table -->
         </div>
-<?php
+        <?php
     }
 }
