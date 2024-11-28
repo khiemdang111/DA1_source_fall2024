@@ -13,30 +13,25 @@ class Index extends BaseView
 
 ?>
 
-<section
-      class="hero-wrap hero-wrap-2"
-      style="background-image: url('/public/uploads/image/bg_2.jpg')"
-      data-stellar-background-ratio="0.5"
-    >
-      <div class="overlay"></div>
-      <div class="container">
-        <div
-          class="row no-gutters slider-text align-items-end justify-content-center"
-        >
-          <div class="col-md-9 ftco-animate mb-5 text-center">
-            <p class="breadcrumbs mb-0">
-              <span class="mr-2"
-                ><a href="/"
-                  >Tranng chủ <i class="fa fa-chevron-right"></i></a
-              ></span>
-              <span>Sản phẩm <i class="fa fa-chevron-right"></i></span>
-            </p>
-            <h2 class="mb-0 bread">Sản Phẩm</h2>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="mt-4">
+        <section
+            class="hero-wrap hero-wrap-2"
+            style="background-image: url('/public/uploads/image/bg_2.jpg')"
+            data-stellar-background-ratio="0.5">
+            <div class="overlay"></div>
+            <div class="container">
+                <div
+                    class="row no-gutters slider-text align-items-end justify-content-center">
+                    <div class="col-md-9 ftco-animate mb-5 text-center">
+                        <p class="breadcrumbs mb-0">
+                            <span class="mr-2"><a href="/">Tranng chủ <i class="fa fa-chevron-right"></i></a></span>
+                            <span>Sản phẩm <i class="fa fa-chevron-right"></i></span>
+                        </p>
+                        <h2 class="mb-0 bread">Sản Phẩm</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mt-4">
             <div class="container">
                 <form action="" method="GET" id="form-control">
                     <div class="row">
@@ -59,12 +54,37 @@ class Index extends BaseView
                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                 <select id="origin" class="form-control" name="origin" onchange="handleParams('origin', this.value)">
                                     <option value="" selected>Vui lòng chọn xuất xứ</option>
-                                    <?php foreach ($data['origins'] as $origin): ?>
-                                        <option value="<?= $origin['id'] ?>"
-                                            <?= isset($_GET['origin']) && $_GET['origin'] === $origin['id'] ? 'selected' : '' ?>>
-                                            <?= $origin['name'] ?>
-                                        </option>
-                                    <?php endforeach; ?>
+                                    <option value="Mỹ"
+                                        <?= isset($_GET['origin']) && $_GET['origin'] === "Mỹ" ? 'selected' : '' ?>>
+                                        Mỹ
+                                    </option>
+                                    <option value="Chile"
+                                        <?= isset($_GET['origin']) && $_GET['origin'] === "Chile" ? 'selected' : '' ?>>
+                                        Chile
+                                    </option>
+                                    <option value="Ý"
+                                        <?= isset($_GET['origin']) && $_GET['origin'] === "Ý" ? 'selected' : '' ?>>
+                                        Ý
+                                    </option>
+                                    <option value="Pháp"
+                                        <?= isset($_GET['origin']) && $_GET['origin'] === "Pháp" ? 'selected' : '' ?>>
+                                        Pháp
+                                    </option>
+
+                                    <option value="Argentina"
+                                        <?= isset($_GET['origin']) && $_GET['origin'] === "Argentina" ? 'selected' : '' ?>>
+                                        Argentina
+                                    </option>
+                                    <option value="Tây Ban Nha"
+                                        <?= isset($_GET['origin']) && $_GET['origin'] === "Tây Ban Nha" ? 'selected' : '' ?>>
+                                        Tây Ban Nha
+                                    </option>
+                                    <option value="Úc"
+                                        <?= isset($_GET['origin']) && $_GET['origin'] === "Úc" ? 'selected' : '' ?>>
+                                        Úc
+                                    </option>
+                                    
+
                                 </select>
                             </div>
                         </div>
@@ -73,7 +93,7 @@ class Index extends BaseView
                             <div class="select-wrap">
                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                 <select id="categories" class="form-control" name="categories" onchange="handleParams('categories', this.value)">
-                                    <option value="" selected>Vui lòng chọn xuất xứ</option>
+                                    <option value="" selected>Vui lòng chọn loại sản phẩm</option>
                                     <?php foreach ($data['categories'] as $categories): ?>
                                         <option value="<?= $categories['id'] ?>"
                                             <?= isset($_GET['categories']) && $_GET['categories'] === $categories['id'] ? 'selected' : '' ?>>
@@ -95,6 +115,8 @@ class Index extends BaseView
                                     <option value="1000000-5000000" <?= isset($_GET['price']) && $_GET['price'] === '1000000-5000000' ? 'selected' : '' ?>>Từ 1 triệu đến 5 triệu</option>
                                     <option value="5000000-10000000" <?= isset($_GET['price']) && $_GET['price'] === '5000000-10000000' ? 'selected' : '' ?>>Từ 5 triệu đến 10 triệu</option>
                                     <option value="10000000-20000000" <?= isset($_GET['price']) && $_GET['price'] === '10000000-20000000' ? 'selected' : '' ?>>Từ 10 triệu đến 20 triệu</option>
+                                    <option value="20000000-100000000" <?= isset($_GET['price']) && $_GET['price'] === '20000000-100000000' ? 'selected' : '' ?>>Từ 20 triệu đến 100 triệu</option>
+                                    <option value="100000000-1000000000" <?= isset($_GET['price']) && $_GET['price'] === '100000000-1000000000' ? 'selected' : '' ?>>Từ 100 triệu đến 1 tỷ</option>
                                 </select>
                             </div>
                         </div>
@@ -135,20 +157,20 @@ class Index extends BaseView
                                                 class="img d-flex align-items-center justify-content-center"
                                                 style="background-image: url(<?= APP_URL ?>/public/uploads/products/<?= $item['image'] ?>)">
                                                 <div class="desc">
-											<div class="meta-prod d-flex">
-												<form action="/cart/add" method="post">
-													<input type="hidden" name="method" id="" value="POST">
-													<input type="hidden" name="id" id="" value="<?= $item['id'] ?>" required>
-													<button type="submit" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag">
-														</span></button>
-												</form>
-												<a href="#" type="submit" class="d-flex align-items-center justify-content-center"><span
-														class="flaticon-heart"></span></a>
-												<a href="/products/<?= $item['id'] ?>" class="d-flex align-items-center justify-content-center"><span
-														class="flaticon-visibility"></span></a>
+                                                    <div class="meta-prod d-flex">
+                                                        <form action="/cart/add" method="post">
+                                                            <input type="hidden" name="method" id="" value="POST">
+                                                            <input type="hidden" name="id" id="" value="<?= $item['id'] ?>" required>
+                                                            <button type="submit" class="d-flex align-items-center justify-content-center"><span class="flaticon-shopping-bag">
+                                                                </span></button>
+                                                        </form>
+                                                        <a href="#" type="submit" class="d-flex align-items-center justify-content-center"><span
+                                                                class="flaticon-heart"></span></a>
+                                                        <a href="/products/<?= $item['id'] ?>" class="d-flex align-items-center justify-content-center"><span
+                                                                class="flaticon-visibility"></span></a>
 
-											</div>
-										</div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="text text-center">
                                                 <span class="category"><?= $item['category_name'] ?></span>
@@ -158,7 +180,7 @@ class Index extends BaseView
                                                     if ($item['discount_price'] > 0) :
                                                     ?>
                                                         <span class="price price-sale"><?= number_format($item['price']) ?></span> <span
-                                                            class="price"><?= number_format( $item['discount_price']) ?></span>
+                                                            class="price"><?= number_format($item['discount_price']) ?></span>
 
                                                     <?php
                                                     else:
@@ -178,18 +200,18 @@ class Index extends BaseView
                             endif; ?>
 
                         </div>
-                        
+
                     </div>
 
-                    
+
                 </div>
             </div>
         </section>
-            
+
         <script>
             function handleParams(filter, value) {
-                const currentUrl = window.location.href; 
-                const newUrl = new URL(currentUrl); 
+                const currentUrl = window.location.href;
+                const newUrl = new URL(currentUrl);
 
                 const currentValue = newUrl.searchParams.get(filter);
 
@@ -199,7 +221,7 @@ class Index extends BaseView
                     newUrl.searchParams.set(filter, value);
                 }
 
-                window.location.href = newUrl.toString(); 
+                window.location.href = newUrl.toString();
             }
 
             function clearFilters() {

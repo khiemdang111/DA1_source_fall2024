@@ -47,6 +47,7 @@ class ProductController
 
         $queryParams = self::getQueryParams();
         // giả sử data là mảng dữ liệu lấy được từ database
+       
         $category = new Category();
         $categories = $category->getAllCategoryByStatus();
 
@@ -57,13 +58,10 @@ class ProductController
         } else {
             $products = $product->getProductsWithFilters($queryParams);
         }
-        $origins = new Origin();
-        $origins = $origins->getAllOriginsByStatus();
+      
         $data = [
             'products' => $products,
             'categories' => $categories,
-            'origins' => $origins,
-
         ];
         Header::render();
 

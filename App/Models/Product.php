@@ -225,13 +225,13 @@ class Product extends BaseModel
                   AND categories.status = " . self::STATUS_ENABLE;
 
             if (!empty($filters['categories'])) {
-                $categories = implode(',', array_map('intval', (array) $filters['categories']));
+                $categories =  $filters['categories'];
                 $query .= " AND category_id IN ($categories)";
             }
 
             if (!empty($filters['origin'])) {
-                $origin = implode(',', array_map('intval', (array) $filters['origin']));
-                $query .= " AND origin_id IN ($origin)";
+                $origin = $filters['origin'];
+                $query .= " AND origin  = '$origin'";
             }
 
             if (!empty($filters['price'])) {
