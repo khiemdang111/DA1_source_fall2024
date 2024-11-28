@@ -253,7 +253,7 @@ class ProductVariant extends BaseModel
   {
     $result = [];
     try {
-      $sql = "SELECT product_variants.name AS variant_name, product_variant_options.name AS option_name FROM `product_variant_values` INNER JOIN `product_variant_options` ON product_variant_values.option_id = product_variant_options.id INNER JOIN `product_variants` ON product_variants.id = product_variant_options.product_variant_id WHERE product_variant_values.product_id = $id";
+      $sql = "SELECT product_variant_values.id AS id, product_variants.name AS variant_name, product_variant_options.name AS option_name FROM `product_variant_values` INNER JOIN `product_variant_options` ON product_variant_values.option_id = product_variant_options.id INNER JOIN `product_variants` ON product_variants.id = product_variant_options.product_variant_id WHERE product_variant_values.product_id = 525;";
       $result = $this->_conn->MySQLi()->query($sql);
       return $result->fetch_all(MYSQLI_ASSOC);
     } catch (\Throwable $th) {
