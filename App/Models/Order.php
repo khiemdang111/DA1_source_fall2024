@@ -137,5 +137,20 @@ class Order extends BaseModel
             return $result;
         }
     }
-
+    public function getAllorder_admin($number)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM $this->table WHERE transport = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $number);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+   
 }

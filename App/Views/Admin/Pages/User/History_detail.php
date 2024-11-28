@@ -7,10 +7,10 @@ class History_detail extends BaseView
 {
     public static function render($data = null)
     {
-        $data_adress = $data[0]['address'] . " " . $data[0]['ward'] . " " . $data[0]['district'] . " " . $data[0]['province'];
-
-        //    var_dump($data);
-        //    die;
+       
+        //   echo '<pre>';
+//            var_dump($data[0]['name']);
+//            die;
         ?>
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card mb-3">
@@ -41,116 +41,124 @@ class History_detail extends BaseView
 
                     </form>
                 </div>
-
-                <div class="table-responsive text-nowrap">
-                    <?php
-                    if (count($data)):
-                        ?>
-                        <table class="table">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Người nhận </th>
-                                    <th>Địa chỉ giao </th>
-                                    <th>Số điện thoại </th>
-                                    <th>Phương thức thanh toán </th>
-                                    <th>Thời gian đặt hàng</th>
-
-
-                                </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-
-                                <tr>
-                                    <td>
-                                        <?= $data[0]['name'] ?>
-                                    </td>
-                                    <td>
-                                        <?= $data_adress ?>
-                                    </td>
-                                    <td> <?= $data[0]['phone'] ?></td>
-                                    <td> <?= ($data[0]['paymentMethod'] === "COD") ? ' Thanh toán khi nhận hàng ' : ' VNPAY' ?></td>
-
-                                    <td> <?= $data[0]['date'] ?></td>
-
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-
+               
+                    <div class="table-responsive text-nowrap">
                         <?php
-                    else:
+                        if (count($data)):
+                            $data_adress = $data[0]['address'] . " " . $data[0]['ward'] . " " . $data[0]['district'] . " " . $data[0]['province'];
 
-                        ?>
-                        <h4 class="text-center text-danger">Không có dữ liệu</h4>
-                        <?php
-                    endif;
-
-                    ?>
-
-
-                </div>
-                <div class="table-responsive text-nowrap my-4">
-                    <?php
-                    if (count($data)):
-                        ?>
-                        <table class="table">
-                            <thead class="table-light">
-                                <tr>
-                                    <th style="width: 15px">Id</th>
-                                    <th>Tên</th>
-                                    <th>Hình ảnh</th>
-                                    <th>Giá</th>
-                                    <th>Số lượng</th>
-
-                                </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-                                <?php
-                                foreach ($data as $item):
-                                    ?>
+                            ?>
+                            <table class="table">
+                                <thead class="table-light">
                                     <tr>
-                                        <td><?= $item['product_id'] ?></td>
-                                        <td><?= $item['product_name'] ?></td>
-                                        <td><img src="<?= APP_URL ?>/public/uploads/products/<?= $item['product_image'] ?>" alt=""
-                                                width="100px"></td>
-                                        <td>
+                                        <th>Người nhận </th>
+                                        <th>Địa chỉ giao </th>
+                                        <th>Số điện thoại </th>
+                                        <th>Phương thức thanh toán </th>
+                                        <th>Thời gian đặt hàng</th>
 
-                                            <?php
-                                            if ($item['originalPrice'] > 0):
-                                                ?>
-                                                <div class="item">
-                                                    <?= number_format($item['unitPrice']) ?> VND </div>
-                                                <?php
-                                            else:
-                                                ?>
-                                                <div class="item"><?= number_format($item['unitPrice']) ?> VND</div>
-                                                <?php
-                                            endif;
-                                            ?>
-                                        </td>
-                                        <td><?= $item['quantity'] ?></td>
+
                                     </tr>
-                                    <?php
-                                endforeach;
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+
+                                    <tr>
+                                        <td>
+                                            <?= $data[0]['name'] ?>
+                                        </td>
+                                        <td>
+                                            <?= $data_adress ?>
+                                        </td>
+                                        <td> <?= $data[0]['phone'] ?></td>
+                                        <td> <?= ($data[0]['paymentMethod'] === "COD") ? ' Thanh toán khi nhận hàng ' : ' VNPAY' ?></td>
+
+                                        <td> <?= $data[0]['date'] ?></td>
 
 
-                                ?>
-                            </tbody>
-                        </table>
 
-                        <?php
-                    else:
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <?php
+                        else:
+
+                            ?>
+                            <h4 class="text-center text-danger">Không có dữ liệu</h4>
+                            <?php
+                        endif;
 
                         ?>
-                        <h4 class="text-center text-danger">Không có dữ liệu</h4>
+
+
+                    </div>
+                    <div class="table-responsive text-nowrap my-4">
                         <?php
-                    endif;
+                        if (count($data)):
+                            ?>
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 15px">Id</th>
+                                        <th>Tên</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Giá</th>
+                                        <th>Số lượng</th>
 
-                    ?>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    <?php
+                                    foreach ($data as $item):
+                                        ?>
+                                        <tr>
+                                            <td><?= $item['product_id'] ?></td>
+                                            <td><?= $item['product_name'] ?></td>
+                                            <td><img src="<?= APP_URL ?>/public/uploads/products/<?= $item['product_image'] ?>" alt=""
+                                                    width="100px"></td>
+                                            <td>
+
+                                                <?php
+                                                if ($item['originalPrice'] > 0):
+                                                    ?>
+                                                    <div class="item">
+                                                        <?= number_format($item['unitPrice']) ?> VND
+                                                    </div>
+                                                    <?php
+                                                else:
+                                                    ?>
+                                                    <div class="item"><?= number_format($item['unitPrice']) ?> VND</div>
+                                                    <?php
+                                                endif;
+                                                ?>
+                                            </td>
+                                            <td><?= $item['quantity'] ?></td>
+                                        </tr>
+                                        <?php
+                                    endforeach;
 
 
-                </div>
+                                    ?>
+                                </tbody>
+                            </table>
+
+                            <?php
+                        else:
+
+                            ?>
+                           
+                            <?php
+                        endif;
+
+                        ?>
+
+
+                    </div>
+               
+                
+
+
+
             </div>
             <!--/ Basic Bootstrap Table -->
         </div>

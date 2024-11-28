@@ -183,4 +183,12 @@ Route::post('/admin/post/deletePermanently/{id}', 'App\Controllers\Admin\PostCon
  Route::get('/mail', 'App\Controllers\Client\MailController@index');
 
 
+ //  order 
+ Route::get('/admin/order/delivering', 'App\Controllers\Admin\Ordercontroller@index');
+ Route::get('/admin/products/success', 'App\Controllers\Admin\Ordercontroller@success');
+
+
+
+
+
 Route::dispatch($_SERVER['REQUEST_URI']);

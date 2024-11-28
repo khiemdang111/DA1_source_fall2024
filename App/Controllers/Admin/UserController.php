@@ -289,7 +289,9 @@ class UserController
         
             AuthHelper::detail_history($id);
             $detail = new Order_detail();
-            $data = $detail->getAllOrder_id($id);
+            $data = $detail->getAllOrder_id_admin($id);
+            // var_dump($data);
+            // die;
             Header::render();
             Notification::render();
             NotificationHelper::unset();
