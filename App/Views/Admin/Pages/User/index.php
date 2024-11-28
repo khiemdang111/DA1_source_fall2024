@@ -92,6 +92,7 @@ class index extends BaseView
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="/admin/users/history/<?= $item['id'] ?>"><i class='bx bxs-cart'></i></i> Lich sử mua sắm</a>
                                                     <a class="dropdown-item" href="/admin/users/<?= $item['id'] ?>"><i
                                                             class="bx bx-edit-alt me-1"></i> Sửa</a>
                                                     <form class="w-100" action="/admin/delete/users/<?= $item['id'] ?>" method="post"
