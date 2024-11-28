@@ -10,9 +10,9 @@ class detail extends BaseView
 {
   public static function render($data = null)
   {
-    $data_adress = $data[0]['address'] . " " . $data[0]['ward'] . " " . $data[0]['district'] . " " . $data[0]['province'];
-    //         echo '<pre>';
-// var_dump($data[0]['total']);
+   
+//             echo '<pre>';
+// var_dump($data);
     ?>
     <div class="container">
       <div class="row p-5">
@@ -21,16 +21,21 @@ class detail extends BaseView
             <div class="categories">
               <h3>Lịch sử mua hàng </h3>
               <?php
-              NavbarAccount::render($data);
+              NavbarAccount::render();
               ?>
             </div>
           </div>
         </div>
         <div class="col-md-9">
           <div class="card border-dark ">
-            <div class="card-header">Chi tiết thanh toán - <span class="text-danger">
+              <?php 
+              if(isset($data[0])):
+                $data_adress = $data[0]['address'] . " " . $data[0]['ward'] . " " . $data[0]['district'] . " " . $data[0]['province'];
+              ?>
+               <div class="card-header">Chi tiết thanh toán - <span class="text-danger">
                 <?= ($data[0]['orderStatus'] === "0") ? '  Chưa thanh toán' : 'Đã thanh toán' ?>
               </span></div>
+              
             <div class="item">
               <div class="d-flex justify-content-between m-1 item_dflex">
                 <div class="item "><svg class="mb-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -142,6 +147,16 @@ class detail extends BaseView
                 <!-- <a href="" class="btn btn-primary m-1">Mua lại</a> -->
               </div>
             </div>
+              <?php 
+              else:
+              ?>
+               <h3 class="text-danger text-center m-2">Không có dữ liệu</h3>
+              <?php 
+              endif;
+              ?>
+
+
+           
 
           </div>
         </div>

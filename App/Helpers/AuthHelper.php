@@ -122,7 +122,6 @@ class AuthHelper
         }
         $data = $_SESSION['user'];
         $user_id = $data['id'];
-
         if ($user_id != $id) {
             NotificationHelper::error('user_id', 'Bạn không có quyền xem thông tin tài khoản này ');
             return false;
@@ -136,7 +135,7 @@ class AuthHelper
         $detail = new Order();
         $result = $detail->getOne($id);
         if (!$result) {
-            NotificationHelper::error('user_id', 'Bạn không có quyền xem thông tin khoản khoản này');
+            NotificationHelper::error('user_id', 'Bạn không có quyền xem thông tin chuyển khoản này');
             header("Location: /history");
             exit(); 
         }else{

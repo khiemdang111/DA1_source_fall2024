@@ -11,7 +11,7 @@ class Order_detail extends BaseModel
         $result = [];
         try {
             $sql = "SELECT order_detail.id AS order_detail_id, order_detail.*, orders.id ,orders.phone ,orders.total,orders.date as oders_date, orders.name,orders.orderStatus, orders.paymentMethod, orders.address, orders.ward, orders.district, orders.province, orders.user_id ,products.name AS product_name, 
-            products.image AS product_image FROM order_detail INNER JOIN orders ON orders.id = order_detail.order_id INNER JOIN products ON products.id = order_detail.product_id WHERE order_detail.order_id = ?;";
+            products.image AS product_image FROM order_detail INNER JOIN orders ON orders.id = order_detail.order_id INNER JOIN products ON products.id = order_detail.product_id WHERE order_detail.order_id = ? and orders.user_id =".$_SESSION['user']['id'];
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('i', $id);

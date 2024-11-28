@@ -87,7 +87,7 @@ class Detail extends BaseView
                                 // Thêm variant_name vào danh sách đã xử lý
                                 $processed_ids_cli[] = $itemVariant_opt['variant_name'];
 
-                                // Reset $countinput cho mỗi nhóm variant_name
+                              
                                 $countinput = 1;
                                 ?>
                                 <td value="<?= $itemVariant_opt['variant_name'] ?>">
@@ -177,7 +177,6 @@ class Detail extends BaseView
                                         </button>
                                     </span>
                                 </div>
-
                                 <div class="w-100"></div>
                                 <div class="col-md-12">
                                     <p style="color: #000;">Số lượt xem : <?= $data['product'][0]['view'] ?></p>
