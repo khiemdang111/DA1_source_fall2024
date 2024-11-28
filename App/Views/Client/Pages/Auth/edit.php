@@ -74,7 +74,49 @@ class edit extends BaseView
             </div>
         </div>
 
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="bodylucky">
 
+            <div class="mainboxlucky" id="mainboxlucky">
+              <div class="arrow"></div>
+              <div class="box" id="box">
+                <div class="box1">
+                  <span class="font span1"><b>Prize 1</b></span>
+                  <span class="font span2"><b>Prize 2</b></span>
+                </div>
+                <div class="box2">
+                  <span class="font span3"><b>Prize 3</b></span>
+                  <span class="font span4"><b>Prize 2</b></span>
+                </div>
+              </div>
+              <button class="spin" id="spinButton" onclick="spin()">Quay</button>
+            </div>
+          </div>
+        </div>
+        <audio
+      controls="controls"
+      id="applause"
+      src="<?= APP_URL ?>/public/uploads/void/applause.mp3"
+      type="audio/mp3"
+    ></audio>
+    <audio
+      controls="controls"
+      id="wheel"
+      src="<?= APP_URL ?>/public/uploads/void/nhacxoso.mp3"
+      type="audio/mp3"
+    ></audio>
+
+      </div>
+      <!-- <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+        <button type="submit" class="btn btn-primary">Gửi</button>
+      </div> -->
+      </form>
+    </div>
+    </div>
+    </div>
 
 
 

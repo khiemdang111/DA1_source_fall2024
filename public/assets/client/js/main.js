@@ -231,3 +231,62 @@ window.addEventListener('beforeunload', function() {
     xhr.send();
 });
 
+function shuffle(array) {
+	let currentIndex = array.length,
+	  randomIndex;
+	while (currentIndex != 0) {
+	  randomIndex = Math.floor(Math.random() * currentIndex);
+	  currentIndex--;
+	  [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+	}
+	return array;
+  }
+
+  let isSpinning = false; // Biến để kiểm tra trạng thái vòng quay
+
+  function spin() {
+	wheel.play();
+	if (isSpinning) return; // Ngăn không cho người dùng nhấn nhiều lần khi đang quay
+
+	isSpinning = true; // Đặt trạng thái đang quay
+	const box = document.getElementById("box");
+	const spinButton = document.getElementById("spinButton");
+	let selectedItem = "";
+
+	// Các góc quay tương ứng với các ô
+	const prizes = {
+	  90: "Cam",
+	  180: "Xanh biển",
+	  270: "Xanh lá",
+	  360: "Tím"
+	};
+
+	// Random chọn góc trúng thưởng
+	const angles = [90, 180, 270, 360];
+	const randomIndex = Math.floor(Math.random() * angles.length);
+	const rotation = angles[randomIndex];
+
+	// Lấy giá trị giải thưởng
+	selectedItem = prizes[rotation];
+
+	// Vô hiệu hóa nút "SPIN"
+	spinButton.disabled = true;
+
+	// Xoay vòng quay
+	box.style.transition = "all ease 11s";
+	box.style.transform = `rotate(${rotation + 1440}deg)`; // Thêm 1440° để vòng quay xoay nhiều lần
+
+	// Hiển thị kết quả
+	setTimeout(() => {
+	  applause.play();
+	  alert(`Congratulations! You won ${selectedItem}.`);
+	},11000);
+
+	// Reset trạng thái và kích hoạt lại nút "SPIN"
+	setTimeout(() => {
+	  box.style.transition = "none";
+	  box.style.transform = "rotate(0deg)";
+	  spinButton.disabled = false; // Kích hoạt lại nút
+	  isSpinning = false; // Đặt trạng thái quay xong
+	}, 13000);
+  }
