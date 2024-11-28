@@ -29,6 +29,7 @@ class edit extends BaseView
                 <div class="col-md-8">
                     <div class="card ">
                         <h4 class="text-center title_color">Thông tin tài khoản</h4>
+                        <p class="text-right text-danger mr-2">Điểm thưởng: <?= $data['accumulate_points'] ?></p>
                         <form class="p-2" action="/users/update/<?= $data['id'] ?>" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="method" value="PUT">
                             <?php
