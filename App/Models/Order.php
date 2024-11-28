@@ -152,5 +152,35 @@ class Order extends BaseModel
             return $result;
         }
     }
+
+    public function getAllOrderbyUser_idByTransport()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT orders.id, orders.total, orders.orderStatus, orders.date, orders.paymentMethod, orders.transport, orders.user_id 
+                    FROM orders WHERE orders.user_id = " . $_SESSION['user']['id'] . " AND orders.transport = 1";
+
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+
+    public function getAllOrderbyUser_idByCanceled()
+    {
+        $result = [];
+        try {
+            $sql = "SELECT orders.id, orders.total, orders.orderStatus, orders.date, orders.paymentMethod, orders.transport, orders.user_id 
+                    FROM orders WHERE orders.user_id = " . $_SESSION['user']['id'] . " AND orders.transport = 0";
+
+            $result = $this->_conn->MySQLi()->query($sql);
+            return $result->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
    
 }

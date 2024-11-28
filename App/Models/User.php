@@ -146,5 +146,37 @@ class User extends BaseModel
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     
-    
+    public function getUserId(int $id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT * FROM $this->table WHERE id=?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+  
+    public function updateUserPoints(int $id , $new_points)
+    {
+        $result = [];
+        try {
+            $sql = "UPDATE users SET accumulate_points = ? WHERE id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('ii', $new_points , $id);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
 }

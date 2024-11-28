@@ -81,7 +81,8 @@ Route::post('/order', 'App\Controllers\Client\CartController@order');
 Route::get('/thanks', 'App\Controllers\Client\HomeController@thanks');
 Route::get('/history', 'App\Controllers\Client\AuthController@history');
 Route::get('/order/detail/{id}', 'App\Controllers\Client\AuthController@historyDetail');
-
+Route::get('/transport', 'App\Controllers\Client\AuthController@transport');
+Route::get('/canceled', 'App\Controllers\Client\AuthController@canceled');
 // thêm bình luận 
 Route::post('/comments', 'App\Controllers\Client\CommentController@store');
 Route::put('/comments/{id}', 'App\Controllers\Client\CommentController@edit');

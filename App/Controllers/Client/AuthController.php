@@ -21,7 +21,8 @@ use App\Views\Client\Pages\Auth\Verification;
 use App\Views\Client\Pages\Auth\ResetPassword;
 use App\Views\Client\Pages\Auth\updatePassword;
 use App\Views\Client\Pages\Order\detail;
-
+use App\Views\Client\Pages\Order\transport;
+use App\Views\Client\Pages\Order\canceled;
 class AuthController
 {
     public static function login()
@@ -284,5 +285,40 @@ class AuthController
             header("Location: /resetPassword");
             exit();
         }
+    }
+    public static function transport()
+    {
+        $is_login = AuthHelper::checkLogin();
+        if ($is_login) {
+            $order = new Order();
+            $data = $order->getAllOrderbyUser_idByTransport();
+            Header::render();
+            Notification::render();
+            NotificationHelper::unset();
+            transport::render($data);
+            Footer::render();
+        } else {
+            NotificationHelper::error('er', 'Bạn không có quyền truyên cập trang này');
+            header('location: /');
+        }
+
+    }
+
+    public static function canceled()
+    {
+        $is_login = AuthHelper::checkLogin();
+        if ($is_login) {
+            $order = new Order();
+            $data = $order->getAllOrderbyUser_idByCanceled();
+            Header::render();
+            Notification::render();
+            NotificationHelper::unset();
+            canceled::render($data);
+            Footer::render();
+        } else {
+            NotificationHelper::error('er', 'Bạn không có quyền truyên cập trang này');
+            header('location: /');
+        }
+
     }
 }
