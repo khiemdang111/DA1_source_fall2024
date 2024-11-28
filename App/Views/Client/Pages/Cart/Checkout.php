@@ -10,9 +10,10 @@ class Checkout extends BaseView
 	public static function render($data = null)
 	{
 		// echo '<pre>';
-		// var_dump($data);
+		// var_dump($data['voucher']);
+		// die;
 		$is_login = AuthHelper::checkLogin();
-		?>
+?>
 		<section class="ftco-section">
 			<div class="container">
 				<table class="table table_center">
@@ -30,11 +31,13 @@ class Checkout extends BaseView
 						<?php
 						$total_price = 0;
 						$i = 0;
-						foreach ($data as $cart):
+						foreach ($data['cart'] as $cart):
 							if ($cart['data']):
+								// var_dump($cart['data']['name']);
+								// die;
 								$i++;
 
-								?>
+						?>
 								<tr>
 									<td>
 										<span><?= $cart['data']['name'] ?> </span>
@@ -45,7 +48,7 @@ class Checkout extends BaseView
 
 									<?php
 									if ($cart['data']['discount_price'] > 0):
-										?>
+									?>
 										<td>
 											<div class="d-flex justify-content-center"><strike><?= number_format($cart['data']['price']) ?>
 												</strike> <span><del class="margin_vnd">VND</del></span></div>
@@ -54,15 +57,15 @@ class Checkout extends BaseView
 											<?= number_format($cart['data']['discount_price']) ?> VND
 										</td>
 
-										<?php
+									<?php
 
 									else:
-										?>
+									?>
 										<td>
 
 											<?= number_format($cart['data']['price']) ?> <span>VND</span>
 										</td>
-										<?php
+									<?php
 									endif;
 									?>
 
@@ -73,33 +76,33 @@ class Checkout extends BaseView
 									if ($cart['data']['discount_price'] > 0):
 										$discount_price = $cart['quantity'] * $cart['data']['discount_price'];
 										$total_price += $discount_price;
-										?>
+									?>
 										<td>
 											<div class="d-flex">
 												<span><?= number_format($discount_price) ?></span> <span class="margin_vnd"> VND</span>
 											</div>
 
 										</td>
-										<?php
-									   else:
+									<?php
+									else:
 										$unit_price = $cart['quantity'] * $cart['data']['price'];
 										$total_price += $unit_price;
-										?>
+									?>
 										<td>
 											<?= number_format($unit_price) ?> VND
 										</td>
 
 
 
-										<?php
+									<?php
 									endif;
 									?>
-									
+
 								</tr>
 
 
 
-								<?php
+						<?php
 							endif;
 						endforeach;
 						?>
@@ -188,7 +191,7 @@ class Checkout extends BaseView
 						<?php
 						$total_price = 0;
 						$i = 0;
-						foreach ($data as $cart) {
+						foreach ($data['cart'] as $cart) {
 							if ($cart['data']) {
 								$i++;
 								if ($cart['data']['discount_price'] > 0) {
@@ -238,19 +241,22 @@ class Checkout extends BaseView
 											<span>Phí vận chuyển</span>
 											<span>$0.00</span>
 										</p>
-										<p class="d-flex">
-											<span>Giảm giá</span>
-											<span>$3.00</span>
-										</p>
+										<div class="py-4"></div>
 										<hr>
 										<p class="d-flex total-price">
 											<span>Tổng</span>
-											<span>
-												<?php 
-												
-												?>
+											<?php
+											if (isset($_SESSION['unit'])):
+												$unit = (float) $total_price - $_SESSION['unit'];
+											?>
+												<span><?= number_format($unit) ?></span>
+											<?php
+											else:
+											?>
 												<?= number_format($total_price) ?>
-											</span>
+											<?php
+											endif;
+											?>
 										</p>
 										<p>
 											<button type="submit" class="btn btn-primary py-3 px-4">Đặt hàng</button>
@@ -264,6 +270,24 @@ class Checkout extends BaseView
 					</div>
 				</form>
 
+				<div class="form-voucher">
+					<form action="/discountCode" method="post">
+						<input type="hidden" name="method" value="POST">
+
+						<select name="name" id="voucher" class="form-select p-1 rounded-3">
+							<option value="unit" selected>Vui lòng chọn mã giảm giá</option>
+							<?php foreach ($data['voucher'] as $voucher): ?>
+								<option value="<?= $voucher['name'] ?>"
+									<?= isset($_GET['voucher']) && $_GET['voucher'] === $voucher['id'] ? 'selected' : '' ?>>
+									<?= $voucher['name'] ?>
+								</option>
+							<?php endforeach; ?>
+
+						</select>
+						<button type="submit" class="btn btn-primary">Áp dụng mã giảm giá</button>
+					</form>
+				</div>
+
 		</section>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
 			integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
@@ -272,7 +296,6 @@ class Checkout extends BaseView
 			integrity="sha512-bPh3uwgU5qEMipS/VOmRqynnMXGGSRv+72H/N260MQeXZIK4PG48401Bsby9Nq5P5fz7hy5UGNmC/W1Z51h2GQ=="
 			crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script>
-
 			const host = "https://provinces.open-api.vn/api/";
 			var callAPI = (api) => {
 				return axios.get(api)
@@ -328,12 +351,10 @@ class Checkout extends BaseView
 					console.log("Tỉnh:", province, "Huyện:", district, "Phường:", ward);
 				}
 			};
-
-
 		</script>
 
 
-		<?php
+<?php
 	}
 }
 ?>

@@ -6,6 +6,7 @@ use App\Helpers\AuthHelper;
 use App\Helpers\CartHelper;
 use App\Helpers\NotificationHelper;
 use App\Helpers\PayHelper;
+use App\Models\DiscountCode;
 use App\Models\Order;
 use App\Models\Product;
 use App\Validations\CartValidation;
@@ -15,6 +16,7 @@ use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
 use App\Views\Client\Pages\Cart\Checkout;
 use App\Views\Client\Pages\Cart\Index;
+
 
 
 class CartController
@@ -249,10 +251,13 @@ class CartController
                 $product = new Product();
                 $cookie_data = $_COOKIE['cart'];
                 $cart_data = json_decode($cookie_data, true);
-
-                // // echo "<pre>";
+                $user_id = $_SESSION['user']['id'];
+                $voucher = new DiscountCode;
+                $data_voucher = $voucher->getDiscountCodeByUser($user_id);
                 // echo "<pre>";
-                // var_dump($cart_data);
+                // echo "<pre>";
+                // var_dump($data_voucher);
+                // die;
                 if (count($cart_data)) {
                     foreach ($cart_data as $key => $value) {
                         $product_id = $value['product_id'];
@@ -262,10 +267,15 @@ class CartController
                         $cart_data[$key]['data'] = $result;
                         // var_dump($cart_data);
                     }
+
+                    $data = [
+                        'cart' => $cart_data,
+                        'voucher' => $data_voucher,
+                    ];
                     Header::render();
                     Notification::render();
                     NotificationHelper::unset();
-                    Checkout::render($cart_data);
+                    Checkout::render($data);
                     Footer::render();
                 } else {
                     // setcookie("cart", "", time() -  3600 * 24 * 30 * 12, '/');
@@ -346,6 +356,44 @@ class CartController
             NotificationHelper::error('cart', 'Vui lòng đăng nhập để thực hiện chức năng này');
             header('location: /');
         }
+    }
+
+    public static function DiscountCode()
+    {
+
+
+        //
+       
+        //
+
+        // Lấy mã giảm giá và kiểm tra mã giảm giá
+        $voucher_code = $_POST['name'];
+        // var_dump( $voucher_code);
+        // die;
+        $discountModel = new DiscountCode();
+        $voucher = $discountModel->getdiscountCode($voucher_code);
+
+        // var_dump(
+        //     $voucher
+        // );
+        // die();
+        if (!$voucher) {
+            NotificationHelper::error('voucher', 'Mã giảm giá không tồn tại.');
+            header('Location: /checkout');
+            exit();
+        }
+         // Lấy thông tin sản phẩm
+         $_SESSION['unit'] = (float) $voucher['unit'] ;
+
+
+
+    
+        // Nếu mã giảm giá hợp lệ, tính toán giá trị giảm giá và giá cuối cùng
+        
+        // Điều hướng lại trang thanh toán
+        NotificationHelper::success('voucher', ' Áp dụng mã giảm giá '.$_SESSION['unit']);
+        header('Location: /checkout');
+        exit();
     }
 
 

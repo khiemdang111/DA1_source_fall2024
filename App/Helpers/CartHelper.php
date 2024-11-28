@@ -33,9 +33,13 @@ class CartHelper
                     $price = 0;
                     $total += $money;
                 }
-
+                if (isset($_SESSION['unit'])) { 
+                    $unit = floatval($total) - floatval($_SESSION['unit']);
+                } else {
+                    $unit =  $total;
+                }
                 $data_total = [
-                    'total' => $total,
+                    'total' => $unit,
                 ];
             }
         }

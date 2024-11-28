@@ -50,6 +50,9 @@ Route::get('/resetPassword', 'App\Controllers\Client\AuthController@resetPasswor
 Route::post('/resetPassword', 'App\Controllers\Client\AuthController@resetPasswordAction');
 Route::post('/updatePassword', 'App\Controllers\Client\AuthController@updatePassword'); 
 
+//DiscountCode
+Route::post('/discountCode', 'App\Controllers\Client\CartController@discountCode');
+
 Route::post('/mail', 'App\Controllers\Client\EmailController@mail');
 // *** Admin
 Route::get('/admin', 'App\Controllers\Admin\HomeController@index');
