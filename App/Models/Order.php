@@ -36,7 +36,7 @@ class Order extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT orders.id,orders.total,orders.orderStatus,orders.date,orders.paymentMethod,orders.user_id FROM orders WHERE orders.user_id =".$_SESSION['user']['id'];
+            $sql = "SELECT orders.id,orders.total,orders.orderStatus,orders.date,orders.paymentMethod,orders.user_id FROM orders WHERE orders.user_id =" . $_SESSION['user']['id']. " AND orders.orderStatus =1 AND orders.transport =2";
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {
@@ -98,36 +98,36 @@ class Order extends BaseModel
         }
     }
 
-    public function Statistical_order( $subdays)
+    public function Statistical_order($subdays)
     {
         $result = [];
         try {
             // Truy vấn SQL: sử dụng INTERVAL để tính toán ngày bắt đầu từ số ngày được truyền vào ($subdays)
             $sql = "SELECT \n"
 
-            . "    DATE(date) AS order_day,\n"
-        
-            . "    COUNT(*) AS total_orders,  \n"
-        
-            . "    SUM(total) AS total_value \n"
-        
-            . "FROM \n"
-        
-            . "    orders\n"
-        
-            . "WHERE \n"
-        
-            . "    date >= DATE_SUB(CURRENT_DATE, INTERVAL ' $subdays' DAY)  -- Lọc các đơn hàng trong 7 ngày qua\n"
-        
-            . "    AND date < CURRENT_DATE  -- Không bao gồm ngày hôm nay\n"
-        
-            . "GROUP BY \n"
-        
-            . "    DATE(date)  -- Nhóm theo ngày\n"
-        
-            . "ORDER BY \n"
-        
-            . "    order_day;";
+                . "    DATE(date) AS order_day,\n"
+
+                . "    COUNT(*) AS total_orders,  \n"
+
+                . "    SUM(total) AS total_value \n"
+
+                . "FROM \n"
+
+                . "    orders\n"
+
+                . "WHERE \n"
+
+                . "    date >= DATE_SUB(CURRENT_DATE, INTERVAL ' $subdays' DAY)  -- Lọc các đơn hàng trong 7 ngày qua\n"
+
+                . "    AND date < CURRENT_DATE  -- Không bao gồm ngày hôm nay\n"
+
+                . "GROUP BY \n"
+
+                . "    DATE(date)  -- Nhóm theo ngày\n"
+
+                . "ORDER BY \n"
+
+                . "    order_day;";
 
             // Thực thi truy vấn và lấy kết quả
             $result = $this->_conn->MySQLi()->query($sql);
@@ -182,5 +182,57 @@ class Order extends BaseModel
             return $result;
         }
     }
-   
+
+    public function transport(int $id)
+    {
+       
+
+        try {
+            $sql = "UPDATE `orders` SET transport = 2, orderStatus = 2 WHERE id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('i', $id);
+            return $stmt->execute();
+        } catch (\Exception $e) {
+            return $e->getCode();
+        }
+    }
+
+    public function getAllOrderbyUser_idBY($id)
+    {
+        $result = [];
+        try {
+            // Câu SQL với tham số ràng buộc
+            $sql = "SELECT * FROM orders WHERE user_id = ? AND ";
+    
+            // Kết nối cơ sở dữ liệu
+            $conn = $this->_conn->MySQLi();
+           
+    
+            // Chuẩn bị câu lệnh
+            $stmt = $conn->prepare($sql);
+           
+    
+            // Gắn tham số
+            $stmt->bind_param('i', $id);
+    
+            // Thực thi câu lệnh
+           
+    
+            // Lấy kết quả
+            $result = $stmt->get_result();
+            $orders = $result->fetch_all(MYSQLI_ASSOC);
+    
+            // Đóng câu lệnh
+            $stmt->close();
+    
+            return $orders; // Trả về danh sách đơn hàng
+        } catch (\Throwable $th) {
+            // Ghi log lỗi
+            error_log('Lỗi khi lấy danh sách đơn hàng: ' . $th->getMessage());
+            return $result; // Trả về mảng rỗng nếu có lỗi
+        }
+    }
+    
 }

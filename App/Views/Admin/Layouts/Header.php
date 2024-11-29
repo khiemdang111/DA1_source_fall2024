@@ -9,7 +9,7 @@ class Header extends BaseView
   public static function render($data = null)
   {
 
-    ?>
+?>
     <!doctype html>
 
     <html lang="en" class="light-style layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default"
@@ -56,11 +56,12 @@ class Header extends BaseView
       <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
       <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
       <script src="<?= APP_URL ?>/public/assets/admin/assets/js/config.js"></script>
-      
+
       <script src="<?= APP_URL ?>/ckeditor4/ckeditor/ckeditor.js"></script>
 
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     
     </head>
 
     <body>
@@ -270,9 +271,9 @@ class Header extends BaseView
           <!-- / Menu -->
           <div class="layout-page mt-4">
             <!-- Navbar -->
-            <?php
+        <?php
 
-  }
-}
+      }
+    }
 
-?>
+        ?>

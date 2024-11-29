@@ -192,6 +192,13 @@ Route::post('/admin/post/deletePermanently/{id}', 'App\Controllers\Admin\PostCon
  //  order 
  Route::get('/admin/order/delivering', 'App\Controllers\Admin\Ordercontroller@index');
  Route::get('/admin/products/success', 'App\Controllers\Admin\Ordercontroller@success');
+ Route::get('/admin/order/shippingUpdates/{id}', 'App\Controllers\Admin\Ordercontroller@shippingUpdates');
+
+
+
+
+
+
 
 
 
