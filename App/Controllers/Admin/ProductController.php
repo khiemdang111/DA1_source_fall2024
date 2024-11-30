@@ -17,7 +17,8 @@ use App\Views\Admin\Pages\Product\SettingPriceVariant;
 use App\Views\Admin\Pages\Product\DetailSettingVariant;
 use App\Views\Admin\Pages\Product\createAttributeVariant;
 use App\Views\Admin\Pages\Recycle\ProductRecycle;
-use App\Helpers\AuthHelper;;
+use App\Helpers\AuthHelper;
+;
 
 class ProductController
 {
@@ -28,7 +29,7 @@ class ProductController
     {
 
         AuthHelper::checkPermission([0, 4]);
-        $product = new Product();        
+        $product = new Product();
         $data = $product->getAllProductByPagina();
         Header::render();
         Notification::render();
@@ -95,7 +96,7 @@ class ProductController
             'description' => $_POST['description'],
             'short_description' => $_POST['short_description'],
             'date' => $_POST['date'],
-            'origin' => $_POST['origin'],   
+            'origin' => $_POST['origin'],
             'is_featured' => $_POST['is_featured'],
             'status' => $_POST['status'],
             'category_id' => $_POST['category_id'],
@@ -172,7 +173,7 @@ class ProductController
             'discount_price' => $_POST['discount_price'],
             'description' => $_POST['description'],
             'date' => $_POST['date'],
-            'origin' => $_POST['origin'], 
+            'origin' => $_POST['origin'],
             'short_description' => $_POST['short_description'],
             'category_id' => $_POST['category_id'],
             'is_featured' => $_POST['is_featured'],
@@ -267,21 +268,25 @@ class ProductController
 
         $keyword = $_GET['keywords'] ?? '';
         $keyword = trim($keyword);
-      
+
         if (empty($keyword)) {
-            $_SESSION['keywords'] = null; 
-       
+            $_SESSION['keywords'] = null;
+
             $data = [];
             Header::render();
             Index::render($data);
             Footer::render();
-            return;  
+            return;
         }
         $_SESSION['keywords'] = $keyword;
 
         $product = new Product();
-        $data = $product->search($keyword);
-      
+        $products = $product->search($keyword);
+        $totalpagina = $product->getAllProductByPagina();
+        $data = [
+            'products' => $products,
+            'total_pages' => $totalpagina['total_pages']
+        ];
         Header::render();
         Index::render($data);
         Footer::render();

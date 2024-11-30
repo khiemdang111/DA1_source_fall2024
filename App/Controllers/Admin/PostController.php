@@ -265,8 +265,12 @@ class PostController
         }
         $_SESSION['keywords'] = $keyword;
         $post = new Post();
-        $data = $post->search($keyword);
-      
+        $posts = $post->search($keyword);
+        $totalpagina = $post->getAllPost();
+        $data = [
+            'posts' => $posts,
+            'total_pages' => $totalpagina['total_pages']
+        ];
         Header::render();
         Index::render($data);
         Footer::render();
