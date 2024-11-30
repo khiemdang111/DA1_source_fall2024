@@ -16,7 +16,7 @@ use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
 use App\Views\Client\Pages\Cart\Checkout;
 use App\Views\Client\Pages\Cart\Index;
-
+use App\Models\ProductVariant;
 
 
 class CartController
@@ -72,7 +72,13 @@ class CartController
         // Render header và footer
         // HeaderController::render();
         // Footer::render();
-
+        // echo '<pre>';
+        // var_dump($_POST);
+        // die;
+        $idVariant = $_POST['combination'];
+        $variants = new ProductVariant();
+        $variant = $variants->getSkuId($idVariant);
+        $_SESSION['variants_id'] = $variant;
         // Lấy product_id từ request POST
         $product_id = $_POST['id'];
         $number = $_POST['number'];
@@ -84,7 +90,7 @@ class CartController
             $cookie_data = $_COOKIE['cart'];
             $cart_data = json_decode($cookie_data, true);
         } else {
-        
+
             $cart_data = [];
         }
 
@@ -315,7 +321,7 @@ class CartController
     }
     public static function order()
     {
-     
+
         $is_login = AuthHelper::checkLogin();
         if ($is_login) {
             $is_valid = CartValidation::create();
@@ -363,7 +369,7 @@ class CartController
 
 
         //
-       
+
         //
 
         // Lấy mã giảm giá và kiểm tra mã giảm giá
@@ -382,16 +388,16 @@ class CartController
             header('Location: /checkout');
             exit();
         }
-         // Lấy thông tin sản phẩm
-         $_SESSION['unit'] = (float) $voucher['unit'] ;
+        // Lấy thông tin sản phẩm
+        $_SESSION['unit'] = (float) $voucher['unit'];
 
 
 
-    
+
         // Nếu mã giảm giá hợp lệ, tính toán giá trị giảm giá và giá cuối cùng
-        
+
         // Điều hướng lại trang thanh toán
-        NotificationHelper::success('voucher', ' Áp dụng mã giảm giá '.$_SESSION['unit']);
+        NotificationHelper::success('voucher', ' Áp dụng mã giảm giá ' . $_SESSION['unit']);
         header('Location: /checkout');
         exit();
     }

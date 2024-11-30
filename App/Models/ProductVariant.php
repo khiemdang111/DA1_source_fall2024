@@ -362,54 +362,6 @@ class ProductVariant extends BaseModel
       return $result;
     }
   }
-  // {
-  //   // Kết nối MySQLi
-  //   $conn = $this->_conn->MySQLi();
-
-  //   if (!$conn) {
-  //     throw new \Exception("Không thể kết nối tới cơ sở dữ liệu");
-  //   }
-
-  //   $data = $variant_value_id;
-
-  //   // Chèn bản ghi mới vào bảng product_variant_option_combination
-  //   $stmt = $conn->prepare("INSERT INTO product_variant_option_combination (id) VALUES (NULL)");
-  //   if (!$stmt) {
-  //     throw new \Exception("Lỗi khi chuẩn bị câu lệnh: " . $conn->error);
-  //   }
-  //   $stmt->execute();
-  //   $stmt->close(); // Đóng statement sau khi thực thi
-
-  //   // Lấy ID tự động tăng vừa được chèn
-  //   $combination_id = $conn->insert_id;
-  //   $_SESSION['id_combination'] = $combination_id;
-  //   // Duyệt qua từng phần tử trong mảng data
-  //   foreach ($data as $item) {
-  //     if (isset($item['product_variant_values_id'])) {
-  //       // Kiểm tra và ép kiểu dữ liệu
-  //       $variant_ids = is_array($item['product_variant_values_id'])
-  //         ? array_map('intval', $item['product_variant_values_id'])
-  //         : [(int) $item['product_variant_values_id']];
-
-  //       // Cập nhật bảng product_variant_values
-  //       foreach ($variant_ids as $variant_id) {
-  //         $sql = "UPDATE product_variant_values SET combination_id = ? WHERE id = ?";
-  //         $updateStmt = $conn->prepare($sql);
-  //         if (!$updateStmt) {
-  //           throw new \Exception("Lỗi khi chuẩn bị câu lệnh: " . $conn->error);
-  //         }
-  //         $updateStmt->bind_param('ii', $combination_id, $variant_id);
-  //         if (!$updateStmt->execute()) {
-  //           throw new \Exception("Lỗi khi thực thi câu lệnh: " . $updateStmt->error);
-  //         }
-  //         $updateStmt->close(); // Đóng statement sau mỗi lần cập nhật
-  //       }
-  //     }
-  //   }
-
-  //   // Trả về kết quả thành công
-  //   return true;
-  // }
 
   public function InsertCombinationID($variant_value_id)
   {
@@ -649,4 +601,25 @@ class ProductVariant extends BaseModel
       return false;
     }
   }
+  public function getSkuId($id)
+{
+    $result = [];
+    try {
+      $sql = "SELECT product_variant_values.combination_id, skus.id AS sku_id, product_variant_options.name AS option_name, product_variants.name AS variant_name, skus.price AS price  FROM `skus` INNER JOIN product_variant_option_combination on skus.id = product_variant_option_combination.sku_id INNER JOIN product_variant_values on product_variant_option_combination.id = product_variant_values.combination_id INNER JOIN product_variant_options on product_variant_values.option_id = product_variant_options.id INNER JOIN product_variants on product_variant_options.product_variant_id = product_variants.id WHERE product_variant_values.id IN ($id);";
+        // Thực hiện truy vấn
+        $queryResult = $this->_conn->MySQLi()->query($sql);
+
+        // Kiểm tra kết quả truy vấn
+        if ($queryResult === false) {
+            throw new \Exception('Lỗi truy vấn SQL: ' . $this->_conn->MySQLi()->error);
+        }
+
+        // Trả về kết quả dạng mảng liên kết
+        return $queryResult->fetch_all(MYSQLI_ASSOC);
+    } catch (\Throwable $th) {
+        error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+        return $result;
+    }
+}
+
 }

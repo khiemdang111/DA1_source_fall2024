@@ -128,12 +128,10 @@ class Detail extends BaseView
 
                                                     // Thêm ID mới của nhóm này vào mảng
                                                     selectedIDs.push(`${groupName}:${id}`);
-
-                                                    console.log("Selected IDs:", selectedIDs);
                                                 }
 
                                             </script>
-                                            <p id="selected-ids-display">Selected IDs: []</p>
+                                            
                                             <script>
                                                 function updateSelectedIDs(radioElement) {
                                                     const id = radioElement.value;
@@ -146,7 +144,7 @@ class Detail extends BaseView
                                                     selectedIDs.push(`${groupName}:${id}`);
                                                     const idsOnly = selectedIDs.map(item => item.split(":")[1]);
                                                     // Cập nhật giao diện
-                                                    document.getElementById('selected-ids-display').textContent = `${idsOnly}`;
+                                                    document.getElementById('selected-ids-display').value = `${idsOnly}`;
                                                 }
                                             </script>
 
@@ -181,6 +179,7 @@ class Detail extends BaseView
                                 <div class="col-md-12">
                                     <p style="color: #000;">Số lượt xem : <?= $data['product'][0]['view'] ?></p>
                                 </div>
+                                <input type="hidden" id="selected-ids-display" value="" name="combination">
                             </div>
                             <button type="submit" class="btn btn-primary add_to_cart">Thêm vào giỏ hàng</button> <a href="/cart"
                                 class="btn btn-primary buy_now">Mua ngay</a>

@@ -12,7 +12,7 @@ class Index extends BaseView
 		//  echo '<pre>';
 		//  var_dump($data);
 		// die;
-?>
+		?>
 		<section class="ftco-section">
 			<div class="container">
 				<div class="container">
@@ -31,67 +31,104 @@ class Index extends BaseView
 							<?php
 							$total_price = 0;
 							$i = 0;
-							foreach ($data as $cart) :
-								if ($cart['data']) :
+							foreach ($data as $cart):
+								if ($cart['data']):
 									$i++;
-							?>
+									?>
 									<tr>
 										<td>
 											<span><?= $cart['data']['name'] ?> </span>
+											<p>
+												<?php
+												if (isset($_SESSION['variants_id'])):
+													foreach ($_SESSION['variants_id'] as $item):
+														?>
+														<span class="text-danger"><?= $item['option_name'] ?></span>
+														<?php
+													endforeach;
+												else:
+													?>
+												<p></p>
+												<?php
+												endif;
+												?>
+											</p>
 										</td>
 										<td class="">
 											<img class="img_cart" src="/public/uploads/products/<?= $cart['data']['image'] ?>" alt="">
 										</td>
 
 										<?php
-										if ($cart['data']['discount_price'] > 0) :
-										?>
+										if ($cart['data']['discount_price'] > 0):
+											?>
 											<td>
-												<div class="d-flex"><strike><?= number_format($cart['data']['price']) ?> </strike> <span><del class="margin_vnd">VND</del></span></div>
+												<div class="d-flex"><strike><?= number_format($cart['data']['price']) ?> </strike> <span><del
+															class="margin_vnd">VND</del></span></div>
 												<br>
 												<?= number_format($cart['data']['discount_price']) ?> VND
+												<p>
+													<?php
+													if (isset($_SESSION['variants_id'])):
+														$isFirst = true; // Biến flag để kiểm tra lần đầu tiên
+														foreach ($_SESSION['variants_id'] as $item):
+															if ($isFirst): // Chỉ hiển thị ở lần lặp đầu tiên
+																?>
+																<span class="text-danger"><?= $item['price'] ?></span>
+																<?php
+																$isFirst = false; // Đặt flag thành false để không hiển thị lần nữa
+															endif;
+														endforeach;
+													else:
+														?>
+														<span class="text-danger"></span>
+														<?php
+													endif;
+													?>
+
+												</p>
 											</td>
 
-										<?php
+											<?php
 
-										else :
-										?>
+										else:
+											?>
 											<td>
 
 												<?= number_format($cart['data']['price']) ?> <span>VND</span>
 											</td>
-										<?php
+											<?php
 										endif;
 										?>
 
 										<td>
 											<form action="/cart/update" method="post">
 												<input type="hidden" name="method" id="" value="PUT">
-												<input class="quantity form-control input-number number_cart" type="number" name="quantity" value="<?= $cart['quantity'] ?>" onchange="this.form.submit()" class="form-control" min=1>
+												<input class="quantity form-control input-number number_cart" type="number" name="quantity"
+													value="<?= $cart['quantity'] ?>" onchange="this.form.submit()" class="form-control" min=1>
 												<input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
 												<input type="hidden" name="update-cart-item">
 											</form>
 										</td>
 										<?php
-										if ($cart['data']['discount_price'] > 0) :
+										if ($cart['data']['discount_price'] > 0):
 											$discount_price = $cart['quantity'] * $cart['data']['discount_price'];
 											$total_price += $discount_price;
-										?>
+											?>
 											<td>
 												<div class="d-flex">
 													<span><?= number_format($discount_price) ?></span> <span class="margin_vnd"> VND</span>
 												</div>
 
 											</td>
-										<?php
-										else :
+											<?php
+										else:
 											$unit_price = $cart['quantity'] * $cart['data']['price'];
 											$total_price += $unit_price;
-										?>
+											?>
 											<td>
 												<?= number_format($unit_price) ?> VND
 											</td>
-										<?php
+											<?php
 										endif;
 										?>
 										<td>
@@ -108,7 +145,7 @@ class Index extends BaseView
 
 
 
-							<?php
+									<?php
 								endif;
 							endforeach;
 							?>
@@ -142,14 +179,16 @@ class Index extends BaseView
 						</div>
 
 						<?php
-						if ($is_login) :
-						?>
-							<p class="text-center cart_button"><a href="/checkout" class="btn btn-primary py-3 px-4">Tiến hành thanh toán</a></p>
-						<?php
-						else :
-						?>
-							<p class="text-center cart_button"><a href="/login" class="btn btn-primary py-3 px-4">Vui lòng đăng nhập để thanh toán</a></p>
-						<?php
+						if ($is_login):
+							?>
+							<p class="text-center cart_button"><a href="/checkout" class="btn btn-primary py-3 px-4">Tiến hành thanh
+									toán</a></p>
+							<?php
+						else:
+							?>
+							<p class="text-center cart_button"><a href="/login" class="btn btn-primary py-3 px-4">Vui lòng đăng nhập để
+									thanh toán</a></p>
+							<?php
 						endif;
 						?>
 
@@ -157,7 +196,7 @@ class Index extends BaseView
 				</div>
 			</div>
 		</section>
-<?php
-
+		<?php
+		unset($_SESSION['variants_id']);
 	}
 }
