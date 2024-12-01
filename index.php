@@ -108,6 +108,10 @@ Route::get('/admin/products/search', 'App\Controllers\Admin\ProductController@se
 Route::get('/admin/productvariant/edit/{id}', 'App\Controllers\Admin\ProductVariantController@editAttributeVariant');
 Route::post('/admin/product-variant/update/{id}', 'App\Controllers\Admin\ProductVariantController@updateVariantAttribute');
 Route::post('/admin/delete/attributeVariant/{id}', 'App\Controllers\Admin\ProductVariantController@delVariantAttribute');
+Route::get('/admin/getallsku/{id}', 'App\Controllers\Admin\ProductVariantController@getSkuByProductId');
+Route::get('/admin/edit/sku/{id}', 'App\Controllers\Admin\ProductVariantController@editSku');
+Route::post('/update/sku/{id}', 'App\Controllers\Admin\ProductVariantController@updateSku');
+Route::post('/admin/delete/sku/{id}', 'App\Controllers\Admin\ProductVariantController@deleteSku');
 
 
 //  *** Category

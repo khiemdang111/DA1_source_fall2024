@@ -15,6 +15,8 @@ use App\Views\Admin\Pages\ProductVariant\SettingPriceVariant;
 use App\Views\Admin\Pages\ProductVariant\DetailSettingVariant;
 use App\Views\Admin\Pages\ProductVariant\createAttributeVariant;
 use App\Views\Admin\Pages\ProductVariant\EditAttributeVariant;
+use App\Views\Admin\Pages\ProductVariant\GetOneSkuByProduct;
+use App\Views\Admin\Pages\ProductVariant\EditSku;
 
 class ProductVariantController
 {
@@ -205,7 +207,7 @@ class ProductVariantController
             $addFkSku = $product->addFkSku($combination_id, $sku_id);
             unset($_SESSION['id_combination']);
             unset($_SESSION['sku_id']);
-            header('Location: /admin/products');
+            header("Location: /admin/getallsku/{$product_id}");
         } else {
             NotificationHelper::error('create_product', 'Thêm sản phẩm thất bại');
             header('Location: /admin/productvariant/setting');
@@ -259,6 +261,77 @@ class ProductVariantController
         } else {
             NotificationHelper::error('error_add_attribute', 'Cập nhật thất bại!');
             header("Location: /admin/variant/add");
+        }
+    }
+    public static function getSkuByProductId($id)
+    {
+        $_SESSION['product_id'] = $id;
+        $product_variant = new ProductVariant();
+        $data = $product_variant->getAllSkuByProductId($id);
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        GetOneSkuByProduct::render($data);
+        Footer::render();
+    }
+    public static function editSku(int $id)
+    {
+        $product_variant = new ProductVariant();
+        $data = $product_variant->getAllSkuById($id);
+        Header::render();
+        Notification::render();
+        //hủy thông báo
+        NotificationHelper::unset();
+        // hiển thị form sửa
+        EditSku::render($data);
+        Footer::render();
+    }
+    public static function updateSku(int $id)
+    {
+        $sku = new ProductVariant();
+        $data = [
+            'name' => $_POST['name'],
+            'price' => $_POST['price'],
+            'description' => $_POST['description'],
+            'sku' => $_POST['sku'],
+            'id' => $id
+        ];
+        $product_id = $_SESSION['product_id'];
+
+        $is_upload = ProductValidation::updateImage();
+        if ($is_upload) {
+            $data['image'] = $is_upload;
+        }
+        $result = $sku->updateSku($id, $data);
+        if ($result) {
+            NotificationHelper::success('update_products', 'Cập nhật sản phẩm thành công!');
+            unset($_SESSION['product_id']);
+            header("Location: /admin/getallsku/$product_id");
+        } else {
+            NotificationHelper::error('update_products', 'Cập nhật sản phẩm thất bại!');
+            unset($_SESSION['product_id']);
+            header("Location: /admin/getallsku/$product_id");
+        }
+    }
+    public function deleteSku($id)
+    {
+        $sku = new ProductVariant();
+        $is_exist = $sku->getAllSkuById($id);
+        $product_id = $_SESSION['product_id'];
+        if ($is_exist && (int)$is_exist[0]['id'] === $id) {
+            $data = [
+                'status' => 0,
+            ];
+            $result = $sku->updateSku($id, $data);
+        }
+        if ($result) {
+            NotificationHelper::success('delete_product', 'Xóa sản phẩm thành công!');
+            unset($_SESSION['product_id']);
+            header("Location: /admin/getallsku/$product_id");
+        } else {
+            NotificationHelper::error('delete_product', 'Xóa sản phẩm thất bại!');
+            unset($_SESSION['product_id']);
+            header("Location: /admin/getallsku/$product_id");
         }
     }
 }

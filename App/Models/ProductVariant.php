@@ -602,24 +602,83 @@ class ProductVariant extends BaseModel
     }
   }
   public function getSkuId($id)
-{
+  {
     $result = [];
     try {
       $sql = "SELECT product_variant_values.combination_id, skus.id AS sku_id, product_variant_options.name AS option_name, product_variants.name AS variant_name, skus.price AS price  FROM `skus` INNER JOIN product_variant_option_combination on skus.id = product_variant_option_combination.sku_id INNER JOIN product_variant_values on product_variant_option_combination.id = product_variant_values.combination_id INNER JOIN product_variant_options on product_variant_values.option_id = product_variant_options.id INNER JOIN product_variants on product_variant_options.product_variant_id = product_variants.id WHERE product_variant_values.id IN ($id);";
-        // Thực hiện truy vấn
-        $queryResult = $this->_conn->MySQLi()->query($sql);
+      // Thực hiện truy vấn
+      $queryResult = $this->_conn->MySQLi()->query($sql);
 
-        // Kiểm tra kết quả truy vấn
-        if ($queryResult === false) {
-            throw new \Exception('Lỗi truy vấn SQL: ' . $this->_conn->MySQLi()->error);
-        }
+      // Kiểm tra kết quả truy vấn
+      if ($queryResult === false) {
+        throw new \Exception('Lỗi truy vấn SQL: ' . $this->_conn->MySQLi()->error);
+      }
 
-        // Trả về kết quả dạng mảng liên kết
-        return $queryResult->fetch_all(MYSQLI_ASSOC);
+      // Trả về kết quả dạng mảng liên kết
+      return $queryResult->fetch_all(MYSQLI_ASSOC);
     } catch (\Throwable $th) {
-        error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
-        return $result;
+      error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+      return $result;
     }
-}
+  }
+  public function getAllSkuByProductId($id)
+  {
+    $result = [];
+    try {
+      $sql = "SELECT * FROM `skus` WHERE product_id = $id AND status = 1";
 
+      // Thực hiện truy vấn
+      $queryResult = $this->_conn->MySQLi()->query($sql);
+
+      // Kiểm tra kết quả truy vấn
+      if ($queryResult === false) {
+        throw new \Exception('Lỗi truy vấn SQL: ' . $this->_conn->MySQLi()->error);
+      }
+
+      // Trả về kết quả dạng mảng liên kết
+      return $queryResult->fetch_all(MYSQLI_ASSOC);
+    } catch (\Throwable $th) {
+      error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+      return $result;
+    }
+  }
+  public function getAllSkuById($id)
+  {
+    $result = [];
+    try {
+      $sql = "SELECT * FROM `skus` WHERE id = $id";
+
+      // Thực hiện truy vấn
+      $queryResult = $this->_conn->MySQLi()->query($sql);
+
+      // Kiểm tra kết quả truy vấn
+      if ($queryResult === false) {
+        throw new \Exception('Lỗi truy vấn SQL: ' . $this->_conn->MySQLi()->error);
+      }
+
+      // Trả về kết quả dạng mảng liên kết
+      return $queryResult->fetch_all(MYSQLI_ASSOC);
+    } catch (\Throwable $th) {
+      error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+      return $result;
+    }
+  }
+  public function updateSku(int $id, array $data)
+  {
+    try {
+      $sql = "UPDATE skus SET ";
+      foreach ($data as $key => $value) {
+        $sql .= "$key = '$value', ";
+      }
+      $sql = rtrim($sql, ", ");
+
+      $sql .= " WHERE $this->id=$id";
+      $conn = $this->_conn->MySQLi();
+      $stmt = $conn->prepare($sql);
+      return $stmt->execute();
+    } catch (\Throwable $th) {
+      error_log('Lỗi khi cập nhật dữ liệu: ', $th->getMessage());
+      return false;
+    }
+  }
 }
