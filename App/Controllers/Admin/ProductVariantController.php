@@ -334,4 +334,19 @@ class ProductVariantController
             header("Location: /admin/getallsku/$product_id");
         }
     }
+    public function addOptionNamVariant($id){
+        $data = [
+            'product_variant_id' => $_POST['product_variant_id'],
+            'name' => $_POST['name'],
+        ];
+        $product_variant = new ProductVariant();
+        $result = $product_variant->createOptionNamVariant($data);
+        if ($result) {
+            NotificationHelper::success('delete_product', 'Thêm tên thuộc tính thành công!');
+            header("Location: /admin/variant/add");
+        } else {
+            NotificationHelper::error('delete_product', 'Thêm tên thuộc tính thất bại!');
+            header("Location: /admin/variant/add");
+        }
+    }
 }

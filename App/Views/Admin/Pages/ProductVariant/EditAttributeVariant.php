@@ -42,19 +42,25 @@ class EditAttributeVariant extends BaseView
             <div class="col-md-6 mt-3">
               <div class="card">
                 <div class="card-body">
-                <div class="dropdown">
-  <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Thêm mới
-  </button>
-  <ul class="dropdown-menu">
-    <li><button class="dropdown-item" type="button">Action</button></li>
-    <li><button class="dropdown-item" type="button">Another action</button></li>
-    <li><button class="dropdown-item" type="button">Something else here</button></li>
-  </ul>
-</div>
-
                   <table class="table table-striped">
                     <thead>
+                      <tr>
+                        <div class="dropdown-1">
+                          <input hidden="" class="sr-only" name="state-dropdown" id="state-dropdown" type="checkbox" />
+                          <label aria-label="dropdown scrollbar" for="state-dropdown" class="trigger"></label>
+                          <ul class="list webkit-scrollbar" role="list" dir="auto">
+                            <li class="listitem" role="listitem">
+                              <form action="/addmin/add/optionname/<?= $variant[0]['id'] ?>" method="post">
+                                <input type="hidden" name="method" value="POST">
+                                <input type="hidden" name="product_variant_id" value="<?= $variant[0]['id'] ?>">
+                                <label for="variant_name" class="form-label">Thuộc tính</label>
+                                <input type="text" name="name" class="form-control" placeholder="Tên thuộc tính">
+                                <button type="submit" class="btn btn-primary mt-3">Thêm</button>
+                              </form>
+                            </li>
+                          </ul>
+                        </div>
+                      </tr>
                       <tr>
                         <th>Tên</th>
                         <th>Tùy chỉnh</th>
@@ -67,18 +73,18 @@ class EditAttributeVariant extends BaseView
                       foreach ($option_name as $item):
                         ?>
                         <tr>
-                          <th class="w-75">            
+                          <th class="w-75">
                             <form class="" action="/admin/product-variant/update/<?= $item['variant_option_id'] ?>"
                               method="post" style="display: inline-block;">
                               <input type="hidden" name="method" value="POST" id="">
                               <input type="text" name="variant_name" class="form-control"
-                              value="<?= $item['variant_option_name'] ?>">
+                                value="<?= $item['variant_option_name'] ?>">
                               <input type="hidden" name="table" value="product_variant_options">
                               <input type="hidden" name="variant_id" placeholder="" value="<?= $item['variant_option_id'] ?>">
                               <button type="submit" class="btn btn-primary mt-3">
                                 Cập nhật</button>
                             </form>
-                            
+
                           </th>
                           <td>
                             <form class="w-20" action="/admin/delete/attributeVariant/<?= $item['variant_option_id'] ?>"
@@ -90,19 +96,19 @@ class EditAttributeVariant extends BaseView
                               <button type="submit" class="btn btn-outline-danger">
                                 <i class="bx bx-trash"></i></button>
                             </form>
-                            </div>
-                          </td>
-                        </tr>
-                        <?php
+                  </div>
+                  </td>
+                  </tr>
+                  <?php
                       endforeach;
                       ?>
-                    </tbody>
-                  </table>
+                </tbody>
+                </table>
 
-                </div>
               </div>
             </div>
           </div>
-          <?php
+        </div>
+        <?php
   }
 }

@@ -681,4 +681,41 @@ class ProductVariant extends BaseModel
       return false;
     }
   }
+  public function createOptionNamVariant($data)
+  {
+    try {
+
+      $conn = $this->_conn->MySQLi();
+      if (!$conn) {
+        throw new \Exception('Không thể kết nối cơ sở dữ liệu');
+      }
+
+      // Sử dụng prepared statement để bảo mật
+      $stmt = $conn->prepare("INSERT INTO product_variant_options (product_variant_id, name ) VALUES (?, ?)");
+      if (!$stmt) {
+        throw new \Exception('Lỗi chuẩn bị câu lệnh SQL: ' . $conn->error);
+      }
+
+      // Gán tham số vào câu lệnh và thực thi
+      $product_variant_id = $data['product_variant_id'];
+      $name = $data['name'];
+      $stmt->bind_param("is", $product_variant_id, $name);
+      if (!$stmt->execute()) {
+        throw new \Exception('Lỗi thực thi câu lệnh SQL: ' . $stmt->error);
+      }
+
+      // Lấy ID bản ghi vừa thêm
+      $insert_id = $stmt->insert_id;
+
+      // Đóng tài nguyên
+      $stmt->close();
+      $conn->close();
+
+      // Trả về ID bản ghi vừa thêm
+      return $insert_id;
+    } catch (\Throwable $th) {
+      error_log('Lỗi khi thêm dữ liệu: ' . $th->getMessage());
+      return false;
+    }
+  }
 }

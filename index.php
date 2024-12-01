@@ -112,6 +112,7 @@ Route::get('/admin/getallsku/{id}', 'App\Controllers\Admin\ProductVariantControl
 Route::get('/admin/edit/sku/{id}', 'App\Controllers\Admin\ProductVariantController@editSku');
 Route::post('/update/sku/{id}', 'App\Controllers\Admin\ProductVariantController@updateSku');
 Route::post('/admin/delete/sku/{id}', 'App\Controllers\Admin\ProductVariantController@deleteSku');
+Route::post('/addmin/add/optionname/{id}', 'App\Controllers\Admin\ProductVariantController@addOptionNamVariant');
 
 
 //  *** Category
