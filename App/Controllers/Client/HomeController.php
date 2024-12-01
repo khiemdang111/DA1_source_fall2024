@@ -15,8 +15,12 @@ use App\Models\Product;
 use App\Models\Post;
 use App\Models\User;
 use App\Helpers\AuthHelper;
+use App\Models\Bank;
+use App\Views\Client\Pages\Order\maqr;
+use App\Views\Client\Pages\Order\Sepay;
 use App\Views\Error\NotFound;
-use Mailer;
+use App\Views\Client\Pages\Order\payment;
+
 use App\Views\Client\Pages\Cart\Bill;
 
 class HomeController
@@ -65,7 +69,7 @@ class HomeController
     public static function thanks()
     {
         $is_login = AuthHelper::checkLogin();
-        if($is_login){
+        if ($is_login) {
             if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $vnp_ResponseCode = $_GET['vnp_ResponseCode'] ?? null;
                 if ($vnp_ResponseCode == '00') {
@@ -106,7 +110,18 @@ class HomeController
         }
 
     }
-    public static function notFound(){
+    public static function notFound()
+    {
         NotFound::render();
     }
+
+
+    public static function taoqr()
+    {
+        Header::render();
+        payment::render();
+        Footer::render();
+    }
+
+
 }

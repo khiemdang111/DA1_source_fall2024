@@ -157,8 +157,6 @@ class ProductController
             exit();
         }
         $name = $_POST['name'];
-
-        // kiểm tra product name đã tồn tại chgx nếu có thì thông báo ra 
         $product = new product();
         $is_exist = $product->getOneproductByName($name);
 

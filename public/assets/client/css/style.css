@@ -102,7 +102,12 @@ body {
   z-index: 10;
   /* Đặt z-index cao hơn để menu nổi lên trên */
 }
-
+.item_banks{
+  border-right: 1px dashed black;
+}
+.item_banks:last-child{
+  border-right: none;
+}
 .title_color {
   background-color: #a23f25;
   color: white;

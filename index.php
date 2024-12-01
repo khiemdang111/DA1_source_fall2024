@@ -26,6 +26,13 @@ Route::get('/notfound', controllerMethod: 'App\Controllers\Client\HomeController
 
 // *** Client
 Route::get('/', controllerMethod: 'App\Controllers\Client\HomeController@index');
+
+
+Route::get('/phiship', 'App\Controllers\Client\ShippingController@taoqr');
+
+
+
+
 Route::delete('/home/delete', 'App\Controllers\Client\CartController@deleteItem');
 
 Route::get('/products', 'App\Controllers\Client\ProductController@index');
@@ -40,7 +47,10 @@ Route::get('/products/categories/{id}','App\Controllers\Client\ProductController
 Route::post('/products/filter', 'App\Controllers\Client\ProductController@index');
 Route::get('/search', 'App\Controllers\Client\ProductController@searchProduct');
 
-Route::get('/ghn', 'App\Controllers\Client\ShippingController@createOrderGHN');
+
+
+
+
 
 
 Route::get('/forgetpass', 'App\Controllers\Client\AuthController@forgetpass');
@@ -142,6 +152,14 @@ Route::get('/admin/users/history/{id}', 'App\Controllers\Admin\UserController@hi
 Route::get('/admin/users/history/detail/{id}', 'App\Controllers\Admin\UserController@historyDetail');
 
 
+
+// bank
+Route::get('/admin/banks', 'App\Controllers\Admin\BankController@index');
+Route::get('/admin/banks/create', 'App\Controllers\Admin\BankController@create');
+Route::post('/admin/banks', 'App\Controllers\Admin\BankController@store');
+Route::get('/admin/banks/{id}', 'App\Controllers\Admin\BankController@edit');
+Route::put('/admin/banks/{id}', 'App\Controllers\Admin\BankController@update');
+Route::post('/admin/delete/banks/{id}', 'App\Controllers\Admin\BankController@delete');
 
 
 // *** Post ***

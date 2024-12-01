@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Client;
 
+use App\Controllers\Client\PaymentController;
 use App\Helpers\AuthHelper;
 use App\Helpers\CartHelper;
 use App\Helpers\NotificationHelper;
@@ -353,7 +354,9 @@ class CartController
                 NotificationHelper::success('cart', 'Đặt hàng thành công');
                 header('location: /');
                 exit();
-            } else {
+            }else if ($_POST['PaymentMethod'] === 'PAYMENT') {
+                PaymentController::createQRCode();
+            }else {
                 $total = CartHelper::tatol($cart_data);
                 PayHelper::VNpay($total);
             }

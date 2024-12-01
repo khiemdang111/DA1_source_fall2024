@@ -20,17 +20,15 @@ class GhnService
                 'Token: ' . $this->token,
                 'ShopId: ' . $this->shopId,
             ],
-            CURLOPT_POSTFIELDS => json_encode($data), // Dữ liệu payload
+            CURLOPT_POSTFIELDS => json_encode($data), 
         ]);
-
         $response = curl_exec($curl);
         $error = curl_error($curl);
         curl_close($curl);
-
         if ($error) {
             throw new \Exception('cURL Error: ' . $error);
         }
 
-        return json_decode($response, true); // Chuyển đổi kết quả trả về thành mảng PHP
+        return json_decode($response, true);
     }
 }

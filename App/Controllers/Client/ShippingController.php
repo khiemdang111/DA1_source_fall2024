@@ -38,7 +38,7 @@ class ShippingController
             "to_ward_code" => "20308",
             "to_district_id" => 1444,
             "cod_amount" => (int) $total_vulue['total'],
-            "content" => "Theo New York Times",
+            "content" => "Thong tin đơn hàng của Wine Cần Thơ",
             "weight" => 200,
             "length" => 1,
             "width" => 19,
@@ -137,7 +137,7 @@ class ShippingController
         // Gửi yêu cầu API
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://services.giaohangtietkiem.vn/services/shipment/order",
+            CURLOPT_URL => $_ENV['GHTK_API_URL'],
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode($order),
@@ -150,8 +150,6 @@ class ShippingController
         curl_close($curl);
         $data = json_decode($response, true);
         if ($data['success']) {
-            // var_dump($data['order']['label']);
-            // die;
             if (!isset($_SESSION['information']['delivery'])) {
                 echo "Tạo đơn hàng thành công! Booking ID: " . $data['order']['label'];
             }
@@ -181,7 +179,29 @@ class ShippingController
         echo 'Response: ' . $response;
 
     }
-
+    function getGHTKFee() {
+        $apiUrl = "https://services.ghtklab.com/shipping_fee";
+        $apiKey = "YOUR_API_KEY";
+    
+        $data = [
+           'weight' => 2.5,
+            'distance' => 15,
+           'address' => '123 Nguyễn Văn Cừ, Phường 2, Quận 5, TP.HCM'
+        ];
+    
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Authorization: Bearer $apiKey"
+        ]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+    
+        $response = curl_exec($ch);
+        curl_close($ch);
+    
+        return json_decode($response, true);
+    }
+    
 }
 
 

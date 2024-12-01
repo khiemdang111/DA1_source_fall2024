@@ -177,8 +177,9 @@ class Checkout extends BaseView
 											<select id="" class="form-control" name="PaymentMethod">
 												<option value="">Vui lòng chọn ...</option>
 												<option value="COD">Thanh toán khi nhận hàng</option>
+												<option value="PAYMENT">Chuyển khoản ngân hàng</option>
 												<option value="VNPAY">Thanh toán qua VNPAY</option>
-												<option value="MOMO">Thanh toán qua MoMo</option>
+												
 											</select>
 										</div>
 									</div>

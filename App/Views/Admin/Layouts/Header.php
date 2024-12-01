@@ -237,6 +237,25 @@ class Header extends BaseView
                   </li>
                 </ul>
               </li>
+
+              <li class="menu-item">
+                <a href="javascript:void(0)" class="menu-link menu-toggle">
+                  <i class="menu-icon tf-icons bx bx-box"></i>
+                  <div class="text-truncate" data-i18n="User interface">Ngân hàng thanh toán</div>
+                </a>
+                <ul class="menu-sub">
+                  <li class="menu-item">
+                    <a href="/admin/banks" class="menu-link">
+                      <div class="text-truncate" data-i18n="Carousel">Danh sách ngân hàng</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="/admin/banks/create" class="menu-link">
+                      <div class="text-truncate" data-i18n="Collapse">Thêm ngân hàng</div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
               <!-- #region -->
               <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
