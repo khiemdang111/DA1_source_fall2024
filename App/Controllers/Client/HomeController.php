@@ -123,5 +123,8 @@ class HomeController
         Footer::render();
     }
 
-
+    public static function test()
+    {
+        maqr::render();
+    }
 }

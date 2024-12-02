@@ -28,7 +28,10 @@ Route::get('/notfound', controllerMethod: 'App\Controllers\Client\HomeController
 Route::get('/', controllerMethod: 'App\Controllers\Client\HomeController@index');
 
 
-Route::get('/phiship', 'App\Controllers\Client\ShippingController@taoqr');
+Route::get('/test', controllerMethod: 'App\Controllers\Client\HomeController@test');
+
+
+Route::post('/savingshipping', 'App\Controllers\Client\ShippingController@getGHTKFee');
 
 
 

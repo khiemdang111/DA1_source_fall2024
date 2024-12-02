@@ -137,7 +137,7 @@ class ShippingController
         // Gửi yêu cầu API
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => $_ENV['GHTK_API_URL'],
+            CURLOPT_URL => 'https://services.giaohangtietkiem.vn/services/shipment/order',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "POST",
             CURLOPT_POSTFIELDS => json_encode($order),
@@ -177,31 +177,69 @@ class ShippingController
         $response = curl_exec($curl);
         curl_close($curl);
         echo 'Response: ' . $response;
-
     }
-    function getGHTKFee() {
-        $apiUrl = "https://services.ghtklab.com/shipping_fee";
-        $apiKey = "YOUR_API_KEY";
-    
+    public function getGHTKFee()
+    {
+        // Nhận dữ liệu từ form
+
+        // $province = isset($_POST['province']) ? $_POST['province'] : '';
+        // $district = isset($_POST['district']) ? $_POST['district'] : '';
+
+
+        $apiUrl = "https://services.giaohangtietkiem.vn/services/shipment/fee";
+        $apiKey = "ATo2Yp39vAKo3XErRxJZERRIisA4QIHqA4KgCE";
+
+        // Dữ liệu gửi lên API
         $data = [
-           'weight' => 2.5,
+            'weight' => 2500,
             'distance' => 15,
-           'address' => '123 Nguyễn Văn Cừ, Phường 2, Quận 5, TP.HCM'
+            'pick_province' => 'Hồ Chí Minh',
+            'pick_district' => 'Quận 5',
+            'province' => 'Hà Nội',
+            'district' => 'Quận 1',
         ];
-    
+
+        // Gửi yêu cầu tới API GHTK
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Authorization: Bearer $apiKey"
+            "Token: $apiKey",
+            "Content-Type: application/json"
         ]);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-    
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
         $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-    
-        return json_decode($response, true);
+        if ($httpCode !== 200) {
+            echo json_encode(['error' => 'Không thể tính phí giao hàng', 'code' => $httpCode]);
+            exit;
+        }
+
+
+        $result = json_decode($response, true);
+
+        if (isset($result['fee']['options']['shipMoneyText'])) {
+
+            $shipMoneyText = $result['fee']['options']['shipMoneyText'];
+            $shipMoney = preg_replace('/[^0-9]/', '', $shipMoneyText);
+
+
+            header('Content-Type: application/json');
+            // $_SESSION['phihip'] = $shipMoney;
+            // echo json_encode(['fee' => $shipMoney]);
+            var_dump(json_encode(['fee' => $shipMoney]));
+            die;
+        } else {
+            // Trả về thông báo lỗi nếu không tìm thấy phí
+            header('Content-Type: application/json');
+            echo json_encode(['error' => 'Không có phí giao hàng trong phản hồi']);
+        }
+
+       
     }
-    
+
 }
 
 

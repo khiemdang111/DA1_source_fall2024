@@ -13,7 +13,7 @@ class Checkout extends BaseView
 		// var_dump($data['voucher']);
 		// die;
 		$is_login = AuthHelper::checkLogin();
-?>
+		?>
 		<section class="ftco-section">
 			<div class="container">
 				<table class="table table_center">
@@ -37,7 +37,7 @@ class Checkout extends BaseView
 								// die;
 								$i++;
 
-						?>
+								?>
 								<tr>
 									<td>
 										<span><?= $cart['data']['name'] ?> </span>
@@ -48,7 +48,7 @@ class Checkout extends BaseView
 
 									<?php
 									if ($cart['data']['discount_price'] > 0):
-									?>
+										?>
 										<td>
 											<div class="d-flex justify-content-center"><strike><?= number_format($cart['data']['price']) ?>
 												</strike> <span><del class="margin_vnd">VND</del></span></div>
@@ -57,15 +57,15 @@ class Checkout extends BaseView
 											<?= number_format($cart['data']['discount_price']) ?> VND
 										</td>
 
-									<?php
+										<?php
 
 									else:
-									?>
+										?>
 										<td>
 
 											<?= number_format($cart['data']['price']) ?> <span>VND</span>
 										</td>
-									<?php
+										<?php
 									endif;
 									?>
 
@@ -76,25 +76,25 @@ class Checkout extends BaseView
 									if ($cart['data']['discount_price'] > 0):
 										$discount_price = $cart['quantity'] * $cart['data']['discount_price'];
 										$total_price += $discount_price;
-									?>
+										?>
 										<td>
 											<div class="d-flex">
 												<span><?= number_format($discount_price) ?></span> <span class="margin_vnd"> VND</span>
 											</div>
 
 										</td>
-									<?php
+										<?php
 									else:
 										$unit_price = $cart['quantity'] * $cart['data']['price'];
 										$total_price += $unit_price;
-									?>
+										?>
 										<td>
 											<?= number_format($unit_price) ?> VND
 										</td>
 
 
 
-									<?php
+										<?php
 									endif;
 									?>
 
@@ -102,7 +102,7 @@ class Checkout extends BaseView
 
 
 
-						<?php
+								<?php
 							endif;
 						endforeach;
 						?>
@@ -179,7 +179,6 @@ class Checkout extends BaseView
 												<option value="COD">Thanh toán khi nhận hàng</option>
 												<option value="PAYMENT">Chuyển khoản ngân hàng</option>
 												<option value="VNPAY">Thanh toán qua VNPAY</option>
-												
 											</select>
 										</div>
 									</div>
@@ -211,7 +210,8 @@ class Checkout extends BaseView
 										<div class="form-group">
 											<div class="col-md-12">
 												<div class="radio">
-													<label><input type="radio" name="delivery" value="conomy" class="mr-2" />
+													<label><input type="radio" name="delivery" id="savingshipping"
+															value="conomy" class="mr-2" />
 														Giao hàng tiết kiệm</label><img
 														src="public/uploads/image/Giaohangtietkiem.jpg" alt="" width="20%">
 												</div>
@@ -240,7 +240,9 @@ class Checkout extends BaseView
 										</p>
 										<p class="d-flex">
 											<span>Phí vận chuyển</span>
-											<span>$0.00</span>
+											<span id="shippingFee">
+											
+											</span>
 										</p>
 										<div class="py-4"></div>
 										<hr>
@@ -249,13 +251,13 @@ class Checkout extends BaseView
 											<?php
 											if (isset($_SESSION['unit'])):
 												$unit = (float) $total_price - $_SESSION['unit'];
-											?>
+												?>
 												<span><?= number_format($unit) ?></span>
-											<?php
+												<?php
 											else:
-											?>
+												?>
 												<?= number_format($total_price) ?>
-											<?php
+												<?php
 											endif;
 											?>
 										</p>
@@ -271,15 +273,14 @@ class Checkout extends BaseView
 					</div>
 				</form>
 
-				<div class="form-voucher">
+				<!-- <div class="form-voucher">
 					<form action="/discountCode" method="post">
 						<input type="hidden" name="method" value="POST">
 
 						<select name="name" id="voucher" class="form-select p-1 rounded-3">
 							<option value="unit" selected>Vui lòng chọn mã giảm giá</option>
 							<?php foreach ($data['voucher'] as $voucher): ?>
-								<option value="<?= $voucher['name'] ?>"
-									<?= isset($_GET['voucher']) && $_GET['voucher'] === $voucher['id'] ? 'selected' : '' ?>>
+								<option value="<?= $voucher['name'] ?>" <?= isset($_GET['voucher']) && $_GET['voucher'] === $voucher['id'] ? 'selected' : '' ?>>
 									<?= $voucher['name'] ?>
 								</option>
 							<?php endforeach; ?>
@@ -287,7 +288,7 @@ class Checkout extends BaseView
 						</select>
 						<button type="submit" class="btn btn-primary">Áp dụng mã giảm giá</button>
 					</form>
-				</div>
+				</div> -->
 
 		</section>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
@@ -319,7 +320,7 @@ class Checkout extends BaseView
 			}
 
 			var renderData = (array, select) => {
-				let row = ' <option  value="">Chọn </option>';
+				let row = ' <option  value="">Vui lòng chọn</option>';
 				array.forEach(element => {
 					row += `<option value="${element.code}">${element.name}</option>`
 				});
@@ -354,8 +355,46 @@ class Checkout extends BaseView
 			};
 		</script>
 
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script>
+			$(document).ready(function () {
+				$('#savingshipping').change(function () {
+					if ($(this).is(':checked')) {
+						// Lấy giá trị tỉnh và quận từ form
+						var province = $('#province-input').val(); 
+						var district = $('#district-input').val(); 
 
-<?php
+						if (province && district) {
+							$.ajax({
+								url: '/savingshipping',
+								method: 'POST',
+								data: {
+									type: 'savingshipping',
+									province: province,
+									district: district
+								},
+								success: function (response) {
+
+									console.log('Response:', response); 
+									$('#shippingFee').html(response.fee + " VND");
+								},
+								error: function (xhr, status, error) {
+									console.log('Error:', xhr.responseText); 
+									alert('Có lỗi xảy ra khi tính phí giao hàng!');
+								}
+							});
+						} else {
+							alert('Vui lòng chọn tỉnh và quận!');
+						}
+					} else {
+						$('#shippingFee').html(''); 
+					}
+				});
+			});
+		</script>
+
+
+		<?php
 	}
 }
 ?>
