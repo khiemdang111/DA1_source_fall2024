@@ -13,6 +13,8 @@ class Header extends BaseView
 	public static function render($data = null)
 	{
 		$is_login = AuthHelper::checkLogin();
+	
+
 
 ?>
 		<!DOCTYPE html>

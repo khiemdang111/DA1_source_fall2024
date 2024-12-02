@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Client;
 
+use App\Models\Lucky;
 use App\Models\Order_detail;
 use App\Models\User;
 use App\Models\vnpays;
@@ -321,4 +322,17 @@ class AuthController
         }
 
     }
+
+    public static function lucky() {
+        
+        $discount_codes = new Lucky();
+        $dataLucky = $discount_codes->getAll();
+        $dataLucky = [
+            'name' => 'name',
+
+        ];
+        Edit::render($dataLucky);
+
+    }
+
 }

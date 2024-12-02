@@ -221,7 +221,10 @@ Route::post('/admin/post/deletePermanently/{id}', 'App\Controllers\Admin\PostCon
 
 
 
+// luckySpin
 
+Route::get('/lucky_wheel/spin','App\Controllers\Client\LuckyController@spin');
+Route::post('/lucky_wheel/spin','App\Controllers\Client\LuckyController@spin');
 
 
 

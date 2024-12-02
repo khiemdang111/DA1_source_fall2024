@@ -14944,8 +14944,7 @@ textarea.form-control {
   border-radius: 50%;
   border: 10px solid #949090;
   overflow: hidden;
-  transition: all ease-in-out 5s;
-  transform: rotate(90deg);
+  transition: transform ease-in-out 11s; /* Đồng bộ với thời gian trong JS */
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -14974,7 +14973,7 @@ textarea.form-control {
 
 .span2 {
   clip-path: polygon(50% 50%, 0% 0%, 100% 0%);
-  background-color: #33ff57;
+  background-color: #d39e00;
   transform: rotate(90deg);
 }
 
@@ -15001,29 +15000,29 @@ textarea.form-control {
 
 .box1 .span1 b {
   position: absolute;
-  top: 45%;
-  left: 11%;
+  top: 48%;
+  left: 9%;
   transform: rotate(-45deg);
 }
 
 .box1 .span2 b {
   position: absolute;
-  top: 14%;
-  right: 43%;
+  top: 12%;
+  right: 37%;
   transform: rotate(45deg);
 }
 
 .box2 .span3 b {
   position: absolute;
   top: 15%;
-  left: 47%;
+  left: 41%;
   transform: rotate(135deg);
 }
 
 .box2 .span4 b {
   position: absolute;
-  top: 45%;
-  left: 75%;
+  top: 39%;
+  left: 63%;
   transform: rotate(135deg);
 }
 

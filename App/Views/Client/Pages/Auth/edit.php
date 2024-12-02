@@ -10,8 +10,10 @@ class edit extends BaseView
 {
     public static function render($data = null)
     {
+
         // var_dump($data['avatar']);
-        ?>
+?>
+
         <div class="container">
             <div class="row p-5">
                 <div class="col-md-4">
@@ -27,23 +29,22 @@ class edit extends BaseView
                 <div class="col-md-8">
                     <div class="card ">
                         <h4 class="text-center title_color">Thông tin tài khoản</h4>
-                        <p class="text-right text-danger mr-2">Điểm thưởng: <?= $data['accumulate_points'] ?></p>
                         <form class="p-2" action="/users/update/<?= $data['id'] ?>" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="method" value="PUT">
                             <?php
                             if ($data && $data['avatar']):
-                                ?>
+                            ?>
                                 <div class="text-center "> <img class="avatar_user"
                                         src="<?= APP_URL ?>/public/uploads/users/<?= $data['avatar'] ?>" alt="" width="10%">
                                 </div>
 
-                                <?php
+                            <?php
                             else:
-                                ?>
+                            ?>
                                 <div class="text-center "> <img class="avatar_user"
                                         src="<?= APP_URL ?>/public/uploads/users/user.png" alt="" width="10%">
                                 </div>
-                                <?php
+                            <?php
                             endif; ?>
 
                             <div class="mb-3">
@@ -76,52 +77,45 @@ class edit extends BaseView
         </div>
 
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="bodylucky">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <input type="hidden" name="method">
+                    <div class="bodylucky">
+                        <div class="mainboxlucky" id="mainboxlucky">
+                            <div class="arrow"></div>
+                            <div class="box" id="box">
+                                <div class="box1">
+                                    <span class="font span1"><b>Giảm giá 10k</b></span>
+                                    <span class="font span2"><b>Giảm giá 100K</b></span>
+                                </div>
+                                <div class="box2">
+                                    <span class="font span3"><b>Giảm giá 50K</b></span>
+                                    <span class="font span4"><b>Chúc bạn may mắn lần sao</b></span>
+                                </div>
+                            </div>
+                            <button class="spin" id="spinButton" onclick="spin()">Quay</button>
+                        </div>
+                    </div>
+                </div>
+                <audio
+                    controls="controls"
+                    id="applause"
+                    src="<?= APP_URL ?>/public/uploads/void/applause.mp3"
+                    type="audio/mp3"></audio>
+                <audio
+                    controls="controls"
+                    id="wheel"
+                    src="<?= APP_URL ?>/public/uploads/void/nhacxoso.mp3"
+                    type="audio/mp3"></audio>
 
-            <div class="mainboxlucky" id="mainboxlucky">
-              <div class="arrow"></div>
-              <div class="box" id="box">
-                <div class="box1">
-                  <span class="font span1"><b>Prize 1</b></span>
-                  <span class="font span2"><b>Prize 2</b></span>
-                </div>
-                <div class="box2">
-                  <span class="font span3"><b>Prize 3</b></span>
-                  <span class="font span4"><b>Prize 2</b></span>
-                </div>
-              </div>
-              <button class="spin" id="spinButton" onclick="spin()">Quay</button>
             </div>
-          </div>
         </div>
-        <audio
-      controls="controls"
-      id="applause"
-      src="<?= APP_URL ?>/public/uploads/void/applause.mp3"
-      type="audio/mp3"
-    ></audio>
-    <audio
-      controls="controls"
-      id="wheel"
-      src="<?= APP_URL ?>/public/uploads/void/nhacxoso.mp3"
-      type="audio/mp3"
-    ></audio>
-
-      </div>
-      <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-        <button type="submit" class="btn btn-primary">Gửi</button>
-      </div> -->
-      </form>
-    </div>
-    </div>
-    </div>
+        </div>
+        </div>
 
 
 
-        <?php
+<?php
 
     }
 }
