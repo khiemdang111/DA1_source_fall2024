@@ -12,7 +12,7 @@ class edit extends BaseView
     {
 
         // var_dump($data['avatar']);
-?>
+        ?>
 
         <div class="container">
             <div class="row p-5">
@@ -33,18 +33,18 @@ class edit extends BaseView
                             <input type="hidden" name="method" value="PUT">
                             <?php
                             if ($data && $data['avatar']):
-                            ?>
+                                ?>
                                 <div class="text-center "> <img class="avatar_user"
                                         src="<?= APP_URL ?>/public/uploads/users/<?= $data['avatar'] ?>" alt="" width="10%">
                                 </div>
 
-                            <?php
+                                <?php
                             else:
-                            ?>
+                                ?>
                                 <div class="text-center "> <img class="avatar_user"
                                         src="<?= APP_URL ?>/public/uploads/users/user.png" alt="" width="10%">
                                 </div>
-                            <?php
+                                <?php
                             endif; ?>
 
                             <div class="mb-3">
@@ -76,7 +76,8 @@ class edit extends BaseView
             </div>
         </div>
 
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <input type="hidden" name="method">
@@ -90,32 +91,24 @@ class edit extends BaseView
                                 </div>
                                 <div class="box2">
                                     <span class="font span3"><b>Giảm giá 50K</b></span>
-                                    <span class="font span4"><b>Chúc bạn may mắn lần sao</b></span>
+                                    <span class="font span4"><b>Chúc bạn may mắn lần sau</b></span>
                                 </div>
                             </div>
                             <button class="spin" id="spinButton" onclick="spin()">Quay</button>
                         </div>
                     </div>
                 </div>
-                <audio
-                    controls="controls"
-                    id="applause"
-                    src="<?= APP_URL ?>/public/uploads/void/applause.mp3"
+                <audio controls="controls" id="applause" src="<?= APP_URL ?>/public/uploads/void/applause.mp3"
                     type="audio/mp3"></audio>
-                <audio
-                    controls="controls"
-                    id="wheel"
-                    src="<?= APP_URL ?>/public/uploads/void/nhacxoso.mp3"
+                <audio controls="controls" id="wheel" src="<?= APP_URL ?>/public/uploads/void/nhacxoso.mp3"
                     type="audio/mp3"></audio>
 
             </div>
         </div>
-        </div>
-        </div>
 
 
 
-<?php
+        <?php
 
     }
 }

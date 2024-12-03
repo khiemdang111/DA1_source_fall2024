@@ -251,7 +251,7 @@ let isSpinning = false; // Biến để kiểm tra trạng thái vòng quay
 async function spin() {
   wheel.play();
   if (isSpinning) return; // Ngăn không cho người dùng nhấn nhiều lần khi đang quay
- 
+
   isSpinning = true; // Đặt trạng thái đang quay
   const box = document.getElementById("box");
   const spinButton = document.getElementById("spinButton");
@@ -260,28 +260,44 @@ async function spin() {
     const response = await fetch("/lucky_wheel/spin", { method: "GET" });
     if (!response.ok) {
       throw new Error("Có lỗi khi lấy dữ liệu từ server.");
-    }  
-	const contentType = response.headers.get("Content-Type");
-	if (!contentType || !contentType.includes("application/json")) {
-		throw new Error("Server không trả về JSON hợp lệ.");
-	}
+    }
+    const contentType = response.headers.get("Content-Type");
+    if (!contentType || !contentType.includes("application/json")) {
+      throw new Error("Server không trả về JSON hợp lệ.");
+    }
     const result = await response.json();
-    const { prize, prizeAngle } = result;
 
-  spinButton.disabled = true;
+    const { prize, angle, unit } = result;
+    const prizeAngle = angle;
+
+    spinButton.disabled = true;
 
     box.style.transition = "all ease 11s";
     box.style.transform = `rotate(${prizeAngle + 1440}deg)`;
     setTimeout(() => {
-       applause.play();
-      alert(`Bạn đã trúng: ${prize}`);
+      applause.play();
+      if (prize === "Chúc bạn may mắn lần sau") {
+        swal({
+          title: "Chúc bạn may mắn lần sau!",
+          icon: "error"
+        }
+        );
+      } else {
+        swal({
+          text: "Chúc mừng bạn!",
+          title: "Voucher " + prize + ".",
+          icon: "success"
+        }
+        );
+      }
+
       box.style.transition = "none";
       box.style.transform = "rotate(0deg)";
       spinButton.disabled = false; // Kích hoạt lại nút
       isSpinning = false; // Đặt trạng thái quay xong
     }, 11000);
   } catch (error) {
-    console.log(error); 
+    console.log(error);
     alert("Lỗi: " + error.message); // Hiển thị lỗi nếu có vấn đề với fetch
     spinButton.disabled = false; // Đảm bảo bật lại nút quay
   }
