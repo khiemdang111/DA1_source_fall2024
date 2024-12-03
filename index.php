@@ -28,14 +28,7 @@ Route::get('/notfound', controllerMethod: 'App\Controllers\Client\HomeController
 Route::get('/', controllerMethod: 'App\Controllers\Client\HomeController@index');
 
 
-Route::get('/test', controllerMethod: 'App\Controllers\Client\HomeController@test');
-
-
 Route::post('/savingshipping', 'App\Controllers\Client\ShippingController@getGHTKFee');
-
-
-
-
 Route::delete('/home/delete', 'App\Controllers\Client\CartController@deleteItem');
 
 Route::get('/products', 'App\Controllers\Client\ProductController@index');

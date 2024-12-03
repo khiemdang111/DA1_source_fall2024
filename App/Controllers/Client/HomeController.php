@@ -118,9 +118,22 @@ class HomeController
 
     public static function taoqr()
     {
-        Header::render();
-        payment::render();
-        Footer::render();
+
+        // Lưu thời gian bắt đầu
+        $start_time = time();
+        $end_time = $start_time + 10;
+       
+        while (time() < $end_time) {
+            Header::render();
+            payment::render();
+            Footer::render();
+        }
+
+        // Khi hết thời gian, thực hiện công việc
+        NotificationHelper::error('s', 'HẾT THỜI GIAN BẠN VUI LÒNG ĐẶT HÀNG LẠI!');
+        header('location: /');
+     
+     
     }
 
     public static function test()

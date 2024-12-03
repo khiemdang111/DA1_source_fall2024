@@ -111,7 +111,7 @@ class ShippingController
         }
         $total_vulue = CartHelper::tatol($cart_data);
         $order['order'] = [
-            'id' => (string) $_SESSION['order_id'],
+            'id' => (string) rand(1000, 9999),
             'pick_name' => 'Wine Cần Thơ',
             'pick_address' => 'FPT Polytechnic',
             'pick_province' => 'TP.Cần Thơ',
@@ -181,24 +181,18 @@ class ShippingController
     public function getGHTKFee()
     {
         // Nhận dữ liệu từ form
-
-        // $province = isset($_POST['province']) ? $_POST['province'] : '';
-        // $district = isset($_POST['district']) ? $_POST['district'] : '';
-
-
+        $province = isset($_POST['province']) ? $_POST['province'] : '';
+        $district = isset($_POST['district']) ? $_POST['district'] : '';
         $apiUrl = "https://services.giaohangtietkiem.vn/services/shipment/fee";
         $apiKey = "ATo2Yp39vAKo3XErRxJZERRIisA4QIHqA4KgCE";
-
-        // Dữ liệu gửi lên API
         $data = [
             'weight' => 2500,
             'distance' => 15,
             'pick_province' => 'Hồ Chí Minh',
             'pick_district' => 'Quận 5',
-            'province' => 'Hà Nội',
-            'district' => 'Quận 1',
+            'province' => $province,
+            'district' => $district,
         ];
-
         // Gửi yêu cầu tới API GHTK
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -229,8 +223,8 @@ class ShippingController
             header('Content-Type: application/json');
             // $_SESSION['phihip'] = $shipMoney;
             // echo json_encode(['fee' => $shipMoney]);
-            var_dump(json_encode(['fee' => $shipMoney]));
-            die;
+      echo json_encode(['fee' => $shipMoney]);
+          
         } else {
             // Trả về thông báo lỗi nếu không tìm thấy phí
             header('Content-Type: application/json');
@@ -239,7 +233,7 @@ class ShippingController
 
        
     }
-
+   
 }
 
 

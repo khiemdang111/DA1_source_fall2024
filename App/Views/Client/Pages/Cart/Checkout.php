@@ -363,23 +363,23 @@ class Checkout extends BaseView
 						// Lấy giá trị tỉnh và quận từ form
 						var province = $('#province-input').val(); 
 						var district = $('#district-input').val(); 
-
 						if (province && district) {
 							$.ajax({
 								url: '/savingshipping',
 								method: 'POST',
 								data: {
 									type: 'savingshipping',
+									method:"POST",
 									province: province,
 									district: district
 								},
 								success: function (response) {
-
-									console.log('Response:', response); 
+									console.log('Response:', response);
 									$('#shippingFee').html(response.fee + " VND");
 								},
 								error: function (xhr, status, error) {
 									console.log('Error:', xhr.responseText); 
+									$('#shippingFee').html(xhr.responseText + " VND");
 									alert('Có lỗi xảy ra khi tính phí giao hàng!');
 								}
 							});
