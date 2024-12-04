@@ -13,7 +13,7 @@ class Checkout extends BaseView
 		// var_dump($data['voucher']);
 		// die;
 		$is_login = AuthHelper::checkLogin();
-		?>
+?>
 		<section class="ftco-section">
 			<div class="container">
 				<table class="table table_center">
@@ -37,7 +37,7 @@ class Checkout extends BaseView
 								// die;
 								$i++;
 
-								?>
+						?>
 								<tr>
 									<td>
 										<span><?= $cart['data']['name'] ?> </span>
@@ -48,7 +48,7 @@ class Checkout extends BaseView
 
 									<?php
 									if ($cart['data']['discount_price'] > 0):
-										?>
+									?>
 										<td>
 											<div class="d-flex justify-content-center">
 												<strike><?= number_format($cart['data']['price'], 0, ',', '.') ?>
@@ -58,15 +58,15 @@ class Checkout extends BaseView
 											<?= number_format($cart['data']['discount_price'], 0, ',', '.') ?> VND
 										</td>
 
-										<?php
+									<?php
 
 									else:
-										?>
+									?>
 										<td>
 
 											<?= number_format($cart['data']['price'], 0, ',', '.') ?> <span>VND</span>
 										</td>
-										<?php
+									<?php
 									endif;
 									?>
 
@@ -77,7 +77,7 @@ class Checkout extends BaseView
 									if ($cart['data']['discount_price'] > 0):
 										$discount_price = $cart['quantity'] * $cart['data']['discount_price'];
 										$total_price += $discount_price;
-										?>
+									?>
 										<td>
 											<div class="d-flex">
 												<span><?= number_format($discount_price, 0, ',', '.') ?></span> <span class="margin_vnd">
@@ -85,11 +85,11 @@ class Checkout extends BaseView
 											</div>
 
 										</td>
-										<?php
+									<?php
 									else:
 										$unit_price = $cart['quantity'] * $cart['data']['price'];
 										$total_price += $unit_price;
-										?>
+									?>
 										<td>
 											<?= number_format($unit_price, 0, ',', '.') ?> VND
 
@@ -97,7 +97,7 @@ class Checkout extends BaseView
 
 
 
-										<?php
+									<?php
 									endif;
 									?>
 
@@ -105,7 +105,7 @@ class Checkout extends BaseView
 
 
 
-								<?php
+						<?php
 							endif;
 						endforeach;
 						?>
@@ -245,6 +245,13 @@ class Checkout extends BaseView
 										<p class="d-flex">
 											<span>Phí vận chuyển</span>
 											<span id="shippingFee">
+
+											</span>
+										</p>
+										<p class="d-flex">
+											<span>Voucher</span>
+											<span id="Voucher">
+												<a href="" data-toggle="modal" data-target="#exampleModalCenter2">Chọn voucher để giảm giá </a>
 											</span>
 										</p>
 										<div class="py-4"></div>
@@ -277,21 +284,40 @@ class Checkout extends BaseView
 					</div>
 				</form>
 
-				<!-- <div class="form-voucher">
-					<form action="/discountCode" method="post">
-						<input type="hidden" name="method" value="POST">
-						<select name="name" id="voucher" class="form-select p-1 rounded-3">
-							<option value="unit" selected>Vui lòng chọn mã giảm giá</option>
-							<?php foreach ($data['voucher'] as $voucher): ?>
-								<option value="<?= $voucher['name'] ?>" <?= isset($_GET['voucher']) && $_GET['voucher'] === $voucher['id'] ? 'selected' : '' ?>>
-									<?= $voucher['name'] ?>
-								</option>
-							<?php endforeach; ?>
+				<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title">Chọn mã Voucher </h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
 
-						</select>
-						<button type="submit" class="btn btn-primary">Áp dụng mã giảm giá</button>
-					</form>
-				</div> -->
+							<form action="/discountCode" method="post">
+								<div class="modal-body">
+									<input type="hidden" name="method" value="POST">
+									<div id="voucherRadios">
+										<?php foreach ($data['voucher'] as $voucher): ?>
+											<label>
+												<input type="radio" name="name" value="<?= $voucher['name'] ?>"
+													<?= isset($_GET['voucher']) && $_GET['voucher'] === $voucher['id'] ? 'checked' : '' ?>>
+												<?= $voucher['name'] ?>
+											</label>
+											<br>
+										<?php endforeach; ?>
+									</div>
+
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+									<button type="submit" class="btn btn-primary">Xác nhận</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
 
 		</section>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
@@ -443,7 +469,7 @@ class Checkout extends BaseView
 		</script>
 
 
-		<?php
+<?php
 	}
 }
 ?>
