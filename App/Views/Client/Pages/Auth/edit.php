@@ -12,7 +12,7 @@ class edit extends BaseView
     {
 
         // var_dump($data['avatar']);
-        ?>
+?>
 
         <div class="container">
             <div class="row p-5">
@@ -30,22 +30,25 @@ class edit extends BaseView
                     <div class="card ">
                         <h4 class="text-center title_color">Thông tin tài khoản</h4>
                         <p class="text-right text-danger mr-2">Điểm thưởng: <?= $data['accumulate_points'] ?></p>
+                        <p class="text-right text-danger mr-2">Số lượt quay: <?= $data['turns'] ?></p>
+
+                    
                         <form class="p-2" action="/users/update/<?= $data['id'] ?>" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="method" value="PUT">
                             <?php
                             if ($data && $data['avatar']):
-                                ?>
+                            ?>
                                 <div class="text-center "> <img class="avatar_user"
                                         src="<?= APP_URL ?>/public/uploads/users/<?= $data['avatar'] ?>" alt="" width="10%">
                                 </div>
 
-                                <?php
+                            <?php
                             else:
-                                ?>
+                            ?>
                                 <div class="text-center "> <img class="avatar_user"
                                         src="<?= APP_URL ?>/public/uploads/users/user.png" alt="" width="10%">
                                 </div>
-                                <?php
+                            <?php
                             endif; ?>
 
                             <div class="mb-3">
@@ -107,9 +110,60 @@ class edit extends BaseView
             </div>
         </div>
 
+        <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
 
 
-        <?php
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Đổi điểm quay voucher</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="/points" method="post" id="exchangeForm">
+                        <input type="hidden" name="method" value="POST">
+                        <div class="modal-body">
+                            <h6 class="text-danger">Điểm hiện tại của bạn: <?= $data['accumulate_points'] ?></h6>
+                            <div class="form-group">
+                                <label for="points">Nhập số điểm bạn muốn đổi:</label>
+                                <input type="number" class="form-control" id="points" name="points" min="100" step="100" max=" <?= $data['accumulate_points'] ?>"
+                                    placeholder="Nhập số điểm (tối thiểu 100)" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="turns">Số lượt quay nhận được:</label>
+                                <input type="text" class="form-control" id="turns" name="turns" readonly>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-primary">Xác nhận</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const currentPoints = <?= $data['accumulate_points'] ?>;
+            const maxPoints = Math.floor(currentPoints / 100) * 100;
+
+            document.getElementById('points').addEventListener('input', function() {
+                let pointsInput = parseInt(this.value) || 0;
+                if (pointsInput > maxPoints) {
+                    pointsInput = maxPoints;
+                }
+                this.value = pointsInput;
+                const turns = Math.floor(pointsInput / 100);
+                document.getElementById('turns').value = turns > 0 ? turns : 0;
+            });
+        </script>
+
+
+<?php
 
     }
 }

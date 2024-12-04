@@ -81,7 +81,7 @@ class OrderController
         $new_points = $data_user['accumulate_points'] + $earned_points; // Cộng điểm mới
 
         try {
-            $result = $user->updateUserPoints($user_id, $new_points); // Cập nhật điểm trong DB
+            $result = $user->updateUserPointsNew($user_id, $new_points); // Cập nhật điểm trong DB
             if ($result) {
                 NotificationHelper::success('points', "User {$user_id} đã tích lũy thêm {$earned_points} điểm!");
                 return true;

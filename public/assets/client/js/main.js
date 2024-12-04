@@ -249,6 +249,12 @@ function shuffle(array) {
 let isSpinning = false; // Biến để kiểm tra trạng thái vòng quay
 
 async function spin() {
+  const path = window.location.pathname; // ví dụ: "/users/123"
+
+  // Tách phần id người dùng từ đường dẫn
+  const userId = path.split("/").pop(); // Tách chuỗi và lấy phần cuối, ví dụ: "123"
+
+  console.log(userId);
   wheel.play();
   if (isSpinning) return; // Ngăn không cho người dùng nhấn nhiều lần khi đang quay
 
@@ -279,16 +285,18 @@ async function spin() {
       if (prize === "Chúc bạn may mắn lần sau") {
         swal({
           title: "Chúc bạn may mắn lần sau!",
-          icon: "error"
-        }
-        );
+          icon: "error",
+        }).then(() => {
+          window.location.href = "/users/" + userId ;
+        });
       } else {
         swal({
           text: "Chúc mừng bạn!",
           title: "Voucher " + prize + ".",
-          icon: "success"
-        }
-        );
+          icon: "success",
+        }).then(() => {
+          window.location.href = "/users/" + userId ;
+        });
       }
 
       box.style.transition = "none";

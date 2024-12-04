@@ -48,4 +48,16 @@ class Lucky extends BaseModel
         ];
     }
 
+
+    public function updateTurns($userId, $newTurns)
+{
+    $sql = "UPDATE users SET turns = ? WHERE id = ?";
+    $conn = $this->_conn->MySQLi();
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ii', $newTurns, $userId); 
+    return $stmt->execute();
+}
+
+
+
 }

@@ -22,7 +22,7 @@ class User extends BaseModel
             error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
             return $result;
         }
-
+    
     }
     public function getOneUser($id)
     {
@@ -162,8 +162,8 @@ class User extends BaseModel
             return $result;
         }
     }
-
-    public function updateUserPoints(int $id, $new_points)
+  
+    public function updateUserPointsNew(int $id , $new_points)
     {
         $result = [];
         try {
@@ -171,7 +171,7 @@ class User extends BaseModel
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
 
-            $stmt->bind_param('ii', $new_points, $id);
+            $stmt->bind_param('ii', $new_points , $id);
             $stmt->execute();
             return $stmt->get_result()->fetch_assoc();
         } catch (\Throwable $th) {
@@ -217,4 +217,15 @@ class User extends BaseModel
         }
     }
 
+
+
+    public function updateUserPoints($user_id, $points, $turns)
+    {
+       
+        $sql = "UPDATE users SET accumulate_points = ?, turns = turns + ? WHERE id = ?";
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('iii', $points, $turns, $user_id);
+        return $stmt->execute();
+    }
 }

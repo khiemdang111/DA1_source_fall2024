@@ -69,6 +69,9 @@ Route::post('/updatePassword', 'App\Controllers\Client\AuthController@updatePass
 
 //DiscountCode
 Route::post('/discountCode', 'App\Controllers\Client\CartController@discountCode');
+Route::post('/points', 'App\Controllers\Client\LuckyController@points');
+
+
 
 Route::post('/mail', 'App\Controllers\Client\EmailController@mail');
 // *** Admin
