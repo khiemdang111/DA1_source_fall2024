@@ -43,7 +43,6 @@ class CartHelper
                 ];
             }
         }
-
         return $data_total;
     }
 
@@ -231,8 +230,8 @@ ROW;
                     $total += $money;
                 }
                 $total_price_formatted = number_format($money) . " VND";
-                $unit_price = number_format($unitPrice) . " VND";
-                $total = number_format($total) . " VND";
+                $unit_price = number_format($unitPrice, 0, ',', '.') . " VND";
+                $total = number_format($total, 0, ',', '.') . " VND";
                 $html .= <<<ROW2
             <tr>
                 <td>{$i}</td>

@@ -167,6 +167,8 @@ class AuthController
         } else {
             $order = new Order();
             $data = $order->getAllOrderbyUser_id();
+            // var_dump($data);
+            // die;
             Header::render();
             Notification::render();
             NotificationHelper::unset();

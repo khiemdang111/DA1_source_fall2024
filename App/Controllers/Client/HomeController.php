@@ -116,28 +116,13 @@ class HomeController
     }
 
 
-    public static function taoqr()
+    public static function huydon()
     {
-
-        // Lưu thời gian bắt đầu
-        $start_time = time();
-        $end_time = $start_time + 10;
-       
-        while (time() < $end_time) {
-            Header::render();
-            payment::render();
-            Footer::render();
-        }
-
-        // Khi hết thời gian, thực hiện công việc
-        NotificationHelper::error('s', 'HẾT THỜI GIAN BẠN VUI LÒNG ĐẶT HÀNG LẠI!');
+        $_SESSION['hihi'] = 'hay lawms nha';
         header('location: /');
-     
-     
+
+
     }
 
-    public static function test()
-    {
-        maqr::render();
-    }
+
 }

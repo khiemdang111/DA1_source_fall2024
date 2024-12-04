@@ -28,7 +28,18 @@ Route::get('/notfound', controllerMethod: 'App\Controllers\Client\HomeController
 Route::get('/', controllerMethod: 'App\Controllers\Client\HomeController@index');
 
 
-Route::post('/savingshipping', 'App\Controllers\Client\ShippingController@getGHTKFee');
+
+ Route::get('/savingshippingGHN', controllerMethod: 'App\Controllers\Client\ShippingController@getGHNFee');
+
+
+
+Route::post('/savingshippingGHN', 'App\Controllers\Client\ShippingController@getGHNFee');
+
+
+Route::post('/huydon', 'App\Controllers\Client\HomeController@huydon');
+
+
+
 Route::delete('/home/delete', 'App\Controllers\Client\CartController@deleteItem');
 
 Route::get('/products', 'App\Controllers\Client\ProductController@index');
@@ -89,6 +100,8 @@ Route::get('/history', 'App\Controllers\Client\AuthController@history');
 Route::get('/order/detail/{id}', 'App\Controllers\Client\AuthController@historyDetail');
 Route::get('/transport', 'App\Controllers\Client\AuthController@transport');
 Route::get('/canceled', 'App\Controllers\Client\AuthController@canceled');
+// phí ship GHTK
+Route::post('/savingshippingGHTK', 'App\Controllers\Client\ShippingController@getGHTKFee');
 // thêm bình luận 
 Route::post('/comments', 'App\Controllers\Client\CommentController@store');
 Route::put('/comments/{id}', 'App\Controllers\Client\CommentController@edit');

@@ -36,7 +36,7 @@ class Order extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT orders.id,orders.total,orders.orderStatus,orders.date,orders.paymentMethod,orders.user_id FROM orders WHERE orders.user_id =" . $_SESSION['user']['id']. " AND orders.orderStatus =1 AND orders.transport =2";
+            $sql = "SELECT orders.id,orders.total,orders.orderStatus,orders.date,orders.paymentMethod,orders.user_id FROM orders WHERE orders.user_id =" . $_SESSION['user']['id']. " AND orders.transport =2";
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {

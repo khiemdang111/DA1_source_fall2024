@@ -61,7 +61,7 @@ class index extends BaseView
                             <?= ($item['paymentMethod'] === "COD") ? ' Thanh toán khi nhận hàng ' : ' VNPAY' ?>
                           </td>
                           <td>
-                            <?= ($item['orderStatus'] === "0") ? '  Chưa thanh toán' : 'Đã thanh toán' ?>
+                            Đã giao hàng
                           </td>
                         </tr>
                       </tbody>

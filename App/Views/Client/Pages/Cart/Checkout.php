@@ -50,11 +50,12 @@ class Checkout extends BaseView
 									if ($cart['data']['discount_price'] > 0):
 										?>
 										<td>
-											<div class="d-flex justify-content-center"><strike><?= number_format($cart['data']['price']) ?>
+											<div class="d-flex justify-content-center">
+												<strike><?= number_format($cart['data']['price'], 0, ',', '.') ?>
 												</strike> <span><del class="margin_vnd">VND</del></span></div>
 
 											<br>
-											<?= number_format($cart['data']['discount_price']) ?> VND
+											<?= number_format($cart['data']['discount_price'], 0, ',', '.') ?> VND
 										</td>
 
 										<?php
@@ -63,7 +64,7 @@ class Checkout extends BaseView
 										?>
 										<td>
 
-											<?= number_format($cart['data']['price']) ?> <span>VND</span>
+											<?= number_format($cart['data']['price'], 0, ',', '.') ?> <span>VND</span>
 										</td>
 										<?php
 									endif;
@@ -79,7 +80,8 @@ class Checkout extends BaseView
 										?>
 										<td>
 											<div class="d-flex">
-												<span><?= number_format($discount_price) ?></span> <span class="margin_vnd"> VND</span>
+												<span><?= number_format($discount_price, 0, ',', '.') ?></span> <span class="margin_vnd">
+													VND</span>
 											</div>
 
 										</td>
@@ -89,7 +91,8 @@ class Checkout extends BaseView
 										$total_price += $unit_price;
 										?>
 										<td>
-											<?= number_format($unit_price) ?> VND
+											<?= number_format($unit_price, 0, ',', '.') ?> VND
+
 										</td>
 
 
@@ -210,7 +213,7 @@ class Checkout extends BaseView
 										<div class="form-group">
 											<div class="col-md-12">
 												<div class="radio">
-													<label><input type="radio" name="delivery" id="savingshipping"
+													<label><input type="radio" name="delivery" id="savingshippingGHTK"
 															value="conomy" class="mr-2" />
 														Giao hàng tiết kiệm</label><img
 														src="public/uploads/image/Giaohangtietkiem.jpg" alt="" width="20%">
@@ -220,7 +223,8 @@ class Checkout extends BaseView
 										<div class="form-group">
 											<div class="col-md-12">
 												<div class="radio">
-													<label><input type="radio" name="delivery" value="fast" class="mr-2" />
+													<label><input type="radio" name="delivery" value="fast" class="mr-2"
+															id="savingshippingGHN" />
 														Giao hàng nhanh</label><img src="public/uploads/image/giaohangnhanh.jpg"
 														alt="" width="20%">
 												</div>
@@ -236,12 +240,11 @@ class Checkout extends BaseView
 										<h3 class="billing-heading mb-4">Tổng cộng giỏ hàng</h3>
 										<p class="d-flex">
 											<span>Tổng cộng</span>
-											<span><?= number_format($total_price) ?></span>
+											<span><?= number_format($total_price, 0, ',', '.') ?> VND</span>
 										</p>
 										<p class="d-flex">
 											<span>Phí vận chuyển</span>
 											<span id="shippingFee">
-											
 											</span>
 										</p>
 										<div class="py-4"></div>
@@ -250,16 +253,17 @@ class Checkout extends BaseView
 											<span>Tổng</span>
 											<?php
 											if (isset($_SESSION['unit'])):
-												$unit = (float) $total_price - $_SESSION['unit'];
+												$total_price = (float) $total_price - $_SESSION['unit'];
 												?>
-												<span><?= number_format($unit) ?></span>
+												<span id="shippingFee2"><?= number_format($total_price, 0, ',', '.') ?></span>
 												<?php
 											else:
 												?>
-												<?= number_format($total_price) ?>
+												<span id="shippingFee2"><?= number_format($total_price, 0, ',', '.') ?></span>
 												<?php
 											endif;
 											?>
+											<input type="hidden" id="total" name="total" value="<?=$total_price?>">
 										</p>
 										<p>
 											<button type="submit" class="btn btn-primary py-3 px-4">Đặt hàng</button>
@@ -276,7 +280,6 @@ class Checkout extends BaseView
 				<!-- <div class="form-voucher">
 					<form action="/discountCode" method="post">
 						<input type="hidden" name="method" value="POST">
-
 						<select name="name" id="voucher" class="form-select p-1 rounded-3">
 							<option value="unit" selected>Vui lòng chọn mã giảm giá</option>
 							<?php foreach ($data['voucher'] as $voucher): ?>
@@ -358,27 +361,34 @@ class Checkout extends BaseView
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script>
 			$(document).ready(function () {
-				$('#savingshipping').change(function () {
+				$('#savingshippingGHTK').change(function () {
 					if ($(this).is(':checked')) {
 						// Lấy giá trị tỉnh và quận từ form
-						var province = $('#province-input').val(); 
-						var district = $('#district-input').val(); 
+						var province = $('#province-input').val();
+						var district = $('#district-input').val();
+						var total = $('#total').val();
+						
+						
 						if (province && district) {
 							$.ajax({
-								url: '/savingshipping',
+								url: '/savingshippingGHTK',
 								method: 'POST',
 								data: {
-									type: 'savingshipping',
-									method:"POST",
+									type: 'savingshippingGHTK',
+									method: "POST",
+									total: total,
 									province: province,
 									district: district
 								},
 								success: function (response) {
-									console.log('Response:', response);
+							
+									console.log(response);
+									
 									$('#shippingFee').html(response.fee + " VND");
+									$('#shippingFee2').html(response.total + " VND");
 								},
 								error: function (xhr, status, error) {
-									console.log('Error:', xhr.responseText); 
+									console.log('Error:', xhr.responseText);
 									$('#shippingFee').html(xhr.responseText + " VND");
 									alert('Có lỗi xảy ra khi tính phí giao hàng!');
 								}
@@ -387,7 +397,46 @@ class Checkout extends BaseView
 							alert('Vui lòng chọn tỉnh và quận!');
 						}
 					} else {
-						$('#shippingFee').html(''); 
+						$('#shippingFee').html('');
+					}
+				});
+			});
+		</script>
+		<script>
+			$(document).ready(function () {
+				$('#savingshippingGHN').change(function () {
+					if ($(this).is(':checked')) {
+						
+						var district = $('#ward').val();
+						var total = $('#total').val();
+						console.log(district);
+						if (district) {
+							$.ajax({
+								url: '/savingshippingGHN',
+								method: 'POST',
+								data: {
+									type: 'savingshippingGHN',
+									method: "POST",
+									total: total,
+									district: district
+								},
+								success: function (response) {
+									console.log(response);
+									
+									$('#shippingFee').html(response.fee + " VND");
+									$('#shippingFee2').html(response.total + " VND");
+								}, 
+								error: function (xhr, status, error) {
+									console.log('Error:', xhr.responseText);
+									$('#shippingFee').html(xhr.responseText + " VND");
+									alert('Có lỗi xảy ra khi tính phí giao hàng!');
+								}
+							});
+						} else {
+							alert('Vui lòng chọn tỉnh và quận!');
+						}
+					} else {
+						$('#shippingFee').html('');
 					}
 				});
 			});

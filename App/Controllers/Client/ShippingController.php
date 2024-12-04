@@ -162,7 +162,6 @@ class ShippingController
 
     public function deleteOrderGHTK()
     {
-
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -180,18 +179,19 @@ class ShippingController
     }
     public function getGHTKFee()
     {
-        // Nhận dữ liệu từ form
         $province = isset($_POST['province']) ? $_POST['province'] : '';
         $district = isset($_POST['district']) ? $_POST['district'] : '';
+       
+         $total = isset($_POST['total']) ? $_POST['total'] : '';
         $apiUrl = "https://services.giaohangtietkiem.vn/services/shipment/fee";
         $apiKey = "ATo2Yp39vAKo3XErRxJZERRIisA4QIHqA4KgCE";
         $data = [
-            'weight' => 2500,
-            'distance' => 15,
+            'weight' => 500,
             'pick_province' => 'Hồ Chí Minh',
             'pick_district' => 'Quận 5',
-            'province' => $province,
-            'district' => $district,
+             'province' => $province,
+             'district' => $district,
+            
         ];
         // Gửi yêu cầu tới API GHTK
         $ch = curl_init($apiUrl);
@@ -210,30 +210,92 @@ class ShippingController
             echo json_encode(['error' => 'Không thể tính phí giao hàng', 'code' => $httpCode]);
             exit;
         }
-
-
         $result = json_decode($response, true);
 
         if (isset($result['fee']['options']['shipMoneyText'])) {
 
             $shipMoneyText = $result['fee']['options']['shipMoneyText'];
             $shipMoney = preg_replace('/[^0-9]/', '', $shipMoneyText);
+            $shipMoneyFormatted = number_format($shipMoney, 0, ',', '.');
+            header('Content-Type: application/json');
+          
+            $total_GHTK = floatval($result['fee']['fee']) + floatval($total);
+            $_SESSION['ship_GHTK'] = $total_GHTK;
+            $number_format = number_format($total_GHTK, 0, ',', '.');
+            $response = [
+                'fee' => $shipMoneyFormatted,
+                'total' => $number_format
+            ];
+            echo json_encode($response);
 
+        } else {
 
             header('Content-Type: application/json');
-            // $_SESSION['phihip'] = $shipMoney;
-            // echo json_encode(['fee' => $shipMoney]);
-      echo json_encode(['fee' => $shipMoney]);
-          
+            echo json_encode(['error' => 'Không có phí giao hàng trong phản hồi']);
+        }
+    }
+    public function getGHNFee()
+    {
+        $apiUrl = "https://online-gateway.ghn.vn/shiip/public-api/v2/shipping-order/fee";
+        $apiToken = "2854bda0-abb0-11ef-9dc7-a66496990e59";
+        $total = isset($_POST['total']) ? $_POST['total'] : '';
+        //$total = 220;
+        $data = [
+            "service_type_id" => 2,
+            "insurance_value" => 1000000,
+            "coupon" => null,
+            "from_district_id" => 94900,
+            "to_district_id" => 1451,
+            "weight" => 1500,
+            "length" => 20,
+            "width" => 15,
+            "height" => 200,
+        ];
+
+        $headers = [
+            "Content-Type: application/json",
+            "Token: $apiToken"
+        ];
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if ($httpCode !== 200) {
+            echo json_encode(['error' => 'Không thể tính phí giao hàng', 'code' => $httpCode]);
+            exit;
+        }
+        $result = json_decode($response, true);
+
+        if (isset($result['data']["total"])) {
+            $shipMoneyText = $result['data']["total"];
+            $shipMoney = preg_replace('/[^0-9]/', '', $shipMoneyText);
+            $shipMoneyFormatted = number_format($shipMoney, 0, ',', '.');
+            header('Content-Type: application/json');
+            $total_GHN = floatval($result['data']["total"]) + floatval($total);
+            $_SESSION['ship_GHN'] = $total_GHN;
+            // var_dump($_SESSION['ship_GHN']);
+            // die();
+            $number_format = number_format($total_GHN, 0, ',', '.');
+            $response = [
+                'fee' => $shipMoneyFormatted,
+                'total' => $number_format
+            ];
+            echo json_encode($response);
+
         } else {
-            // Trả về thông báo lỗi nếu không tìm thấy phí
             header('Content-Type: application/json');
             echo json_encode(['error' => 'Không có phí giao hàng trong phản hồi']);
         }
 
-       
+
+
+
     }
-   
+
 }
 
 

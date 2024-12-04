@@ -182,13 +182,13 @@ class Home extends BaseView
 											<?php
 											if ($item['discount_price'] > 0):
 												?>
-												<span class="price price-sale"><?= number_format($item['price']) ?></span> <span
-													class="price"><?= number_format($item['discount_price']) ?></span>
+												<span class="price price-sale"><?= number_format($item['price'], 0, ',', '.') ?></span> <span
+													class="price"><?= number_format($item['discount_price'], 0, ',', '.') ?></span>
 
 												<?php
 											else:
 												?>
-												<span class="price"><?= number_format($item['price']) ?></span>
+												<span class="price"><?= number_format($item['price'], 0, ',', '.') ?></span>
 
 											<?php endif; ?>
 

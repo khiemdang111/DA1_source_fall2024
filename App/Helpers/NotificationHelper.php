@@ -15,6 +15,8 @@ class NotificationHelper{
  }
  public static function unsetorder(){
   unset($_SESSION['information']);
+  unset($_SESSION['ship_GHN']);
+  unset($_SESSION['ship_GHTK']);
   unset($_SESSION['order_id']);
  }
 }

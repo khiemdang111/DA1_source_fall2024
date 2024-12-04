@@ -62,10 +62,11 @@ class Index extends BaseView
 										if ($cart['data']['discount_price'] > 0):
 											?>
 											<td>
-												<div class="d-flex"><strike><?= number_format($cart['data']['price']) ?> </strike> <span><del
-															class="margin_vnd">VND</del></span></div>
+												<div class="d-flex"><strike><?= number_format($cart['data']['price'], 0, ',', '.') ?>
+													</strike> <span><del class="margin_vnd">VND</del></span></div>
 												<br>
-												<?= number_format($cart['data']['discount_price']) ?> VND
+												<?= number_format($cart['data']['discount_price'], 0, ',', '.') ?>
+												VND
 												<p>
 													<?php
 													if (isset($_SESSION['variants_id'])):
@@ -93,8 +94,8 @@ class Index extends BaseView
 										else:
 											?>
 											<td>
+												<?= number_format($cart['data']['price'], 0, ',', '.') ?><span>VND</span>
 
-												<?= number_format($cart['data']['price']) ?> <span>VND</span>
 											</td>
 											<?php
 										endif;
@@ -103,8 +104,9 @@ class Index extends BaseView
 										<td>
 											<form action="/cart/update" method="post">
 												<input type="hidden" name="method" id="" value="PUT">
-												<input class="quantity form-control input-number number_cart" type="number" name="quantity"
-													value="<?= $cart['quantity'] ?>" onchange="this.form.submit()" class="form-control" min=1>
+												<input class="quantity form-control input-number number_cart" type="number"
+													name="quantity" value="<?= $cart['quantity'] ?>" onchange="this.form.submit()"
+													class="form-control" min=1>
 												<input type="hidden" name="id" value="<?= $cart['data']['id'] ?>">
 												<input type="hidden" name="update-cart-item">
 											</form>
@@ -116,7 +118,8 @@ class Index extends BaseView
 											?>
 											<td>
 												<div class="d-flex">
-													<span><?= number_format($discount_price) ?></span> <span class="margin_vnd"> VND</span>
+													<span><?= number_format($discount_price, 0, ',', '.') ?></span> <span
+														class="margin_vnd"> VND</span>
 												</div>
 
 											</td>
@@ -126,7 +129,9 @@ class Index extends BaseView
 											$total_price += $unit_price;
 											?>
 											<td>
-												<?= number_format($unit_price) ?> VND
+												<?= number_format($unit_price, 0, ',', '.') ?>
+
+												VND
 											</td>
 											<?php
 										endif;
@@ -159,22 +164,10 @@ class Index extends BaseView
 					<div class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate_cart">
 						<div class="cart-total ">
 							<h3>Tổng cộng giỏ hàng</h3>
-							<p class="d-flex">
-								<span>Tổng cộng</span>
-								<span><?= number_format($total_price) ?></span>
-							</p>
-							<p class="d-flex">
-								<span>Phí vận chuyển</span>
-								<span>$0.00</span>
-							</p>
-							<p class="d-flex">
-								<span>Giảm giá</span>
-								<span>$3.00</span>
-							</p>
-							<hr>
+							
 							<p class="d-flex total-price">
 								<span>Tổng</span>
-								<span><?= number_format($total_price) ?></span>
+								<span><?= number_format($total_price, 0, ',', '.') ?> VND	</span>
 							</p>
 						</div>
 
@@ -186,7 +179,8 @@ class Index extends BaseView
 							<?php
 						else:
 							?>
-							<p class="text-center cart_button"><a href="/login" class="btn btn-primary py-3 px-4">Vui lòng đăng nhập để
+							<p class="text-center cart_button"><a href="/login" class="btn btn-primary py-3 px-4">Vui lòng đăng nhập
+									để
 									thanh toán</a></p>
 							<?php
 						endif;

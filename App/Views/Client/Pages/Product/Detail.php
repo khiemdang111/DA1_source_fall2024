@@ -62,14 +62,14 @@ class Detail extends BaseView
                         <?php
                         if ($data['product'][0]['discount_price'] > 0):
                             ?>
-                            <p class="price_product text-danger"><del><?= number_format($data['product'][0]['discount_price']) ?>
+                            <p class="price_product text-danger"><del><?= number_format($data['product'][0]['discount_price'], 0, ',', '.') ?>
                                     VND</del></p>
-                            <p class="price_product"><span><?= number_format($data['product'][0]['price']) ?> VND</span></p>
+                            <p class="price_product"><span><?= number_format($data['product'][0]['price'], 0, ',', '.') ?> VND</span></p>
                             <?php
                         else:
                             ?>
 
-                            <p class="price_product"><span><?= number_format($data['product'][0]['price']) ?> VND</span></p>
+                            <p class="price_product"><span><?= number_format($data['product'][0]['price'], 0, ',', '.') ?> VND</span></p>
                             <?php
                         endif;
                         ?>
