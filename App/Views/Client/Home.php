@@ -10,7 +10,7 @@ class Home extends BaseView
 	public static function render($data = null)
 	{
 
-		?>
+?>
 
 		<div class="hero-wrap" style="background-image: url('<?= APP_URL ?>/public/assets/client/images/bg_2.jpg');"
 			data-stellar-background-ratio="0.5">
@@ -32,32 +32,30 @@ class Home extends BaseView
 			<div class="container">
 				<div class="row no-gutters">
 					<div class="col-md-4 d-flex">
-						<div class="intro d-lg-flex w-100 ftco-animate">
-							<div class="icon">
+						<div class="intro d-lg-flex w-100 ftco-animate text-center">
+							<div class="icon mx-auto">
 								<span class="flaticon-support"></span>
 							</div>
 							<div class="text">
 								<h2>Hỗ trợ online 24/7</h2>
-								<p>Chúng tôi cung cấp những dịch vụ tốt nhất cho bạn, để bạn có thể chọn được 1 loại rượu mà bạn hài lòng.
-								</p>
+								<p>Chúng tôi cung cấp những dịch vụ tốt nhất cho bạn, để bạn có thể chọn được 1 loại rượu mà bạn hài lòng.</p>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-4 d-flex">
-						<div class="intro color-1 d-lg-flex w-100 ftco-animate">
-							<div class="icon">
+						<div class="intro color-1 d-lg-flex w-100 ftco-animate text-center">
+							<div class="icon mx-auto">
 								<span class="flaticon-cashback"></span>
 							</div>
 							<div class="text">
 								<h2>Giá tốt</h2>
-								<p>Chúng tôi đưa ra những mức giá phù hợp với bạn, để có thể giúp bạn trải nghiệm những loại rượu khác nhau.
-								</p>
+								<p>Chúng tôi đưa ra những mức giá phù hợp với bạn, để có thể giúp bạn trải nghiệm những loại rượu khác nhau.</p>
 							</div>
 						</div>
 					</div>
 					<div class="col-md-4 d-flex">
-						<div class="intro color-2 d-lg-flex w-100 ftco-animate">
-							<div class="icon">
+						<div class="intro color-2 d-lg-flex w-100 ftco-animate text-center">
+							<div class="icon mx-auto">
 								<span class="flaticon-free-delivery"></span>
 							</div>
 							<div class="text">
@@ -69,6 +67,7 @@ class Home extends BaseView
 				</div>
 			</div>
 		</section>
+
 
 		<section class="ftco-section ftco-no-pb">
 			<div class="container">
@@ -149,10 +148,10 @@ class Home extends BaseView
 				<div class="row">
 					<?php
 					if (count($data) && count($data['products'])):
-						?>
+					?>
 						<?php
 						foreach ($data['products'] as $item):
-							?>
+						?>
 							<div class="col-md-3 d-flex">
 								<div class="product ftco-animate">
 									<div class="img d-flex align-items-center justify-content-center"
@@ -185,7 +184,7 @@ class Home extends BaseView
 												<span class="price price-sale"><?= number_format($item['price'], 0, ',', '.') ?></span> <span
 													class="price"><?= number_format($item['discount_price'], 0, ',', '.') ?></span>
 
-												<?php
+											<?php
 											else:
 												?>
 												<span class="price"><?= number_format($item['price'], 0, ',', '.') ?></span>
@@ -196,22 +195,22 @@ class Home extends BaseView
 									</div>
 								</div>
 							</div>
-							<?php
+						<?php
 						endforeach;
 						?>
-					</div>
 				</div>
-				<?php
+			</div>
+		<?php
 					endif;
-					?>
+		?>
+		</div>
+		<div class="row justify-content-center">
+			<div class="col-md-4">
+				<a href="/products" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
+						class="fa fa-long-arrow-right"></span></a>
 			</div>
-			<div class="row justify-content-center">
-				<div class="col-md-4">
-					<a href="/products" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
-							class="fa fa-long-arrow-right"></span></a>
-				</div>
-			</div>
-			</div>
+		</div>
+		</div>
 		</section>
 
 		<section class="ftco-section testimony-section img"
@@ -229,16 +228,16 @@ class Home extends BaseView
 						<div class="carousel-testimony owl-carousel ftco-owl">
 							<div class="item">
 								<div class="testimony-wrap py-4">
-									<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
+									<div class="icon d-flex align-items-center justify-content-center">
+										<span class="fa fa-quote-left"></span>
+									</div>
 									<div class="text">
-										<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-											there live the blind texts.</p>
+										<p class="mb-4">Xa thật xa, sau những dãy núi, xa khỏi những vùng đất Vokalia và Consonantia, có một nơi ở của những văn bản bị lãng quên.</p>
 										<div class="d-flex align-items-center">
-											<div class="user-img"
-												style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_1.jpg)"></div>
+											<div class="user-img" style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_1.jpg)"></div>
 											<div class="pl-3">
 												<p class="name">Roger Scott</p>
-												<span class="position">Marketing Manager</span>
+												<span class="position">Giám đốc Marketing</span>
 											</div>
 										</div>
 									</div>
@@ -246,16 +245,16 @@ class Home extends BaseView
 							</div>
 							<div class="item">
 								<div class="testimony-wrap py-4">
-									<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
+									<div class="icon d-flex align-items-center justify-content-center">
+										<span class="fa fa-quote-left"></span>
+									</div>
 									<div class="text">
-										<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-											there live the blind texts.</p>
+										<p class="mb-4">Xa thật xa, sau những dãy núi, xa khỏi những vùng đất Vokalia và Consonantia, có một nơi ở của những văn bản bị lãng quên.</p>
 										<div class="d-flex align-items-center">
-											<div class="user-img"
-												style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_2.jpg)"></div>
+											<div class="user-img" style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_2.jpg)"></div>
 											<div class="pl-3">
 												<p class="name">Roger Scott</p>
-												<span class="position">Marketing Manager</span>
+												<span class="position">Giám đốc Marketing</span>
 											</div>
 										</div>
 									</div>
@@ -263,16 +262,16 @@ class Home extends BaseView
 							</div>
 							<div class="item">
 								<div class="testimony-wrap py-4">
-									<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
+									<div class="icon d-flex align-items-center justify-content-center">
+										<span class="fa fa-quote-left"></span>
+									</div>
 									<div class="text">
-										<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-											there live the blind texts.</p>
+										<p class="mb-4">Xa thật xa, sau những dãy núi, xa khỏi những vùng đất Vokalia và Consonantia, có một nơi ở của những văn bản bị lãng quên.</p>
 										<div class="d-flex align-items-center">
-											<div class="user-img"
-												style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_3.jpg)"></div>
+											<div class="user-img" style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_3.jpg)"></div>
 											<div class="pl-3">
 												<p class="name">Roger Scott</p>
-												<span class="position">Marketing Manager</span>
+												<span class="position">Giám đốc Marketing</span>
 											</div>
 										</div>
 									</div>
@@ -280,16 +279,16 @@ class Home extends BaseView
 							</div>
 							<div class="item">
 								<div class="testimony-wrap py-4">
-									<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
+									<div class="icon d-flex align-items-center justify-content-center">
+										<span class="fa fa-quote-left"></span>
+									</div>
 									<div class="text">
-										<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-											there live the blind texts.</p>
+										<p class="mb-4">Xa thật xa, sau những dãy núi, xa khỏi những vùng đất Vokalia và Consonantia, có một nơi ở của những văn bản bị lãng quên.</p>
 										<div class="d-flex align-items-center">
-											<div class="user-img"
-												style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_1.jpg)"></div>
+											<div class="user-img" style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_1.jpg)"></div>
 											<div class="pl-3">
 												<p class="name">Roger Scott</p>
-												<span class="position">Marketing Manager</span>
+												<span class="position">Giám đốc Marketing</span>
 											</div>
 										</div>
 									</div>
@@ -297,16 +296,16 @@ class Home extends BaseView
 							</div>
 							<div class="item">
 								<div class="testimony-wrap py-4">
-									<div class="icon d-flex align-items-center justify-content-center"><span class="fa fa-quote-left"></div>
+									<div class="icon d-flex align-items-center justify-content-center">
+										<span class="fa fa-quote-left"></span>
+									</div>
 									<div class="text">
-										<p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia,
-											there live the blind texts.</p>
+										<p class="mb-4">Xa thật xa, sau những dãy núi, xa khỏi những vùng đất Vokalia và Consonantia, có một nơi ở của những văn bản bị lãng quên.</p>
 										<div class="d-flex align-items-center">
-											<div class="user-img"
-												style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_2.jpg)"></div>
+											<div class="user-img" style="background-image: url(<?= APP_URL ?>/public/assets/client/images/person_2.jpg)"></div>
 											<div class="pl-3">
 												<p class="name">Roger Scott</p>
-												<span class="position">Marketing Manager</span>
+												<span class="position">Giám đốc Marketing</span>
 											</div>
 										</div>
 									</div>
@@ -315,6 +314,7 @@ class Home extends BaseView
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</section>
 
@@ -329,7 +329,7 @@ class Home extends BaseView
 				<div class="row d-flex">
 					<?php
 					foreach ($data['posts'] as $item):
-						?>
+					?>
 						<div class="col-lg-6 d-flex align-items-stretch ftco-animate">
 							<div class="blog-entry d-md-flex">
 								<a href="/Blog_single/<?= $item['id'] ?>" class="block-20 img"
@@ -348,7 +348,7 @@ class Home extends BaseView
 								</div>
 							</div>
 						</div>
-						<?php
+					<?php
 					endforeach;
 					?>
 				</div>
@@ -360,6 +360,6 @@ class Home extends BaseView
 				</div>
 			</div>
 		</section>
-		<?php
+<?php
 	}
 }

@@ -102,12 +102,15 @@ body {
   z-index: 10;
   /* Đặt z-index cao hơn để menu nổi lên trên */
 }
-.item_banks{
+
+.item_banks {
   border-right: 1px dashed black;
 }
-.item_banks:last-child{
+
+.item_banks:last-child {
   border-right: none;
 }
+
 .title_color {
   background-color: #a23f25;
   color: white;
@@ -12552,13 +12555,8 @@ h5,
   padding: 30px;
 }
 
-.intro.color-1 {
-  background: #ab4227;
-}
 
-.intro.color-2 {
-  background: #a23f25;
-}
+
 
 .intro .icon {
   margin-right: 20px;
@@ -12577,7 +12575,7 @@ h5,
   font-size: 18px;
   font-weight: 500;
   text-transform: uppercase;
-  color: #fff;
+  color: white;
 }
 
 .product {
@@ -14947,7 +14945,8 @@ textarea.form-control {
   border-radius: 50%;
   border: 10px solid #949090;
   overflow: hidden;
-  transition: transform ease-in-out 11s; /* Đồng bộ với thời gian trong JS */
+  transition: transform ease-in-out 11s;
+  /* Đồng bộ với thời gian trong JS */
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -15073,4 +15072,53 @@ textarea.form-control {
   position: absolute;
   top: 70%;
   right: 19%;
+}
+
+.ftco-intro .icon {
+  font-size: 50px;
+  /* Điều chỉnh kích thước icon */
+  margin-bottom: 15px;
+  /* Tạo khoảng cách giữa icon và text */
+  color: #333;
+  /* Màu sắc của icon */
+}
+
+.ftco-intro .text h2 {
+  font-size: 20px;
+  /* Điều chỉnh kích thước tiêu đề */
+  margin-bottom: 10px;
+}
+
+.ftco-intro .text p {
+  font-size: 16px;
+  /* Điều chỉnh kích thước chữ */
+  color: #fff;
+  /* Màu sắc chữ */
+  line-height: 1.6;
+  /* Dòng chữ rõ ràng hơn */
+}
+
+.ftco-intro .intro {
+  padding: 20px;
+ 
+  /* Làm góc bo tròn */
+  flex: 1;
+  /* Đảm bảo các phần tử chia đều không gian */
+  margin: 10px;
+  /* Khoảng cách giữa các phần */
+  text-align: center;
+  /* Căn giữa nội dung */
+}
+
+.ftco-intro .row.no-gutters {
+  display: flex;
+  /* Sắp xếp các phần tử theo hàng */
+  justify-content: space-between;
+  /* Tạo khoảng cách đều giữa các phần tử */
+  align-items: center;
+  /* Căn giữa theo trục dọc */
+  flex-wrap: nowrap;
+  /* Ngăn các phần tử xuống dòng */
+  gap: 20px;
+  /* Khoảng cách giữa các phần tử */
 }

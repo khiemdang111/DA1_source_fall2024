@@ -50,8 +50,8 @@ class Header extends BaseView
 						<div class="row">
 							<div class="col-md-6 d-flex align-items-center">
 								<p class="mb-0 phone pl-md-2">
-									<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span> +00 1234 567</a>
-									<a href="#"><span class="fa fa-paper-plane mr-1"></span> youremail@email.com</a>
+									<a href="#" class="mr-2"><span class="fa fa-phone mr-1"></span>070 472 5597</a>
+									<a href="#"><span class="fa fa-paper-plane mr-1">  </span>winecantho@gmail.com</a>
 								</p>
 							</div>
 							<div class="col-md-6 d-flex justify-content-md-end">
@@ -72,7 +72,7 @@ class Header extends BaseView
 									if ($is_login):
 									?>
 										<div class="dropdown_hmenu">
-											<a class="a_dropdown_hmenu" href="#">Xin Chào,<?= $_SESSION['user']['name'] ?> ▼</a>
+											<a class="a_dropdown_hmenu" href="#">Xin Chào , <?= $_SESSION['user']['name'] ?> ▼</a>
 											<div class="dropdown-content">
 												<a href="/users/<?= $_SESSION['user']['id'] ?>">Thông tin tài khoản</a>
 												<a href="#">Đổi mật khẩu</a>
