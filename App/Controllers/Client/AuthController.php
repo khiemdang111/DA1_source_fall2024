@@ -342,7 +342,8 @@ class AuthController
     public static function walletUser()
     {
         $users = new User();
-        $user = $_SESSION['user'];
+        $order = new Order();
+        $user = $_SESSION['user'];  
         $data = $users->getOneUserByUsername($user['username']);
         Header::render();
         Notification::render();

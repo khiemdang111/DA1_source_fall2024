@@ -87,7 +87,7 @@ class delivering extends BaseView
                       </button>
                       <div class="dropdown-menu">
                         <a class="dropdown-item" href="/admin/users/history/detail/<?= $item['id'] ?>"><i class='bx bxs-cart'></i></i>Chi tiết đơn hàng</a>
-                        <form class="w-100" action="/admin/delete/products/<?= $item['id'] ?>" method="post"
+                        <form class="w-100" action="/admin/cancel/order/<?= $item['id'] ?>" method="post"
                           style="display: inline-block;">
                           <input type="hidden" name="method" value="POST">
                           <button class="dropdown-item delete-button button-del">

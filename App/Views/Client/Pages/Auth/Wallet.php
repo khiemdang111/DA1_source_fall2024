@@ -16,10 +16,20 @@ class Wallet extends BaseView
         <div class="col-xl-5 col-lg-6 col-md-8">
           <div class="card shadow-lg p-4 border-0 rounded-4">
             <div class="text-center mb-4">
-              <h2 class="fw-bold">Số dư trong ví của bạn là: <strong><?= number_format($data['balance'], 0, '', '.') ?></strong></h2>
-            </div>
+              <h2 class="fw-bold">Số dư trong ví của bạn là:
+                <?php if ($data != null): ?>
+                  <strong><?= number_format($data['balance'], 0, '', '.') ?></strong>
+                </h2>
+              <?php
+                else:
+                  ?>
+                <strong>0</strong>
+              <?php
+                endif;
+                ?>
           </div>
         </div>
+      </div>
       </div>
     <?php else: ?>
       <div class="container d-flex justify-content-center align-items-center min-vh-100">
@@ -38,7 +48,7 @@ class Wallet extends BaseView
           </div>
         </div>
       </div>
-    <?php
+      <?php
     endif;
     // unset($_SESSION['check_password']);
   ?>

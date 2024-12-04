@@ -199,40 +199,22 @@ class Order extends BaseModel
         }
     }
 
-    public function getAllOrderbyUser_idBY($id)
-    {
-        $result = [];
-        try {
-            // Câu SQL với tham số ràng buộc
-            $sql = "SELECT * FROM orders WHERE user_id = ? AND ";
-    
-            // Kết nối cơ sở dữ liệu
-            $conn = $this->_conn->MySQLi();
-           
-    
-            // Chuẩn bị câu lệnh
-            $stmt = $conn->prepare($sql);
-           
-    
-            // Gắn tham số
-            $stmt->bind_param('i', $id);
-    
-            // Thực thi câu lệnh
-           
-    
-            // Lấy kết quả
-            $result = $stmt->get_result();
-            $orders = $result->fetch_all(MYSQLI_ASSOC);
-    
-            // Đóng câu lệnh
-            $stmt->close();
-    
-            return $orders; // Trả về danh sách đơn hàng
-        } catch (\Throwable $th) {
-            // Ghi log lỗi
-            error_log('Lỗi khi lấy danh sách đơn hàng: ' . $th->getMessage());
-            return $result; // Trả về mảng rỗng nếu có lỗi
-        }
+    public function updateTransportByUserId(int $id)
+{
+    $result = [];
+    try {
+        $sql = "UPDATE $this->table SET transport = 2 WHERE user_id = $id AND paymentMethod = 'VNPAY' AND transport = 0";
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+
+        $stmt->bind_param('i', $id); // 's' vì $id là string
+        $stmt->execute();
+
+    } catch (\Throwable $th) {
+        error_log('Lỗi khi cập nhật dữ liệu: ' . $th->getMessage());
+        return ['success' => false, 'message' => 'An error occurred'];
     }
+}
+
     
 }

@@ -22,7 +22,7 @@ class User extends BaseModel
             error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
             return $result;
         }
-    
+
     }
     public function getOneUser($id)
     {
@@ -78,8 +78,8 @@ class User extends BaseModel
             error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
             return $result;
         }
-    }     
-    
+    }
+
     public function getOneUserByInfo($column, $info)
     {
         $this->id = $column;
@@ -104,18 +104,18 @@ class User extends BaseModel
             $sql = "UPDATE users SET password = ? WHERE username = ?";
             $conn = $this->_conn->MySQLi(); // Giả sử bạn đã khởi tạo kết nối MySQLi trong lớp
             $stmt = $conn->prepare($sql);
-    
+
             if (!$stmt) {
                 throw new \Exception("Không thể chuẩn bị câu lệnh: " . $conn->error);
             }
-    
+
             $stmt->bind_param('ss', $hashedPassword, $username);
             $result = $stmt->execute();
-    
+
             if (!$result) {
                 throw new \Exception("Lỗi khi thực thi câu lệnh: " . $stmt->error);
             }
-    
+
             return true;
         } catch (\Throwable $th) {
             error_log("Lỗi khi cập nhật mật khẩu: " . $th->getMessage());
@@ -145,7 +145,7 @@ class User extends BaseModel
         $result = $this->_conn->MySQLi()->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    
+
     public function getUserId(int $id)
     {
         $result = [];
@@ -162,8 +162,8 @@ class User extends BaseModel
             return $result;
         }
     }
-  
-    public function updateUserPoints(int $id , $new_points)
+
+    public function updateUserPoints(int $id, $new_points)
     {
         $result = [];
         try {
@@ -171,7 +171,7 @@ class User extends BaseModel
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
 
-            $stmt->bind_param('ii', $new_points , $id);
+            $stmt->bind_param('ii', $new_points, $id);
             $stmt->execute();
             return $stmt->get_result()->fetch_assoc();
         } catch (\Throwable $th) {
@@ -179,4 +179,42 @@ class User extends BaseModel
             return $result;
         }
     }
+    public function getOneUserByWallet(string $id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT orders.total, users.id AS user_id FROM `orders` INNER JOIN users on orders.user_id =  users.id WHERE orders.user_id = ? AND orders.paymentMethod = 'VNPAY' AND orders.transport = 0";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+    public function addMoneyWallet(int $id, int $balance)
+    {
+        try {
+            $sql = "UPDATE users SET balance = balance + ? WHERE id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('ii', $balance, $id);
+            $stmt->execute();
+
+            // Kiểm tra số dòng bị ảnh hưởng
+            if ($stmt->affected_rows > 0) {
+                return ['success' => true, 'message' => 'Balance updated successfully'];
+            } else {
+                return ['success' => false, 'message' => 'No rows updated'];
+            }
+        } catch (\Throwable $th) {
+            error_log('Error updating balance: ' . $th->getMessage());
+            return ['success' => false, 'message' => 'An error occurred'];
+        }
+    }
+
 }

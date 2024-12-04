@@ -71,15 +71,15 @@ class OrderController
     }
 
 
-   
+
     public static function update_user_points($user_id, $earned_points)
     {
         $user = new User();
         $data_user = $user->getUserId($user_id); // Lấy thông tin user từ DB
-    
-      
+
+
         $new_points = $data_user['accumulate_points'] + $earned_points; // Cộng điểm mới
-    
+
         try {
             $result = $user->updateUserPoints($user_id, $new_points); // Cập nhật điểm trong DB
             if ($result) {
@@ -89,8 +89,32 @@ class OrderController
         } catch (\Exception $e) {
             NotificationHelper::error('points', 'Không thể cập nhật điểm tích lũy: ' . $e->getMessage());
         }
-    
+
         return false;
     }
-    
+    public static function cencelOrder(int $id)
+    {
+        $order = new Order();
+        $is_exist = $order->getOneorder($id);
+        if ($is_exist && $is_exist['id'] === $id) {
+            $data = [
+                'transport' => 0,
+            ];
+            $result = $order->updateorder($id, $data);
+        }
+        $users = new User();
+        $user = $_SESSION['user'];
+        $get_money_user = $users->getOneUserByWallet($user['id']);
+        $user_id = $get_money_user['user_id'];
+        $balance = $get_money_user['total'];
+        $add_money_wallet = $users->addMoneyWallet($user_id, $balance);
+        $update_tranpost = $order->updateTransportByUserId($user_id);
+        if ($result) {
+            NotificationHelper::success('delete_order', 'Hủy đơn hàng thành công!');
+            header('Location: /admin/order/delivering');
+        } else {
+            NotificationHelper::error('delete_order', 'Hủy đơn hàng thất bại!');
+            header("Location: /admin/order/delivering");
+        }
+    }
 }
