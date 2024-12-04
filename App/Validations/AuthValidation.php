@@ -216,4 +216,16 @@ class AuthValidation
 
         return $nameImage;
     }
+    public static function loginWallet(): bool
+    {
+        $is_valid = true;
+
+        // Tên đăng nhập
+        if (!isset($_POST['password_user']) || $_POST['password_user'] === '') {
+            NotificationHelper::error('password_user', 'Vui lòng nhập mật khẩu');
+            $is_valid = false;
+        }
+
+        return $is_valid;
+    }
 }

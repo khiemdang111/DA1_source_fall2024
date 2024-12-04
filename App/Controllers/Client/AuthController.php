@@ -24,6 +24,8 @@ use App\Views\Client\Pages\Auth\updatePassword;
 use App\Views\Client\Pages\Order\detail;
 use App\Views\Client\Pages\Order\transport;
 use App\Views\Client\Pages\Order\canceled;
+use App\Views\Client\Pages\Auth\Wallet;
+
 class AuthController
 {
     public static function login()
@@ -323,8 +325,9 @@ class AuthController
 
     }
 
-    public static function lucky() {
-        
+    public static function lucky()
+    {
+
         $discount_codes = new Lucky();
         $dataLucky = $discount_codes->getAll();
         $dataLucky = [
@@ -334,5 +337,40 @@ class AuthController
         Edit::render($dataLucky);
 
     }
+    public static function walletUser()
+    {
+        $users = new User();
+        $user = $_SESSION['user'];
+        $data = $users->getOneUserByUsername($user['username']);
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        Wallet::render($data);
+        Footer::render();
+    }
 
+    public static function checkUser()
+    {
+        $is_valid = AuthValidation::loginWallet();
+        if (!$is_valid) {
+            NotificationHelper::error('login_valid', 'Vui lòng nhập mật khẩu');
+            header('Location: /wallet');
+            exit();
+        }
+        $user_data = $_SESSION['user'];
+        $username = $user_data['username'];
+        $data = [
+            'password' => $_POST['password_user'],
+            'username' => $username,
+        ];
+        $user = new User();
+        $is_exist = $user->getOneUserByUsername($data['username']);
+        if (password_verify($data['password'], $is_exist['password'])) {
+            $_SESSION['check_password'] = true;
+            header('Location: /wallet');
+        } else {
+            NotificationHelper::error('login_valid', 'Bạn đã nhập sai mật khẩu');
+            header('Location: /wallet');
+        }
+    }
 }

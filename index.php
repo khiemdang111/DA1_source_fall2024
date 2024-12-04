@@ -146,7 +146,8 @@ Route::post('/admin/delete/users/{id}', 'App\Controllers\Admin\UserController@de
 Route::get('/admin/users/search', 'App\Controllers\Admin\UserController@searchUsers');
 Route::get('/admin/users/history/{id}', 'App\Controllers\Admin\UserController@history');
 Route::get('/admin/users/history/detail/{id}', 'App\Controllers\Admin\UserController@historyDetail');
-
+Route::get('/wallet', 'App\Controllers\Client\AuthController@walletUser');
+Route::post('/checkuser/wallet', 'App\Controllers\Client\AuthController@checkUser');
 
 
 // bank
