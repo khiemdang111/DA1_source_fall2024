@@ -76,7 +76,7 @@ class Footer extends BaseView
         <!-- Liên kết đến Colorlib không thể bị gỡ bỏ. Mẫu này được cấp phép theo CC BY 3.0. -->
         Bản quyền &copy;<script>
           document.write(new Date().getFullYear());
-        </script> Tất cả các quyền được bảo lưu | Mẫu này được tạo với <i class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+        </script> Tất cả các quyền được bảo lưu | Mẫu này được tạo với <i class="fa fa-heart color-danger" aria-hidden="true"></i> bởi <a href="http://127.0.0.1:8080/" target="_blank">FC ĐUM ĐÚM</a>
         <!-- Liên kết đến Colorlib không thể bị gỡ bỏ. Mẫu này được cấp phép theo CC BY 3.0. -->
       </p>
 

@@ -34,7 +34,7 @@ class Login extends BaseView
                                     <div class="mb-3 ">
                                         <label for="username" class="form-label">Tên đăng nhập </label>
                                         <input type="text" class="form-control" id="username" name="username" value=""
-                                            placeholder="Enter your email" autofocus />
+                                            placeholder=" Nhập tên tài khoản ....." autofocus />
                                     </div>
                                     <div class="mb-3 form-password-toggle">
                                         <label class="form-label" for="password">Mật khẩu</label>

@@ -78,7 +78,7 @@ class Login extends BaseView
                                     <div class="mb-6">
                                         <label for="email" class="form-label">Email </label>
                                         <input type="text" class="form-control" id="email" name="email" value=""
-                                            placeholder="Enter your email" autofocus />
+                                            placeholder="Vui lòng nhập email " autofocus />
 
                                     </div>
                                     <div class="mb-6 form-password-toggle">
