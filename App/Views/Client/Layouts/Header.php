@@ -200,7 +200,7 @@ class Header extends BaseView
 						<div class="collapse navbar-collapse justify-content-center" id="ftco-nav">
 							<ul class="navbar-nav ">
 								<li class="nav-item active"><a href="/" class="nav-link">Trang chủ</a></li>
-								<li class="nav-item"><a href="about.html" class="nav-link">Giới Thiệu</a></li>
+								<li class="nav-item"><a href="/aboutl" class="nav-link">Giới Thiệu</a></li>
 								<li class="nav-item"><a href="/products" class="nav-link">Sản Phẩm</a></li>
 								<li class="nav-item"><a href="/post" class="nav-link">Tin Tức</a></li>
 								<li class="nav-item"><a href="/contact" class="nav-link">Liên hệ</a></li>

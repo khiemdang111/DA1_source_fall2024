@@ -190,6 +190,9 @@ Route::get('/contact', 'App\Controllers\Client\PostController@Contact');
 Route::post('/contact', 'App\Controllers\Client\PostController@PostContact');
 
 
+// blog 
+Route::get('/aboutl', 'App\Controllers\Client\AboutlController@index');
+ // Trỏ tới Blog.php
 
 
 // *** Recycle Bin ***

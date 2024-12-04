@@ -62,7 +62,7 @@ class Footer extends BaseView
               <h2 class="ftco-heading-2">Có câu hỏi?</h2>
               <div class="block-23 mb-3">
                 <ul>
-                  <li><span class="icon fa fa-map-marker"></span><span class="text">203 Đường Giả, Thành phố Núi, San Francisco, California, USA</span></li>
+                  <li><span class="icon fa fa-map-marker"></span><span class="text"> Cao đẳng FPT Cần Thơ </span></li>
                   <li><a href="#"><span class="icon fa fa-phone"></span><span class="text">070 472 5597</span></a></li>
                   <li><a href="#"><span class="icon fa fa-paper-plane pr-4"></span><span class="text">winecantho@gmail.com.com</span></a></li>
                 </ul>
