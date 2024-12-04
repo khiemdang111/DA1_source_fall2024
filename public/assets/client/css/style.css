@@ -15100,7 +15100,7 @@ textarea.form-control {
 
 .ftco-intro .intro {
   padding: 20px;
- 
+
   /* Làm góc bo tròn */
   flex: 1;
   /* Đảm bảo các phần tử chia đều không gian */
@@ -15122,3 +15122,4 @@ textarea.form-control {
   gap: 20px;
   /* Khoảng cách giữa các phần tử */
 }
+

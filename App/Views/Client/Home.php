@@ -198,19 +198,17 @@ class Home extends BaseView
 						<?php
 						endforeach;
 						?>
-				</div>
-			</div>
-		<?php
+					<?php
 					endif;
-		?>
-		</div>
-		<div class="row justify-content-center">
-			<div class="col-md-4">
-				<a href="/products" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
-						class="fa fa-long-arrow-right"></span></a>
-			</div>
-		</div>
-		</div>
+					?>
+				</div>
+				<div class="row justify-content-center">
+					<div class="col-md-4">
+						<a href="/products" class="btn btn-primary d-block">Xem tất cả sản phẩm <span
+								class="fa fa-long-arrow-right"></span></a>
+					</div>
+				</div>
+
 		</section>
 
 		<section class="ftco-section testimony-section img"
@@ -360,6 +358,7 @@ class Home extends BaseView
 				</div>
 			</div>
 		</section>
+
 <?php
 	}
 }

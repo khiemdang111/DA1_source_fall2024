@@ -11,7 +11,7 @@ class index extends BaseView
 
 ?>
 
-<section
+        <section
             class="hero-wrap hero-wrap-2"
             style="background-image: url('/public/uploads/image/bg_2.jpg')"
             data-stellar-background-ratio="0.5">
@@ -22,7 +22,7 @@ class index extends BaseView
                     <div class="col-md-9 ftco-animate mb-5 text-center">
                         <p class="breadcrumbs mb-0">
                             <span class="mr-2"><a href="/">Tranng chủ <i class="fa fa-chevron-right"></i></a></span>
-                            <span>Giới Thiệu  <i class="fa fa-chevron-right"></i></span>
+                            <span>Giới Thiệu <i class="fa fa-chevron-right"></i></span>
                         </p>
                         <h2 class="mb-0 bread"> Giới Thiệu </h2>
                     </div>
