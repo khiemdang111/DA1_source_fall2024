@@ -148,7 +148,8 @@ Route::post('/admin/delete/categories/{id}', 'App\Controllers\Admin\CategoryCont
 Route::get('/admin/categories/search', 'App\Controllers\Admin\CategoryController@searchCategory');
 
 
-
+// Vourcher
+Route::get('/admin/vourcher', 'App\Controllers\Admin\VourcherController@index');
 
 
 
