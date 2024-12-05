@@ -22,6 +22,10 @@ class Lucky extends BaseModel
             //     ':prize' => $unit,
             // ]);
             // return true;
+            if ($name == "Chúc bạn may mắn lần sau") {
+                header("Location: /users/$userId");
+                exit();
+            }
             header("Content-Type: application/json; charset=UTF-8");
             if (empty($unit)) {
                 $unit = 0;  // Hoặc bạn có thể thay bằng NULL nếu cột cho phép giá trị NULL
@@ -50,13 +54,13 @@ class Lucky extends BaseModel
 
 
     public function updateTurns($userId, $newTurns)
-{
-    $sql = "UPDATE users SET turns = ? WHERE id = ?";
-    $conn = $this->_conn->MySQLi();
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('ii', $newTurns, $userId); 
-    return $stmt->execute();
-}
+    {
+        $sql = "UPDATE users SET turns = ? WHERE id = ?";
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ii', $newTurns, $userId);
+        return $stmt->execute();
+    }
 
 
 

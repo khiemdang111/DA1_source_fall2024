@@ -6,7 +6,7 @@ use App\Helpers\NotificationHelper;
 
 class Category_post extends BaseModel
 {
-    protected $table = 'categories_post';
+    protected $table = 'post_categories';
     protected $id = 'id';
 
 
