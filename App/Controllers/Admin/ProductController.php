@@ -27,7 +27,7 @@ class ProductController
     // hiển thị danh sách
     public static function index()
     {
-
+        unset($_SESSION['id']);
         AuthHelper::checkPermission([0, 4]);
         $product = new Product();
         $data = $product->getAllProductByPagina();

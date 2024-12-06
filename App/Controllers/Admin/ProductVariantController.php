@@ -124,7 +124,6 @@ class ProductVariantController
     public function settingVariant()
     {
         $id = $_SESSION['id'];
-        unset($_SESSION['id']);
         $products = new ProductVariant();
         $data = $products->SettingVariantByProductId($id);
         Header::render();
