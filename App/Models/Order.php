@@ -11,7 +11,7 @@ class Order extends BaseModel
     {
         return $this->getAll();
     }
-    public function getAllOrder_ByStatus($user_id, $status)
+    public function getAllOrder_ByStatus($user_id, $transport)
     {
         $result = [];
         try {
@@ -20,7 +20,7 @@ class Order extends BaseModel
                     WHERE orders.user_id = ? AND orders.transport = ?";
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ii', $transport, $user_id);
+            $stmt->bind_param('ii', $user_id, $transport);
             $stmt->execute();
             return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {
@@ -66,7 +66,7 @@ class Order extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT orders.id,orders.total,orders.orderStatus,orders.date,orders.paymentMethod,orders.user_id FROM orders WHERE orders.user_id = ?";
+            $sql = "SELECT orders.id,orders.total,orders.orderStatus,orders.date,orders.paymentMethod,orders.transport,orders.user_id FROM orders WHERE orders.user_id = ?";
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
             $stmt->bind_param('i', $id);
@@ -216,24 +216,6 @@ class Order extends BaseModel
         }
     }
 
-    public function updateTransportByUserId(int $id)
-{
-    $result = [];
-    try {
-        $sql = "UPDATE $this->table SET transport = 2 WHERE user_id = $id AND paymentMethod = 'VNPAY' AND transport = 0";
-        $conn = $this->_conn->MySQLi();
-        $stmt = $conn->prepare($sql);
-
-        $stmt->bind_param('i', $id); // 's' vì $id là string
-        $stmt->execute();
-
-    } catch (\Throwable $th) {
-        error_log('Lỗi khi cập nhật dữ liệu: ' . $th->getMessage());
-        return ['success' => false, 'message' => 'An error occurred'];
-    }
-}
-
-    
     public function getAllOrderbyUser_idBY($id)
     {
         $result = [];

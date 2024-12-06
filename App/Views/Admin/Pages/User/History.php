@@ -45,9 +45,10 @@ class History extends BaseView
                 <div class="card-header">
                     <select class="form-select select_status" id="select">
                         <option selected value="all">Tất cả đơn hàng</option>
-                        <option value="1">Chưa xử lí</option>
-                        <option value="2">Đang giao</option>
-                        <option value="3">Giao thành công</option>
+                        <option value="1">Đang giao</option>
+                        <option value="2">Giao thành công</option>
+                        <option value="3">Hoàn tiền thành công</option>
+                        <option value="4">Đã hủy</option>
                     </select>
                 </div>
                 <div class="table-responsive text-nowrap">
@@ -87,7 +88,17 @@ class History extends BaseView
                                             <?= $item['date'] ?>
                                         </td>
                                         <td>
-                                            <?= ($item['orderStatus'] === "0") ? '  Chưa thanh toán' : 'Đã thanh toán' ?>
+                                           <?php
+                                           if($item['transport'] === 1){
+                                            echo 'Đang giao';
+                                           }else if($item['transport'] === 2){
+                                             echo 'Giao thành công';
+                                           }else if($item['transport'] === 3){
+                                             echo 'Hoàn tiền thành công';
+                                           }else{
+                                             echo 'Đã hủy';
+                                        }
+                                           ?>
                                         </td>
                                         <td>
                                             <div class="dropdown">
@@ -133,13 +144,13 @@ class History extends BaseView
             $(document).ready(function () {
                 $('#select').change(function () {
                      
-                    var selectedValue = parseInt($(this).val())
-                   // console.log(typeof selectedValue);
+                    var selectedValue = $(this).val()
+                 
                     
                     if (selectedValue) {
                         $.ajax({
                             url: '/handleOrderStatus', 
-                            method: 'POST', // Sử dụng POST thay vì GET
+                            method: 'POST', 
                             data: { status: selectedValue, method: 'POST', }, // Gửi trạng thái qua body của request
                             success: function (response) {
                                 console.log(response);

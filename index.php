@@ -39,7 +39,7 @@ Route::get('/cancel', 'App\Controllers\Client\PaymentController@cancelOrder');
 Route::post('/cancel', 'App\Controllers\Client\PaymentController@cancelOrder');
 
 
-Route::get('/handleOrderStatus', 'App\Controllers\Admin\UserController@historyOrderStatus');
+Route::post('/handleOrderStatus', 'App\Controllers\Admin\UserController@historyOrderStatus');
 
 
 

@@ -301,20 +301,23 @@ class UserController
     }
     public static function historyOrderStatus()
     {
-       // $status = isset($_POST['status']) ? $_POST['status'] : 'all';
-        $transport = 1;
-        $user_id = 8;
-    
-        $detail = new Order();
-        $data = $detail->getAllOrder_ByStatus($transport, $user_id); 
-        var_dump($data);
-        die;
+     $status = isset($_POST['status']) ? $_POST['status'] : 'all';
+        $user_id = $_SESSION['user_id'];
+        $transport = $status; 
+        $order = new Order();
+        $data = $order->getAllOrder_ByStatus($user_id, $transport);
+      
         if ($status === 'all') {
-            $data = $detail->getAll_($int, $user_id); // Lấy tất cả đơn hàng
+            $data = $order->getAllOrderbyUser_id_admin($_SESSION['user_id']);
         } else {
-            $data = $detail->getAll_($int, $user_id); // Lấy tất cả đơn hàng
+            $data = $order->getAllOrder_ByStatus($user_id, $transport);
         }
-
+        $statusMap = [
+            1 => 'Đang giao',
+            2 => 'Giao thành công',
+            3 => 'Hoàn tiền thành công',
+            'default' => 'Đã hủy',
+        ];
         // Kiểm tra dữ liệu trước khi sử dụng foreach
         if (is_array($data) || is_object($data)) {
             foreach ($data as $item) {
@@ -323,7 +326,7 @@ class UserController
                 echo '<td>' . number_format($item['total']) . ' VND</td>';
                 echo '<td>' . ($item['paymentMethod'] === "COD" ? 'Thanh toán khi nhận hàng' : 'VNPAY') . '</td>';
                 echo '<td>' . $item['date'] . '</td>';
-                echo '<td>' . ($item['orderStatus'] === "0" ? 'Chưa thanh toán' : 'Đã thanh toán') . '</td>';
+                echo '<td>' . $statusMap[$item['transport']] ?? $statusMap['default'] . '</td>';
                 echo '<td>
                          <div class="dropdown">
                              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
