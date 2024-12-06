@@ -90,9 +90,9 @@ class ShippingController
     {
         $cart_data = CartController::getorder();
         $order = [
-            'products' => []  // Khởi tạo mảng sản phẩm trống
+            'products' => []  
         ];
-        // Lặp qua giỏ hàng và xây dựng mảng sản phẩm
+        
         foreach ($cart_data as $cart) {
             if ($cart['data']) {
                 $weight = isset($cart['data']['weight']) ? $cart['data']['weight'] : 0.6;
@@ -131,10 +131,7 @@ class ShippingController
             'value' => $total_vulue['total'],
             'transport' => 'road',
         ];
-        // echo '<pre>';
-        // var_dump($order);
-        // die;
-        // Gửi yêu cầu API
+        
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => 'https://services.giaohangtietkiem.vn/services/shipment/order',
@@ -193,7 +190,7 @@ class ShippingController
              'district' => $district,
             
         ];
-        // Gửi yêu cầu tới API GHTK
+        
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -218,9 +215,9 @@ class ShippingController
             $shipMoney = preg_replace('/[^0-9]/', '', $shipMoneyText);
             $shipMoneyFormatted = number_format($shipMoney, 0, ',', '.');
             header('Content-Type: application/json');
-          
             $total_GHTK = floatval($result['fee']['fee']) + floatval($total);
-            $_SESSION['ship_GHTK'] = $total_GHTK;
+            $_SESSION['ShippingFee'] = $shipMoneyFormatted;
+            $_SESSION['ship'] = $total_GHTK;
             $number_format = number_format($total_GHTK, 0, ',', '.');
             $response = [
                 'fee' => $shipMoneyFormatted,
@@ -251,7 +248,6 @@ class ShippingController
             "width" => 15,
             "height" => 200,
         ];
-
         $headers = [
             "Content-Type: application/json",
             "Token: $apiToken"
@@ -276,9 +272,8 @@ class ShippingController
             $shipMoneyFormatted = number_format($shipMoney, 0, ',', '.');
             header('Content-Type: application/json');
             $total_GHN = floatval($result['data']["total"]) + floatval($total);
-            $_SESSION['ship_GHN'] = $total_GHN;
-            // var_dump($_SESSION['ship_GHN']);
-            // die();
+            $_SESSION['ShippingFee'] = $shipMoneyFormatted;
+            $_SESSION['ship'] = $total_GHN;
             $number_format = number_format($total_GHN, 0, ',', '.');
             $response = [
                 'fee' => $shipMoneyFormatted,

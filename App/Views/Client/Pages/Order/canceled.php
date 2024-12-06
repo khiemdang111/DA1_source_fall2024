@@ -54,7 +54,6 @@ class canceled extends BaseView
                         <tr>
                           <td><?= $item['id'] ?></td>
                           <td><?= number_format($item['total']) ?></td>
-
                           <td>
                             <?php
                             if ($item['paymentMethod'] === "COD"):

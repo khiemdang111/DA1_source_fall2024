@@ -8,11 +8,10 @@ class History extends BaseView
 {
     public static function render($data = null)
     {
-
+         
         ?>
-        <!-- / Navbar -->
+       
 
-        <!-- Content wrapper -->
         <div class="container-xxl flex-grow-1 container-p-y">
             <div class="card mb-3">
                 <h5 class="card-header">Danh sách thanh toán</h5>
@@ -30,6 +29,7 @@ class History extends BaseView
                     </nav>
                 </div>
             </div>
+
             <!-- Basic Bootstrap Table -->
             <div class="card">
                 <div class="card-header">
@@ -40,8 +40,15 @@ class History extends BaseView
                                 value="<?= (isset($_SESSION['keywords']) ? $_SESSION['keywords'] : "") ?>" aria-label="Tìm kiếm"
                                 aria-describedby="basic-addon-search31" />
                         </div>
-
                     </form>
+                </div>
+                <div class="card-header">
+                    <select class="form-select select_status" id="select">
+                        <option selected value="all">Tất cả đơn hàng</option>
+                        <option value="1">Chưa xử lí</option>
+                        <option value="2">Đang giao</option>
+                        <option value="3">Giao thành công</option>
+                    </select>
                 </div>
                 <div class="table-responsive text-nowrap">
                     <?php
@@ -53,12 +60,13 @@ class History extends BaseView
                                     <th>Mã đơn hàng </th>
                                     <th>Số tiền thanh toán</th>
                                     <th>Phương thức thanh toán</th>
+                                    <th>Ngày Mua</th>
                                     <th>Trạng thái</th>
                                     <th></th>
 
                                 </tr>
                             </thead>
-                            <tbody class="table-border-bottom-0">
+                            <tbody class="table-border-bottom-0" id="order-list">
                                 <?php
 
                                 foreach ($data as $item):
@@ -73,10 +81,13 @@ class History extends BaseView
                                             <?= number_format($item['total']) ?> VND
                                         </td>
                                         <td>
-                                        <?= ($item['paymentMethod'] === "COD") ? ' Thanh toán khi nhận hàng ' : ' VNPAY' ?>
+                                            <?= ($item['paymentMethod'] === "COD") ? ' Thanh toán khi nhận hàng ' : ' VNPAY' ?>
                                         </td>
                                         <td>
-                                        <?= ($item['orderStatus'] === "0") ? '  Chưa thanh toán' : 'Đã thanh toán' ?>
+                                            <?= $item['date'] ?>
+                                        </td>
+                                        <td>
+                                            <?= ($item['orderStatus'] === "0") ? '  Chưa thanh toán' : 'Đã thanh toán' ?>
                                         </td>
                                         <td>
                                             <div class="dropdown">
@@ -86,7 +97,8 @@ class History extends BaseView
                                                 </button>
                                                 <div class="dropdown">
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="/admin/users/history/detail/<?= $item['id'] ?>"><i
+                                                        <a class="dropdown-item"
+                                                            href="/admin/users/history/detail/<?= $item['id'] ?>"><i
                                                                 class='bx bxs-cart'></i></i> Chi tiết Thanh toán</a>
                                                     </div>
                                                 </div>
@@ -115,6 +127,39 @@ class History extends BaseView
             </div>
             <!--/ Basic Bootstrap Table -->
         </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#select').change(function () {
+                     
+                    var selectedValue = parseInt($(this).val())
+                   // console.log(typeof selectedValue);
+                    
+                    if (selectedValue) {
+                        $.ajax({
+                            url: '/handleOrderStatus', 
+                            method: 'POST', // Sử dụng POST thay vì GET
+                            data: { status: selectedValue, method: 'POST', }, // Gửi trạng thái qua body của request
+                            success: function (response) {
+                                console.log(response);
+                                
+                                // Render dữ liệu trả về vào phần danh sách
+                                $('#order-list').html(response);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('Error:', xhr.responseText);
+                                alert('Có lỗi xảy ra khi lọc trạng thái đơn hàng!');
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+
+
+
+
         <?php
     }
 }

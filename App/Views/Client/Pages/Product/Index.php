@@ -220,7 +220,6 @@ class Index extends BaseView
                 } else {
                     newUrl.searchParams.set(filter, value);
                 }
-
                 window.location.href = newUrl.toString();
             }
 

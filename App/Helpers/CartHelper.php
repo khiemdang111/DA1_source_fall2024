@@ -33,13 +33,9 @@ class CartHelper
                     $price = 0;
                     $total += $money;
                 }
-                if (isset($_SESSION['unit'])) { 
-                    $unit = floatval($total) - floatval($_SESSION['unit']);
-                } else {
-                    $unit =  $total;
-                }
+
                 $data_total = [
-                    'total' => $unit,
+                    'total' => $_SESSION['ship'],
                 ];
             }
         }
@@ -60,10 +56,16 @@ class CartHelper
         } else {
             $orderStatus = 1;
         }
+        if (isset($_SESSION['cancel'])) {
+            $transport = 4;
+        } else {
+            $transport = 1;
+        }
         $total = self::tatol($cart_data);
         $date = date('Y-m-d');
         $oders = [
             'total' => $total['total'],
+            'shippingFee' => $_SESSION['ShippingFee'],
             'orderStatus' => $orderStatus,
             'name' => $_SESSION['information']['name'],
             'phone' => $_SESSION['information']['phone'],
@@ -72,6 +74,7 @@ class CartHelper
             'ward' => $_SESSION['information']['ward'],
             'address' => $_SESSION['information']['address'],
             'date' => $date,
+            'transport' => $transport,
             'PaymentMethod' => $_SESSION['information']['PaymentMethod'],
             'user_id' => $user_id,
         ];
@@ -83,10 +86,8 @@ class CartHelper
     {
         $order_id = self::getOrder_id($cart_data);
         $_SESSION['order_id'] = $order_id;
-
         foreach ($cart_data as $cart) {
             if ($cart['data']) {
-
                 // $price = self::tatol($cart_data);
                 if ($cart['data']['discount_price'] > 0) {
                     $money = $cart['quantity'] * $cart['data']['discount_price'];
@@ -104,35 +105,36 @@ class CartHelper
                     'totalPrice' => $money,
                     'product_id' => $cart['data']['id'],
                     'order_id' => $order_id,
-
                 ];
                 $oder = new Order_detail();
                 $result = $oder->createorderDetail($order_detail);
             }
         }
-        $mail = new MailController();
-        $form = self::form_Html();
-        $mail->index($form);
-        if (isset($_POST['delivery'])) {
-            $delivery = $_POST['delivery']; 
-            if ($delivery == 'conomy') {
-                $GHTK = new ShippingController();
-                $GHTK->createOrderGHTK();
-            } elseif ($delivery == 'fast') {
-                $GHTK = new ShippingController();
-                $GHTK->createOrderGHN();
+        if (!isset($_SESSION['cancel'])) {
+            $mail = new MailController();
+            $form = self::form_Html();
+            $mail->index($form);
+            if (isset($_POST['delivery'])) {
+                $delivery = $_POST['delivery'];
+                if ($delivery == 'conomy') {
+                    $GHTK = new ShippingController();
+                    $GHTK->createOrderGHTK();
+                } else if ($delivery == 'fast') {
+                    $GHTK = new ShippingController();
+                    $GHTK->createOrderGHN();
+                } else {
+                    echo "Loại giao hàng không hợp lệ.";
+                }
             } else {
-                echo "Loại giao hàng không hợp lệ.";
-            }
-        } else {
-            if ($_SESSION['information']['delivery'] == 'conomy') {
-                $GHTK = new ShippingController();
-                $GHTK->createOrderGHTK();
-            } elseif ($_SESSION['information']['delivery'] == 'fast') {
-                $GHTK = new ShippingController();
-                $GHTK->createOrderGHN();
-            } else {
-                echo "Loại giao hàng không hợp lệ.";
+                if ($_SESSION['information']['delivery'] == 'conomy') {
+                    $GHTK = new ShippingController();
+                    $GHTK->createOrderGHTK();
+                } else if ($_SESSION['information']['delivery'] == 'fast') {
+                    $GHTK = new ShippingController();
+                    $GHTK->createOrderGHN();
+                } else {
+                    echo "Loại giao hàng không hợp lệ.";
+                }
             }
         }
     }
@@ -140,6 +142,8 @@ class CartHelper
     {
         $data = CartController::getorder();
         $phone = $_SESSION['information']['phone'];
+        $shippingFee = $_SESSION['ShippingFee'];
+        
         $address = $_SESSION['information']['address'] . " " . $_SESSION['information']['ward'] . " " . $_SESSION['information']['district'] . " " . $_SESSION['information']['province'];
         $i = 0;
         $stt = 1;
@@ -184,7 +188,9 @@ HTML;
                   <th>Tên Người đặt </th>
                   <th>Số điện thoại</th>
                   <th>Ngày đặt</th>
-                  <th>Địa chỉ</th>
+                  <th>Phí vận chuyển</th>
+                   <th>Địa chỉ</th>
+                 
                    </tr>
              </thead>
             <tbody>
@@ -193,7 +199,9 @@ HTML;
                 <td>{$fullname}</td>
                 <td>{$phone}</td>
                 <td>{$date}</td>
+                <td>{$shippingFee} VND</td>
                 <td>{$address}</td>
+              
                </tr>
              </tbody>
         </table>
@@ -220,18 +228,17 @@ ROW;
                 $quantity = $cart['quantity'];
                 if ($cart['data']['discount_price'] > 0) {
                     $money = $cart['quantity'] * $cart['data']['discount_price'];
-
                     $unitPrice = $cart['data']['discount_price'];
-                    $total += $money;
+                   
                 } else {
                     $money = $cart['quantity'] * $cart['data']['price'];
                     $unitPrice = $cart['data']['price'];
                     $price = 0;
-                    $total += $money;
+                   
                 }
-                $total_price_formatted = number_format($money) . " VND";
+                $total_price_formatted = number_format($money, 0, ',', '.') . " VND";
                 $unit_price = number_format($unitPrice, 0, ',', '.') . " VND";
-                $total = number_format($total, 0, ',', '.') . " VND";
+                $total = number_format($_SESSION['ship'], 0, ',', '.') . " VND";
                 $html .= <<<ROW2
             <tr>
                 <td>{$i}</td>
@@ -248,7 +255,7 @@ ROW2;
             <tfoot>
                 <tr>
                     <td colspan="3" class="total">Tổng cộng</td>
-                    <td colspan="2" class="total">{$total} </td>
+                    <td colspan="2" class="total">{$total}</td>
                 </tr>
             </tfoot>
         </table>

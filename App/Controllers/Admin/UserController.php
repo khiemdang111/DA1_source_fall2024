@@ -277,27 +277,73 @@ class UserController
 
     public static function history($id)
     {
-            $order = new Order();
-            $data = $order->getAllOrderbyUser_id_admin($id);
-            Header::render();
-            History::render($data);
-            Footer::render();
+        $_SESSION['user_id'] = $id;
+        $order = new Order();
+        $data = $order->getAllOrderbyUser_id_admin($id);
+        Header::render();
+        History::render($data);
+        Footer::render();
     }
 
     public static function historyDetail(int $id)
     {
-        
-            AuthHelper::detail_history($id);
-            $detail = new Order_detail();
-            $data = $detail->getAllOrder_id_admin($id);
-            // var_dump($data);
-            // die;
-            Header::render();
-            Notification::render();
-            NotificationHelper::unset();
-            History_detail::render($data);
-            Footer::render();
-      
 
+        AuthHelper::detail_history($id);
+        $detail = new Order_detail();
+        $data = $detail->getAllOrder_id_admin($id);
+        // var_dump($data);
+        // die;
+        Header::render();
+        Notification::render();
+        NotificationHelper::unset();
+        History_detail::render($data);
+        Footer::render();
     }
+    public static function historyOrderStatus()
+    {
+       // $status = isset($_POST['status']) ? $_POST['status'] : 'all';
+        $transport = 1;
+        $user_id = 8;
+    
+        $detail = new Order();
+        $data = $detail->getAllOrder_ByStatus($transport, $user_id); 
+        var_dump($data);
+        die;
+        if ($status === 'all') {
+            $data = $detail->getAll_($int, $user_id); // Lấy tất cả đơn hàng
+        } else {
+            $data = $detail->getAll_($int, $user_id); // Lấy tất cả đơn hàng
+        }
+
+        // Kiểm tra dữ liệu trước khi sử dụng foreach
+        if (is_array($data) || is_object($data)) {
+            foreach ($data as $item) {
+                echo '<tr>';
+                echo '<td>' . $item['id'] . '</td>';
+                echo '<td>' . number_format($item['total']) . ' VND</td>';
+                echo '<td>' . ($item['paymentMethod'] === "COD" ? 'Thanh toán khi nhận hàng' : 'VNPAY') . '</td>';
+                echo '<td>' . $item['date'] . '</td>';
+                echo '<td>' . ($item['orderStatus'] === "0" ? 'Chưa thanh toán' : 'Đã thanh toán') . '</td>';
+                echo '<td>
+                         <div class="dropdown">
+                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                 <i class="bx bx-dots-vertical-rounded"></i>
+                             </button>
+                             <div class="dropdown">
+                                 <div class="dropdown-menu">
+                                     <a class="dropdown-item" href="/admin/users/history/detail/' . $item['id'] . '">
+                                         <i class="bx bxs-cart"></i> Chi tiết Thanh toán
+                                     </a>
+                                 </div>
+                             </div>
+                         </div>
+                     </td>';
+                echo '</tr>';
+            }
+        } else {
+            echo '<tr><td colspan="6">Không có đơn hàng nào phù hợp.</td></tr>';
+        }
+    }
+
+
 }

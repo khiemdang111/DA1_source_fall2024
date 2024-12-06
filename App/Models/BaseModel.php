@@ -34,7 +34,24 @@ abstract class BaseModel implements CrudInterface
             return $result;
         }
     }
-    
+    public function getAll_(int $transport, int $user_id)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT orders.id, orders.total, orders.orderStatus, orders.date, orders.paymentMethod, orders.user_id , orders.transport
+                FROM orders 
+                WHERE orders.user_id = ? AND orders.transport = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ii', $transport, $user_id);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
+
     public function getOne(int $id)
     {
         $result = [];
@@ -66,7 +83,7 @@ abstract class BaseModel implements CrudInterface
             // INSERT INTO $this->table (name, description, status, 
             $sql = rtrim($sql, ", ");
             // INSERT INTO $this->table (name, description, status
-            $sql .=   " ) VALUES (";
+            $sql .= " ) VALUES (";
             // INSERT INTO $this->table (name, description, status) VALUES (
             foreach ($data as $key => $value) {
                 $sql .= "'$value', ";
@@ -115,7 +132,6 @@ abstract class BaseModel implements CrudInterface
             $conn = $this->_conn->MySQLi();
             $stmt = $conn->prepare($sql);
             $stmt->execute();
-
             // trả về số hàng dữ liệu bị ảnh hưởng
             return $stmt->affected_rows;
         } catch (\Throwable $th) {
@@ -130,8 +146,9 @@ abstract class BaseModel implements CrudInterface
         $result = $this->_conn->MySQLi()->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-   
-    public function getOneByName($name){
+
+    public function getOneByName($name)
+    {
         $result = [];
         try {
             $sql = "SELECT * FROM $this->table WHERE name=?";
@@ -144,7 +161,7 @@ abstract class BaseModel implements CrudInterface
         } catch (\Throwable $th) {
             error_log('Lỗi khi lấy bằng tên: ' . $th->getMessage());
             return $result;
-        }  
+        }
     }
     public function countTotal()
     {

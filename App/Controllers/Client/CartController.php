@@ -111,7 +111,6 @@ class CartController
                         $cart_data[$key]['quantity'] += 1;
                     }
                 }
-
                 // 
                 // if ($cart_data[$key]['product_id'] == $product_id && isset($_POST['number'])) {
                 //     $cart_data[$key]['quantity'] += $number;
@@ -320,52 +319,47 @@ class CartController
     }
     public static function order()
     {
-        $cart_data = self::getorder();
-        $total = CartHelper::tatol($cart_data);
-       var_dump($total);
-
-        // $is_login = AuthHelper::checkLogin();
-        // if ($is_login) {
-        //     $is_valid = CartValidation::create();
-        //     if (!$is_valid) {
-        //         NotificationHelper::error('update_product2', 'Cập nhật sản phẩm thất bại  !');
-        //         header("Location: /checkout");
-        //         exit();
-        //     }
-        //     $cart_data = self::getorder();
-        //     $data = [
-        //         'name' => $_POST['name'],
-        //         'phone' => $_POST['phone'],
-        //         'province' => $_POST['province_'],
-        //         'district' => $_POST['district_'],
-        //         'ward' => $_POST['ward_'],
-        //         'province_code' => $_POST['province'],
-        //         'district_code' => $_POST['district'],
-        //         'ward_code' => $_POST['ward'],
-        //         'address' => $_POST['address'],
-        //         'PaymentMethod' => $_POST['PaymentMethod'],
-        //         'delivery' => $_POST['delivery'],
-        //     ];
-        //     // var_dump($data);
-        //     // die;
-        //     $_SESSION['information'] = $data;
-        //     if ($_POST['PaymentMethod'] === 'COD') {
-        //         CartHelper::createCart($cart_data);
-        //         setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
-        //         NotificationHelper::success('cart', 'Đặt hàng thành công');
-        //         header('location: /');
-        //         exit();
-        //     }else if ($_POST['PaymentMethod'] === 'PAYMENT') {
-        //         PaymentController::createQRCode();
-        //     }else {
-        //         $total = CartHelper::tatol($cart_data);
-        //         PayHelper::VNpay($total);
-        //     }
-
-        // } else {
-        //     NotificationHelper::error('cart', 'Vui lòng đăng nhập để thực hiện chức năng này');
-        //     header('location: /');
-        // }
+        $is_login = AuthHelper::checkLogin();
+        if ($is_login) {
+            $is_valid = CartValidation::create();
+            if (!$is_valid) {
+                NotificationHelper::error('update_product2', 'Cập nhật sản phẩm thất bại  !');
+                header("Location: /checkout");
+                exit();
+            }
+            $cart_data = self::getorder();
+            $data = [
+                'name' => $_POST['name'],
+                'phone' => $_POST['phone'],
+                'province' => $_POST['province_'],
+                'district' => $_POST['district_'],
+                'ward' => $_POST['ward_'],
+                'province_code' => $_POST['province'],
+                'district_code' => $_POST['district'],
+                'ward_code' => $_POST['ward'],
+                'address' => $_POST['address'],
+                'PaymentMethod' => $_POST['PaymentMethod'],
+                'delivery' => $_POST['delivery'],
+            ];
+            $_SESSION['information'] = $data;
+            if ($_POST['PaymentMethod'] === 'COD') {
+                CartHelper::createCart($cart_data);
+                setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
+                NotificationHelper::success('cart', 'Đặt hàng thành công');
+                header('location: /');
+                exit();
+            }else if ($_POST['PaymentMethod'] === 'PAYMENT') {
+                $_SESSION['cancel'] = 'Cancel';
+                CartHelper::createCart($cart_data);
+                PaymentController::createQRCode();
+            }else {
+                $total = CartHelper::tatol($cart_data);
+                PayHelper::VNpay($total);
+            }
+        } else {
+            NotificationHelper::error('cart', 'Vui lòng đăng nhập để thực hiện chức năng này');
+            header('location: /');
+        }
     }
 
     public static function DiscountCode()
@@ -382,11 +376,6 @@ class CartController
         // die;
         $discountModel = new DiscountCode();
         $voucher = $discountModel->getdiscountCode($voucher_code);
-
-        // var_dump(
-        //     $voucher
-        // );
-        // die();
         if (!$voucher) {
             NotificationHelper::error('voucher', 'Mã giảm giá không tồn tại.');
             header('Location: /checkout');
@@ -398,15 +387,13 @@ class CartController
 
 
 
-        // Nếu mã giảm giá hợp lệ, tính toán giá trị giảm giá và giá cuối cùng
-
-        // Điều hướng lại trang thanh toán
+      
         NotificationHelper::success('voucher', ' Áp dụng mã giảm giá ' . $_SESSION['unit']);
         header('Location: /checkout');
         exit();
     }
 
-
+    
 
 }
 

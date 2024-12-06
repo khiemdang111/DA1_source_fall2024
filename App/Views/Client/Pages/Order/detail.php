@@ -114,7 +114,6 @@ class detail extends BaseView
                           <?php
                         endif;
                         ?>
-
                       </div>
                       <div class="d-flex justify-content-between">
                         <div class="item">Tổng tiền : </div>

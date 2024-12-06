@@ -11,6 +11,24 @@ class Order extends BaseModel
     {
         return $this->getAll();
     }
+    public function getAllOrder_ByStatus($user_id, $status)
+    {
+        $result = [];
+        try {
+            $sql = "SELECT orders.id, orders.total, orders.orderStatus, orders.date, orders.paymentMethod, orders.user_id , orders.transport
+                    FROM orders 
+                    WHERE orders.user_id = ? AND orders.transport = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ii', $transport, $user_id);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị tất cả dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+
+    }
     public function getOneorder($id)
     {
         return $this->getOne($id);
@@ -36,7 +54,7 @@ class Order extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT orders.id,orders.total,orders.orderStatus,orders.date,orders.paymentMethod,orders.user_id FROM orders WHERE orders.user_id =" . $_SESSION['user']['id']. " AND orders.transport =2";
+            $sql = "SELECT orders.id,orders.total,orders.orderStatus,orders.date,orders.paymentMethod,orders.user_id FROM orders WHERE orders.user_id =" . $_SESSION['user']['id'] . " AND orders.transport =2";
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {
@@ -59,7 +77,6 @@ class Order extends BaseModel
             return $result;
         }
     }
-
     public function createOder(array $data)
     {
         // $sql ="INSERT INTO $this->table (name, description, status) VALUES ('category test', 'category test description', '1')";
@@ -173,7 +190,7 @@ class Order extends BaseModel
         $result = [];
         try {
             $sql = "SELECT orders.id, orders.total, orders.orderStatus, orders.date, orders.paymentMethod, orders.transport, orders.user_id 
-                    FROM orders WHERE orders.user_id = " . $_SESSION['user']['id'] . " AND orders.transport = 0";
+                    FROM orders WHERE orders.user_id = " . $_SESSION['user']['id'] . " AND orders.transport = 4";
 
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
@@ -185,7 +202,7 @@ class Order extends BaseModel
 
     public function transport(int $id)
     {
-       
+
 
         try {
             $sql = "UPDATE `orders` SET transport = 2, orderStatus = 2 WHERE id = ?";
@@ -217,4 +234,55 @@ class Order extends BaseModel
 }
 
     
+    public function getAllOrderbyUser_idBY($id)
+    {
+        $result = [];
+        try {
+            // Câu SQL với tham số ràng buộc
+            $sql = "SELECT * FROM orders WHERE user_id = ? AND ";
+
+            // Kết nối cơ sở dữ liệu
+            $conn = $this->_conn->MySQLi();
+
+
+            // Chuẩn bị câu lệnh
+            $stmt = $conn->prepare($sql);
+
+
+            // Gắn tham số
+            $stmt->bind_param('i', $id);
+
+            // Thực thi câu lệnh
+
+
+            // Lấy kết quả
+            $result = $stmt->get_result();
+            $orders = $result->fetch_all(MYSQLI_ASSOC);
+
+            // Đóng câu lệnh
+            $stmt->close();
+
+            return $orders; // Trả về danh sách đơn hàng
+        } catch (\Throwable $th) {
+            // Ghi log lỗi
+            error_log('Lỗi khi lấy danh sách đơn hàng: ' . $th->getMessage());
+            return $result; // Trả về mảng rỗng nếu có lỗi
+        }
+    }
+    public function getOne_OrderByStatus($id)
+    {
+
+        $result = [];
+        try {
+            $sql = "SELECT id, transport FROM orders WHERE id=?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
 }

@@ -25,11 +25,8 @@ use App\Views\Client\Pages\Cart\Bill;
 
 class HomeController
 {
-    // hiển thị danh sách
     public static function index()
     {
-
-
         $viewedProducts = isset($_COOKIE['viewed_product']) ? json_decode($_COOKIE['viewed_product'], true) : [];
         $productIds = array_column($viewedProducts, 'product_id');
         $ids = implode(',', array_map('intval', $productIds));
@@ -51,14 +48,11 @@ class HomeController
             }
             return true;
         });
-
         $data = [
             'categories' => $categories,
             'products' => array_merge($product_watched, $products),
             'posts' => $post
         ];
-
-
         Header::render();
         Notification::render();
         NotificationHelper::unset();
@@ -114,15 +108,4 @@ class HomeController
     {
         NotFound::render();
     }
-
-
-    public static function huydon()
-    {
-        $_SESSION['hihi'] = 'hay lawms nha';
-        header('location: /');
-
-
-    }
-
-
 }

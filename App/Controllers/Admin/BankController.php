@@ -12,12 +12,13 @@ use App\Views\Admin\Pages\Bank\Create;
 use App\Views\Admin\Pages\Bank\index;
 use App\Validations\ProductValidation;
 use App\Views\Admin\Pages\Bank\Edit;
+use App\Helpers\AuthHelper;
 
 class BankController
 {
     public static function index()
     {
-
+        AuthHelper::checkPermission([0, 5]);
         $bank = new Bank();
         $data = $bank->getAll();
         // var_dump($data);
@@ -31,7 +32,7 @@ class BankController
     public static function create()
     {
 
-
+        AuthHelper::checkPermission([0, 5]);
         // var_dump($data);
         Header::render();
         Notification::render();
@@ -42,6 +43,7 @@ class BankController
     }
     public static function store()
     {
+       
         $is_valid = BankValidation::create();
 
         if (!$is_valid) {

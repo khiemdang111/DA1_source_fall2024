@@ -8,12 +8,10 @@ class Home extends BaseView
 {
   public static function render($data = null)
   {
-
 ?>
-
     <!-- Layout container -->
     <div class="layout-page-1">
-      <!-- Navbar -->
+   
       <nav
         class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
         id="layout-navbar">

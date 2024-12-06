@@ -29,14 +29,25 @@ Route::get('/', controllerMethod: 'App\Controllers\Client\HomeController@index')
 
 
 
- Route::get('/savingshippingGHN', controllerMethod: 'App\Controllers\Client\ShippingController@getGHNFee');
 
 
 
-Route::post('/savingshippingGHN', 'App\Controllers\Client\ShippingController@getGHNFee');
+Route::get('/cancel', 'App\Controllers\Client\PaymentController@cancelOrder');
 
 
-Route::post('/huydon', 'App\Controllers\Client\HomeController@huydon');
+
+Route::post('/cancel', 'App\Controllers\Client\PaymentController@cancelOrder');
+
+
+Route::get('/handleOrderStatus', 'App\Controllers\Admin\UserController@historyOrderStatus');
+
+
+
+
+
+
+
+
 
 
 
@@ -102,9 +113,11 @@ Route::get('/thanks', 'App\Controllers\Client\HomeController@thanks');
 Route::get('/history', 'App\Controllers\Client\AuthController@history');
 Route::get('/order/detail/{id}', 'App\Controllers\Client\AuthController@historyDetail');
 Route::get('/transport', 'App\Controllers\Client\AuthController@transport');
-Route::get('/canceled', 'App\Controllers\Client\AuthController@canceled');
+Route::post('/canceled', 'App\Controllers\Client\AuthController@canceled');
 // phí ship GHTK
 Route::post('/savingshippingGHTK', 'App\Controllers\Client\ShippingController@getGHTKFee');
+Route::post('/savingshippingGHN', 'App\Controllers\Client\ShippingController@getGHNFee');
+
 // thêm bình luận 
 Route::post('/comments', 'App\Controllers\Client\CommentController@store');
 Route::put('/comments/{id}', 'App\Controllers\Client\CommentController@edit');

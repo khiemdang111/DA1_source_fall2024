@@ -102,8 +102,8 @@ body {
   z-index: 10;
   /* Đặt z-index cao hơn để menu nổi lên trên */
 }
-
-.item_banks {
+.item_banks{
+ 
   border-right: 1px dashed black;
 }
 

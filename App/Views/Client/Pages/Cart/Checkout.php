@@ -420,7 +420,7 @@ class Checkout extends BaseView
 								}
 							});
 						} else {
-							alert('Vui lòng chọn tỉnh và quận!');
+							window.location.href = '/checkout';
 						}
 					} else {
 						$('#shippingFee').html('');
@@ -432,7 +432,6 @@ class Checkout extends BaseView
 			$(document).ready(function () {
 				$('#savingshippingGHN').change(function () {
 					if ($(this).is(':checked')) {
-						
 						var district = $('#ward').val();
 						var total = $('#total').val();
 						console.log(district);
@@ -448,7 +447,6 @@ class Checkout extends BaseView
 								},
 								success: function (response) {
 									console.log(response);
-									
 									$('#shippingFee').html(response.fee + " VND");
 									$('#shippingFee2').html(response.total + " VND");
 								}, 
@@ -459,7 +457,8 @@ class Checkout extends BaseView
 								}
 							});
 						} else {
-							alert('Vui lòng chọn tỉnh và quận!');
+							alert('Vui lòng chọn địa chỉ giao!');
+							window.location.href = '/checkout';
 						}
 					} else {
 						$('#shippingFee').html('');
