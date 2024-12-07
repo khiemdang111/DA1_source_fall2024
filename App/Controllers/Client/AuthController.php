@@ -376,4 +376,18 @@ class AuthController
             header('Location: /wallet');
         }
     }
+
+    public static function updateWallet(){
+        header('Content-Type: application/json');
+        $user = new User();
+        $user_data = $_SESSION['user'];
+        $id = $user_data['id'];
+        $username = $user_data['username'];
+        $money = $_POST;
+        $money_value = $money['value_money'];
+        $_SESSION['ship'] -= $money_value;
+        $data = $_SESSION['ship'];
+        echo json_encode($data);
+        $result = $user->updateWalletUserById($id, $money_value);
+    }
 }

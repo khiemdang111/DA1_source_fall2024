@@ -243,4 +243,11 @@ class User extends BaseModel
             return $result;
         }
     }
+    public function updateWalletUserById(int $id, $balance){
+        $sql = "UPDATE users SET balance = balance - ? WHERE id = ?";
+        $conn = $this->_conn->MySQLi();
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('ii', $balance, $id);
+        return $stmt->execute();
+    }
 }

@@ -178,6 +178,7 @@ Route::get('/admin/users/history/{id}', 'App\Controllers\Admin\UserController@hi
 Route::get('/admin/users/history/detail/{id}', 'App\Controllers\Admin\UserController@historyDetail');
 Route::get('/wallet', 'App\Controllers\Client\AuthController@walletUser');
 Route::post('/checkuser/wallet', 'App\Controllers\Client\AuthController@checkUser');
+Route::post('/updateWallet', 'App\Controllers\Client\AuthController@updateWallet');
 
 
 // bank

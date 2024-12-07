@@ -253,62 +253,41 @@ class Checkout extends BaseView
 											</span>
 										</p>
 										<div class="d-flex align-items-center">
-    <span>Sử dụng số dư trong ví:</span>
-    <input class="mx-2" type="checkbox" id="money-wallet" value="<?= $data['money_wallet']['balance'] ?>">
-</div>
-<div class="py-4"></div>
-<hr>
-<p class="d-flex total-price">
-    <span>Tổng</span>
-    <?php
-    if (isset($_SESSION['unit'])):
-        $total_price = (float)$total_price - $_SESSION['unit'];
-        ?>
-        <span id="shippingFee2"><?= number_format($total_price, 0, ',', '.') ?></span>
-        <?php
-    else:
-        ?>
-        <span id="shippingFee2"><?= number_format($total_price, 0, ',', '.') ?></span>
-        <?php
-    endif;
-    ?>
-    <input type="hidden" id="total" name="total" value="<?= $total_price ?>">
-</p>
-<p>
-    <button type="submit" class="btn btn-primary py-3 px-4">Đặt hàng</button>
-</p>
-<script>
-	document.addEventListener('DOMContentLoaded', function () {
-    const checkbox = document.getElementById('money-wallet');
-    const shippingFeeElement = document.getElementById('shippingFee2');
-    const totalInput = document.getElementById('total');
-    const walletBalance = parseFloat(checkbox.value); // Giá trị số dư trong ví
-    let originalTotal = parseFloat(totalInput.value); // Giá trị tổng ban đầu từ PHP
+											<form action="/updateWallet" method="post">
+												<input type="hidden" name="method" value="POST">
+												<span>Sử dụng số dư trong ví:</span>
+												<input class="mx-2" type="checkbox" id="money-wallet"
+													value="<?= $data['money_wallet']['balance'] ?>">
+											</form>
+										</div>
+										<div class="py-4"></div>
+										<hr>
+										<p class="d-flex total-price">
+											<span>Tổng</span>
+											<?php
+											if (isset($_SESSION['unit'])):
+												$total_price = (float) $total_price - $_SESSION['unit'];
+												?>
+												<span id="shippingFee2"><?= number_format($total_price, 0, ',', '.') ?></span>
+												<?php
+											else:
+												?>
+												<span id="shippingFee2"><?= number_format($total_price, 0, ',', '.') ?></span>
+												<?php
+											endif;
+											?>
+											<input type="hidden" id="total" name="total" value="<?= $total_price ?>">
+										</p>
+										<p>
+											<button type="submit" class="btn btn-primary py-3 px-4">Đặt hàng</button>
+										</p>
 
-    // Lắng nghe sự kiện thay đổi trên checkbox
-    checkbox.addEventListener('change', function () {
-        let currentTotal = originalTotal;
-
-        if (checkbox.checked) {
-            currentTotal -= walletBalance; // Trừ số dư ví
-        }
-
-        // Đảm bảo tổng không âm
-        if (currentTotal < 0) currentTotal = 0;
-
-        // Cập nhật giá trị hiển thị và input ẩn
-        shippingFeeElement.textContent = currentTotal.toLocaleString('vi-VN');
-        totalInput.value = currentTotal; // Cập nhật giá trị cho form
-    });
-});
-
-</script>
+									</div>
 								</div>
 							</div>
+
+
 						</div>
-
-
-					</div>
 				</form>
 
 				<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog"
@@ -490,6 +469,53 @@ class Checkout extends BaseView
 						$('#shippingFee').html('');
 					}
 				});
+			});
+		</script>
+		<script>
+			let isHandlingChange = false;
+
+			$('#money-wallet').change(function () {
+				if (isHandlingChange) return; // Ngăn chặn vòng lặp
+				isHandlingChange = true;
+
+				if ($(this).is(':checked')) {
+					var value_money = $('#money-wallet').val();
+					var total = $('#total').val();
+					console.log('Total:', total);
+					console.log('Value Money:', value_money);
+					if (value_money) {
+						$.ajax({
+							url: '/updateWallet',
+							method: 'POST',
+							data: {
+								type: 'updateWallet',
+								method: "POST",
+								total: total,
+								value_money: value_money
+							},
+							success: function (response) {
+								if (response) {
+									$('#shippingFee2').html(Number(response).toLocaleString('vi-VN') + " VND");
+								} else {
+									console.error('Phản hồi không hợp lệ:', response);
+								}
+							},
+							error: function (xhr, status, error) {
+								console.error('Lỗi AJAX:', status, error);
+							},
+							complete: function () {
+								isHandlingChange = false;
+							}
+						});
+
+					} else {
+						console.error('Dữ liệu đầu vào không hợp lệ:', { value_money, total });
+						isHandlingChange = false; // Đặt lại flag nếu không đủ điều kiện
+					}
+				} else {
+					$('#shippingFee').html('');
+					isHandlingChange = false; // Đặt lại flag khi checkbox bị bỏ chọn
+				}
 			});
 		</script>
 
