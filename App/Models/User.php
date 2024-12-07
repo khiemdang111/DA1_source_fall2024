@@ -228,4 +228,19 @@ class User extends BaseModel
         $stmt->bind_param('iii', $points, $turns, $user_id);
         return $stmt->execute();
     }
+    public function getMoneyWalletByUser($id){
+        $result = [];
+        try {
+            $sql = "SELECT balance FROM $this->table WHERE $this->id = ?";
+            $conn = $this->_conn->MySQLi();
+            $stmt = $conn->prepare($sql);
+
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            return $stmt->get_result()->fetch_assoc();
+        } catch (\Throwable $th) {
+            error_log('Lỗi khi hiển thị chi tiết dữ liệu: ' . $th->getMessage());
+            return $result;
+        }
+    }
 }

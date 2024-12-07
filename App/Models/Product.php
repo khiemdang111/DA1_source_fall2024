@@ -264,7 +264,7 @@ class Product extends BaseModel
     {
         $result = [];
         try {
-            $sql = "SELECT products.*, categories.name AS category_name FROM $this->table INNER JOIN categories on products.category_id = categories.id WHERE products.status = " . self::STATUS_ENABLE . "  ORDER BY id DESC LIMIT 6";
+            $sql = "SELECT products.*, categories.name AS category_name FROM $this->table INNER JOIN categories on products.category_id = categories.id WHERE products.status = " . self::STATUS_ENABLE . "  ORDER BY id DESC LIMIT 7";
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
         } catch (\Throwable $th) {

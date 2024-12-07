@@ -13,7 +13,7 @@ class Checkout extends BaseView
 		// var_dump($data['voucher']);
 		// die;
 		$is_login = AuthHelper::checkLogin();
-?>
+		?>
 		<section class="ftco-section">
 			<div class="container">
 				<table class="table table_center">
@@ -37,7 +37,7 @@ class Checkout extends BaseView
 								// die;
 								$i++;
 
-						?>
+								?>
 								<tr>
 									<td>
 										<span><?= $cart['data']['name'] ?> </span>
@@ -48,25 +48,26 @@ class Checkout extends BaseView
 
 									<?php
 									if ($cart['data']['discount_price'] > 0):
-									?>
+										?>
 										<td>
 											<div class="d-flex justify-content-center">
 												<strike><?= number_format($cart['data']['price'], 0, ',', '.') ?>
-												</strike> <span><del class="margin_vnd">VND</del></span></div>
+												</strike> <span><del class="margin_vnd">VND</del></span>
+											</div>
 
 											<br>
 											<?= number_format($cart['data']['discount_price'], 0, ',', '.') ?> VND
 										</td>
 
-									<?php
+										<?php
 
 									else:
-									?>
+										?>
 										<td>
 
 											<?= number_format($cart['data']['price'], 0, ',', '.') ?> <span>VND</span>
 										</td>
-									<?php
+										<?php
 									endif;
 									?>
 
@@ -77,7 +78,7 @@ class Checkout extends BaseView
 									if ($cart['data']['discount_price'] > 0):
 										$discount_price = $cart['quantity'] * $cart['data']['discount_price'];
 										$total_price += $discount_price;
-									?>
+										?>
 										<td>
 											<div class="d-flex">
 												<span><?= number_format($discount_price, 0, ',', '.') ?></span> <span class="margin_vnd">
@@ -85,11 +86,11 @@ class Checkout extends BaseView
 											</div>
 
 										</td>
-									<?php
+										<?php
 									else:
 										$unit_price = $cart['quantity'] * $cart['data']['price'];
 										$total_price += $unit_price;
-									?>
+										?>
 										<td>
 											<?= number_format($unit_price, 0, ',', '.') ?> VND
 
@@ -97,7 +98,7 @@ class Checkout extends BaseView
 
 
 
-									<?php
+										<?php
 									endif;
 									?>
 
@@ -105,7 +106,7 @@ class Checkout extends BaseView
 
 
 
-						<?php
+								<?php
 							endif;
 						endforeach;
 						?>
@@ -213,20 +214,17 @@ class Checkout extends BaseView
 										<div class="form-group">
 											<div class="col-md-12">
 												<div class="radio">
-													<label><input type="radio" name="delivery" id="savingshippingGHTK"
-															value="conomy" class="mr-2" />
-														Giao hàng tiết kiệm</label><img
-														src="public/uploads/image/Giaohangtietkiem.jpg" alt="" width="20%">
+													<label><input type="radio" name="delivery" id="savingshippingGHTK" value="conomy" class="mr-2" />
+														Giao hàng tiết kiệm</label><img src="public/uploads/image/Giaohangtietkiem.jpg" alt=""
+														width="20%">
 												</div>
 											</div>
 										</div>
 										<div class="form-group">
 											<div class="col-md-12">
 												<div class="radio">
-													<label><input type="radio" name="delivery" value="fast" class="mr-2"
-															id="savingshippingGHN" />
-														Giao hàng nhanh</label><img src="public/uploads/image/giaohangnhanh.jpg"
-														alt="" width="20%">
+													<label><input type="radio" name="delivery" value="fast" class="mr-2" id="savingshippingGHN" />
+														Giao hàng nhanh</label><img src="public/uploads/image/giaohangnhanh.jpg" alt="" width="20%">
 												</div>
 											</div>
 										</div>
@@ -254,28 +252,57 @@ class Checkout extends BaseView
 												<a href="" data-toggle="modal" data-target="#exampleModalCenter2">Chọn voucher để giảm giá </a>
 											</span>
 										</p>
-										<div class="py-4"></div>
-										<hr>
-										<p class="d-flex total-price">
-											<span>Tổng</span>
-											<?php
-											if (isset($_SESSION['unit'])):
-												$total_price = (float) $total_price - $_SESSION['unit'];
-												?>
-												<span id="shippingFee2"><?= number_format($total_price, 0, ',', '.') ?></span>
-												<?php
-											else:
-												?>
-												<span id="shippingFee2"><?= number_format($total_price, 0, ',', '.') ?></span>
-												<?php
-											endif;
-											?>
-											<input type="hidden" id="total" name="total" value="<?=$total_price?>">
-										</p>
-										<p>
-											<button type="submit" class="btn btn-primary py-3 px-4">Đặt hàng</button>
-										</p>
-									</div>
+										<div class="d-flex align-items-center">
+    <span>Sử dụng số dư trong ví:</span>
+    <input class="mx-2" type="checkbox" id="money-wallet" value="<?= $data['money_wallet']['balance'] ?>">
+</div>
+<div class="py-4"></div>
+<hr>
+<p class="d-flex total-price">
+    <span>Tổng</span>
+    <?php
+    if (isset($_SESSION['unit'])):
+        $total_price = (float)$total_price - $_SESSION['unit'];
+        ?>
+        <span id="shippingFee2"><?= number_format($total_price, 0, ',', '.') ?></span>
+        <?php
+    else:
+        ?>
+        <span id="shippingFee2"><?= number_format($total_price, 0, ',', '.') ?></span>
+        <?php
+    endif;
+    ?>
+    <input type="hidden" id="total" name="total" value="<?= $total_price ?>">
+</p>
+<p>
+    <button type="submit" class="btn btn-primary py-3 px-4">Đặt hàng</button>
+</p>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+    const checkbox = document.getElementById('money-wallet');
+    const shippingFeeElement = document.getElementById('shippingFee2');
+    const totalInput = document.getElementById('total');
+    const walletBalance = parseFloat(checkbox.value); // Giá trị số dư trong ví
+    let originalTotal = parseFloat(totalInput.value); // Giá trị tổng ban đầu từ PHP
+
+    // Lắng nghe sự kiện thay đổi trên checkbox
+    checkbox.addEventListener('change', function () {
+        let currentTotal = originalTotal;
+
+        if (checkbox.checked) {
+            currentTotal -= walletBalance; // Trừ số dư ví
+        }
+
+        // Đảm bảo tổng không âm
+        if (currentTotal < 0) currentTotal = 0;
+
+        // Cập nhật giá trị hiển thị và input ẩn
+        shippingFeeElement.textContent = currentTotal.toLocaleString('vi-VN');
+        totalInput.value = currentTotal; // Cập nhật giá trị cho form
+    });
+});
+
+</script>
 								</div>
 							</div>
 						</div>
@@ -301,8 +328,7 @@ class Checkout extends BaseView
 									<div id="voucherRadios">
 										<?php foreach ($data['voucher'] as $voucher): ?>
 											<label>
-												<input type="radio" name="name" value="<?= $voucher['name'] ?>"
-													<?= isset($_GET['voucher']) && $_GET['voucher'] === $voucher['id'] ? 'checked' : '' ?>>
+												<input type="radio" name="name" value="<?= $voucher['name'] ?>" <?= isset($_GET['voucher']) && $_GET['voucher'] === $voucher['id'] ? 'checked' : '' ?>>
 												<?= $voucher['name'] ?>
 											</label>
 											<br>
@@ -393,8 +419,8 @@ class Checkout extends BaseView
 						var province = $('#province-input').val();
 						var district = $('#district-input').val();
 						var total = $('#total').val();
-						
-						
+
+
 						if (province && district) {
 							$.ajax({
 								url: '/savingshippingGHTK',
@@ -407,9 +433,9 @@ class Checkout extends BaseView
 									district: district
 								},
 								success: function (response) {
-							
+
 									console.log(response);
-									
+
 									$('#shippingFee').html(response.fee + " VND");
 									$('#shippingFee2').html(response.total + " VND");
 								},
@@ -449,7 +475,7 @@ class Checkout extends BaseView
 									console.log(response);
 									$('#shippingFee').html(response.fee + " VND");
 									$('#shippingFee2').html(response.total + " VND");
-								}, 
+								},
 								error: function (xhr, status, error) {
 									console.log('Error:', xhr.responseText);
 									$('#shippingFee').html(xhr.responseText + " VND");
@@ -468,7 +494,7 @@ class Checkout extends BaseView
 		</script>
 
 
-<?php
+		<?php
 	}
 }
 ?>

@@ -18,7 +18,7 @@ use App\Views\Client\Layouts\Header;
 use App\Views\Client\Pages\Cart\Checkout;
 use App\Views\Client\Pages\Cart\Index;
 use App\Models\ProductVariant;
-
+use App\Models\User;
 
 class CartController
 {
@@ -260,6 +260,8 @@ class CartController
                 $user_id = $_SESSION['user']['id'];
                 $voucher = new DiscountCode;
                 $data_voucher = $voucher->getDiscountCodeByUser($user_id);
+                $users = new User();
+                $wallet = $users->getMoneyWalletByUser($user_id);
                 // echo "<pre>";
                 // echo "<pre>";
                 // var_dump($data_voucher);
@@ -277,6 +279,7 @@ class CartController
                     $data = [
                         'cart' => $cart_data,
                         'voucher' => $data_voucher,
+                        'money_wallet' => $wallet
                     ];
                     Header::render();
                     Notification::render();
