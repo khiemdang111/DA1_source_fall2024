@@ -22,13 +22,16 @@ class Lucky extends BaseModel
             //     ':prize' => $unit,
             // ]);
             // return true;
-            if ($name == "Chúc bạn may mắn lần sau") {
-                header("Location: /users/$userId");
-                exit();
-            }
+            // if ($name == "Chúc bạn may mắn lần sau") {
+            //     header("Location: /users/$userId");
+            //     exit();
+            // }
             header("Content-Type: application/json; charset=UTF-8");
             if (empty($unit)) {
                 $unit = 0;  // Hoặc bạn có thể thay bằng NULL nếu cột cho phép giá trị NULL
+            }
+            if ($name === 'Chúc bạn may mắn lần sau') {
+                return true; // Không cần thực hiện thao tác INSERT
             }
             $sql = "INSERT INTO discount_codes (user_Id, name, unit) VALUES (?, ?, ?)";
             $conn = $this->_conn->MySQLi();
