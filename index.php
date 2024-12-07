@@ -163,6 +163,16 @@ Route::get('/admin/categories/search', 'App\Controllers\Admin\CategoryController
 
 // Vourcher
 Route::get('/admin/vourcher', 'App\Controllers\Admin\VourcherController@index');
+Route::get('/admin/vourcher/create', 'App\Controllers\Admin\VourcherController@create');
+Route::post('/admin/vourcher', 'App\Controllers\Admin\VourcherController@store');
+Route::get('/admin/vourcher/{id}', 'App\Controllers\Admin\VourcherController@edit');
+Route::put('/admin/vourcher/{id}', 'App\Controllers\Admin\VourcherController@update');
+Route::post('/admin/delete/vourcher/{id}', 'App\Controllers\Admin\VourcherController@delete');
+Route::get('/admin/vourcher/search', 'App\Controllers\Admin\VourcherController@searchVourcher');
+
+
+
+
 
 
 

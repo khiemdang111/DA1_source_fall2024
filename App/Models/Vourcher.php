@@ -100,7 +100,9 @@ class Vourcher extends BaseModel
 
     public function search($keyword)
     {
-        $sql = "SELECT categories.* FROM categories WHERE categories.name REGEXP '$keyword' ";
+        $sql = "SELECT discount_codes.*,  users.username FROM discount_codes
+             INNER JOIN users ON discount_codes.user_id=users.id
+        WHERE discount_codes.name REGEXP '$keyword' ";
         $result = $this->_conn->MySQLi()->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }

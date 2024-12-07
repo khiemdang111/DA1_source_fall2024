@@ -89,5 +89,14 @@ class LuckyController
 
     }
 
+    public static function oneUser(){
+        $user_id = $_SESSION['user']['id'];
+        $userModel = new User();
+        $user = $userModel->getUserId($user_id);
+        return $user;
+    }
+   
+    
+
 }
 

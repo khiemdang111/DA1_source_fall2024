@@ -8,7 +8,8 @@ class Header extends BaseView
 {
   public static function render($data = null)
   {
-
+    $currentPath = strtok($_SERVER['REQUEST_URI'], '?');
+    $adminOrder = ['/admin/order/delivering', '/admin/products/success'];
 ?>
     <!doctype html>
 
@@ -61,7 +62,7 @@ class Header extends BaseView
 
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-     
+
     </head>
 
     <body>
@@ -129,24 +130,24 @@ class Header extends BaseView
 
             <ul class="menu-inner py-1">
               <!-- Dashboards -->
-              <li class="menu-item active open">
+              <li class="menu-item  <?= $currentPath == '/admin' ? 'active open' : '' ?>">
                 <a href="/admin" class="menu-link">
                   <i class="menu-icon tf-icons bx bx-home-smile"></i>
                   Dashboard
                 </a>
               </li>
-              <li class="menu-item">
+              <li class="menu-item <?= strpos($currentPath, '/admin/products') === 0 ? 'active open' : '' ?>">
                 <a href="javascript:void(0)" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons bx bx-box"></i>
                   <div class="text-truncate" data-i18n="User interface">Sản phẩm</div>
                 </a>
                 <ul class="menu-sub">
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/products' ? 'active' : '' ?>">
                     <a href="/admin/products" class="menu-link">
                       <div class="text-truncate" data-i18n="Carousel">Tất cả</div>
                     </a>
                   </li>
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/products/create' ? 'active' : '' ?>">
                     <a href="/admin/products/create" class="menu-link">
                       <div class="text-truncate" data-i18n="Collapse">Thêm mới</div>
                     </a>
@@ -155,7 +156,7 @@ class Header extends BaseView
               </li>
 
               <!-- Layouts -->
-              <li class="menu-item">
+              <li class="menu-item <?= strpos($currentPath, '/admin/categories') === 0 ? 'active open' : '' ?>">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons bx bx-layout"></i>
                   <div class="text-truncate" data-i18n="Layouts">Danh mục sản phẩm</div>
@@ -163,19 +164,19 @@ class Header extends BaseView
 
                 <ul class="menu-sub">
 
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/categories' ? 'active' : '' ?>">
                     <a href="/admin/categories" class="menu-link">
                       <div class="text-truncate" data-i18n="Container">Tất cả</div>
                     </a>
                   </li>
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/categories/create' ? 'active' : '' ?>">
                     <a href="/admin/categories/create" class="menu-link">
                       <div class="text-truncate" data-i18n="Blank">Thêm mới</div>
                     </a>
                   </li>
                 </ul>
               </li>
-              <li class="menu-item">
+              <li class="menu-item <?= strpos($currentPath, '/admin/users') === 0 ? 'active open' : '' ?>">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons bx bx-layout"></i>
                   <div class="text-truncate" data-i18n="Layouts">Khách hàng</div>
@@ -183,12 +184,12 @@ class Header extends BaseView
 
                 <ul class="menu-sub">
 
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/users' ? 'active' : '' ?>">
                     <a href="/admin/users" class="menu-link">
                       <div class="text-truncate" data-i18n="Container">Tất cả</div>
                     </a>
                   </li>
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/users/create' ? 'active' : '' ?>">
                     <a href="/admin/users/create" class="menu-link">
                       <div class="text-truncate" data-i18n="Blank">Thêm mới</div>
                     </a>
@@ -197,7 +198,7 @@ class Header extends BaseView
                 </ul>
               </li>
 
-              <li class="menu-item">
+              <li class="menu-item  <?= strpos($currentPath, '/admin/posts') === 0 ? 'active open' : '' ?>">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons bx bx-detail"></i>
                   <div class="text-truncate" data-i18n="Layouts">Bài viết</div>
@@ -205,12 +206,12 @@ class Header extends BaseView
 
                 <ul class="menu-sub">
 
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/posts' ? 'active' : '' ?>">
                     <a href="/admin/posts" class="menu-link">
                       <div class="text-truncate" data-i18n="Container">Tất cả</div>
                     </a>
                   </li>
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/posts/create' ? 'active' : '' ?>">
                     <a href="/admin/posts/create" class="menu-link">
                       <div class="text-truncate" data-i18n="Blank">Thêm mới</div>
                     </a>
@@ -218,7 +219,7 @@ class Header extends BaseView
                 </ul>
               </li>
 
-              <li class="menu-item">
+              <li class="menu-item <?= strpos($currentPath, '/admin/vourcher') === 0 ? 'active open' : '' ?>">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons bx bx-layout"></i>
                   <div class="text-truncate" data-i18n="Layouts">Vourcher</div>
@@ -226,13 +227,13 @@ class Header extends BaseView
 
                 <ul class="menu-sub">
 
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/vourcher' ? 'active' : '' ?>">
                     <a href="/admin/vourcher" class="menu-link">
                       <div class="text-truncate" data-i18n="Container">Tất cả</div>
                     </a>
                   </li>
-                  <li class="menu-item">
-                    <a href="/admin/categories/create" class="menu-link">
+                  <li class="menu-item <?= $currentPath == '/admin/vourcher/create' ? 'active' : '' ?>">
+                    <a href="/admin/vourcher/create" class="menu-link">
                       <div class="text-truncate" data-i18n="Blank">Thêm mới</div>
                     </a>
                   </li>
@@ -240,18 +241,18 @@ class Header extends BaseView
               </li>
 
 
-              <li class="menu-item">
+              <li class="menu-item  <?= in_array($currentPath, $adminOrder) ? 'active open' : '' ?>">
                 <a href="javascript:void(0)" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons bx bx-box"></i>
                   <div class="text-truncate" data-i18n="User interface">Đơn hàng</div>
                 </a>
                 <ul class="menu-sub">
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/order/delivering' ? 'active' : '' ?>">
                     <a href="/admin/order/delivering" class="menu-link">
                       <div class="text-truncate" data-i18n="Carousel">Đang giao </div>
                     </a>
                   </li>
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/products/success' ? 'active' : '' ?>">
                     <a href="/admin/products/success" class="menu-link">
                       <div class="text-truncate" data-i18n="Collapse">Giao thành công</div>
                     </a>
@@ -259,18 +260,18 @@ class Header extends BaseView
                 </ul>
               </li>
 
-              <li class="menu-item">
+              <li class="menu-item <?= strpos($currentPath, '/admin/banks') === 0 ? 'active open' : '' ?>">
                 <a href="javascript:void(0)" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons bx bx-box"></i>
                   <div class="text-truncate" data-i18n="User interface">Ngân hàng thanh toán</div>
                 </a>
                 <ul class="menu-sub">
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/banks' ? 'active' : '' ?>">
                     <a href="/admin/banks" class="menu-link">
                       <div class="text-truncate" data-i18n="Carousel">Danh sách ngân hàng</div>
                     </a>
                   </li>
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/banks/create' ? 'active' : '' ?>">
                     <a href="/admin/banks/create" class="menu-link">
                       <div class="text-truncate" data-i18n="Collapse">Thêm ngân hàng</div>
                     </a>
@@ -278,7 +279,7 @@ class Header extends BaseView
                 </ul>
               </li>
               <!-- #region -->
-              <li class="menu-item">
+              <li class="menu-item <?= strpos($currentPath, '/admin/recycle') === 0 ? 'active open' : '' ?>">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons bx bx-recycle"></i>
                   <div class="text-truncate" data-i18n="Layouts">Thùng rác</div>
@@ -286,26 +287,24 @@ class Header extends BaseView
 
                 <ul class="menu-sub">
 
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/recycle/products' ? 'active' : '' ?>">
                     <a href="/admin/recycle/products" class="menu-link">
                       <div class="text-truncate" data-i18n="Container">Sản phẩm</div>
                     </a>
                   </li>
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/recycle/users' ? 'active' : '' ?>">
                     <a href="/admin/recycle/users" class="menu-link">
                       <div class="text-truncate" data-i18n="Blank">Tài khoảng khách hàng</div>
                     </a>
                   </li>
-                  <li class="menu-item">
+                  <li class="menu-item <?= $currentPath == '/admin/recycle/posts' ? 'active' : '' ?>">
                     <a href="/admin/recycle/posts" class="menu-link">
                       <div class="text-truncate" data-i18n="Blank">Bài viết</div>
                     </a>
                   </li>
                 </ul>
               </li>
-              <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">Apps &amp; Pages</span>
-              </li>
+            
             </ul>
           </aside>
           <!-- / Menu -->

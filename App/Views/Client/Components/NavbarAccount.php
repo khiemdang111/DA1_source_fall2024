@@ -4,11 +4,13 @@ namespace App\Views\Client\Components;
 
 use App\Models\Category as ModelsCategory;
 use App\Views\BaseView;
+use App\Controllers\Client\LuckyController;
 
 class NavbarAccount extends BaseView
 {
   public static function render($data = null)
   {
+    $data = LuckyController::oneUser();
 ?>
 
     <ul class="menu_account">

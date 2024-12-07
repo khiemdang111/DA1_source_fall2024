@@ -34,7 +34,7 @@ class Index extends BaseView
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <form action="/admin/categories/search" method="get">
+                        <form action="/admin/vourcher/search" method="get">
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
                                 <input type="text" class="form-control" name="keywords"
@@ -78,9 +78,9 @@ class Index extends BaseView
                                                     <i class="bx bx-dots-vertical-rounded"></i>
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    <a class="dropdown-item" href="/admin/categories/<?= $item['id'] ?>"><i
+                                                    <a class="dropdown-item" href="/admin/vourcher/<?= $item['id'] ?>"><i
                                                             class="bx bx-edit-alt me-1"></i> Sửa</a>
-                                                    <form class="w-100" action="/admin/delete/categories/<?= $item['id'] ?>"
+                                                    <form class="w-100" action="/admin/delete/vourcher/<?= $item['id'] ?>"
                                                         method="post" style="display: inline-block;"
                                                         onsubmit="return confirm('Chắc chưa?')">
                                                         <input type="hidden" name="method" value="POST" id="">
