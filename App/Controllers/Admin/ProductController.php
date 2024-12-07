@@ -18,6 +18,8 @@ use App\Views\Admin\Pages\Product\DetailSettingVariant;
 use App\Views\Admin\Pages\Product\createAttributeVariant;
 use App\Views\Admin\Pages\Recycle\ProductRecycle;
 use App\Helpers\AuthHelper;
+use App\Models\User;
+
 ;
 
 class ProductController
@@ -277,7 +279,6 @@ class ProductController
             return;
         }
         $_SESSION['keywords'] = $keyword;
-
         $product = new Product();
         $products = $product->search($keyword);
         $totalpagina = $product->getAllProductByPagina();
@@ -289,4 +290,5 @@ class ProductController
         Index::render($data);
         Footer::render();
     }
+    
 }

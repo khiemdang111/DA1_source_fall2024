@@ -90,9 +90,9 @@ class ShippingController
     {
         $cart_data = CartController::getorder();
         $order = [
-            'products' => []  
+            'products' => []
         ];
-        
+
         foreach ($cart_data as $cart) {
             if ($cart['data']) {
                 $weight = isset($cart['data']['weight']) ? $cart['data']['weight'] : 0.6;
@@ -131,7 +131,7 @@ class ShippingController
             'value' => $total_vulue['total'],
             'transport' => 'road',
         ];
-        
+
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => 'https://services.giaohangtietkiem.vn/services/shipment/order',
@@ -178,19 +178,19 @@ class ShippingController
     {
         $province = isset($_POST['province']) ? $_POST['province'] : '';
         $district = isset($_POST['district']) ? $_POST['district'] : '';
-       
-         $total = isset($_POST['total']) ? $_POST['total'] : '';
+
+        $total = isset($_POST['total']) ? $_POST['total'] : '';
         $apiUrl = "https://services.giaohangtietkiem.vn/services/shipment/fee";
         $apiKey = "ATo2Yp39vAKo3XErRxJZERRIisA4QIHqA4KgCE";
         $data = [
             'weight' => 500,
             'pick_province' => 'Hồ Chí Minh',
             'pick_district' => 'Quận 5',
-             'province' => $province,
-             'district' => $district,
-            
+            'province' => $province,
+            'district' => $district,
+
         ];
-        
+
         $ch = curl_init($apiUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
@@ -265,7 +265,6 @@ class ShippingController
             exit;
         }
         $result = json_decode($response, true);
-
         if (isset($result['data']["total"])) {
             $shipMoneyText = $result['data']["total"];
             $shipMoney = preg_replace('/[^0-9]/', '', $shipMoneyText);

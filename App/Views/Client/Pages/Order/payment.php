@@ -64,8 +64,6 @@ class payment extends BaseView
                     countdownTime--;
                 }
             }
-
-            // Gọi hàm updateCountdown mỗi giây
             let countdownInterval = setInterval(updateCountdown, 1000);
             function sendPostRequest() {
                 $.ajax({

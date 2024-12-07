@@ -53,7 +53,6 @@ class EmailController
             // NotificationHelper::error('checkout', 'Vui lòng đăng nhập hoặc thêm sản phẩm vào giỏ hàng để thanh toán');
             header('location: /Verification');
         }
-
         // Tạo mật khẩu mới và mã hóa
         // $newPassword = self::generateRandomNumber();
         // $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);

@@ -284,7 +284,6 @@ class UserController
         History::render($data);
         Footer::render();
     }
-
     public static function historyDetail(int $id)
     {
 
@@ -313,20 +312,20 @@ class UserController
             $data = $order->getAllOrder_ByStatus($user_id, $transport);
         }
         $statusMap = [
+            0 => 'Đã hủy',
             1 => 'Đang giao',
             2 => 'Giao thành công',
             3 => 'Hoàn tiền thành công',
             'default' => 'Đã hủy',
         ];
-        // Kiểm tra dữ liệu trước khi sử dụng foreach
-        if (is_array($data) || is_object($data)) {
+        if ((is_array($data) && !empty($data)) || (is_object($data) && count((array)$data) > 0)) {
             foreach ($data as $item) {
                 echo '<tr>';
                 echo '<td>' . $item['id'] . '</td>';
                 echo '<td>' . number_format($item['total']) . ' VND</td>';
                 echo '<td>' . ($item['paymentMethod'] === "COD" ? 'Thanh toán khi nhận hàng' : 'VNPAY') . '</td>';
                 echo '<td>' . $item['date'] . '</td>';
-                echo '<td>' . $statusMap[$item['transport']] ?? $statusMap['default'] . '</td>';
+                echo '<td>' . ($statusMap[$item['transport']] ?? $statusMap['default']) . '</td>';
                 echo '<td>
                          <div class="dropdown">
                              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -346,6 +345,7 @@ class UserController
         } else {
             echo '<tr><td colspan="6">Không có đơn hàng nào phù hợp.</td></tr>';
         }
+        
     }
 
 

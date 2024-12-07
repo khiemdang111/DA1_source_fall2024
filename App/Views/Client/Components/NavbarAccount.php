@@ -55,7 +55,6 @@ class NavbarAccount extends BaseView
               d="M12 8c-2.206 0-4 1.794-4 4s1.794 4 4 4 4-1.794 4-4-1.794-4-4-4zm0 6c-1.103 0-2-.897-2-2s.897-2 2-2 2 .897 2 2-.897 2-2 2z">
             </path>
           </svg>Giao thành công </a>
-
       </li>
       <li>
         <a href="/transport"><svg class="m-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

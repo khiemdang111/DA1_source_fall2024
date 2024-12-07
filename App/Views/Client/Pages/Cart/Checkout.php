@@ -323,7 +323,6 @@ class Checkout extends BaseView
 						</div>
 					</div>
 				</div>
-
 		</section>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
 			integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
@@ -371,7 +370,6 @@ class Checkout extends BaseView
 			$("#ward").change(() => {
 				printResult();
 			})
-
 			var printResult = () => {
 				if ($("#district").val() !== "" && $("#province").val() !== "" && $("#ward").val() !== "") {
 					// Lấy giá trị từ các dropdown
@@ -382,7 +380,6 @@ class Checkout extends BaseView
 					$("#province-input").val(province);
 					$("#district-input").val(district);
 					$("#ward-input").val(ward);
-
 					// Debug (Kiểm tra giá trị được lưu)
 					console.log("Tỉnh:", province, "Huyện:", district, "Phường:", ward);
 				}

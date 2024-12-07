@@ -7,17 +7,12 @@ use App\Views\BaseView;
 class Edit extends BaseView
 {
     public static function render($data = null)
-    {
-        // var_dump($data);
-        // die;
+    {     
 ?>
 
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
+      
         <div class="page-wrapper">
-            <!-- ============================================================== -->
-            <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
+            
             <div class="page-breadcrumb">
                 <div class="row">
                     <div class="col-12 d-flex no-block align-items-center">

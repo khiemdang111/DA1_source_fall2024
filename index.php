@@ -32,14 +32,16 @@ Route::get('/', controllerMethod: 'App\Controllers\Client\HomeController@index')
 
 
 
-Route::get('/cancel', 'App\Controllers\Client\PaymentController@cancelOrder');
+Route::post('/statistical', 'App\Controllers\Admin\HomeController@statistical');
 
 
 
 Route::post('/cancel', 'App\Controllers\Client\PaymentController@cancelOrder');
 
 
-Route::post('/handleOrderStatus', 'App\Controllers\Admin\UserController@historyOrderStatus');
+
+
+
 
 
 
@@ -190,6 +192,7 @@ Route::get('/wallet', 'App\Controllers\Client\AuthController@walletUser');
 Route::post('/checkuser/wallet', 'App\Controllers\Client\AuthController@checkUser');
 Route::post('/updateWallet', 'App\Controllers\Client\AuthController@updateWallet');
 
+Route::post('/handleOrderStatus', 'App\Controllers\Admin\UserController@historyOrderStatus');
 
 // bank
 Route::get('/admin/banks', 'App\Controllers\Admin\BankController@index');

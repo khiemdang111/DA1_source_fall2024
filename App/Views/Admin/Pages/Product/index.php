@@ -71,6 +71,7 @@ class index extends BaseView
 
                     <td><?= number_format($item['price']) ?></td>
                     <td><?= ($item['status'] == 1) ? 'Hiển thị' : 'Ẩn' ?></td>
+                   
                     <td>
                       <div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
@@ -127,19 +128,17 @@ class index extends BaseView
               $nextPage = $currentPage + 1;
               ?>
               <li class="page-item <?= $currentPage >= $totalPages ? 'disabled' : '' ?>">
-                <a class="page-link" href="<?= $currentPage < $totalPages ? '/admin/products?pages=' . $nextPage : '#' ?>"> >> </a>
+                <a class="page-link" href="<?= $currentPage < $totalPages ? '/admin/products?pages=' . $nextPage : '#' ?>">
+                  >> </a>
               </li>
             </ul>
           </nav>
 
         </div>
         <hr class="my-12" />
-
-        <!-- Bootstrap Dark Table -->
-
-        <!--/ Bootstrap Dark Table -->
       </div>
-
+      
+  
 
       <?php
   }

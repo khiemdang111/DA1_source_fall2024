@@ -48,7 +48,7 @@ class History extends BaseView
                         <option value="1">Đang giao</option>
                         <option value="2">Giao thành công</option>
                         <option value="3">Hoàn tiền thành công</option>
-                        <option value="4">Đã hủy</option>
+                        <option value="0">Đã hủy</option>
                     </select>
                 </div>
                 <div class="table-responsive text-nowrap">
@@ -76,8 +76,6 @@ class History extends BaseView
                                         <td>
                                             <?= $item['id'] ?>
                                         </td>
-
-
                                         <td>
                                             <?= number_format($item['total']) ?> VND
                                         </td>

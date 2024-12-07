@@ -62,6 +62,7 @@ class Header extends BaseView
 
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
 
     </head>
 
@@ -73,7 +74,7 @@ class Header extends BaseView
 
           <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
             <div class="app-brand demo">
-              <a href="index.html" class="app-brand-link">
+              <a href="/admin" class="app-brand-link">
                 <span class="app-brand-logo demo">
                   <svg width="25" viewBox="0 0 25 42" version="1.1" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink">

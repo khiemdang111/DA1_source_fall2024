@@ -232,4 +232,6 @@ class ProductController
         }
         header("Location: /products/$product_id");
     }
+
+    
 }
