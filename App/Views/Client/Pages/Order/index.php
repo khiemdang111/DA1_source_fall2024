@@ -20,7 +20,7 @@ class index extends BaseView
         <div class="col-md-3">
           <div class="sidebar-box ftco-animate">
             <div class="categories">
-              <h3>Lịch sử mua hàng </h3>
+              <h3>Giao thành công</h3>
               <?php
               NavbarAccount::render($data);
               ?>

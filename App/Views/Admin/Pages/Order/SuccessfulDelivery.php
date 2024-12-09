@@ -11,7 +11,7 @@ class SuccessfulDelivery extends BaseView
     // echo '<pre>';
     // var_dump($data);
     // die;
-?>
+    ?>
     <div class="container-xxl flex-grow-1 container-p-y">
       <!-- Basic Bootstrap Table -->
       <div class="card mb-3">
@@ -66,7 +66,7 @@ class SuccessfulDelivery extends BaseView
               foreach ($data as $item):
                 $data_adress = $item['address'] . " " . $item['ward'] . " " . $item['district'] . " " . $item['province'];
 
-              ?>
+                ?>
                 <tr>
                   <td><?= $item['id'] ?></td>
                   <td><?= $item['name'] ?></td>
@@ -74,11 +74,11 @@ class SuccessfulDelivery extends BaseView
                   <td><?= $item['phone'] ?></td>
                   <td><?= $item['date'] ?></td>
                   <td class="text-truncate" style="max-width: 200px;"><?= $data_adress ?></td>
-                 <td>
+                  <td>
 
-                 <!-- <button class="btn btn-primary">Xác nhận giao thành công</button>
+                    <!-- <button class="btn btn-primary">Xác nhận giao thành công</button>
                  -->
-                 </td>
+                  </td>
                   </td>
                   <td>
                     <div class="dropdown">
@@ -95,12 +95,12 @@ class SuccessfulDelivery extends BaseView
                           </button>
                           
                         </form> -->
-                      
+
                       </div>
                     </div>
                   </td>
                 </tr>
-              <?php
+                <?php
               endforeach;
 
 
@@ -148,10 +148,10 @@ class SuccessfulDelivery extends BaseView
       <!--/ Bootstrap Dark Table -->
     </div>
 
-   
 
 
 
-<?php
+
+    <?php
   }
 }

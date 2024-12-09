@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Views\Client\Layouts;
-
+use App\Helpers\NotificationHelper;
+use App\Controllers\Client\PaymentController;
 use App\Controllers\Client\ProductController;
 use App\Helpers\AuthHelper;
 use App\Helpers\CartHelper;
@@ -12,6 +13,10 @@ class Header extends BaseView
 {
 	public static function render($data = null)
 	{
+		if(isset($_SESSION['order_id'])){
+			PaymentController::cancelOrder();
+			NotificationHelper::unsetorder();
+		}
 		$is_login = AuthHelper::checkLogin();
 ?>
 		<!DOCTYPE html>
@@ -233,7 +238,7 @@ class Header extends BaseView
 						</form>
 					</div>
 				</nav>
-				<!-- <button class="search"><i class="bi bi-search"></i></button> -->
+				
 			</div>
 
 

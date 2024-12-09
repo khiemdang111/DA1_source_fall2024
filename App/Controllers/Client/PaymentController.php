@@ -7,6 +7,7 @@ use App\Models\Bank;
 use App\Models\VietQRModel;
 use App\Views\Client\Layouts\Footer;
 use App\Views\Client\Layouts\Header;
+use App\Views\Client\Layouts\Headerpay;
 use App\Views\Client\Pages\Order\payment;
 use App\Helpers\NotificationHelper;
 use App\Models\Order;
@@ -24,7 +25,7 @@ class PaymentController
         $vietQR = new VietQRModel();
         $response = $vietQR->generateQRCode($result[0]['account_number'], $result[0]['account_name'], $result[0]['bank_code'], $addInfo, $total['total']);
         if (isset($response['data']["qrCode"])) {
-            Header::render();
+            Headerpay::render();
             payment::render($result);
             Footer::render();
         } else {
@@ -42,8 +43,7 @@ class PaymentController
             'transport' => 0,
         ];
         $orders->update($result['id'],$data);
-    }else{
-        echo  'sai';
+        setcookie('cart', '', time() - (3600 * 24 * 30 * 12), '/');
     }
     }
 }

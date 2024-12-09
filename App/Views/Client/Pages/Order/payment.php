@@ -30,7 +30,7 @@ class payment extends BaseView
                 </div>
                 <div class="d-flex justify-content-center item_banks">
                     <div class="item pl-2">Tổng tiền :  </div>
-                    <div class="item px-2"><?=  $total['total'] ?></div>
+                    <div class="item px-2"><?=  number_format($total['total'], 0, ',', '.')  ?> VND</div>
                 </div>
                 <div class="d-flex justify-content-center item_banks">
                     <div class="item pl-2">Phương thức thanh toán chuyển khoản : Chuyển khoản ngân hàng</div>

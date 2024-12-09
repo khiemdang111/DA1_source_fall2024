@@ -116,6 +116,11 @@ Route::get('/history', 'App\Controllers\Client\AuthController@history');
 Route::get('/order/detail/{id}', 'App\Controllers\Client\AuthController@historyDetail');
 Route::get('/transport', 'App\Controllers\Client\AuthController@transport');
 Route::post('/canceled', 'App\Controllers\Client\AuthController@canceled');
+
+Route::get('/canceled', 'App\Controllers\Client\AuthController@canceled');
+
+
+
 // phí ship GHTK
 Route::post('/savingshippingGHTK', 'App\Controllers\Client\ShippingController@getGHTKFee');
 Route::post('/savingshippingGHN', 'App\Controllers\Client\ShippingController@getGHNFee');
@@ -193,6 +198,7 @@ Route::post('/checkuser/wallet', 'App\Controllers\Client\AuthController@checkUse
 Route::post('/updateWallet', 'App\Controllers\Client\AuthController@updateWallet');
 
 Route::post('/handleOrderStatus', 'App\Controllers\Admin\UserController@historyOrderStatus');
+Route::post('/admin/users/pdf/{id}', 'App\Controllers\Admin\UserController@pdf');
 
 // bank
 Route::get('/admin/banks', 'App\Controllers\Admin\BankController@index');

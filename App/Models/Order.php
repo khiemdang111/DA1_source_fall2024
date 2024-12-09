@@ -190,7 +190,7 @@ class Order extends BaseModel
         $result = [];
         try {
             $sql = "SELECT orders.id, orders.total, orders.orderStatus, orders.date, orders.paymentMethod, orders.transport, orders.user_id 
-                    FROM orders WHERE orders.user_id = " . $_SESSION['user']['id'] . " AND orders.transport = 4";
+                    FROM orders WHERE orders.user_id = " . $_SESSION['user']['id'] . " AND orders.transport = 0";
 
             $result = $this->_conn->MySQLi()->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);

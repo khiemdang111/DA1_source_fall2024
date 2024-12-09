@@ -209,24 +209,11 @@ class Home extends BaseView
               <div class="card">
                 <div class="row row-bordered g-0">
                   <div class="col-lg-6">
-                    <div class="card-header d-flex  justify-content-between">
 
-
-                      <h5 class="card-title mb-0">Thống kê doanh thu theo ngày</h5>
-
-                      <select class="form-select w-50" aria-label="Default select example">
-
-                        <option value="3">3 Ngày</option>
-                        <option value="5">5 Ngày</option>
-                        <option value="7">7 Ngày</option>
-                      </select>
-
-                    </div>
                     <div>
-
-                      <div id="myfirstchart" style="height: 400px;"></div>
-
+                      <canvas id="product_by_category"></canvas>
                     </div>
+                    
                   </div>
                   <div class="col-lg-6 p-2">
                     <h4 class="card-title m-3">Top 5 sản phẩm có lượt xem nhiều nhất</h4>
@@ -269,6 +256,27 @@ class Home extends BaseView
                 </div>
               </div>
             </div>
+            <div class="col-12 col-xxl-12 order-2 order-md-3 order-xxl-2 mb-6 mt-3">
+              <div class="card">
+                <div class="row row-bordered g-0">
+                  <div class="col-lg-12">
+                    <div class="card-header d-flex  justify-content-between">
+                      <h5 class="card-title mb-0">Thống kê doanh thu theo ngày</h5>
+                      <select class="form-select w-50" aria-label="Default select example">
+                        <option value="3">3 Ngày</option>
+                        <option value="5">5 Ngày</option>
+                        <option value="7">7 Ngày</option>
+                      </select>
+
+                    </div>
+                    <div>
+                      <div id="myfirstchart" style="height: 400px;"></div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
             <!--/ Total Revenue -->
 
           </div>
@@ -291,7 +299,7 @@ class Home extends BaseView
             });
             function statistical() {
               $(document).ready(function () {
-                var date = $(this).val(); 
+                var date = $(this).val();
                 date = 365;
                 console.log('Default date: ' + date);
                 $.ajax({
@@ -299,18 +307,18 @@ class Home extends BaseView
                   method: 'POST',
                   dataType: 'JSON',
                   data: {
-                    date: date, 
+                    date: date,
                     method: 'POST',
                   },
                   success: function (data) {
                     console.log(data);
-                    char.setData(data); 
+                    char.setData(data);
                     $('#text-date').text('Default date: 365');
                   }
                 });
               });
               $('.form-select').change(function () {
-                var date = $(this).val(); 
+                var date = $(this).val();
                 console.log(date);
 
                 $.ajax({
@@ -324,8 +332,8 @@ class Home extends BaseView
                   success: function (data) {
                     console.log(data);
 
-                    char.setData(data); 
-                    $('#text-date').text(date); 
+                    char.setData(data);
+                    $('#text-date').text(date);
                   }
                 });
               });
@@ -333,7 +341,44 @@ class Home extends BaseView
 
           });
         </script>
+        <script>
+          function producByCategory() {
+            const ctx = document.getElementById('product_by_category');
+            var php_data = <?= json_encode($data['product_by_category']) ?>;
+            console.log(php_data);
+            var labels = [];
+            var data = [];
+            for (let i of php_data) {
+              // console.log(i);
+              labels.push(i.name);
+              data.push(i.count);
 
+            }
+            console.log(labels);
+            console.log(data);
+            new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels,
+                datasets: [{
+                  label: 'Số lượng sản phẩm ',
+                  data: data,
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true
+                  }
+                }
+              }
+            });
+          }
+
+
+          producByCategory();
+        </script>
 
         <?php
   }
