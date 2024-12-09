@@ -71,7 +71,7 @@ class Contact extends BaseView
 							</div>
 							<div class="row no-gutters">
 								<div class="col-md-7">
-									<div class="contact-wrap w-100 p-md-5 p-4">
+									<div class="card ml-5 shadow-lg p-4 border-0 rounded-4">
 										
 										<h3 class="mb-4">Liên hệ với chúng tôi</h3>
 										<form method="post" id="contactForm" name="contactForm" class="contactForm " action="">

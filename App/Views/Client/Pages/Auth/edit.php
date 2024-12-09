@@ -27,10 +27,13 @@ class edit extends BaseView
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div class="card ">
+                    <div class="card shadow-lg p-4 border-0 rounded-4">
                         <h4 class="text-center title_color">Thông tin tài khoản</h4>
+                        <div class="d-flex justify-content-center">
                         <p class="text-right text-danger mr-2">Điểm thưởng: <?= $data['accumulate_points'] ?></p>
                         <p class="text-right text-danger mr-2">Số lượt quay: <?= $data['turns'] ?></p>
+                        </div>
+                        
 
                     
                         <form class="p-2" action="/users/update/<?= $data['id'] ?>" method="post" enctype="multipart/form-data">

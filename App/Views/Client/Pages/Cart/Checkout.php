@@ -117,6 +117,7 @@ class Checkout extends BaseView
 					<input type="hidden" name="method" value="POST">
 					<div class="row ">
 						<div class="col-xl-6 ftco-animate">
+							<div class="shadow-sm p-3 mb-5 bg-body rounded">
 							<div class="row align-items-end">
 								<div class="col-md-6">
 									<div class="form-group">
@@ -190,6 +191,7 @@ class Checkout extends BaseView
 
 
 							</div>
+							</div>
 						</div>
 
 						<?php
@@ -209,14 +211,14 @@ class Checkout extends BaseView
 						<div class="col-md-6">
 							<div class="col-md-12 oder_cart mb-2">
 								<div class="col-xl-12 ftco-animate ">
-									<div class="cart-detail p-3 p-md-4">
+									<div class="cart-detail p-3 p-md-4 shadow-none p-3 mb-5 bg-light rounded">
 										<h3 class="billing-heading mb-4">Phương thức vận chuyển</h3>
 										<div class="form-group">
 											<div class="col-md-12">
 												<div class="radio">
 													<label><input type="radio" name="delivery" id="savingshippingGHTK" value="conomy" class="mr-2" />
-														Giao hàng tiết kiệm</label><img src="public/uploads/image/Giaohangtietkiem.jpg" alt=""
-														width="20%">
+														Giao hàng tiết kiệm</label><img src="public/uploads/image/Logo-GHTK-Slogan-768x576.webp" alt=""
+														width="15%">
 												</div>
 											</div>
 										</div>
@@ -224,7 +226,7 @@ class Checkout extends BaseView
 											<div class="col-md-12">
 												<div class="radio">
 													<label><input type="radio" name="delivery" value="fast" class="mr-2" id="savingshippingGHN" />
-														Giao hàng nhanh</label><img src="public/uploads/image/giaohangnhanh.jpg" alt="" width="20%">
+														Giao hàng nhanh</label><img src="public/uploads/image/Logo-GHN-Slogan-En.webp" alt="" width="20%" class="ml-2">
 												</div>
 											</div>
 										</div>
@@ -234,7 +236,7 @@ class Checkout extends BaseView
 							</div>
 							<div class="col-xl-12 oder_cart">
 								<div class="col-xl-12 ftco-animate ">
-									<div class="cart-detail cart-total p-3 p-md-4">
+									<div class="cart-detail cart-total p-3 p-md-4 shadow-none p-3 mb-5 bg-light rounded">
 										<h3 class="billing-heading mb-4">Tổng cộng giỏ hàng</h3>
 										<p class="d-flex">
 											<span>Tổng cộng</span>

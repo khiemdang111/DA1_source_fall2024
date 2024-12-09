@@ -367,13 +367,6 @@ class CartController
 
     public static function DiscountCode()
     {
-
-
-        //
-
-        //
-
-        // Lấy mã giảm giá và kiểm tra mã giảm giá
         $voucher_code = $_POST['name'];
         // var_dump( $voucher_code);
         // die;

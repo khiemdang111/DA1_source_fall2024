@@ -112,8 +112,7 @@ body {
 }
 
 .title_color {
-  background-color: #a23f25;
-  color: white;
+  color: black;
 }
 
 .avatar_user {
@@ -15122,4 +15121,7 @@ textarea.form-control {
   gap: 20px;
   /* Khoảng cách giữa các phần tử */
 }
+
+
+
 
